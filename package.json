@@ -1,0 +1,15 @@
+{
+	"name": "@svelte-material-ui-test/test",
+	"version": "2.0.0-beta.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"directory": "git+https://github.com/svelte-material-ui-test/test.git"
+	},
+	"author": "Daniele Loreto <monkeythedev@gmail.com>",
+	"license": "ISC"
+}
