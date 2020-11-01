@@ -1,0 +1,8 @@
+@use "@material/card";
+
+@include card.core-styles;
+
+.smui-card__content,
+.smui-card__primary-action--padded {
+	padding: 1em;
+}

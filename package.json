@@ -1,5 +1,5 @@
 {
-	"name": "@svelte-material-ui-test/test",
+	"name": "@svelte-material-ui-test2/test",
 	"version": "2.0.0-beta.0",
 	"description": "",
 	"main": "index.js",
@@ -8,8 +8,14 @@
 	},
 	"repository": {
 		"type": "git",
-		"directory": "git+https://github.com/svelte-material-ui-test/test.git"
+		"url": "git+https://github.com/svelte-material-ui-test/test.git"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"author": "Daniele Loreto <monkeythedev@gmail.com>",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"@svelte-material-ui-test/test": "2.0.0-beta.0"
+	}
 }

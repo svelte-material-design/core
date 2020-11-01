@@ -1,0 +1,5 @@
+@use "@material/button";
+@use "./mixins";
+
+@include button.core-styles;
+@include mixins.smui-button-core-styles;

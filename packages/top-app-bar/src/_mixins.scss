@@ -1,0 +1,12 @@
+@use "@material/top-app-bar";
+
+@mixin smui-top-app-bar-core-styles() {
+  .smui-top-app-bar--static {
+    position: static;
+  }
+
+  .smui-top-app-bar--color-secondary {
+    @include top-app-bar.fill-color-accessible(secondary);
+    @include top-app-bar.icon-ink-color(on-secondary);
+  }
+}

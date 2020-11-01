@@ -1,0 +1,308 @@
+<script context="module" lang="ts">
+	let count = 0;
+</script>
+
+<script lang="ts">
+	const _count = count++;
+
+	//#region Base
+	import { DOMEventsForwarder } from "@smui/common/actions/DOMEventsForwarder";
+	const forwardDOMEvents = DOMEventsForwarder();
+	let className = "";
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@smui/select/Select:${_count}`;
+
+	export let dom: HTMLDivElement = undefined;
+	import { BaseProps } from "@smui/common/dom/Props";
+	export let props: BaseProps = {};
+	//#endregion
+
+	// Select
+	import { MDCSelect, MDCSelectEvent } from "@material/select";
+	import {
+		onMount,
+		onDestroy,
+		setContext,
+		createEventDispatcher,
+	} from "svelte";
+	import { Menu } from "@smui/menu";
+	import { List } from "@smui/list";
+	import { FloatingLabel } from "@smui/floating-label";
+	import { LineRipple } from "@smui/line-ripple";
+	import { NotchedOutline } from "@smui/notched-outline";
+	import { setCreateMDCMenuInstance } from "@smui/menu/src/MenuContext";
+	import { Span } from "@smui/common/dom";
+	import { ExtractNamedSlot } from "@smui/common/components";
+	import { createInputFieldContext } from "@smui/textfield/src/TextFieldContext";
+	import { OnSelectChangeEventDetail, SelectVariant } from "./types";
+	import { UseState } from "@smui/common/hooks";
+	import SelectableGroup from "@smui/common/src/hoc/selectable-group/SelectableGroup.svelte";
+	import { OnSelectableGroupChange } from "@smui/common/hoc";
+
+	export let ripple: boolean = true;
+	export let disabled: boolean = false;
+	export let variant: SelectVariant = "filled";
+	export let value: string = undefined;
+	export let dirty = false;
+	export let customValidation: (value: any, init?: true) => boolean = undefined;
+	export let required: boolean = false;
+	export let nullable: boolean = true;
+
+	let helperTextId: string;
+	let labelId: string;
+	let invalid: boolean = customValidation
+		? !customValidation(value, true)
+		: false;
+	let selectableGroupInitialized: boolean = false;
+	const selectedTextId: string = `SMUI-Select-SelectedText-${_count}`;
+
+	const dispatch = createEventDispatcher<{
+		change: OnSelectChangeEventDetail;
+	}>();
+
+	createInputFieldContext({
+		setHelperTextId(id: string) {
+			helperTextId = id;
+		},
+		setLabelId(id: string) {
+			labelId = id;
+		},
+	});
+
+	setCreateMDCMenuInstance(false);
+	setContext("SMUI:list:role", "listbox");
+
+	let select: MDCSelect;
+	onMount(async () => {
+		select = new MDCSelect(dom);
+
+		select.listen("MDCSelect:change", (event: MDCSelectEvent) => {
+			setValue(event.detail.value);
+			dirty = true;
+		});
+	});
+
+	$: if (select && selectableGroupInitialized) {
+		if (select.value !== value) {
+			setSelectValue(value);
+		}
+
+		if (select.disabled !== disabled) {
+			select.disabled = disabled;
+		}
+
+		if (select.required !== required) {
+			select.required = required;
+		}
+	}
+
+	onDestroy(() => {
+		select && select.destroy();
+	});
+
+	function handleChange(event: CustomEvent<OnSelectableGroupChange>) {
+		if (select) {
+			setSelectValue(value);
+		}
+
+		dispatch("change", {
+			value,
+			index: event.detail.selectedItemsIndex[0],
+		});
+	}
+
+	function setSelectValue(newValue: string) {
+		if (select) select.value = newValue || ""; // For MDC null, undefined get always translated to "".
+	}
+
+	function setValue(newValue: string) {
+		if (!value && !newValue) return; // For MDC null, undefined get always translated to "".
+		value = newValue;
+	}
+
+	function handleOptionsUpdated() {
+		select.layoutOptions();
+	}
+
+	function onValueChange(oldValue: any) {
+		if (value !== oldValue && customValidation) {
+			invalid = !customValidation(value);
+		}
+	}
+</script>
+
+<svelte:options immutable={true} />
+
+<UseState {value} onUpdate={onValueChange} />
+
+<SelectableGroup
+	bind:value
+	selectionType="single"
+	on:change={handleChange}
+	on:optionsUpdated={handleOptionsUpdated}
+	{nullable}
+	bind:initialized={selectableGroupInitialized}>
+	<div
+		bind:this={dom}
+		{...props}
+		class="mdc-select {className}
+      {variant === 'filled' ? 'mdc-select--filled' : ''}
+      {variant === 'outlined' ? 'mdc-select--outlined' : ''}
+      {disabled ? 'mdc-select--disabled' : ''}
+      {required ? 'mdc-select--required' : ''}
+      {$$slots.leadingIcon ? 'mdc-select--with-leading-icon' : ''}
+      {invalid ? 'mdc-select--invalid' : ''}"
+		{style}
+		{id}
+		use:forwardDOMEvents>
+		<div
+			class="mdc-select__anchor"
+			role="button"
+			aria-haspopup="listbox"
+			aria-labelledby="{labelId} {selectedTextId}"
+			aria-required={required || null}
+			aria-disabled={disabled || null}
+			aria-controls={helperTextId}
+			aria-describedby={helperTextId}>
+			{#if ripple && variant === 'filled'}
+				<span class="mdc-select__ripple" />
+			{/if}
+			{#if $$slots.leadingIcon}
+				<ExtractNamedSlot>
+					<slot name="leadingIcon" />
+				</ExtractNamedSlot>
+			{/if}
+			<span id={selectedTextId} class="mdc-select__selected-text">{value}</span>
+			<span class="mdc-select__dropdown-icon">
+				<svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5">
+					<polygon
+						class="mdc-select__dropdown-icon-inactive"
+						stroke="none"
+						fill-rule="evenodd"
+						points="7 10 12 15 17 10" />
+					<polygon
+						class="mdc-select__dropdown-icon-active"
+						stroke="none"
+						fill-rule="evenodd"
+						points="7 15 12 10 17 15" />
+				</svg>
+			</span>
+			{#if variant === 'filled'}
+				{#if $$slots.label}
+					<FloatingLabel component={Span}>
+						<ExtractNamedSlot>
+							<slot name="label" />
+						</ExtractNamedSlot>
+					</FloatingLabel>
+				{/if}
+			{:else if variant === 'outlined'}
+				<NotchedOutline noLabel={!$$slots.label}>
+					{#if $$slots.label}
+						<FloatingLabel component={Span}>
+							<slot name="label" />
+						</FloatingLabel>
+					{/if}
+				</NotchedOutline>
+			{/if}
+		</div>
+
+		{#if ripple && variant === 'filled'}
+			<LineRipple />
+		{/if}
+
+		<Menu class="mdc-select__menu" fullWidth>
+			<List>
+				<slot />
+			</List>
+		</Menu>
+	</div>
+</SelectableGroup>
+
+{#if $$slots.helperText}
+	<ExtractNamedSlot>
+		<slot name="helperText" />
+	</ExtractNamedSlot>
+{/if}
+
+<!-- <div
+  bind:this={dom}
+  class="
+    mdc-select
+    {className}
+    {disabled ? 'mdc-select--disabled' : ''}
+    {variant === 'outlined' ? 'mdc-select--outlined' : ''}
+    {variant === 'standard' ? 'smui-select--standard' : ''}
+    {withLeadingIcon ? 'mdc-select--with-leading-icon' : ''}
+    {invalid ? 'mdc-select--invalid' : ''}
+  "
+  use:forwardDOMEvents>
+  <slot name="icon" />
+  <i class="mdc-select__dropdown-icon" />
+  {#if enhanced}
+    <input
+      bind:this={inputElement}
+      type="hidden"
+      {disabled}
+      {required}
+      id={inputId}
+      {value}
+      on:blur
+      on:change
+      on:input />
+    <div
+      id={inputId + '-smui-selected-text'}
+      class="mdc-select__selected-text"
+      role="button"
+      aria-haspopup="listbox"
+      aria-labelledby="{inputId + '-smui-label'} {inputId + '-smui-selected-text'}"
+      aria-required={required ? 'true' : 'false'}>
+      {selectedText}
+    </div>
+    <Menu
+      class="mdc-select__menu {menu$class}"
+      role="listbox"
+      anchor={false}
+      bind:anchorElement={dom}>
+      <List>
+        <slot />
+      </List>
+    </Menu>
+  {:else}
+    <select
+      bind:this={inputElement}
+      class="mdc-select__native-control {input$class}"
+      {disabled}
+      {required}
+      id={inputId}
+      on:blur
+      on:change
+      on:input><slot /></select>
+  {/if}
+  {#if variant !== 'outlined'}
+    {#if !noLabel && label != null}
+      <FloatingLabel
+        for={inputId}
+        id={inputId + '-smui-label'}
+        class="{value !== '' ? 'mdc-floating-label--float-above' : ''} {label$class}">
+        {label}
+        <slot name="label" />
+      </FloatingLabel>
+    {/if}
+    {#if ripple}
+      <LineRipple />
+    {/if}
+  {/if}
+  {#if variant === 'outlined'}
+    <NotchedOutline noLabel={noLabel || label == null}>
+      {#if !noLabel && label != null}
+        <FloatingLabel
+          for={inputId}
+          class="{value !== '' ? 'mdc-floating-label--float-above' : ''} {label$class}">
+          {label}
+          <slot name="label" />
+        </FloatingLabel>
+      {/if}
+    </NotchedOutline>
+  {/if}
+</div> -->
