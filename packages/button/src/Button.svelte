@@ -7,7 +7,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events/DOMEventsForwarder";
+	import { DOMEventsForwarder } from "@smui/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -26,7 +26,7 @@
 	import { UseState } from "@smui/common/hooks";
 	import { tick } from "svelte";
 	import { getButtonBehaviour } from "./";
-	import { parseClassList } from "@smui/common/src/functions";
+	import { parseClassList } from "@smui/common/functions";
 	//#endregion
 
 	//#region exports

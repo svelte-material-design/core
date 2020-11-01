@@ -1,21 +1,31 @@
 {
-	"name": "@svelte-material-ui-test2/test",
-	"version": "2.0.0-beta.0",
+	"name": "@svelte-material-ui-test/core",
+	"version": "2.0.0-alpha.0",
 	"description": "",
-	"main": "index.js",
+	"main": "src/index.ts",
 	"scripts": {
+		"tsc": "tsc",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/svelte-material-ui-test/test.git"
+		"url": "git+https://github.com/svelte-material-ui-test/core.git"
 	},
 	"publishConfig": {
 		"access": "public"
 	},
-	"author": "Daniele Loreto <monkeythedev@gmail.com>",
+	"author": "Hunter Perrin <hperrin@gmail.com>",
+	"contributors": [
+		"Daniele Loreto <monkeythedev@gmail.com>"
+	],
 	"license": "ISC",
+	"type": "module",
 	"dependencies": {
-		"@svelte-material-ui-test/test": "2.0.0-beta.0"
+		"svelte": "^3.29.4"
+	},
+	"devDependencies": {
+		"lerna": "^3.22.1",
+		"svelte-preprocess": "^4.5.2",
+		"typescript": "^4.0.5"
 	}
 }

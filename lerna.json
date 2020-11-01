@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "command": {
+    "version": {
+      "allowBranch": [
+        "master"
+      ],
+      "conventionalCommits": true
+    }
+  },
+  "packages": [
+    "packages/*"
+  ]
+}
