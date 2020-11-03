@@ -6,15 +6,15 @@
 	const _count = count++;
 
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/select/Select:${_count}`;
+	export let id: string = `../../../packages/select/Select:${_count}`;
 
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -26,18 +26,18 @@
 		setContext,
 		createEventDispatcher,
 	} from "svelte";
-	import { Menu } from "@smui/menu";
-	import { List } from "@smui/list";
-	import { FloatingLabel } from "@smui/floating-label";
-	import { LineRipple } from "@smui/line-ripple";
-	import { NotchedOutline } from "@smui/notched-outline";
-	import { setCreateMDCMenuInstance } from "@smui/menu";
-	import { Span } from "@smui/common/dom";
-	import { ExtractNamedSlot } from "@smui/common/components";
-	import { createInputFieldContext } from "@smui/textfield";
+	import { Menu } from "../../../packages/menu";
+	import { List } from "../../../packages/list";
+	import { FloatingLabel } from "../../../packages/floating-label";
+	import { LineRipple } from "../../../packages/line-ripple";
+	import { NotchedOutline } from "../../../packages/notched-outline";
+	import { setCreateMDCMenuInstance } from "../../../packages/menu";
+	import { Span } from "../../../packages/common/dom";
+	import { ExtractNamedSlot } from "../../../packages/common/components";
+	import { createInputFieldContext } from "../../../packages/textfield";
 	import { OnSelectChangeEventDetail, SelectVariant } from "./types";
-	import { UseState } from "@smui/common/hooks";
-	import { OnSelectableGroupChange, SelectableGroup } from "@smui/common/hoc";
+	import { UseState } from "../../../packages/common/hooks";
+	import { OnSelectableGroupChange, SelectableGroup } from "../../../packages/common/hoc";
 
 	export let ripple: boolean = true;
 	export let disabled: boolean = false;

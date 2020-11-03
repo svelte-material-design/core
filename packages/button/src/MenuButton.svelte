@@ -1,18 +1,18 @@
 <script lang="ts">
 	// Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
 	export let style: string = null;
 
 	export let dom: HTMLButtonElement = null;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 
 	// MenuButton
 	import { Button } from "./";
-	import { Menu } from "@smui/menu";
+	import { Menu } from "../../../packages/menu";
 	import { DefaultFocusState } from "@material/menu";
 
 	export let ripple: boolean = true;

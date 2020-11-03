@@ -8,7 +8,7 @@
 
 	export let value: any;
 	export let onUpdate: (oldValue?: any) => void;
-	export const id: string = `@smui/common/hooks/UseState-${count++}`;
+	export const id: string = `../../../../packages/common/hooks/UseState-${count++}`;
 
 	const valueMemo = memo(value);
 

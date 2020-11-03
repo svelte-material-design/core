@@ -1,4 +1,4 @@
-import { createContextBuilder } from "@smui/common";
+import { createContextBuilder } from "../../../packages/common";
 
 const [createDialogContext, getDialogContext] = createContextBuilder<
 	DialogContext

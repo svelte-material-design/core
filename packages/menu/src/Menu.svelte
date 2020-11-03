@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -8,7 +8,7 @@
 	export let id: string = undefined;
 
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 
 	// Menu
@@ -19,11 +19,11 @@
 		MDCMenuFoundation,
 	} from "@material/menu";
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import { MenuSurface } from "@smui/menu-surface";
+	import { MenuSurface } from "../../../packages/menu-surface";
 	import { MDCMenuDistance } from "@material/menu-surface";
 	import { getCreateMDCMenuIstance } from "./MenuContext";
-	import { setCreateMDCListInstance } from "@smui/list";
-	import { setCreateMDCMenuSurfaceInstance } from "@smui/menu-surface";
+	import { setCreateMDCListInstance } from "../../../packages/list";
+	import { setCreateMDCMenuSurfaceInstance } from "../../../packages/menu-surface";
 
 	export let open: boolean = false;
 	export let quickOpen: boolean = false;

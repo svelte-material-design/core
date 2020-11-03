@@ -1,5 +1,5 @@
-import { createContextPropBuilder } from "@smui/common";
+import { createContextPropBuilder } from "../../../packages/common";
 
 export const [setNativeSelect, getNativeSelect] = createContextPropBuilder<
-  boolean
+	boolean
 >();

@@ -5,7 +5,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -14,13 +14,13 @@
 
 	export let dom: HTMLInputElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Fab
-	import { Ripple3 } from "@smui/ripple";
-	import { parseClassList } from "@smui/common/functions";
+	import { Ripple3 } from "../../../packages/ripple";
+	import { parseClassList } from "../../../packages/common/functions";
 
 	export let ripple: boolean = true;
 	export let color: FabColor = "secondary";

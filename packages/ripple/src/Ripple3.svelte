@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Use } from "@smui/common/hooks";
+  import { Use } from "../../../packages/common/hooks";
   import { UseRipple } from ".";
   import { RippleProps } from "./Ripple";
 

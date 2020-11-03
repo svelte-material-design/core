@@ -4,22 +4,22 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "@smui/common/functions";
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { parseClassList } from "../../../packages/common/functions";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/dialog/Action:${count++}`;
+	export let id: string = `../../../packages/dialog/Action:${count++}`;
 
 	export let dom: HTMLButtonElement | HTMLAnchorElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Action
-	import { Button, ButtonVariant, ButtonColor } from "@smui/button";
+	import { Button, ButtonVariant, ButtonColor } from "../../../packages/button";
 
 	//#region exports
 	export let ripple: boolean = undefined;

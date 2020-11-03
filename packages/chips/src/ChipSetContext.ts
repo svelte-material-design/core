@@ -1,4 +1,4 @@
-import { createContextBuilder } from "@smui/common/context";
+import { createContextBuilder } from "../../../packages/common/context";
 import { ChipContext } from "./ChipContext";
 import { ChipSetVariant } from "./types";
 

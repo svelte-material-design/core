@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -8,16 +8,16 @@
 	export let id: string = "";
 
 	export let dom: HTMLDivElement = null;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Slider
 	import { MDCSlider } from "@material/slider";
 	import { onMount, onDestroy, getContext } from "svelte";
-	import { getDialogContext } from "@smui/dialog";
-	import { getFormFieldContext } from "@smui/form-field";
-	import { Use } from "@smui/common/hooks";
+	import { getDialogContext } from "../../../packages/dialog";
+	import { getFormFieldContext } from "../../../packages/form-field";
+	import { Use } from "../../../packages/common/hooks";
 
 	export let disabled: boolean = false;
 	export let discrete: boolean = false;

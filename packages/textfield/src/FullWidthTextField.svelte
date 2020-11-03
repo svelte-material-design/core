@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -13,17 +13,17 @@
 
 	export let dom: HTMLLabelElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// TextField
 	import { createInputFieldContext } from "./TextFieldContext";
-	import { LineRipple } from "@smui/line-ripple";
+	import { LineRipple } from "../../../packages/line-ripple";
 	import UseTextField from "./hooks/UseTextField.svelte";
 	import { onMount } from "svelte";
-	import { RippleProps, Ripple3 } from "@smui/ripple";
-	import { ExtractNamedSlot } from "@smui/common/components";
+	import { RippleProps, Ripple3 } from "../../../packages/ripple";
+	import { ExtractNamedSlot } from "../../../packages/common/components";
 
 	//#region UseTextField params
 	export let ripple: boolean = true;

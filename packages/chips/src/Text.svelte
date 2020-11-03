@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -8,11 +8,11 @@
 	export let id: string = undefined;
 
 	export let dom: HTMLSpanElement = undefined;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 
 	// Icon
-	import { getSelectableContext } from "@smui/common/hoc";
+	import { getSelectableContext } from "../../../packages/common/hoc";
 
 	const selectableContext$ = getSelectableContext();
 </script>

@@ -1,19 +1,19 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
 	export let style: string = "";
 
 	export let dom: HTMLAnchorElement | HTMLButtonElement = null;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Section
-	import { setIconButtonBehaviour } from "@smui/icon-button";
-	import { setButtonBehaviour } from "@smui/button";
+	import { setIconButtonBehaviour } from "../../../packages/icon-button";
+	import { setButtonBehaviour } from "../../../packages/button";
 
 	export let align = "start";
 	export let toolbar = false;

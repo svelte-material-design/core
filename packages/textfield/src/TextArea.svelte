@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -9,7 +9,7 @@
 
 	export let dom: HTMLLabelElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -17,10 +17,10 @@
 	import { onMount } from "svelte";
 	import UseTextField from "./hooks/UseTextField.svelte";
 	import { createInputFieldContext } from "./TextFieldContext";
-	import { FloatingLabel } from "@smui/floating-label";
-	import { NotchedOutline } from "@smui/notched-outline";
-	import { RippleProps, Ripple3 } from "@smui/ripple";
-	import { Span } from "@smui/common/dom";
+	import { FloatingLabel } from "../../../packages/floating-label";
+	import { NotchedOutline } from "../../../packages/notched-outline";
+	import { RippleProps, Ripple3 } from "../../../packages/ripple";
+	import { Span } from "../../../packages/common/dom";
 
 	//#region UseTextField params
 	export let ripple: boolean = true;

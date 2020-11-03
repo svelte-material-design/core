@@ -6,28 +6,28 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "@smui/common/functions";
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { parseClassList } from "../../../packages/common/functions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/chips/ChipSet:${count++}`;
+	export let id: string = `../../../packages/chips/ChipSet:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// ChipSet
 	import { MDCChipSet } from "@material/chips";
 	import { onDestroy } from "svelte";
-	import { SelectableGroup } from "@smui/common/hoc";
+	import { SelectableGroup } from "../../../packages/common/hoc";
 	import { createChipSetContext } from "./ChipSetContext";
 	import { ChipContext } from "./ChipContext";
-	import { arrRemove, arrAdd, arrHas } from "@smui/common/utils";
-	import { Use, UseState } from "@smui/common/hooks";
+	import { arrRemove, arrAdd, arrHas } from "../../../packages/common/utils";
+	import { Use, UseState } from "../../../packages/common/hooks";
 
 	export let value: any = undefined;
 	export let variant: ChipSetVariant = null;

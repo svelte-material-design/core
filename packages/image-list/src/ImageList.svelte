@@ -1,7 +1,7 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
-	import { setLabelBehaviour } from "@smui/common/dom/LabelContext";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import { setLabelBehaviour } from "../../../packages/common/dom/LabelContext";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -10,7 +10,7 @@
 
 	export let dom: HTMLUListElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 

@@ -81,26 +81,26 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
 	export let style: string = "";
 
 	export let dom: HTMLDivElement | HTMLLIElement = null;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps;
 	//#endregion
 
 	// Ripple
-	import { Li, Button, A } from "@smui/common/dom";
+	import { Li, Button, A } from "../../../packages/common/dom";
 	import {
 		MDCRipple,
 		MDCRippleAdapter,
 		MDCRippleFoundation,
 	} from "@material/ripple";
 	import { onMount } from "svelte";
-	import H1 from "@smui/common/dom/H1.svelte";
+	import H1 from "../../../packages/common/dom/H1.svelte";
 	import { RippleProps } from "./Ripple";
 
 	export let unbounded: RippleProps["unbounded"] = null;

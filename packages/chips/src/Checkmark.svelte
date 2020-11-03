@@ -6,12 +6,12 @@
 	export let id: string = undefined;
 
 	export let dom: GraphicElement = undefined;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 
 	// Icon
-	import { GraphicElement } from "@smui/common/components";
-	import { parseClassList } from "@smui/common/functions";
+	import { GraphicElement } from "../../../packages/common/components";
+	import { parseClassList } from "../../../packages/common/functions";
 </script>
 
 <svelte:options immutable={true} />

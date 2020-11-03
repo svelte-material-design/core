@@ -1,17 +1,17 @@
 <script lang="ts">
 	// Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
 	export let style: string = "";
 
 	export let dom: HTMLLIElement = null;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 
 	// Selection group
-	import { setIsSelectionGroup } from "@smui/list";
+	import { setIsSelectionGroup } from "../../../packages/list";
 
 	setIsSelectionGroup(true);
 </script>

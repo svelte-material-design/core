@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -9,20 +9,20 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// TabBar
 	import { MDCTabBar, MDCTabBarActivatedEvent } from "@material/tab-bar";
 	import { onMount, onDestroy } from "svelte";
-	import { SelectableContext, SelectableGroup } from "@smui/common/hoc";
-	import { UseState, Use } from "@smui/common/hooks";
+	import { SelectableContext, SelectableGroup } from "../../../packages/common/hoc";
+	import { UseState, Use } from "../../../packages/common/hooks";
 	import {
 		setCreateMDCTabScrollerInstance,
 		TabScroller,
-	} from "@smui/tab-scroller";
-	import { setCreateMDCTabInstance } from "@smui/tab";
+	} from "../../../packages/tab-scroller";
+	import { setCreateMDCTabInstance } from "../../../packages/tab";
 
 	export let focusOnActivate: boolean = true;
 	export let useAutomaticActivation: boolean = true;

@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import { H1, H2, H3, H4, H5, H6, P, Span } from "@smui/common/dom";
+	import { H1, H2, H3, H4, H5, H6, P, Span } from "../../../packages/common/dom";
 
 	function getDefaultComponent(variant: TypographyVariant) {
 		switch (variant) {
@@ -46,7 +46,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -55,7 +55,7 @@
 
 	export let dom: HTMLElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 

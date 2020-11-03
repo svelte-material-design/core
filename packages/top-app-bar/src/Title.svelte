@@ -1,7 +1,7 @@
 <script lang="ts">
-	import A from "@smui/common/dom/A.svelte";
-	import Span from "@smui/common/dom/Span.svelte";
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import A from "../../../packages/common/dom/A.svelte";
+	import Span from "../../../packages/common/dom/Span.svelte";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 
 	const forwardDOMEvents = DOMEventsForwarder();
 

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -13,21 +13,21 @@
 
 	export let dom: HTMLLabelElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// TextField
 	import { InputFieldType, TextFieldVariant } from "./types";
-	import { FloatingLabel } from "@smui/floating-label";
-	import { LineRipple } from "@smui/line-ripple";
+	import { FloatingLabel } from "../../../packages/floating-label";
+	import { LineRipple } from "../../../packages/line-ripple";
 	import { createInputFieldContext } from "./TextFieldContext";
-	import { NotchedOutline } from "@smui/notched-outline";
+	import { NotchedOutline } from "../../../packages/notched-outline";
 	import UseTextField from "./hooks/UseTextField.svelte";
 	import { onMount } from "svelte";
-	import { RippleProps, Ripple3 } from "@smui/ripple";
-	import { ExtractNamedSlot } from "@smui/common/components";
-	import { Span } from "@smui/common/dom";
+	import { RippleProps, Ripple3 } from "../../../packages/ripple";
+	import { ExtractNamedSlot } from "../../../packages/common/components";
+	import { Span } from "../../../packages/common/dom";
 
 	//#region UseTextField params
 	export let ripple: boolean = true;

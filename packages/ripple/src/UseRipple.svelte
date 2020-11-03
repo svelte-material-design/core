@@ -95,7 +95,7 @@
 
 <script lang="ts">
 	import { RippleProps } from "./Ripple";
-	import { Use, UseState } from "@smui/common/hooks";
+	import { Use, UseState } from "../../../packages/common/hooks";
 	import { onDestroy } from "svelte";
 
 	export let target: HTMLElement;

@@ -1,10 +1,14 @@
-import { createContextBuilder, createContextPropBuilder } from "@smui/common";
+import {
+	createContextBuilder,
+	createContextPropBuilder,
+} from "../../../packages/common";
 
 const [createMenuContext, getMenuContext] = createContextBuilder<MenuContext>();
 export { createMenuContext, getMenuContext };
 
-export interface MenuContext {
+export interface MenuContext {}
 
-}
-
-export const [setCreateMDCMenuInstance, getCreateMDCMenuIstance] = createContextPropBuilder<boolean>();
+export const [
+	setCreateMDCMenuInstance,
+	getCreateMDCMenuIstance,
+] = createContextPropBuilder<boolean>();

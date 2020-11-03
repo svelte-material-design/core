@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -9,7 +9,7 @@
 
 	export let dom: HTMLButtonElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -17,15 +17,15 @@
 	import { MDCTab } from "@material/tab";
 	import { onMount, onDestroy, setContext, getContext } from "svelte";
 	import { getCreateMDCTabInstance } from "./TabContext";
-	import { setLabelBehaviour } from "@smui/common/dom/LabelContext";
-	import { Selectable } from "@smui/common/hoc";
-	import { setIconBehaviour } from "@smui/common/dom";
+	import { setLabelBehaviour } from "../../../packages/common/dom/LabelContext";
+	import { Selectable } from "../../../packages/common/hoc";
+	import { setIconBehaviour } from "../../../packages/common/dom";
 	import {
 		setCreateMDCTabIndicatorInstance,
 		TabIndicator,
-	} from "@smui/tab-indicator";
-	import { UseState } from "@smui/common/hooks";
-	import { ExtractNamedSlot } from "@smui/common/components";
+	} from "../../../packages/tab-indicator";
+	import { UseState } from "../../../packages/common/hooks";
+	import { ExtractNamedSlot } from "../../../packages/common/components";
 
 	export let ripple: boolean = true;
 	export let key: any = undefined;

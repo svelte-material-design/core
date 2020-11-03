@@ -1,7 +1,7 @@
-import { createContextPropBuilder } from "@smui/common";
+import { createContextPropBuilder } from "../../../packages/common";
 
 const [setButtonBehaviour, getButtonBehaviour] = createContextPropBuilder<
-  ButtonBehaviour
+	ButtonBehaviour
 >();
 export { setButtonBehaviour, getButtonBehaviour };
 

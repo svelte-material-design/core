@@ -1,17 +1,17 @@
 <script lang="ts">
 	// Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
 	export let style: string = "";
 
 	export let dom: HTMLButtonElement | HTMLAnchorElement = null;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 
 	// Separator
-	import { Li, Hr } from "@smui/common/dom";
+	import { Li, Hr } from "../../../packages/common/dom";
 
 	export let group: boolean = false;
 	export let nav: boolean = false;

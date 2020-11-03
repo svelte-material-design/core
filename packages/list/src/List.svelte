@@ -4,15 +4,15 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/list/List:${count++}`;
+	export let id: string = `../../../packages/list/List:${count++}`;
 
 	export let dom: HTMLDivElement | HTMLUListElement = undefined;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -20,23 +20,23 @@
 	//#region imports
 	import { MDCList, MDCListActionEvent } from "@material/list";
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import Nav from "@smui/common/dom/Nav.svelte";
-	import Ul from "@smui/common/dom/Ul.svelte";
+	import Nav from "../../../packages/common/dom/Nav.svelte";
+	import Ul from "../../../packages/common/dom/Ul.svelte";
 	import {
 		createListContext,
 		getCreateMDCListInstance,
 		ListRole,
 	} from "./ListContext";
 	import { ItemContext } from "./item";
-	import { getMenuSurfaceContext } from "@smui/menu-surface";
-	import { getDrawerContext } from "@smui/drawer";
+	import { getMenuSurfaceContext } from "../../../packages/menu-surface";
+	import { getDrawerContext } from "../../../packages/drawer";
 	import {
 		SelectableGroup,
 		SelectionType,
 		OnSelectableGroupChange,
-	} from "@smui/common/hoc";
+	} from "../../../packages/common/hoc";
 	import { getDialogContext } from "../../../packages/dialog"; // TODO: fix circular dep
-	import { setDisableCheckboxMDCIstance } from "@smui/checkbox";
+	import { setDisableCheckboxMDCIstance } from "../../../packages/checkbox";
 	//#endregion
 
 	//#region exports

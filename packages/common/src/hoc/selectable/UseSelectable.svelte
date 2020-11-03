@@ -10,7 +10,7 @@
 	export let disabled: boolean = false;
 	export let value: any = undefined;
 	export let tabindex: number = undefined;
-	export let id: string = `@smui/common/hoc/UseSelectable:${count++}`;
+	export let id: string = `../../../../../packages/common/hoc/UseSelectable:${count++}`;
 
 	const dispatch = createEventDispatcher<{
 		change: {

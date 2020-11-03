@@ -1,4 +1,4 @@
-import { createContextBuilder } from "@smui/common";
+import { createContextBuilder } from "../../../packages/common";
 
 export const [
 	createDataTableContext,

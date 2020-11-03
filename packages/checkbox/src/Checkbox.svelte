@@ -12,11 +12,11 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/checkbox/Checkbox:${count++}`;
+	export let id: string = `../../../packages/checkbox/Checkbox:${count++}`;
 
 	export let dom: HTMLInputElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -29,8 +29,8 @@
 		getCheckboxBehaviour,
 		getDisableCheckboxMDCIstance,
 	} from "./CheckboxContext";
-	import { getFormFieldContext } from "@smui/form-field";
-	import { Selectable } from "@smui/common/hoc";
+	import { getFormFieldContext } from "../../../packages/form-field";
+	import { Selectable } from "../../../packages/common/hoc";
 	import { createEventDispatcher } from "svelte";
 	//#endregion
 

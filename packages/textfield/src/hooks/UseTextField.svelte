@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { MDCTextField } from "@material/textfield";
-	import { Use } from "@smui/common/hooks";
+	import { Use } from "../../../../packages/common/hooks";
 	import { onDestroy } from "svelte";
 	import { TextFieldVariant } from "../types";
 	import UseClassList, { ClassListToParse } from "./UseClassList.svelte";

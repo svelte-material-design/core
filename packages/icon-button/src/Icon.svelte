@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -9,13 +9,13 @@
 
 	export let dom: HTMLAnchorElement | HTMLButtonElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// IconButton
-	import { Graphic, GraphicType } from "@smui/common/components";
-	import { parseClassList } from "@smui/common/functions";
+	import { Graphic, GraphicType } from "../../../packages/common/components";
+	import { parseClassList } from "../../../packages/common/functions";
 
 	export let on: boolean = false;
 	export let type: GraphicType = "icon";

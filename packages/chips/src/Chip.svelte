@@ -15,17 +15,17 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "@smui/common/functions";
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { parseClassList } from "../../../packages/common/functions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/chips/Chip:${count++}`;
+	export let id: string = `../../../packages/chips/Chip:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -40,8 +40,8 @@
 	import { createEventDispatcher, onDestroy } from "svelte";
 	import { getChipSetContext } from "./ChipSetContext";
 	import { ChipContext, createChipContext } from "./ChipContext";
-	import { Selectable } from "@smui/common/hoc";
-	import { Use, UseState } from "@smui/common/hooks";
+	import { Selectable } from "../../../packages/common/hoc";
+	import { Use, UseState } from "../../../packages/common/hooks";
 
 	export let value: any = null;
 	export let ripple: boolean = true;

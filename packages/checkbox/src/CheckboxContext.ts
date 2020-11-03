@@ -1,13 +1,18 @@
-import { createContextPropBuilder } from "@smui/common";
+import { createContextPropBuilder } from "../../../packages/common";
 
 export interface CheckboxContext {
-  value: any;
+	value: any;
 }
 
-const [setCheckboxBehaviour, getCheckboxBehaviour] = createContextPropBuilder<CheckboxBehaviour>()
-export {setCheckboxBehaviour, getCheckboxBehaviour};
+const [setCheckboxBehaviour, getCheckboxBehaviour] = createContextPropBuilder<
+	CheckboxBehaviour
+>();
+export { setCheckboxBehaviour, getCheckboxBehaviour };
 
 export type CheckboxBehaviour = "data-table-header" | "data-table-row";
 
-const [setDisableCheckboxMDCIstance, getDisableCheckboxMDCIstance] = createContextPropBuilder<boolean>()
-export {setDisableCheckboxMDCIstance, getDisableCheckboxMDCIstance};
+const [
+	setDisableCheckboxMDCIstance,
+	getDisableCheckboxMDCIstance,
+] = createContextPropBuilder<boolean>();
+export { setDisableCheckboxMDCIstance, getDisableCheckboxMDCIstance };

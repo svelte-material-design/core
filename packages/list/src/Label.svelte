@@ -1,7 +1,7 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
-	import A from "@smui/common/dom/A.svelte";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import A from "../../../packages/common/dom/A.svelte";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -10,12 +10,12 @@
 
 	export let dom: HTMLLabelElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Label
-	import { getFormFieldContext } from "@smui/form-field";
+	import { getFormFieldContext } from "../../../packages/form-field";
 
 	let _for: string = "";
 	export { _for as for };

@@ -4,21 +4,21 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/select/Option:${count++}`;
+	export let id: string = `../../../packages/select/Option:${count++}`;
 
-	import { ListItemDOMElement, Text } from "@smui/list";
+	import { ListItemDOMElement, Text } from "../../../packages/list";
 	export let dom: ListItemDOMElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
-	import { Item } from "@smui/list";
+	import { Item } from "../../../packages/list";
 
 	export let value: string = "";
 	export let selected: boolean = undefined;

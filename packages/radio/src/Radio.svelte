@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -9,7 +9,7 @@
 
 	export let dom: HTMLInputElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -17,8 +17,8 @@
 	import { MDCRadio } from "@material/radio";
 	import { onMount, onDestroy } from "svelte";
 	import { RadioContext } from "./RadioContext";
-	import { getFormFieldContext } from "@smui/form-field";
-	import { Selectable } from "@smui/common/hoc";
+	import { getFormFieldContext } from "../../../packages/form-field";
+	import { Selectable } from "../../../packages/common/hoc";
 
 	export let disabled: boolean = false;
 	export let value: any = undefined;

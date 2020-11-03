@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Graphic, setIsSelectionGroupIcon } from "@smui/list";
+  import { Graphic, setIsSelectionGroupIcon } from "../../../packages/list";
 
   setIsSelectionGroupIcon(true);
 </script>

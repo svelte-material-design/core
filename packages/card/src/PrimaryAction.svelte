@@ -1,7 +1,7 @@
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "@smui/common/functions";
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { parseClassList } from "../../../packages/common/functions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -10,12 +10,12 @@
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// PrimaryAction
-	import { UseRipple, RippleProps } from "@smui/ripple";
+	import { UseRipple, RippleProps } from "../../../packages/ripple";
 
 	export let ripple: boolean = true;
 	export let color: RippleProps["color"] = undefined;

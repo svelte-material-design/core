@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -10,7 +10,7 @@
 	export let props: any = {};
 
 	// Graphic
-	import { Span } from "@smui/common/dom";
+	import { Span } from "../../../packages/common/dom";
 </script>
 
 <Span

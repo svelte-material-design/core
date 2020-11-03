@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -8,7 +8,7 @@
 	export let id: string = undefined;
 
 	export let dom: GraphicElement = undefined;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 
 	// Icon
@@ -16,8 +16,8 @@
 		Graphic,
 		GraphicElement,
 		GraphicType,
-	} from "@smui/common/components";
-	import { parseClassList } from "@smui/common/functions";
+	} from "../../../packages/common/components";
+	import { parseClassList } from "../../../packages/common/functions";
 	import { onMount, tick } from "svelte";
 	import { getChipContext } from "./ChipContext";
 	import { getChipSetContext } from "./ChipSetContext";

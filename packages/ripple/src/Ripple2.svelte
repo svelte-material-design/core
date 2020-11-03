@@ -80,14 +80,14 @@
 </script>
 
 <script lang="ts">
-  import { Portal } from "@smui/common/components";
+  import { Portal } from "../../../packages/common/components";
   import {
     MDCRipple,
     MDCRippleAdapter,
     MDCRippleFoundation,
   } from "@material/ripple";
   import { RippleProps } from "./Ripple";
-  import { Use } from "@smui/common/hooks";
+  import { Use } from "../../../packages/common/hooks";
 
   export let target: HTMLElement;
   export let unbounded: RippleProps["unbounded"] = null;

@@ -1,7 +1,10 @@
-import { createContextPropBuilder, createContextBuilder } from "@smui/common";
+import {
+	createContextPropBuilder,
+	createContextBuilder,
+} from "../../../packages/common";
 
 const [setRowBehaviour, getRowBehaviour] = createContextPropBuilder<
-  RowBehaviour
+	RowBehaviour
 >();
 export { setRowBehaviour, getRowBehaviour };
 
@@ -11,5 +14,5 @@ const [createRowContext, getRowContext] = createContextBuilder<RowContext>();
 export { createRowContext, getRowContext };
 
 export interface RowContext {
-  setSelected(selected: boolean): void
+	setSelected(selected: boolean): void;
 }

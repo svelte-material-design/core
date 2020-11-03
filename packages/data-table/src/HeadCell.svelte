@@ -4,17 +4,17 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "@smui/common/functions";
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { parseClassList } from "../../../packages/common/functions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/data-table/HeaderCell:${count++}`;
+	export let id: string = `../../../packages/data-table/HeaderCell:${count++}`;
 
 	export let dom: HTMLTableHeaderCellElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -25,7 +25,7 @@
 		createHeadCellContext,
 		SortDirection,
 	} from "./";
-	import { Icon, IconButton } from "@smui/icon-button";
+	import { Icon, IconButton } from "../../../packages/icon-button";
 
 	export let numeric: boolean = false;
 	export let checkbox: boolean = false;

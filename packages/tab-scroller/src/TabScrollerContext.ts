@@ -1,6 +1,6 @@
-import { createContextPropBuilder } from "@smui/common";
+import { createContextPropBuilder } from "../../../packages/common";
 
 export const [
-  setCreateMDCTabScrollerInstance,
-  getCreateMDCTabScrollerInstance,
+	setCreateMDCTabScrollerInstance,
+	getCreateMDCTabScrollerInstance,
 ] = createContextPropBuilder<boolean>();

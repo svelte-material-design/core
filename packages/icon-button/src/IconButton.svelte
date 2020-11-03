@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -13,18 +13,18 @@
 
 	export let dom: HTMLAnchorElement | HTMLButtonElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// IconButton
 	//#region imports
-	import { Button, A } from "@smui/common/dom";
+	import { Button, A } from "../../../packages/common/dom";
 	import { getIconButtonBehaviour } from "./IconButtonContextProps";
-	import { UseState } from "@smui/common/hooks";
-	import { UseRipple } from "@smui/ripple";
+	import { UseState } from "../../../packages/common/hooks";
+	import { UseRipple } from "../../../packages/ripple";
 	import { tick } from "svelte";
-	import { parseClassList } from "@smui/common/functions";
+	import { parseClassList } from "../../../packages/common/functions";
 	//#endregion
 
 	//#region exports

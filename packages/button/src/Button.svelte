@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import { A, Button } from "@smui/common/dom";
+	import { A, Button } from "../../../packages/common/dom";
 	export type ButtonComponent = typeof Button | typeof A;
 	export type ButtonVariant = "raised" | "unelevated" | "outlined";
 	export type ButtonColor = "primary" | "secondary";
@@ -7,7 +7,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -16,17 +16,17 @@
 
 	export let dom: HTMLButtonElement | HTMLAnchorElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Button
 	//#region imports
-	import { Ripple3 } from "@smui/ripple";
-	import { UseState } from "@smui/common/hooks";
+	import { Ripple3 } from "../../../packages/ripple";
+	import { UseState } from "../../../packages/common/hooks";
 	import { tick } from "svelte";
 	import { getButtonBehaviour } from "./";
-	import { parseClassList } from "@smui/common/functions";
+	import { parseClassList } from "../../../packages/common/functions";
 	//#endregion
 
 	//#region exports

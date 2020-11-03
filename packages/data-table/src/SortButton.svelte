@@ -4,22 +4,22 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "@smui/common/functions";
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { parseClassList } from "../../../packages/common/functions";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/data-table/SortButton:${count++}`;
+	export let id: string = `../../../packages/data-table/SortButton:${count++}`;
 
 	export let dom: HTMLButtonElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// SortButton
-	import { Icon, IconButton } from "@smui/icon-button";
+	import { Icon, IconButton } from "../../../packages/icon-button";
 	import { onDestroy } from "svelte";
 	import { SortDirection, getHeadCellContext } from "./";
 

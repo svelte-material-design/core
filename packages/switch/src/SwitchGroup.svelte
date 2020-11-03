@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SelectableGroup } from "@smui/common/hoc";
+	import { SelectableGroup } from "../../../packages/common/hoc";
 
 	export let value: any;
 </script>

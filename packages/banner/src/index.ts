@@ -4,6 +4,6 @@ import Text from "./Text.svelte";
 import Action from "./Action.svelte";
 import Graphic from "./Graphic.svelte";
 import Icon from "./Icon.svelte";
-import { Label } from "@smui/button";
+import { Label } from "../../../packages/button";
 
 export { Banner, Actions, Text, Action, Graphic, Label, Icon };

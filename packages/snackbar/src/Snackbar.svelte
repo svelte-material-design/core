@@ -27,7 +27,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -36,17 +36,17 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Snackbar
 	import { MDCSnackbar } from "@material/snackbar";
 	import { onMount, onDestroy, setContext } from "svelte";
-	import { setIconButtonBehaviour } from "@smui/icon-button";
+	import { setIconButtonBehaviour } from "../../../packages/icon-button";
 	import { createEventDispatcher } from "svelte";
 	import { MDCSelectEvent, MDCSelectEventDetail } from "@material/select";
-	import { UseState } from "@smui/common/hooks";
+	import { UseState } from "../../../packages/common/hooks";
 
 	export let stacked: boolean = false;
 	export let leading: boolean = false;

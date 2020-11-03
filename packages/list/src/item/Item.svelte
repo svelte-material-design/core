@@ -4,29 +4,29 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/list/Item:${count++}`;
+	export let id: string = `../../../../packages/list/Item:${count++}`;
 
 	import { ItemRole, ListItemDOMElement } from "../types";
 	export let dom: ListItemDOMElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Item
 	//#region import
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import { Ripple3 } from "@smui/ripple";
-	import { Li, A } from "@smui/common/dom";
+	import { Ripple3 } from "../../../../packages/ripple";
+	import { Li, A } from "../../../../packages/common/dom";
 	import { getListContext } from "../";
 	import { createItemContext, ItemContext } from "./";
-	import { getMenuSurfaceContext } from "@smui/menu-surface";
-	import { Selectable, OnSelectableChange } from "@smui/common/hoc";
+	import { getMenuSurfaceContext } from "../../../../packages/menu-surface";
+	import { Selectable, OnSelectableChange } from "../../../../packages/common/hoc";
 	//#endregion
 
 	export let ripple: boolean = true;

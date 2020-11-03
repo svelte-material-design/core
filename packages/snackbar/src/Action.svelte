@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -9,13 +9,13 @@
 
 	export let dom: HTMLButtonElement | HTMLAnchorElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Action
-	import { Button, ButtonVariant, ButtonColor } from "@smui/button";
-	import A from "@smui/common/dom/A.svelte";
+	import { Button, ButtonVariant, ButtonColor } from "../../../packages/button";
+	import A from "../../../packages/common/dom/A.svelte";
 
 	//#region exports
 	export let ripple: boolean = undefined;

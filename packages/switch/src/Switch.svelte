@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -8,7 +8,7 @@
 	export let id: string = "";
 
 	export let dom: HTMLDivElement = null;
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -20,9 +20,9 @@
 		getContext,
 		createEventDispatcher,
 	} from "svelte";
-	import { Selectable } from "@smui/common/hoc";
-	import { getFormFieldContext } from "@smui/form-field";
-	import { Use } from "@smui/common/hooks";
+	import { Selectable } from "../../../packages/common/hoc";
+	import { getFormFieldContext } from "../../../packages/form-field";
+	import { Use } from "../../../packages/common/hooks";
 
 	export let disabled: boolean = false;
 	export let checked: boolean = null;

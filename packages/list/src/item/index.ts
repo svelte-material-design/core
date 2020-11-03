@@ -1,4 +1,4 @@
-import Item from "./item.svelte";
+import Item from "./Item.svelte";
 
 export * from "./ItemContext";
 export { Item };

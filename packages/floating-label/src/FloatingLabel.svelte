@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/events";
+	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -13,15 +13,15 @@
 
 	export let dom: HTMLLabelElement | HTMLSpanElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// FloatingLabel
 	import { MDCFloatingLabel } from "@material/floating-label";
 	import { onMount, onDestroy, getContext } from "svelte";
-	import { getFormFieldContext } from "@smui/form-field";
-	import { Span, Label } from "@smui/common/dom";
+	import { getFormFieldContext } from "../../../packages/form-field";
+	import { Span, Label } from "../../../packages/common/dom";
 	import { getInputFieldContext } from "../../../packages/textfield"; // TODO: fix circular dep
 
 	export let component: typeof Span | typeof Label = Label;

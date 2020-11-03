@@ -23,7 +23,7 @@
 	export let tabindex: number = undefined;
 	export let contextOverride$: Writable<SelectableContext> = undefined;
 	export let selectableGroupContext$: Writable<SelectableGroupContext> = undefined;
-	export const id: string = `@smui/common/hoc/Selectable:${count++}`;
+	export const id: string = `../../../../../packages/common/hoc/Selectable:${count++}`;
 
 	let selectable: UseSelectable;
 

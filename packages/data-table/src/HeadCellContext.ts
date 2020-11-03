@@ -1,5 +1,5 @@
 import { SortDirection } from "./";
-import { createContextBuilder } from "@smui/common";
+import { createContextBuilder } from "../../../packages/common";
 
 export const [createHeadCellContext, getHeadCellContext] = createContextBuilder<
 	HeadCellContext

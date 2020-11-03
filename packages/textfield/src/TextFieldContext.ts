@@ -1,11 +1,11 @@
-import { createContextBuilder } from "@smui/common";
+import { createContextBuilder } from "../../../packages/common";
 
 const [createInputFieldContext, getInputFieldContext] = createContextBuilder<
-  InputFieldContext
+	InputFieldContext
 >();
 export { createInputFieldContext, getInputFieldContext };
 
 export interface InputFieldContext {
-  setHelperTextId(id: string);
-  setLabelId?(id: string);
+	setHelperTextId(id: string);
+	setLabelId?(id: string);
 }

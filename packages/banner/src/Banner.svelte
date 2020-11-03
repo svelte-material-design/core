@@ -2,7 +2,7 @@
 	import { MDCBanner } from "@material/banner";
 
 	//#region Base
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -11,8 +11,8 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "@smui/common/dom/Props";
-	import { UseState } from "@smui/common/hooks";
+	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { UseState } from "../../../packages/common/hooks";
 	import { onDestroy, onMount } from "svelte";
 	export let props: BaseProps = {};
 	//#endregion

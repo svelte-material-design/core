@@ -4,22 +4,22 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "@smui/common/functions";
-	import { DOMEventsForwarder } from "@smui/common/actions";
+	import { parseClassList } from "../../../packages/common/functions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/data-table/Row:${count++}`;
+	export let id: string = `../../../packages/data-table/Row:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "@smui/common/dom/Props";
+	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// HeadRow
-	import { SelectableGroup } from "@smui/common/hoc";
+	import { SelectableGroup } from "../../../packages/common/hoc";
 </script>
 
 <SelectableGroup contextOverride$={null}>

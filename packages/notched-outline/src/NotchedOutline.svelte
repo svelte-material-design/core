@@ -2,9 +2,9 @@
 	import { MDCNotchedOutline } from "@material/notched-outline";
 	import { onMount, onDestroy } from "svelte";
 	import { get_current_component } from "svelte/internal";
-	import { forwardEventsBuilder } from "@smui/common";
-	import { exclude } from "@smui/common/exclude.js";
-	import { useActions } from "@smui/common/useActions.js";
+	import { forwardEventsBuilder } from "../../../packages/common";
+	import { exclude } from "../../../packages/common/exclude.js";
+	import { useActions } from "../../../packages/common/useActions.js";
 
 	const forwardEvents = forwardEventsBuilder(get_current_component());
 
