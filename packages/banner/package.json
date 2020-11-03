@@ -27,9 +27,6 @@
 		"url": "https://github.com/hperrin/svelte-material-ui/issues"
 	},
 	"license": "Apache-2.0",
-	"files": [
-		"dist"
-	],
 	"dependencies": {
 		"@material/banner": "8.0.0-canary.e1bc84d10.0",
 		"@smui/common": "file:../common",

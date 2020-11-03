@@ -27,9 +27,6 @@
 		"url": "https://github.com/hperrin/svelte-material-ui/issues"
 	},
 	"license": "Apache-2.0",
-	"files": [
-		"dist"
-	],
 	"dependencies": {
 		"@material/button": "^7.0.0",
 		"@material/elevation": "^7.0.0",
