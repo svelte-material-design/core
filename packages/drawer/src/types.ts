@@ -1,1 +1,1 @@
-export type DrawerVariant = "dismissible" | "modal";
+export type DrawerVariant = "permanent" | "dismissible" | "modal";

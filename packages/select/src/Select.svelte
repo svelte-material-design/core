@@ -11,7 +11,7 @@
 	let className = "";
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../packages/select/Select:${_count}`;
+	export let id: string = `@smui/select/Select:${_count}`;
 
 	export let dom: HTMLDivElement = undefined;
 	import { BaseProps } from "../../../packages/common/dom/Props";
@@ -37,7 +37,10 @@
 	import { createInputFieldContext } from "../../../packages/textfield";
 	import { OnSelectChangeEventDetail, SelectVariant } from "./types";
 	import { UseState } from "../../../packages/common/hooks";
-	import { OnSelectableGroupChange, SelectableGroup } from "../../../packages/common/hoc";
+	import {
+		OnSelectableGroupChange,
+		SelectableGroup,
+	} from "../../../packages/common/hoc";
 
 	export let ripple: boolean = true;
 	export let disabled: boolean = false;

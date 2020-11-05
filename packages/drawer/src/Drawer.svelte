@@ -1,62 +1,87 @@
+<script context="module" lang="ts">
+	let count = 0;
+</script>
+
 <script lang="ts">
-	// Base
+	//#region Base
+	import { parseClassList } from "../../../packages/common/functions";
 	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	let className = undefined;
 	export { className as class };
-	export let style: string = "";
+	export let style: string = undefined;
+	export let id: string = `@smui/drawer/Drawer:${count++}`;
 
 	export let dom: HTMLDivElement = null;
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
+	//#endregion
 
 	// Drawer
 	import { MDCDrawer } from "@material/drawer";
-	import {
-		onMount,
-		onDestroy,
-		afterUpdate,
-		setContext,
-		createEventDispatcher,
-	} from "svelte";
+	import { onMount, onDestroy, tick } from "svelte";
 	import { createDrawerContext } from "./DrawerContext";
 	import { DrawerVariant } from "./types";
+	import { Use } from "../../../packages/common/hooks";
+	import Scrim from "./Scrim.svelte";
 
-	export let variant: DrawerVariant = null;
+	export let variant: DrawerVariant = "permanent";
 	export let open: boolean = false;
+	export let belowTopAppBar: boolean = undefined;
 
-	const context$ = createDrawerContext();
+	let opened = false;
+	let siblingTopAppBarFound = false;
+
+	$: if (!variant) variant = "permanent";
+
+	const context$ = createDrawerContext({
+		variant,
+	});
 	$: $context$ = { ...$context$, variant };
 
 	$: if (drawer && drawer.open !== open) {
 		drawer.open = open;
+		tick().then(() => {
+			// Sometimes when rerendered with #key block, it will stuck in opening state. This will unlock it.
+			if (!drawer.open && open && !dom.classList.contains("mdc-drawer--open")) {
+				dom.classList.remove("mdc-drawer--opening");
+				drawer.open = open;
+			}
+		});
 	}
 
-	let drawer;
-	onMount(() => {
-		if (variant === "dismissible" || variant === "modal") {
-			drawer = new MDCDrawer(dom);
-			drawer.listen("MDCDrawer:opened", updateOpen);
-			drawer.listen("MDCDrawer:closed", updateOpen);
-		}
-	});
+	let drawer: MDCDrawer;
 
 	onDestroy(() => {
 		drawer && drawer.destroy();
 	});
 
-	afterUpdate(() => {
-		// if (drawer && !(variant === "dismissible" || variant === "modal")) {
-		//   drawer.destroy();
-		//   drawer = undefined;
-		// } else if (!drawer && (variant === "dismissible" || variant === "modal")) {
-		//   drawer = new MDCDrawer(dom);
-		//   drawer.listen("MDCDrawer:opened", updateOpen);
-		//   drawer.listen("MDCDrawer:closed", updateOpen);
-		// }
-	});
+	function init(_variant?: typeof variant) {
+		drawer?.list?.destroy();
+		drawer?.destroy();
 
-	function updateOpen() {
+		if (variant === "dismissible" || variant === "modal") {
+			drawer = new MDCDrawer(dom);
+			drawer.listen("MDCDrawer:opened", handleOpen);
+			drawer.listen("MDCDrawer:closed", handleClose);
+		}
+
+		siblingTopAppBarFound = !!dom.parentElement.querySelector(
+			":scope > .mdc-top-app-bar"
+		);
+	}
+
+	function handleOpen() {
+		opened = true;
+		handleUpdateOpen();
+	}
+
+	function handleClose() {
+		opened = false;
+		handleUpdateOpen();
+	}
+
+	function handleUpdateOpen() {
 		open = drawer.open;
 	}
 
@@ -65,27 +90,37 @@
 	}
 </script>
 
+<style>
+	:global(.smui-drawer) {
+		position: absolute;
+	}
+</style>
+
+<svelte:options immutable={true} />
+
+<Use effect hook={() => init(variant)} />
+
 <aside
 	{...props}
 	bind:this={dom}
 	use:forwardDOMEvents
-	class="mdc-drawer {className}
-    {variant === 'dismissible' ? 'mdc-drawer--dismissible' : ''}
-    {variant === 'modal' ? 'mdc-drawer--modal' : ''}"
+	{id}
+	class={parseClassList([
+		className,
+		'smui-drawer',
+		'mdc-drawer',
+		[variant === 'dismissible', 'mdc-drawer--dismissible'],
+		[variant === 'modal', 'mdc-drawer--modal'],
+		[
+			belowTopAppBar === undefined ? siblingTopAppBarFound : belowTopAppBar,
+			'mdc-top-app-bar--fixed-adjust',
+		],
+		[opened || variant === 'permanent', 'mdc-drawer--open'],
+	])}
 	{style}>
 	<slot />
 </aside>
 
-<!-- <aside
-  bind:this={element}
-  use:useActions={use}
-  use:forwardEvents
-  class=" mdc-drawer {className}
-  {variant === 'dismissible' ? 'mdc-drawer--dismissible' : ''}
-  {variant === 'modal' ? 'mdc-drawer--modal' : ''}
-  "
-  on:MDCDrawer:opened={updateOpen}
-  on:MDCDrawer:closed={updateOpen}
-  {...exclude($$props, ['use', 'class', 'variant', 'open'])}>
-  <slot />
-</aside> -->
+{#if variant === 'modal'}
+	<Scrim />
+{/if}

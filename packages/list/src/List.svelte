@@ -9,7 +9,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../packages/list/List:${count++}`;
+	export let id: string = `@smui/list/List:${count++}`;
 
 	export let dom: HTMLDivElement | HTMLUListElement = undefined;
 	import { BaseProps } from "../../../packages/common/dom/Props";
@@ -19,9 +19,8 @@
 	// List
 	//#region imports
 	import { MDCList, MDCListActionEvent } from "@material/list";
-	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import Nav from "../../../packages/common/dom/Nav.svelte";
-	import Ul from "../../../packages/common/dom/Ul.svelte";
+	import { onDestroy, createEventDispatcher } from "svelte";
+	import { Nav, Ul } from "../../../packages/common/dom";
 	import {
 		createListContext,
 		getCreateMDCListInstance,
@@ -29,7 +28,7 @@
 	} from "./ListContext";
 	import { ItemContext } from "./item";
 	import { getMenuSurfaceContext } from "../../../packages/menu-surface";
-	import { getDrawerContext } from "../../../packages/drawer";
+	import { getDrawerContext, DrawerVariant } from "../../../packages/drawer";
 	import {
 		SelectableGroup,
 		SelectionType,
@@ -37,6 +36,7 @@
 	} from "../../../packages/common/hoc";
 	import { getDialogContext } from "../../../packages/dialog"; // TODO: fix circular dep
 	import { setDisableCheckboxMDCIstance } from "../../../packages/checkbox";
+	import { Use } from "../../../packages/common/hooks";
 	//#endregion
 
 	//#region exports
@@ -60,7 +60,7 @@
 		};
 	}>();
 
-	//#region local varaibles
+	//#region local variables
 	const items = new Set<ItemContext>();
 	let selectableGroup: SelectableGroup;
 
@@ -119,16 +119,6 @@
 	//#endregion
 
 	let list: MDCList;
-	onMount(async () => {
-		if (
-			shouldCreateMDCListInstance !== false &&
-			$drawerContext$?.variant !== "dismissible" &&
-			$drawerContext$?.variant !== "modal"
-		) {
-			list = new MDCList(dom);
-			list.listen("MDCList:action", handleAction);
-		}
-	});
 
 	$: if (list && $dialogContext$?.isOpen) list.layout();
 
@@ -165,6 +155,19 @@
 	onDestroy(() => {
 		list && list.destroy();
 	});
+
+	function init(domValue: typeof dom, drawerVariant: DrawerVariant) {
+		list?.destroy();
+
+		if (
+			shouldCreateMDCListInstance !== false &&
+			$drawerContext$?.variant !== "dismissible" &&
+			$drawerContext$?.variant !== "modal"
+		) {
+			list = new MDCList(dom);
+			list.listen("MDCList:action", handleAction);
+		}
+	}
 
 	function handleAction(event: MDCListActionEvent) {
 		const item = Array.from(items)[event.detail.index];
@@ -211,6 +214,10 @@
 	};
 </script>
 
+<Use
+	effect
+	hook={() => init(dom, $drawerContext$ ? $drawerContext$.variant : undefined)} />
+
 <SelectableGroup
 	bind:this={selectableGroup}
 	bind:value
@@ -234,38 +241,3 @@
 		<slot />
 	</svelte:component>
 </SelectableGroup>
-
-<!-- {#if nav}
-  <nav
-    bind:this={element}
-    use:useActions={use}
-    use:forwardEvents
-    class=" mdc-list {className}
-    {nonInteractive ? 'mdc-list--non-interactive' : ''}
-    {dense ? 'mdc-list--dense' : ''}
-    {avatarList ? 'mdc-list--avatar-list' : ''}
-    {twoLine ? 'mdc-list--two-line' : ''}
-    {threeLine && !twoLine ? 'smui-list--three-line' : ''}
-    "
-    on:MDCList:action={handleAction}
-    {...props}>
-    <slot />
-  </nav>
-{:else}
-  <ul
-    bind:this={element}
-    use:useActions={use}
-    use:forwardEvents
-    class=" mdc-list {className}
-    {nonInteractive ? 'mdc-list--non-interactive' : ''}
-    {dense ? 'mdc-list--dense' : ''}
-    {avatarList ? 'mdc-list--avatar-list' : ''}
-    {twoLine ? 'mdc-list--two-line' : ''}
-    {threeLine && !twoLine ? 'smui-list--three-line' : ''}
-    "
-    {role}
-    on:MDCList:action={handleAction}
-    {...props}>
-    <slot />
-  </ul>
-{/if} -->

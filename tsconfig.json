@@ -7,15 +7,7 @@
 			"svelte"
 		],
 		"baseUrl": ".",
-		"moduleResolution": "node",
-		"paths": {
-			"@root/*": [
-				"./*"
-			],
-			"@smui/*": [
-				"./packages/*"
-			]
-		}
+		"moduleResolution": "node"
 	},
 	"exclude": [
 		"**/node_modules/**/*",

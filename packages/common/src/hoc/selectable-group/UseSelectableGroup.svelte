@@ -13,7 +13,7 @@
 	export let selectionType: SelectionType = "multi";
 	export let indexHasValues: boolean = undefined;
 	export let nullable: boolean = undefined;
-	export const id: string = `../../../../../packages/common/hoc/UseSelectableGroup:${count++}`;
+	export const id: string = `@smui/common/hoc/UseSelectableGroup:${count++}`;
 
 	const items = new Set<SelectableContext>();
 	let valueState: UseState;
