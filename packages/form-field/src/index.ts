@@ -1,5 +1,6 @@
 import FormField from "./FormField.svelte";
-export * from "./FormField.svelte";
+import Label from "./Label.svelte";
 
-export { FormField };
+export { FormField, Label };
 export * from "./FormFieldContext";
+export * from "./types";

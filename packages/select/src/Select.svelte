@@ -193,9 +193,7 @@
 			{#if variant === 'filled'}
 				{#if $$slots.label}
 					<FloatingLabel component={Span}>
-						<ExtractNamedSlot>
-							<slot name="label" />
-						</ExtractNamedSlot>
+						<slot name="label" />
 					</FloatingLabel>
 				{/if}
 			{:else if variant === 'outlined'}

@@ -1,0 +1,7 @@
+@use "./variables";
+
+:export {
+	defaultColumns: variables.$default-columns;
+	defaultStandardGap: variables.$default-standard-gap;
+	defaultMasonryGap: variables.$default-masonry-gap;
+}

@@ -10,7 +10,7 @@
 	export let style: string = undefined;
 	export let id: string = `@smui/drawer/Header:${count++}`;
 
-	export let dom: HTMLDivElement = null;
+	export let dom: HTMLDivElement = undefined;
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion

@@ -10,7 +10,7 @@
 	export let style: string = undefined;
 	export let id: string = `@smui/drawer/Subtitle:${count++}`;
 
-	export let dom: HTMLHeadingElement = null;
+	export let dom: HTMLHeadingElement = undefined;
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion

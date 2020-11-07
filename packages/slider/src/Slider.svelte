@@ -17,7 +17,7 @@
 	import { onMount, onDestroy, getContext } from "svelte";
 	import { getDialogContext } from "../../../packages/dialog";
 	import { getFormFieldContext } from "../../../packages/form-field";
-	import { Use } from "../../../packages/common/hooks";
+	import { Use, UseState } from "../../../packages/common/hooks";
 
 	export let disabled: boolean = false;
 	export let discrete: boolean = false;
@@ -25,7 +25,10 @@
 	export let min: number = 0;
 	export let max: number = 100;
 	export let step: number = 0.1;
-	export let value: number = null;
+	export let value: number = min;
+
+	$: if (value == null || value < min) value = min;
+	$: if (value > max) value = max;
 
 	const formFieldContext$ = getFormFieldContext();
 	const dialogContext$ = getDialogContext();
@@ -64,6 +67,13 @@
 		slider && slider.destroy();
 	});
 
+	function handleStepUpdate() {
+		const vMod = value % step;
+		if (vMod) {
+			value = value - vMod;
+		}
+	}
+
 	function setFormFieldInput() {
 		$formFieldContext$?.setInput(slider as any);
 	}
@@ -94,6 +104,7 @@
 </style>
 
 <Use effect once hook={setFormFieldInput} />
+<UseState value={step} onUpdate={handleStepUpdate} />
 
 <div
 	bind:this={dom}

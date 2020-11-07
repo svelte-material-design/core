@@ -24,8 +24,7 @@
 	{...props}
 	{id}
 	class="{className}
-    {behaviour === 'tab' ? 'mdc-tab__text-label' : ''}
-    {behaviour === 'image-list' ? 'mdc-image-list__label' : ''}"
+    {behaviour === 'tab' ? 'mdc-tab__text-label' : ''}"
 	{style}
 	use:forwardDOMEvents>
 	<slot />

@@ -1,6 +1,5 @@
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
 	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
@@ -8,23 +7,33 @@
 	export let style: string = undefined;
 	export let id: string = undefined;
 
-	export let dom: HTMLSpanElement = undefined;
+	export let dom: HTMLLabelElement = undefined;
 
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Label
+	import { getFormFieldContext } from "./";
+
+	const formFieldContext$ = getFormFieldContext();
 </script>
+
+<style>
+	span {
+		display: block;
+	}
+</style>
 
 <svelte:options immutable={true} />
 
-<span
+<label
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-button__label'])}
+	class={className}
 	{style}
+	for={$formFieldContext$.inputId}
 	use:forwardDOMEvents>
 	<slot />
-</span>
+</label>
