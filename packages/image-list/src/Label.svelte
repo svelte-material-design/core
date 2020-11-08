@@ -1,3 +1,7 @@
+<script context="module" lang="ts">
+	let count = 0;
+</script>
+
 <script lang="ts">
 	//#region Base
 	import { parseClassList } from "../../../packages/common/functions";
@@ -6,7 +10,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
+	export let id: string = `@smui/image-list/Label:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 

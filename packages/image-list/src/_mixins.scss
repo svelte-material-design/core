@@ -22,24 +22,3 @@
 		}
 	}
 }
-
-// Masonry Image List
-
-@mixin masonry-columns(
-	$column-count,
-	$gutter-size: image-list.$masonry-gutter-size,
-	$query: feature-targeting.all()
-) {
-	$feat-structure: feature-targeting.create-target($query, structure);
-
-	@include feature-targeting.targets($feat-structure) {
-		column-count: $column-count;
-		column-gap: $gutter-size;
-	}
-
-	.mdc-image-list__item {
-		@include feature-targeting.targets($feat-structure) {
-			margin-bottom: $gutter-size;
-		}
-	}
-}

@@ -1,5 +1,10 @@
 <script context="module" lang="ts">
 	let count = 0;
+
+	interface AspectWidthHeight {
+		width: number;
+		height: number;
+	}
 </script>
 
 <script lang="ts">
@@ -26,19 +31,50 @@
 	} from "./image-list.module.scss";
 
 	export let variant: ImageListVariant = "standard";
-	export let withTextProtection: boolean = false;
+	export let textProtection: boolean = false;
 	export let columns: number = defaultColumns;
 	/**
-	 * Eg: "12px" or "1em"
+	 * Eg: "12px" | "1em"
 	 */
 	export let gap: string = defaultStandardGap;
+	/**
+	 * Eg: "1:1" | "16:9" | "4:3"
+	 */
+	export let aspect: string = "1:1";
 
 	$: if (!variant) variant = "standard";
+
 	$: if (!gap == null)
 		gap = variant === "standard" ? defaultStandardGap : defaultMasonryGap;
+
 	$: if (columns < 0) columns = columns = 0;
 	$: if (columns == null) columns = defaultColumns;
+
+	$: aspectObj = getAspectWidthHeight(aspect);
+	$: aspectRatio = aspectObj.width / aspectObj.height;
+
+	function getAspectWidthHeight(aspectValue: typeof aspect): AspectWidthHeight {
+		const [widthString, heightString] = aspectValue?.split(":") ?? "";
+		const width = Number(widthString);
+		const height = Number(heightString);
+		let res: AspectWidthHeight;
+
+		if (!width || !height) {
+			res = {
+				width: 1,
+				height: 1,
+			};
+		} else {
+			res = { width, height };
+		}
+
+		aspect = `${res.width}:${res.height}`;
+
+		return res;
+	}
 </script>
+
+<svelte:options immutable={true} />
 
 <ul
 	bind:this={dom}
@@ -46,16 +82,18 @@
 	{id}
 	class={parseClassList([
 		className,
+		'smui-image-list',
 		'mdc-image-list',
 		[variant === 'standard', 'smui-image-list--standard-columns'],
 		[variant === 'masonry', 'smui-image-list--masonry-columns'],
 		[variant === 'masonry', 'mdc-image-list--masonry'],
-		[withTextProtection, 'mdc-image-list--with-text-protection'],
+		[textProtection, 'mdc-image-list--with-text-protection'],
 	])}
 	style={parseClassList([
 		style,
 		`--smui-image-list--columns: ${columns};`,
 		[gap, `--smui-image-list--gap: ${gap};`],
+		[aspectRatio !== 1, `--smui-image-list--aspect-ratio: ${aspectRatio};`],
 	])}
 	use:forwardDOMEvents>
 	<slot />
