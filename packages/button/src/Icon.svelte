@@ -1,5 +1,6 @@
 <script lang="ts">
 	// Base
+	import { parseClassList } from "../../../packages/common/functions";
 	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
@@ -17,7 +18,6 @@
 		GraphicElement,
 		GraphicType,
 	} from "../../../packages/common/components";
-	import { parseClassList } from "../../../packages/common/functions";
 
 	export let type: GraphicType = "icon";
 

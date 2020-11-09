@@ -1,13 +1,18 @@
+<script lang="ts" context="module">
+	let count = 0;
+</script>
+
 <script lang="ts">
 	//#region Base
+	import { parseClassList } from "../../../../packages/common/functions";
 	import { DOMEventsForwarder } from "../../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	let className = undefined;
 	export { className as class };
-	export let style: string = null;
-	export let id: string = null;
+	export let style: string = undefined;
+	export let id: string = `@smui/input-field/character-counter/CharacterCounter:${count++}`;
 
-	export let dom: HTMLInputElement = null;
+	export let dom: HTMLInputElement = undefined;
 
 	import { BaseProps } from "../../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
@@ -22,20 +27,25 @@
 
 	let characterCounter: MDCTextFieldCharacterCounter;
 	onMount(() => {
-		if (!inputFieldContext$)
+		if (!inputFieldContext$) {
 			characterCounter = new MDCTextFieldCharacterCounter(dom);
+		} else {
+			$inputFieldContext$.reistantiate();
+		}
 	});
 
 	onDestroy(() => {
-		characterCounter && characterCounter.destroy();
+		characterCounter?.destroy();
 	});
 </script>
+
+<svelte:options immutable={true} />
 
 <div
 	bind:this={dom}
 	{...props}
 	{id}
-	class="mdc-text-field-character-counter {className}"
+	class={parseClassList([className, 'mdc-text-field-character-counter'])}
 	{style}
 	use:forwardDOMEvents>
 	<slot />

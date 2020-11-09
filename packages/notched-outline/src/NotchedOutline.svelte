@@ -1,50 +1,60 @@
-<script>
+<script lang="ts" context="module">
+	let count = 0;
+</script>
+
+<script lang="ts">
+	//#region Base
+	import { parseClassList } from "../../../packages/common/functions";
+	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	const forwardDOMEvents = DOMEventsForwarder();
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@smui/button/Button:${count++}`;
+
+	export let dom: HTMLDivElement = undefined;
+
+	import { BaseProps } from "../../../packages/common/dom/Props";
+	export let props: BaseProps = {};
+	//#endregion
+
+	// NotchedOutline
 	import { MDCNotchedOutline } from "@material/notched-outline";
 	import { onMount, onDestroy } from "svelte";
-	import { get_current_component } from "svelte/internal";
-	import { forwardEventsBuilder } from "../../../packages/common";
-	import { exclude } from "../../../packages/common/exclude.js";
-	import { useActions } from "../../../packages/common/useActions.js";
 
-	const forwardEvents = forwardEventsBuilder(get_current_component());
-
-	export let use = [];
-	let className = "";
-	export { className as class };
 	export let notched = false;
 	export let noLabel = false;
 
-	let element;
-	let notchedOutline;
-
+	let notchedOutline: MDCNotchedOutline;
 	onMount(() => {
-		notchedOutline = new MDCNotchedOutline(element);
+		notchedOutline = new MDCNotchedOutline(dom);
 	});
 
 	onDestroy(() => {
 		notchedOutline && notchedOutline.destroy();
 	});
 
-	export function notch(notchWidth, ...args) {
-		return notchedOutline.notch(notchWidth, ...args);
+	export function notch(notchWidth) {
+		return notchedOutline.notch(notchWidth);
 	}
 
-	export function closeNotch(...args) {
-		return notchedOutline.closeNotch(...args);
+	export function closeNotch() {
+		return notchedOutline.closeNotch();
 	}
 </script>
 
 <div
-	bind:this={element}
-	use:useActions={use}
-	use:forwardEvents
-	class="
-    mdc-notched-outline
-    {className}
-    {notched ? 'mdc-notched-outline--notched' : ''}
-    {noLabel ? 'mdc-notched-outline--no-label' : ''}
-  "
-	{...exclude($$props, ['use', 'class', 'notched', 'noLabel'])}>
+	bind:this={dom}
+	{...props}
+	{id}
+	class={parseClassList([
+		className,
+		'mdc-notched-outline',
+		[notched, 'mdc-notched-outline--notched'],
+		[noLabel, 'mdc-notched-outline--no-label'],
+	])}
+	{style}
+	use:forwardDOMEvents>
 	<div class="mdc-notched-outline__leading" />
 	{#if !noLabel}
 		<div class="mdc-notched-outline__notch">

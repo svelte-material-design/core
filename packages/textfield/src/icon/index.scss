@@ -1,3 +1,8 @@
 @use "@material/textfield/icon";
 
 @include icon.icon-core-styles;
+
+.smui-input-field-icon {
+	width: 18px;
+	height: 18px;
+}

@@ -1,17 +1,18 @@
-<script context="module" lang="ts">
+<script lang="ts" context="module">
 	let count = 0;
 </script>
 
 <script lang="ts">
 	//#region Base
+	import { parseClassList } from "../../../../packages/common/functions";
 	import { DOMEventsForwarder } from "../../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	let className = undefined;
 	export { className as class };
-	export let style: string = null;
-	export let id: string = `SMUI-HelperText-${count++}`;
+	export let style: string = undefined;
+	export let id: string = `@smui/input-field/helper-text/HelperText:${count++}`;
 
-	export let dom: HTMLDivElement = null;
+	export let dom: HTMLDivElement = undefined;
 
 	import { BaseProps } from "../../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
@@ -38,6 +39,8 @@
 	});
 </script>
 
+<svelte:options immutable={true} />
+
 <div
 	{...props}
 	{id}
@@ -46,11 +49,14 @@
 	use:forwardDOMEvents>
 	<div
 		bind:this={dom}
-		class="mdc-text-field-helper-text {className}
-      {persistent ? 'mdc-text-field-helper-text--persistent' : ''}
-      {validationMsg ? 'mdc-text-field-helper-text--validation-msg' : ''}"
+		class={parseClassList([
+			className,
+			'mdc-text-field-helper-text',
+			[persistent, 'mdc-text-field-helper-text--persistent'],
+			[validationMsg, 'mdc-text-field-helper-text--validation-msg'],
+		])}
 		aria-hidden="true">
-		<slot />
+		<slot name="label" />
 	</div>
-	<slot name="character-counter" />
+	<slot />
 </div>

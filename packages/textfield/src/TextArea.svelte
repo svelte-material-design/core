@@ -1,13 +1,21 @@
+<script lang="ts" context="module">
+	let count = 0;
+</script>
+
 <script lang="ts">
 	//#region Base
+	import {
+		parseClassList,
+		StringListToFilter,
+	} from "../../../packages/common/functions";
 	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	let className = undefined;
 	export { className as class };
-	export let style: string = null;
-	export let id: string = null;
+	export let style: string = undefined;
+	export let id: string = `@smui/input-field/TextArea:${count++}`;
 
-	export let dom: HTMLLabelElement = null;
+	export let dom: HTMLLabelElement = undefined;
 
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
@@ -15,7 +23,7 @@
 
 	// Textarea
 	import { onMount } from "svelte";
-	import UseTextField from "./hooks/UseTextField.svelte";
+	import UseTextField from "./UseTextField.svelte";
 	import { createInputFieldContext } from "./TextFieldContext";
 	import { FloatingLabel } from "../../../packages/floating-label";
 	import { NotchedOutline } from "../../../packages/notched-outline";
@@ -29,8 +37,6 @@
 	export let disabled: boolean = false;
 	export let fullWidth: boolean = false;
 	export let color: RippleProps["color"] = undefined;
-
-	let textFieldClassList: string = "";
 	//#endregion
 
 	export let name: string = undefined;
@@ -49,6 +55,7 @@
 	let textareaElement: HTMLTextAreaElement;
 	let rows: number = undefined;
 	let cols: number = undefined;
+	let textFieldClassList: StringListToFilter = [];
 	//#endregion
 
 	createInputFieldContext({
@@ -70,12 +77,18 @@
 	}
 </script>
 
+<svelte:options immutable={true} />
+
 <div
 	class="smui-text-field__wrapper {fullWidth ? 'smui-text-field__wrapper--fullwidth' : ''}">
 	<label
 		bind:this={dom}
 		for={id}
-		class="{textFieldClassList} mdc-text-field--textarea {className}"
+		class={parseClassList([
+			className,
+			...textFieldClassList,
+			'mdc-text-field--textarea',
+		])}
 		{style}>
 		{#if ripple}
 			<Ripple3

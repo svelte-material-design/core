@@ -4,5 +4,5 @@ import Icon from "./Icon.svelte";
 import MenuButton from "./MenuButton.svelte";
 
 export { Button, Label, Icon, MenuButton };
-export * from "./Button.svelte";
+export * from "./types";
 export * from "./ButtonContext";

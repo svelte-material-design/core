@@ -1,17 +1,21 @@
-<script context="module" lang="ts">
+<script lang="ts" context="module">
 	let count = 0;
 </script>
 
 <script lang="ts">
 	//#region Base
+	import {
+		parseClassList,
+		StringListToFilter,
+	} from "../../../packages/common/functions";
 	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	let className = undefined;
 	export { className as class };
-	export let style: string = null;
-	export let id: string = `SMUI-TextField-${count++}`;
+	export let style: string = undefined;
+	export let id: string = `@smui/input-field/FullWidthTextField:${count++}`;
 
-	export let dom: HTMLLabelElement = null;
+	export let dom: HTMLLabelElement = undefined;
 
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
@@ -20,7 +24,7 @@
 	// TextField
 	import { createInputFieldContext } from "./TextFieldContext";
 	import { LineRipple } from "../../../packages/line-ripple";
-	import UseTextField from "./hooks/UseTextField.svelte";
+	import UseTextField from "./UseTextField.svelte";
 	import { onMount } from "svelte";
 	import { RippleProps, Ripple3 } from "../../../packages/ripple";
 	import { ExtractNamedSlot } from "../../../packages/common/components";
@@ -38,10 +42,11 @@
 		nativeInputInvalid: boolean
 	) => boolean = undefined;
 
-	let textFieldClassList: string = "";
 	//#endregion
 
 	export let name: string = undefined;
+	export let title: string = undefined;
+	export let placeholder: string = undefined;
 
 	export let prefix: string = undefined;
 	export let suffix: string = undefined;
@@ -51,16 +56,18 @@
 	export let dirty: boolean = false;
 
 	export let autocomplete: string = undefined;
-	export let placeholder: string = undefined;
 	export let required: boolean = undefined;
 	export let pattern: string = undefined;
 	export let readonly: boolean = undefined;
+	export let formnovalidate: boolean = undefined;
 
 	export let maxlength: number = undefined;
+	export let minlength: number = undefined;
 
 	//#region internal props
 	let helperTextId: string;
 	let inputElement: HTMLInputElement;
+	let textFieldClassList: StringListToFilter = [];
 	//#endregion
 
 	createInputFieldContext({
@@ -83,14 +90,18 @@
 	}
 </script>
 
+<svelte:options immutable={true} />
+
 <div class="smui-text-field__wrapper smui-text-field__wrapper--fullwidth">
 	<label
 		bind:this={dom}
 		for={id}
-		class="{textFieldClassList}
-    {className}
-      {$$slots.leadingIcon ? 'mdc-text-field--with-leading-icon' : ''}
-      {$$slots.trailingIcon ? 'mdc-text-field--with-trailing-icon' : ''}"
+		class={parseClassList([
+			className,
+			...textFieldClassList,
+			[$$slots.leadingIcon, 'mdc-text-field--with-leading-icon'],
+			[$$slots.trailingIcon, 'mdc-text-field--with-trailing-icon'],
+		])}
 		{style}>
 		{#if ripple}
 			<Ripple3
@@ -115,17 +126,19 @@
 			class="mdc-text-field__input"
 			{type}
 			{name}
+			{placeholder}
+			{title}
 			{maxlength}
+			{minlength}
 			{autocomplete}
 			{pattern}
 			{required}
 			{readonly}
-			on:input={(e) => (value = e.target.value)}
+			{formnovalidate}
 			on:change={changeHandler}
 			aria-controls={helperTextId}
 			aria-describedby={helperTextId}
 			aria-label={placeholder}
-			{placeholder}
 			use:forwardDOMEvents />
 		{#if suffix}
 			<span

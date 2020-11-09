@@ -8,4 +8,5 @@ export { createInputFieldContext, getInputFieldContext };
 export interface InputFieldContext {
 	setHelperTextId(id: string);
 	setLabelId?(id: string);
+	reistantiate();
 }

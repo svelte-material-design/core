@@ -1,18 +1,16 @@
 <script lang="ts" context="module">
-	import { A, Button } from "../../../packages/common/dom";
-	export type ButtonComponent = typeof Button | typeof A;
-	export type ButtonVariant = "raised" | "unelevated" | "outlined";
-	export type ButtonColor = "primary" | "secondary";
+	let count = 0;
 </script>
 
 <script lang="ts">
 	//#region Base
+	import { parseClassList } from "../../../packages/common/functions";
 	import { DOMEventsForwarder } from "../../../packages/common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
+	export let id: string = `@smui/button/Button:${count++}`;
 
 	export let dom: HTMLButtonElement | HTMLAnchorElement = undefined;
 
@@ -25,8 +23,8 @@
 	import { Ripple3 } from "../../../packages/ripple";
 	import { UseState } from "../../../packages/common/hooks";
 	import { tick } from "svelte";
-	import { getButtonBehaviour } from "./";
-	import { parseClassList } from "../../../packages/common/functions";
+	import { getButtonBehaviour, ButtonColor, ButtonVariant } from "./";
+	import { Button, A } from "../../../packages/common/dom";
 	//#endregion
 
 	//#region exports
