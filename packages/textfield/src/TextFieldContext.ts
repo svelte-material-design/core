@@ -6,6 +6,7 @@ const [createInputFieldContext, getInputFieldContext] = createContextBuilder<
 export { createInputFieldContext, getInputFieldContext };
 
 export interface InputFieldContext {
+	readonly id: string;
 	setHelperTextId(id: string);
 	setLabelId?(id: string);
 	reistantiate();

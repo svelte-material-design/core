@@ -36,40 +36,57 @@
 	export let invalid: boolean = false;
 	export let disabled: boolean = false;
 	export let fullWidth: boolean = false;
-	export let color: RippleProps["color"] = undefined;
+	export let resizable: boolean = false;
 	//#endregion
-
-	export let name: string = undefined;
 
 	export let dirty: boolean = false;
 
+	//#region HTML attrs
+	//#region commons HTML attrs
+	export let name: string = undefined;
+	export let title: string = undefined;
+	export let placeholder: string = undefined;
+
 	export let required: boolean = undefined;
-	export let pattern: string = undefined;
 	export let readonly: boolean = undefined;
 
+	export let minlength: number = undefined;
 	export let maxlength: number = undefined;
+	//#endregion
+
+	export let cols: number = undefined;
+	export let rows: number = undefined;
+	export let wrap: "hard" = undefined;
+	//#endregion
 
 	//#region internal props
+	let useInputField: UseTextField;
 	let helperTextId: string;
 	let labelId: string;
 	let textareaElement: HTMLTextAreaElement;
-	let rows: number = undefined;
-	let cols: number = undefined;
 	let textFieldClassList: StringListToFilter = [];
 	//#endregion
 
 	createInputFieldContext({
+		id,
 		setHelperTextId(id: string) {
 			helperTextId = id;
 		},
 		setLabelId(id: string) {
 			labelId = id;
 		},
+		reistantiate() {
+			useInputField.reistantiate();
+		},
 	});
 
 	onMount(() => {
 		invalid = dom.matches(":invalid");
 	});
+
+	function valueUpdater() {
+		value = textareaElement.value;
+	}
 
 	function changeHandler(e) {
 		dirty = true;
@@ -90,33 +107,56 @@
 			'mdc-text-field--textarea',
 		])}
 		{style}>
-		{#if ripple}
-			<Ripple3
-				target={dom}
-				unbounded={false}
-				{color}
-				rippleElement="mdc-text-field__ripple" />
-		{/if}
-		<span class="mdc-text-field__resizer">
+		{#if ripple}<span class="mdc-text-field__ripple" />{/if}
+		{#if resizable}
+			<span class="mdc-text-field__resizer">
+				<textarea
+					bind:this={textareaElement}
+					{...props}
+					{id}
+					class="mdc-text-field__input"
+					{style}
+					{name}
+					{title}
+					{placeholder}
+					{minlength}
+					{maxlength}
+					{required}
+					{readonly}
+					{rows}
+					{cols}
+					{wrap}
+					aria-controls={helperTextId}
+					aria-describedby={helperTextId}
+					aria-labelledby={labelId}
+					on:input={valueUpdater}
+					on:change={changeHandler}
+					use:forwardDOMEvents />
+			</span>
+		{:else}
 			<textarea
 				bind:this={textareaElement}
 				{...props}
 				{id}
-				class="mdc-text-field__input {className}"
+				class="mdc-text-field__input"
 				{style}
 				{name}
+				{title}
+				{placeholder}
+				{minlength}
 				{maxlength}
-				{pattern}
 				{required}
 				{readonly}
-				on:change={changeHandler}
+				{rows}
+				{cols}
+				{wrap}
 				aria-controls={helperTextId}
 				aria-describedby={helperTextId}
 				aria-labelledby={labelId}
-				{rows}
-				{cols}
+				on:input={valueUpdater}
+				on:change={changeHandler}
 				use:forwardDOMEvents />
-		</span>
+		{/if}
 		<NotchedOutline noLabel={!$$slots.label}>
 			{#if $$slots.label}
 				<FloatingLabel component={Span}>
@@ -125,10 +165,11 @@
 			{/if}
 		</NotchedOutline>
 	</label>
-	<slot name="helperText" />
+	<slot />
 </div>
 
 <UseTextField
+	bind:this={useInputField}
 	bind:value
 	bind:invalid
 	{ripple}

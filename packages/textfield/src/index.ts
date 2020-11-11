@@ -5,6 +5,4 @@ import FullWidthTextField from "./FullWidthTextField.svelte";
 
 export { InputField, Input, TextArea, FullWidthTextField };
 export * from "./TextFieldContext";
-export * from "./character-counter";
-export * from "./icon";
 export * from "./types";

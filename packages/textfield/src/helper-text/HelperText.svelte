@@ -35,7 +35,8 @@
 	});
 
 	onDestroy(() => {
-		helperText && helperText.destroy();
+		$inputFieldContext$?.setHelperTextId(undefined);
+		helperText?.destroy();
 	});
 </script>
 

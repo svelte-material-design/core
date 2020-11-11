@@ -33,47 +33,51 @@
 	import { Span } from "../../../packages/common/dom";
 	import { UseState } from "../../../packages/common/hooks";
 
-	//#region UseTextField params
+	//#region exports
+	//#region UseTextField props
 	export let ripple: boolean = true;
+	export let lineRipple: boolean = true;
 	export let value: any = undefined;
 	export let invalid: boolean = false;
 	export let disabled: boolean = false;
 	export let variant: InputFieldVariant = "filled";
-
-	let nativeInputInvalid: boolean = false;
 	export let customValidation: (
 		value: any,
 		nativeInputInvalid: boolean
 	) => boolean = undefined;
 	//#endregion
 
-	//#region exports
+	export let density: number = undefined;
+	export let dirty: boolean = false;
+
+	//#region HTML attrs
+	//#region commons HTML attrs
 	export let name: string = undefined;
 	export let title: string = undefined;
 	export let placeholder: string = undefined;
+
+	export let required: boolean = undefined;
+	export let readonly: boolean = undefined;
+
+	export let minlength: number = undefined;
+	export let maxlength: number = undefined;
+	//#endregion
 
 	export let prefix: string = undefined;
 	export let suffix: string = undefined;
 
 	export let type: InputFieldType = "text";
 
-	export let dirty: boolean = false;
-
 	export let autocomplete: string = undefined;
-	export let required: boolean = undefined;
 	export let pattern: string = undefined;
-	export let readonly: boolean = undefined;
 	export let formnovalidate: boolean = undefined;
 
-	export let maxlength: number = undefined;
-	export let minlength: number = undefined;
 	export let size: number = undefined;
 
 	export let step: number = undefined;
 	export let min: number = undefined;
 	export let max: number = undefined;
-
-	export let density: number = undefined;
+	//#endregion
 	//#endregion
 
 	//#region internal props
@@ -83,6 +87,7 @@
 	let textFieldClassList: StringListToFilter = [];
 	let useTextField: UseTextField;
 	let optionsId: string = `${id}_options`;
+	let nativeInputInvalid: boolean = false;
 	//#endregion
 
 	$: if (density != undefined) {
@@ -94,6 +99,7 @@
 	}
 
 	const context$ = createInputFieldContext({
+		id,
 		setHelperTextId(id: string) {
 			helperTextId = id;
 		},
@@ -115,7 +121,6 @@
 	}
 
 	function reistantiate() {
-		valueUpdater();
 		$context$?.reistantiate();
 	}
 
@@ -150,6 +155,7 @@
 <svelte:options immutable={true} />
 
 <UseState value={type} onUpdate={handleTypeUpdate} />
+<UseState value={lineRipple} onUpdate={reistantiate} />
 
 <div class="smui-text-field__wrapper">
 	<label
@@ -226,7 +232,7 @@
 					</ExtractNamedSlot>
 				</FloatingLabel>
 			{/if}
-			{#if ripple}
+			{#if lineRipple}
 				<LineRipple />
 			{/if}
 		{:else if variant === 'outlined'}

@@ -7,7 +7,7 @@
 	export let style: string = undefined;
 	export let id: string = undefined;
 
-	export let dom: HTMLDivElement = null;
+	export let dom: HTMLLabelElement = null;
 
 	import { BaseProps } from "./Props";
 	export let props: BaseProps = {};
@@ -19,13 +19,14 @@
 	const behaviour = getLabelBehaviour();
 </script>
 
-<span
+<label
 	bind:this={dom}
 	{...props}
 	{id}
 	class="{className}
     {behaviour === 'tab' ? 'mdc-tab__text-label' : ''}"
 	{style}
+	for={props.for}
 	use:forwardDOMEvents>
 	<slot />
-</span>
+</label>

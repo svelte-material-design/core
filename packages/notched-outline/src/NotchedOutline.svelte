@@ -10,7 +10,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/button/Button:${count++}`;
+	export let id: string = `@smui/notched-outlined/NotchedOutlined:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 

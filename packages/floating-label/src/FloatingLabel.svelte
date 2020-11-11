@@ -29,6 +29,8 @@
 	const formFieldContext$ = getFormFieldContext(); //TODO: serve???
 	const inputFieldContext$ = getInputFieldContext();
 
+	$: inputId = $inputFieldContext$?.id ?? $formFieldContext$?.inputId;
+
 	$: $inputFieldContext$?.setLabelId(id);
 
 	let floatingLabel: MDCFloatingLabel;
@@ -52,13 +54,16 @@
 	//   return floatingLabel.getWidth(...args);
 	// }
 
-	$: props = { ...props, for: $formFieldContext$?.inputId };
+	$: props = {
+		...props,
+		for: props.for ? props.for : component === Label ? inputId : undefined,
+	};
 </script>
 
 <svelte:component
 	this={component}
 	bind:dom
-	{...props}
+	{props}
 	{id}
 	class="mdc-floating-label {className}"
 	{style}

@@ -1,14 +1,23 @@
 {
 	"compilerOptions": {
 		"module": "ES2015",
-		"target": "ES2015",
+		"target": "ES2019",
 		"declaration": true,
+		"emitDeclarationOnly": true,
 		"types": [
 			"svelte"
 		],
 		"baseUrl": ".",
-		"moduleResolution": "node"
+		"moduleResolution": "node",
+		"paths": {
+			"@svelte-material-ui-test/core/*": [
+				"./*"
+			]
+		}
 	},
+	"include": [
+		"./index.ts"
+	],
 	"exclude": [
 		"**/node_modules/**/*",
 		"**/site_old/**/*",

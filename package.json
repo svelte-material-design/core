@@ -2,7 +2,11 @@
 	"name": "@svelte-material-ui-test/core",
 	"version": "2.0.0-alpha.5",
 	"description": "",
-	"main": "src/index.ts",
+	"main": "./index.ts",
+	"types": "./index.d.ts",
+	"exports": {
+		".": "./"
+	},
 	"scripts": {
 		"tsc": "tsc",
 		"test": "echo \"Error: no test specified\" && exit 1"

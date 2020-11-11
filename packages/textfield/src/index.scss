@@ -1,11 +1,37 @@
 @use "smui-theme";
 @use "@material/textfield";
-// @use "../../../packages/floating-label";
+@use "@material/floating-label";
 // @use "../../../packages/notched-outline";
-@use "./mixins";
 
 @include textfield.core-styles;
-@include mixins.smui-text-field-core-styles;
+
+.smui-text-field__wrapper {
+	display: inline-flex;
+	flex-direction: column;
+
+	&.smui-text-field__wrapper--fullwidth {
+		display: flex;
+		width: 100%;
+	}
+
+	.mdc-text-field {
+		&.mdc-text-field--textarea {
+			.mdc-text-field__input {
+				padding: 0 textfield.$padding-horizontal;
+			}
+		}
+
+		.mdc-text-field__input {
+			padding-left: 0;
+			padding-right: 0;
+
+			&:-webkit-autofill + .mdc-floating-label {
+				transform: translateY(-(textfield.$label-position-y))
+					scale(floating-label.$float-scale);
+			}
+		}
+	}
+}
 
 @for $density from 1 to 5 {
 	.smui-input-field--filled--dense--#{$density} {
