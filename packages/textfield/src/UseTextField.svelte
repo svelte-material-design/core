@@ -98,7 +98,7 @@
 	}
 
 	export function reistantiate() {
-		istantiate(dom, ripple);
+		if (dom && inputElement) istantiate(dom, ripple);
 	}
 </script>
 

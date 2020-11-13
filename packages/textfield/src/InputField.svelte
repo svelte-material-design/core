@@ -28,7 +28,6 @@
 	import { createInputFieldContext } from "./TextFieldContext";
 	import { NotchedOutline } from "../../../packages/notched-outline";
 	import UseTextField from "./UseTextField.svelte";
-	import { ExtractNamedSlot } from "../../../packages/common/components";
 	import { Span } from "../../../packages/common/dom";
 	import { UseState } from "../../../packages/common/hooks";
 
@@ -141,6 +140,13 @@
 	}
 </script>
 
+<style>
+	:global([slot="leadingIcon"]),
+	:global([slot="trailingIcon"]) {
+		display: contents;
+	}
+</style>
+
 <svelte:options immutable={true} />
 
 <UseState value={type} onUpdate={handleTypeUpdate} />
@@ -217,9 +223,7 @@
 		{#if variant === 'filled'}
 			{#if $$slots.label}
 				<FloatingLabel component={Span}>
-					<ExtractNamedSlot>
-						<slot name="label" />
-					</ExtractNamedSlot>
+					<slot name="label" />
 				</FloatingLabel>
 			{/if}
 			{#if lineRipple}
@@ -253,13 +257,6 @@
 	{disabled}
 	{variant}
 	{customValidation}
-	{required}
-	{minlength}
-	{maxlength}
-	{type}
-	{pattern}
-	{min}
-	{max}
 	{dom}
 	{inputElement}
 	label={$$slots.label}

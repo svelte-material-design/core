@@ -177,9 +177,6 @@
 	{ripple}
 	{disabled}
 	{customValidation}
-	{required}
-	{minlength}
-	{maxlength}
 	{dom}
 	inputElement={textareaElement}
 	label={$$slots.label}

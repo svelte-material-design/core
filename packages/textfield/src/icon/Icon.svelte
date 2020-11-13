@@ -40,7 +40,9 @@
 
 	let icon: MDCTextFieldIcon;
 	onMount(() => {
-		if (!inputFieldContext$) icon = new MDCTextFieldIcon(dom);
+		if (!inputFieldContext$) {
+			icon = new MDCTextFieldIcon(dom);
+		}
 
 		const slot = dom.parentElement.getAttribute("slot");
 		if (slot === "leadingIcon") {

@@ -25,7 +25,6 @@
 	import { createInputFieldContext } from "./TextFieldContext";
 	import { LineRipple } from "../../../packages/line-ripple";
 	import UseTextField from "./UseTextField.svelte";
-	import { ExtractNamedSlot } from "../../../packages/common/components";
 	import { InputFieldCustomValidation, FullWidthTextFieldType } from "./";
 	import { UseState } from "../../../packages/common/hooks";
 
@@ -100,6 +99,13 @@
 	}
 </script>
 
+<style>
+	:global([slot="leadingIcon"]),
+	:global([slot="trailingIcon"]) {
+		display: contents;
+	}
+</style>
+
 <svelte:options immutable={true} />
 
 <UseState value={type} onUpdate={handleTypeUpdate} />
@@ -118,9 +124,7 @@
 		{style}>
 		<span class="mdc-text-field__ripple" />
 		{#if $$slots.leadingIcon}
-			<ExtractNamedSlot>
-				<slot name="leadingIcon" class="mdc-text-field__icon--leading" />
-			</ExtractNamedSlot>
+			<slot name="leadingIcon" class="mdc-text-field__icon--leading" />
 		{/if}
 		{#if prefix}
 			<span
@@ -179,12 +183,6 @@
 	bind:dirty
 	{disabled}
 	{customValidation}
-	{required}
-	{minlength}
-	{maxlength}
-	{type}
-	{pattern}
-	{dom}
 	{inputElement}
 	ripple={false}
 	label={false}
