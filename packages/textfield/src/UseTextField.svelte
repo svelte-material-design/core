@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { MDCTextField } from "@material/textfield";
-	import { Use } from "../../../packages/common/hooks";
+	import { Use, UseState } from "../../../packages/common/hooks";
 	import { onDestroy } from "svelte";
 	import { InputFieldVariant } from "./";
 	import { StringListToFilter } from "../../../packages/common/functions";
@@ -10,7 +10,6 @@
 	export let value: any = undefined;
 	export let invalid: boolean = false;
 	export let disabled: boolean = false;
-	export let nativeInputInvalid: boolean = false;
 	export let label: boolean = false;
 	export let fullWidth: boolean = false;
 	export let variant: InputFieldVariant = "filled";
@@ -19,7 +18,20 @@
 		nativeInputInvalid: boolean
 	) => boolean = undefined;
 	export let classList: StringListToFilter = [];
+	export let dirty: boolean = false;
+	export let inputElement: HTMLInputElement | HTMLTextAreaElement = undefined;
 
+	//#region HTML Native Input validity attrs
+	// export let required: boolean = undefined;
+	// export let minlength: number = undefined;
+	// export let maxlength: number = undefined;
+	// export let type: string = undefined;
+	// export let pattern: string = undefined;
+	// export let min: number = undefined;
+	// export let max: number = undefined;
+	//#endregion
+
+	let nativeInputInvalid: boolean = false;
 	let textField: MDCTextField;
 
 	$: if (variant == undefined) variant = "filled";
@@ -68,10 +80,21 @@
 		if (!rippleValue) {
 			textField?.ripple?.destroy();
 		}
+
+		updateNativeInputInvalid();
 	}
 
 	function destroy() {
 		textField?.destroy();
+	}
+
+	export function updateNativeInputInvalid() {
+		nativeInputInvalid = inputElement.matches(":invalid");
+	}
+
+	export function handleInputChange() {
+		dirty = true;
+		updateNativeInputInvalid();
 	}
 
 	export function reistantiate() {
@@ -81,4 +104,16 @@
 
 <svelte:options immutable={true} />
 
-<Use effect hook={() => istantiate(dom, ripple, variant)} when={!!dom} />
+<!-- If validation state change is needed on attrs modification
+<UseState value={required} onUpdate={updateNativeInputInvalid} />
+<UseState value={minlength} onUpdate={updateNativeInputInvalid} />
+<UseState value={maxlength} onUpdate={updateNativeInputInvalid} />
+<UseState value={type} onUpdate={updateNativeInputInvalid} />
+<UseState value={pattern} onUpdate={updateNativeInputInvalid} />
+<UseState value={min} onUpdate={updateNativeInputInvalid} />
+<UseState value={max} onUpdate={updateNativeInputInvalid} /> -->
+
+<Use
+	effect
+	hook={() => istantiate(dom, ripple, variant)}
+	when={!!(dom && inputElement)} />

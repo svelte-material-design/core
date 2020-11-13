@@ -1,1 +1,10 @@
-@use "@material/line-ripple/mdc-line-ripple";
+@use "@material/line-ripple";
+@use "./variables";
+
+@include line-ripple.core-styles;
+
+.mdc-line-ripple {
+	@include line-ripple.active-color(
+		var(--smui-line-ripple--active-color, variables.$active-color)
+	);
+}

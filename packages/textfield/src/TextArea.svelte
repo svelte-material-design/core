@@ -27,19 +27,21 @@
 	import { createInputFieldContext } from "./TextFieldContext";
 	import { FloatingLabel } from "../../../packages/floating-label";
 	import { NotchedOutline } from "../../../packages/notched-outline";
-	import { RippleProps, Ripple3 } from "../../../packages/ripple";
 	import { Span } from "../../../packages/common/dom";
+	import { InputFieldCustomValidation } from "./";
 
-	//#region UseTextField params
+	//#region exports
+	//#region UseTextField props
 	export let ripple: boolean = true;
 	export let value: string = undefined;
 	export let invalid: boolean = false;
 	export let disabled: boolean = false;
 	export let fullWidth: boolean = false;
-	export let resizable: boolean = false;
+	export let customValidation: InputFieldCustomValidation = undefined;
 	//#endregion
 
 	export let dirty: boolean = false;
+	export let resizable: boolean = false;
 
 	//#region HTML attrs
 	//#region commons HTML attrs
@@ -58,6 +60,7 @@
 	export let rows: number = undefined;
 	export let wrap: "hard" = undefined;
 	//#endregion
+	//#endregion
 
 	//#region internal props
 	let useInputField: UseTextField;
@@ -65,6 +68,7 @@
 	let labelId: string;
 	let textareaElement: HTMLTextAreaElement;
 	let textFieldClassList: StringListToFilter = [];
+	let nativeInputInvalid: boolean = false;
 	//#endregion
 
 	createInputFieldContext({
@@ -80,17 +84,12 @@
 		},
 	});
 
-	onMount(() => {
-		invalid = dom.matches(":invalid");
-	});
-
 	function valueUpdater() {
 		value = textareaElement.value;
 	}
 
-	function changeHandler(e) {
-		dirty = true;
-		invalid = dom.matches(":invalid");
+	function changeHandler() {
+		useInputField.handleInputChange();
 	}
 </script>
 
@@ -129,6 +128,7 @@
 					aria-controls={helperTextId}
 					aria-describedby={helperTextId}
 					aria-labelledby={labelId}
+					aria-label={placeholder && !labelId ? placeholder : undefined}
 					on:input={valueUpdater}
 					on:change={changeHandler}
 					use:forwardDOMEvents />
@@ -170,12 +170,18 @@
 
 <UseTextField
 	bind:this={useInputField}
+	bind:classList={textFieldClassList}
 	bind:value
 	bind:invalid
+	bind:dirty
 	{ripple}
 	{disabled}
+	{customValidation}
+	{required}
+	{minlength}
+	{maxlength}
+	{dom}
+	inputElement={textareaElement}
 	label={$$slots.label}
-	{fullWidth}
 	variant="outlined"
-	bind:classList={textFieldClassList}
-	{dom} />
+	fullWidth={false} />

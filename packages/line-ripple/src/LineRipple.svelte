@@ -1,13 +1,18 @@
+<script lang="ts" context="module">
+	let count = 0;
+</script>
+
 <script lang="ts">
 	//#region Base
+	import { parseClassList } from "../../../packages/common/functions";
 	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	let className = undefined;
 	export { className as class };
-	export let style: string = null;
-	export let id: string = null;
+	export let style: string = undefined;
+	export let id: string = `@smui/line-ripple/LineRipple:${count++}`;
 
-	export let dom: HTMLDivElement = null;
+	export let dom: HTMLDivElement = undefined;
 
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
@@ -16,8 +21,14 @@
 	// LineRipple
 	import { MDCLineRipple } from "@material/line-ripple";
 	import { onMount, onDestroy } from "svelte";
+	import { getCSSVariable } from "../../../packages/common/theme";
+	import defaults from "./line-ripple.module.scss";
 
 	export let active = false;
+	/**
+	 * Eg: "primary" | "secondary" | "red" | "#ff0000"
+	 */
+	export let color: string = defaults.activeColor;
 
 	let lineRipple: MDCLineRipple;
 	onMount(() => {
@@ -27,6 +38,11 @@
 	onDestroy(() => {
 		lineRipple && lineRipple.destroy();
 	});
+
+	function getActiveColorCSSValue(colorValue: typeof color) {
+		const themeVar = getCSSVariable(colorValue as any);
+		return themeVar ? `var(${themeVar})` : colorValue;
+	}
 
 	export function activate() {
 		return lineRipple.activate();
@@ -45,6 +61,16 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class="mdc-line-ripple {className} {active ? 'mdc-line-ripple--active' : ''}"
-	{style}
+	class={parseClassList([
+		className,
+		'mdc-line-ripple',
+		[active, 'mdc-line-ripple--active'],
+	])}
+	style={parseClassList([
+		[
+			color,
+			`--smui-line-ripple--active-color: ${getActiveColorCSSValue(color)};`,
+		],
+		style,
+	])}
 	use:forwardDOMEvents />

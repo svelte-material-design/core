@@ -1,0 +1,5 @@
+@use "./variables";
+
+:export {
+	activeColor: variables.$active-color;
+}

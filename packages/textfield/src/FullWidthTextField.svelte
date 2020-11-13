@@ -25,72 +25,85 @@
 	import { createInputFieldContext } from "./TextFieldContext";
 	import { LineRipple } from "../../../packages/line-ripple";
 	import UseTextField from "./UseTextField.svelte";
-	import { onMount } from "svelte";
-	import { RippleProps, Ripple3 } from "../../../packages/ripple";
 	import { ExtractNamedSlot } from "../../../packages/common/components";
+	import { InputFieldCustomValidation, FullWidthTextFieldType } from "./";
+	import { UseState } from "../../../packages/common/hooks";
 
-	//#region UseTextField params
-	export let ripple: boolean = true;
-	export let value: any = undefined;
+	//#region exports
+	//#region UseTextField props
+	export let value: string = undefined;
 	export let invalid: boolean = false;
 	export let disabled: boolean = false;
-	export let color: RippleProps["color"] = undefined;
-
-	let nativeInputInvalid: boolean = false;
-	export let customValidation: (
-		value: any,
-		nativeInputInvalid: boolean
-	) => boolean = undefined;
-
+	export let customValidation: InputFieldCustomValidation = undefined;
 	//#endregion
 
+	export let lineRipple: boolean = true;
+	export let dirty: boolean = false;
+
+	//#region HTML attrs
+	//#region commons HTML attrs
 	export let name: string = undefined;
 	export let title: string = undefined;
 	export let placeholder: string = undefined;
 
+	export let required: boolean = undefined;
+	export let readonly: boolean = undefined;
+
+	export let minlength: number = undefined;
+	export let maxlength: number = undefined;
+	//#endregion
+
 	export let prefix: string = undefined;
 	export let suffix: string = undefined;
 
-	export let type: "text" | "search" = "text";
-
-	export let dirty: boolean = false;
+	export let type: FullWidthTextFieldType = "text";
 
 	export let autocomplete: string = undefined;
-	export let required: boolean = undefined;
 	export let pattern: string = undefined;
-	export let readonly: boolean = undefined;
 	export let formnovalidate: boolean = undefined;
-
-	export let maxlength: number = undefined;
-	export let minlength: number = undefined;
+	//#endregion
+	//#endregion
 
 	//#region internal props
+	let useInputField: UseTextField;
 	let helperTextId: string;
 	let inputElement: HTMLInputElement;
 	let textFieldClassList: StringListToFilter = [];
+	let optionsId: string = `${id}_options`;
 	//#endregion
 
-	createInputFieldContext({
+	const context$ = createInputFieldContext({
+		id,
 		setHelperTextId(id: string) {
 			helperTextId = id;
 		},
+		reistantiate() {
+			useInputField.reistantiate();
+		},
 	});
 
-	onMount(() => {
-		updateNativeInputInvalid();
-	});
-
-	function changeHandler(e) {
-		dirty = true;
-		updateNativeInputInvalid();
+	function handleTypeUpdate() {
+		value = inputElement.value;
+		reistantiate();
 	}
 
-	function updateNativeInputInvalid() {
-		nativeInputInvalid = inputElement.matches(":invalid");
+	function reistantiate() {
+		$context$?.reistantiate();
+	}
+
+	function valueUpdater() {
+		value = inputElement.value;
+	}
+
+	function changeHandler() {
+		useInputField.handleInputChange();
 	}
 </script>
 
 <svelte:options immutable={true} />
+
+<UseState value={type} onUpdate={handleTypeUpdate} />
+<UseState value={lineRipple} onUpdate={reistantiate} />
 
 <div class="smui-text-field__wrapper smui-text-field__wrapper--fullwidth">
 	<label
@@ -103,13 +116,7 @@
 			[$$slots.trailingIcon, 'mdc-text-field--with-trailing-icon'],
 		])}
 		{style}>
-		{#if ripple}
-			<Ripple3
-				target={dom}
-				unbounded={false}
-				{color}
-				rippleElement="mdc-text-field__ripple" />
-		{/if}
+		<span class="mdc-text-field__ripple" />
 		{#if $$slots.leadingIcon}
 			<ExtractNamedSlot>
 				<slot name="leadingIcon" class="mdc-text-field__icon--leading" />
@@ -135,39 +142,51 @@
 			{required}
 			{readonly}
 			{formnovalidate}
-			on:change={changeHandler}
+			list={$$slots.options ? optionsId : undefined}
 			aria-controls={helperTextId}
 			aria-describedby={helperTextId}
 			aria-label={placeholder}
+			on:input={valueUpdater}
+			on:change={changeHandler}
 			use:forwardDOMEvents />
 		{#if suffix}
 			<span
 				class="mdc-text-field__affix mdc-text-field__affix--suffix">{suffix}</span>
 		{/if}
 		{#if $$slots.trailingIcon}
-			<ExtractNamedSlot>
-				<slot name="trailingIcon" class="mdc-text-field__icon--trailing" />
-			</ExtractNamedSlot>
+			<slot name="trailingIcon" class="mdc-text-field__icon--trailing" />
 		{/if}
 
-		{#if ripple}
-			<LineRipple />
+		{#if lineRipple}
+			<LineRipple color="primary" />
 		{/if}
 	</label>
-	<ExtractNamedSlot>
-		<slot name="helperText" />
-	</ExtractNamedSlot>
+
+	<slot />
+
+	{#if $$slots.options}
+		<datalist id={optionsId}>
+			<slot name="options" />
+		</datalist>
+	{/if}
 </div>
 
 <UseTextField
+	bind:this={useInputField}
+	bind:classList={textFieldClassList}
 	bind:value
 	bind:invalid
-	{ripple}
+	bind:dirty
 	{disabled}
-	label={false}
-	fullWidth
-	{nativeInputInvalid}
 	{customValidation}
-	variant="filled"
-	bind:classList={textFieldClassList}
-	{dom} />
+	{required}
+	{minlength}
+	{maxlength}
+	{type}
+	{pattern}
+	{dom}
+	{inputElement}
+	ripple={false}
+	label={false}
+	variant="outlined"
+	fullWidth={false} />

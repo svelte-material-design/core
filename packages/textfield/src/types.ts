@@ -13,3 +13,10 @@ export type InputFieldType =
 	| "date"
 	| "datetime-local"
 	| "time";
+
+export type FullWidthTextFieldType = "text" | "search";
+
+export type InputFieldCustomValidation = (
+	value: any,
+	nativeInputInvalid: boolean
+) => boolean;

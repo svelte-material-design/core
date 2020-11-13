@@ -28,7 +28,6 @@
 	import { createInputFieldContext } from "./TextFieldContext";
 	import { NotchedOutline } from "../../../packages/notched-outline";
 	import UseTextField from "./UseTextField.svelte";
-	import { onMount } from "svelte";
 	import { ExtractNamedSlot } from "../../../packages/common/components";
 	import { Span } from "../../../packages/common/dom";
 	import { UseState } from "../../../packages/common/hooks";
@@ -36,7 +35,6 @@
 	//#region exports
 	//#region UseTextField props
 	export let ripple: boolean = true;
-	export let lineRipple: boolean = true;
 	export let value: any = undefined;
 	export let invalid: boolean = false;
 	export let disabled: boolean = false;
@@ -47,6 +45,7 @@
 	) => boolean = undefined;
 	//#endregion
 
+	export let lineRipple: boolean = true;
 	export let density: number = undefined;
 	export let dirty: boolean = false;
 
@@ -81,13 +80,12 @@
 	//#endregion
 
 	//#region internal props
+	let useInputField: UseTextField;
 	let helperTextId: string;
 	let labelId: string;
 	let inputElement: HTMLInputElement;
 	let textFieldClassList: StringListToFilter = [];
-	let useTextField: UseTextField;
 	let optionsId: string = `${id}_options`;
-	let nativeInputInvalid: boolean = false;
 	//#endregion
 
 	$: if (density != undefined) {
@@ -107,12 +105,8 @@
 			labelId = id;
 		},
 		reistantiate() {
-			useTextField.reistantiate();
+			useInputField.reistantiate();
 		},
-	});
-
-	onMount(() => {
-		updateNativeInputInvalid();
 	});
 
 	function handleTypeUpdate() {
@@ -142,13 +136,8 @@
 		}
 	}
 
-	function changeHandler(e) {
-		dirty = true;
-		updateNativeInputInvalid();
-	}
-
-	function updateNativeInputInvalid() {
-		nativeInputInvalid = inputElement.matches(":invalid");
+	function changeHandler() {
+		useInputField.handleInputChange();
 	}
 </script>
 
@@ -211,11 +200,12 @@
 			{readonly}
 			{formnovalidate}
 			list={$$slots.options ? optionsId : undefined}
-			on:input={valueUpdater}
-			on:change={changeHandler}
 			aria-controls={helperTextId}
 			aria-describedby={helperTextId}
 			aria-labelledby={labelId}
+			aria-label={placeholder && !labelId ? placeholder : undefined}
+			on:input={valueUpdater}
+			on:change={changeHandler}
 			use:forwardDOMEvents />
 		{#if suffix}
 			<span
@@ -254,15 +244,23 @@
 </div>
 
 <UseTextField
-	bind:this={useTextField}
+	bind:this={useInputField}
+	bind:classList={textFieldClassList}
 	bind:value
 	bind:invalid
+	bind:dirty
 	{ripple}
 	{disabled}
-	label={$$slots.label}
-	fullWidth={false}
-	{nativeInputInvalid}
-	{customValidation}
 	{variant}
-	bind:classList={textFieldClassList}
-	{dom} />
+	{customValidation}
+	{required}
+	{minlength}
+	{maxlength}
+	{type}
+	{pattern}
+	{min}
+	{max}
+	{dom}
+	{inputElement}
+	label={$$slots.label}
+	fullWidth={false} />
