@@ -25,6 +25,7 @@
 		onDestroy,
 		setContext,
 		createEventDispatcher,
+		tick,
 	} from "svelte";
 	import { Menu } from "../../../packages/menu";
 	import { List } from "../../../packages/list";
@@ -83,13 +84,11 @@
 			setValue(event.detail.value);
 			dirty = true;
 		});
+
+		setSelectValue(value);
 	});
 
 	$: if (select && selectableGroupInitialized) {
-		if (select.value !== value) {
-			setSelectValue(value);
-		}
-
 		if (select.disabled !== disabled) {
 			select.disabled = disabled;
 		}
@@ -115,7 +114,9 @@
 	}
 
 	function setSelectValue(newValue: string) {
-		if (select) select.value = newValue || ""; // For MDC null, undefined get always translated to "".
+		if (select) {
+			select.value = newValue || ""; // For MDC null, undefined get always translated to "".
+		}
 	}
 
 	function setValue(newValue: string) {
@@ -128,6 +129,8 @@
 	}
 
 	function onValueChange(oldValue: any) {
+		setSelectValue(value);
+
 		if (value !== oldValue && customValidation) {
 			invalid = !customValidation(value);
 		}

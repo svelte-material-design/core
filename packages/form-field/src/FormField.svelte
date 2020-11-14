@@ -9,6 +9,7 @@
 	let className = "";
 	export { className as class };
 	export let style: string = "";
+	export let id: string = `@smui/form-field/FormField:${counter++}`;
 
 	export let dom: HTMLDivElement = null;
 	import { BaseProps } from "../../../packages/common/dom/Props";
@@ -21,18 +22,20 @@
 	import { FormFieldLabelAlign, createFormFieldContext } from "./";
 
 	export let align: FormFieldLabelAlign = "start";
-	export let inputId: string = `SMUI-form-field-${counter}`;
 	export let noWrap: boolean = false;
 	export let vertical: boolean = false;
 
-	counter++;
-
-	createFormFieldContext({
-		inputId,
-		setInput(input) {
-			formField.input = input;
+	let inputId: string;
+	const context$ = createFormFieldContext({
+		setInput(value) {
+			formField.input = value;
+		},
+		setInputId(value: string) {
+			inputId = value;
 		},
 	});
+
+	$: $context$ = { ...$context$, inputId };
 
 	let formField: MDCFormField;
 	onMount(() => {

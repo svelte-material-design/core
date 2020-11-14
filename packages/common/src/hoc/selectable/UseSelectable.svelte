@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, tick } from "svelte";
 	import { UseState } from "../../hooks";
 
 	export let selected: boolean = false;
@@ -17,22 +17,17 @@
 			value: typeof value;
 			selected: boolean;
 		};
-		notifySelected: void;
-		notifyUnselected: void;
 	}>();
 
 	$: if (disabled && tabindex === 0) tabindex = -1;
 
 	function onSelectedUpdate() {
-		if (selected) {
-			dispatch("notifySelected");
-		} else {
-			dispatch("notifyUnselected");
-		}
-
-		dispatch("change", {
-			value,
-			selected,
+		tick().then(() => {
+			// This is to prevent that when the value change but UseSelectableGroup is still mounting, value change get ignored
+			dispatch("change", {
+				value,
+				selected,
+			});
 		});
 	}
 

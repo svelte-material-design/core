@@ -141,12 +141,9 @@
 	//#endregion
 
 	//#region connector
-	function notifySelected() {
-		$selectableGroupContext$?.notifySelected(context);
-	}
-
-	function notifyUnselected() {
-		$selectableGroupContext$?.notifyUnselected(context);
+	function handleChange(selected: boolean) {
+		if (selected) $selectableGroupContext$?.notifySelected(context);
+		else $selectableGroupContext$?.notifyUnselected(context);
 	}
 
 	export function notifyFocus() {
@@ -177,8 +174,7 @@
 		bind:disabled
 		bind:value
 		bind:tabindex
-		on:notifySelected={notifySelected}
-		on:notifyUnselected={notifyUnselected}
+		on:change={(event) => handleChange(event.detail.selected)}
 		on:change />
 {/if}
 

@@ -22,6 +22,7 @@
 
 	export let value: string = "";
 	export let selected: boolean = undefined;
+	export let disabled: boolean = false;
 
 	$: if (value == null) value = "";
 </script>
@@ -34,6 +35,7 @@
 	{style}
 	{value}
 	{selected}
+	{disabled}
 	role="option"
 	on:domEvent={forwardDOMEvents}>
 	<Text>

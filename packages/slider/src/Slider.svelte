@@ -109,7 +109,7 @@
 <div
 	bind:this={dom}
 	{...props}
-	id={formFieldContext$ ? $formFieldContext$.inputId : id}
+	{id}
 	class="mdc-slider {className}
     {discrete ? 'mdc-slider--discrete' : ''}
     {discrete && displayMarkers ? 'mdc-slider--display-markers' : ''}"

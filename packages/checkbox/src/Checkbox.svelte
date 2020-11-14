@@ -1,18 +1,14 @@
-<script context="module" lang="ts">
-	let count: number = 0;
-
-	export interface SMUICheckboxChangeEvent {
-		checked: boolean;
-		dom: HTMLInputElement;
-	}
+<script lang="ts" context="module">
+	let count = 0;
 </script>
 
 <script lang="ts">
 	//#region Base
+	import { parseClassList } from "../../../packages/common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../packages/checkbox/Checkbox:${count++}`;
+	export let id: string = `@smui/checkbox/Checkbox:${count++}`;
 
 	export let dom: HTMLInputElement = undefined;
 
@@ -23,31 +19,38 @@
 	// Checkbox
 	//#region  imports
 	import { MDCCheckbox } from "@material/checkbox";
-	import { onMount, onDestroy } from "svelte";
+	import { onMount, onDestroy, tick } from "svelte";
 	import {
 		CheckboxContext,
 		getCheckboxBehaviour,
 		getDisableCheckboxMDCIstance,
-	} from "./CheckboxContext";
+	} from "./";
 	import { getFormFieldContext } from "../../../packages/form-field";
 	import { Selectable } from "../../../packages/common/hoc";
 	import { createEventDispatcher } from "svelte";
+	import { CheckboxChangeEvent } from "./types";
+	import { Use, UseState } from "../../common/hooks";
 	//#endregion
 
 	//#region exports
-	export let disabled: boolean = false;
 	export let checked: boolean = false;
 	export let value: any = undefined;
 	export let allowIndeterminated: boolean = false;
 
+	export let name: string = undefined;
+	export let disabled: boolean = false;
 	export let required: boolean = false;
-
-	export let input$class: string = "";
-	export let input$props: BaseProps = {};
+	export let readonly: boolean = undefined;
 	//#endregion
 
+	let inputId: string = `${id}-input`;
+	let inputElement: HTMLInputElement;
+
+	$: $formFieldContext$?.setInputId(inputId);
+	$: if (!allowIndeterminated) tick().then(() => (checked ??= false));
+
 	const dispatch = createEventDispatcher<{
-		change: SMUICheckboxChangeEvent;
+		change: CheckboxChangeEvent;
 	}>();
 	const behaviour = getCheckboxBehaviour();
 
@@ -62,25 +65,14 @@
 	});
 	//#endregion
 
-	// let addChangeHandler = getContext("SMUI:generic:input:addChangeHandler");
-	// let context = getContext("SMUI:checkbox:context");
-	// let getDataTableRowIndex = getContext("SMUI:data-table:row:getIndex");
-	// let instantiate = getContext("SMUI:checkbox:instantiate");
-	// let getInstance = getContext("SMUI:checkbox:getInstance");
-
-	//#region MDC init/destroy
 	let checkbox: MDCCheckbox;
 	onMount(async () => {
-		if (!disableMDC) checkbox = new MDCCheckbox(dom);
+		if (!disableMDC) {
+			checkbox = new MDCCheckbox(dom);
+		}
 	});
 
 	$: if (checkbox) {
-		if (!checkbox.indeterminate && checked === null) {
-			checkbox.indeterminate = true;
-		} else if (checkbox.indeterminate && checked !== null) {
-			checkbox.indeterminate = false;
-		}
-
 		if (checkbox.checked !== checked) {
 			checkbox.checked = checked;
 		}
@@ -88,20 +80,22 @@
 		if (checkbox.disabled !== disabled) {
 			checkbox.disabled = disabled;
 		}
-
-		if (checkbox.value !== value) {
-			checkbox.value = value;
-		}
-	}
-
-	$: if (checkbox && $formFieldContext$?.instance) {
-		$formFieldContext$.instance.input = checkbox;
 	}
 
 	onDestroy(() => {
 		checkbox && checkbox.destroy();
 	});
-	//#endregion
+
+	function isInputDisabled(
+		readonlyValue: typeof readonly = readonly,
+		disabledValue: typeof disabled = disabled
+	) {
+		return readonlyValue ? readonlyValue : disabledValue;
+	}
+
+	function setFormFieldInput() {
+		$formFieldContext$?.setInput(checkbox);
+	}
 
 	function setChecked(newValue: boolean) {
 		if (checked !== newValue) {
@@ -115,40 +109,76 @@
 		}
 	}
 
+	function updateMDCValue() {
+		if (!checkbox.indeterminate && checked === null) {
+			checkbox.indeterminate = true;
+		} else if (checkbox.indeterminate && checked !== null) {
+			checkbox.indeterminate = false;
+		}
+
+		if (checkbox.value !== value) {
+			checkbox.value = value;
+		}
+	}
+
+	function handleValueChange() {
+		if (!allowIndeterminated && checked == null) {
+			tick().then(() => (checked = false));
+		} else {
+			updateMDCValue();
+
+			tick().then(() => {
+				inputElement.disabled = isInputDisabled();
+			});
+
+			dispatch("change", {
+				checked,
+				dom,
+			});
+		}
+	}
+
 	function handleChange() {
 		if (checkbox) {
 			if (allowIndeterminated && checked === false && checkbox.checked) {
-				checkbox.checked = false;
 				setChecked(null);
 			} else {
 				setChecked(checkbox.checked);
 			}
 		}
-
-		dispatch("change", {
-			checked,
-			dom,
-		});
 	}
 </script>
+
+<svelte:options immutable={true} />
+
+<Use effect once hook={setFormFieldInput} when={!!checkbox} />
+<UseState value={checked} onUpdate={handleValueChange} />
 
 <Selectable bind:value bind:selected={checked}>
 	<div
 		bind:this={dom}
 		{...props}
 		{id}
-		class="mdc-checkbox {className}
-      {disabled ? 'mdc-checkbox--disabled' : ''}
-      {behaviour === 'data-table-header' ? 'mdc-data-table__header-row-checkbox' : ''}
-      {behaviour === 'data-table-row' ? 'mdc-data-table__row-checkbox' : ''}"
+		class={parseClassList([
+			className,
+			'mdc-checkbox',
+			[disabled, 'mdc-checkbox--disabled'],
+			[
+				behaviour === 'data-table-header',
+				'mdc-data-table__header-row-checkbox',
+			],
+			[behaviour === 'data-table-row', 'mdc-data-table__row-checkbox'],
+		])}
 		{style}>
 		<input
-			{...input$props}
-			class="mdc-checkbox__native-control {input$class}"
-			id={formFieldContext$ && $formFieldContext$.inputId}
+			bind:this={inputElement}
+			id={inputId}
+			class="mdc-checkbox__native-control"
 			type="checkbox"
-			{disabled}
+			disabled={isInputDisabled(readonly, disabled)}
+			{name}
 			{checked}
+			{readonly}
 			{value}
 			{required}
 			on:change={handleChange}
@@ -165,45 +195,3 @@
 		<div class="mdc-checkbox__ripple" />
 	</div>
 </Selectable>
-<!-- <div
-  bind:this={element}
-  use:useActions={use}
-  use:forwardEvents
-  class="mdc-checkbox {className}
-    {disabled ? 'mdc-checkbox--disabled' : ''}
-    {context === 'data-table' && dataTableHeader ? 'mdc-data-table__header-row-checkbox' : ''}
-    {context === 'data-table' && !dataTableHeader ? 'mdc-data-table__row-checkbox' : ''}"
-  {...exclude($$props, [
-    'use',
-    'class',
-    'disabled',
-    'indeterminate',
-    'group',
-    'checked',
-    'value',
-    'valueKey',
-    'input$',
-  ])}>
-  <input
-    use:useActions={input$use}
-    class="mdc-checkbox__native-control {input$class}"
-    type="checkbox"
-    {...inputProps}
-    {disabled}
-    bind:checked={nativeChecked}
-    value={valueKey === uninitializedValue ? value : valueKey}
-    on:change={handleChange}
-    on:input={handleChange}
-    on:change
-    on:input
-    {...exclude(prefixFilter($$props, 'input$'), ['use', 'class'])} />
-  <div class="mdc-checkbox__background">
-    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-      <path
-        class="mdc-checkbox__checkmark-path"
-        fill="none"
-        d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-    </svg>
-    <div class="mdc-checkbox__mixedmark" />
-  </div>
-</div> -->

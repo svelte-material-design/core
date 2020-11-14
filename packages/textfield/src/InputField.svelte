@@ -30,6 +30,7 @@
 	import UseTextField from "./UseTextField.svelte";
 	import { Span } from "../../../packages/common/dom";
 	import { UseState } from "../../../packages/common/hooks";
+	import { getFormFieldContext } from "../../form-field";
 
 	//#region exports
 	//#region UseTextField props
@@ -84,9 +85,13 @@
 	let labelId: string;
 	let inputElement: HTMLInputElement;
 	let textFieldClassList: StringListToFilter = [];
-	let optionsId: string = `${id}_options`;
+	let optionsId: string = `${id}-options`;
+	let inputId: string = `${id}-input`;
 	//#endregion
 
+	const formFieldContext$ = getFormFieldContext();
+
+	$: $formFieldContext$?.setInputId(inputId);
 	$: if (density != undefined) {
 		if (density < -4) {
 			density = -4;
@@ -155,7 +160,7 @@
 <div class="smui-text-field__wrapper">
 	<label
 		bind:this={dom}
-		for={id}
+		{id}
 		class={parseClassList([
 			className,
 			...textFieldClassList,
@@ -176,7 +181,8 @@
 				)}`,
 			],
 		])}
-		{style}>
+		{style}
+		for={id}>
 		{#if ripple}<span class="mdc-text-field__ripple" />{/if}
 		{#if $$slots.leadingIcon}
 			<slot name="leadingIcon" />
@@ -188,7 +194,7 @@
 		<input
 			bind:this={inputElement}
 			{...props}
-			{id}
+			id={inputId}
 			class="mdc-text-field__input"
 			{type}
 			{name}

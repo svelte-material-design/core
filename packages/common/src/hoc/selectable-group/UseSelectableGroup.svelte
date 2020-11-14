@@ -255,20 +255,34 @@
 	}
 
 	export function registerItem(item: SelectableContext) {
+		console.log("register", item);
 		items.add(item);
 
-		if (initialized) {
-			dispatch("optionsUpdated", items);
-		}
+		tick().then(() => {
+			if (items.size === 1) {
+				// Needed in case nullable is false but since there were no items, value is null or []
+				checkAndFixInvalidValue(value, selectionType);
+			}
+
+			// Needed because html wouldn't still be updated inside each block
+			if (initialized) {
+				dispatch("optionsUpdated", items);
+			}
+		});
 	}
 
 	export function unregisterItem(item: SelectableContext) {
+		console.log("unregister", item);
 		items.delete(item);
-		handleValueChange(undefined);
 
-		if (initialized) {
-			dispatch("optionsUpdated", items);
-		}
+		tick().then(() => {
+			// Needed because html wouldn't still be updated inside each block
+			if (initialized) {
+				dispatch("optionsUpdated", items);
+			}
+
+			handleValueChange(undefined);
+		});
 	}
 
 	export function notifyUnselected(itemDeselected: SelectableContext) {

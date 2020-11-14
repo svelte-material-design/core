@@ -7,7 +7,8 @@ const [createFormFieldContext, getFormFieldContext] = createContextBuilder<
 export { createFormFieldContext, getFormFieldContext };
 
 export interface FormFieldContext {
-	readonly inputId: string;
 	readonly instance: MDCFormField;
-	setInput(slider: MDCFormFieldInput);
+	readonly inputId: string;
+	setInput(value: MDCFormFieldInput);
+	setInputId(id: string);
 }
