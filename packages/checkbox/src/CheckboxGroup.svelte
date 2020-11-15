@@ -1,9 +1,23 @@
 <script lang="ts">
-  import { SelectableGroup } from "../../../packages/common/hoc";
+	import { createEventDispatcher } from "svelte";
+	import { SelectableGroup } from "../../../packages/common/hoc";
+	import { CheckboxGroupChangeEvent } from "./types";
 
-  export let value: any = null;
+	export let value: string[] = undefined;
+
+	const dispatch = createEventDispatcher<{
+		change: CheckboxGroupChangeEvent;
+	}>();
+
+	function handleChange() {
+		dispatch("change", {
+			value,
+		});
+	}
 </script>
 
-<SelectableGroup on:change bind:value>
-  <slot />
+<svelte:options immutable={true} />
+
+<SelectableGroup on:change={handleChange} bind:value>
+	<slot />
 </SelectableGroup>

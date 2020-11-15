@@ -1,5 +1,15 @@
 <script lang="ts" context="module">
-	import { H1, H2, H3, H4, H5, H6, P, Span } from "../../../packages/common/dom";
+	import { TypographyVariant } from "./";
+	import {
+		H1,
+		H2,
+		H3,
+		H4,
+		H5,
+		H6,
+		P,
+		Span,
+	} from "../../../packages/common/dom";
 
 	function getDefaultComponent(variant: TypographyVariant) {
 		switch (variant) {
@@ -27,21 +37,6 @@
 				return P;
 		}
 	}
-
-	export type TypographyVariant =
-		| "headline1"
-		| "headline2"
-		| "headline3"
-		| "headline4"
-		| "headline5"
-		| "headline6"
-		| "subtitle1"
-		| "subtitle2"
-		| "body1"
-		| "body2"
-		| "caption"
-		| "button"
-		| "overline";
 </script>
 
 <script lang="ts">

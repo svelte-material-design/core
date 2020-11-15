@@ -1,1 +1,9 @@
-@use "@material/checkbox/mdc-checkbox";
+@use "@material/checkbox";
+
+@include checkbox.core-styles;
+
+@for $density from 1 to 4 {
+	.smui-checkbox--dense--#{$density} {
+		@include checkbox.density($density * -1);
+	}
+}

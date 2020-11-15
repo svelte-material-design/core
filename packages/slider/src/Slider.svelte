@@ -1,23 +1,28 @@
+<script lang="ts" context="module">
+	let count = 0;
+</script>
+
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	import { parseClassList } from "../../../packages/common/functions";
+	let className = undefined;
 	export { className as class };
-	export let style: string = "";
-	export let id: string = "";
+	export let style: string = undefined;
+	export let id: string = `@smui/slider/Slider:${count++}`;
 
-	export let dom: HTMLDivElement = null;
+	export let dom: HTMLDivElement = undefined;
+
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Slider
 	import { MDCSlider } from "@material/slider";
-	import { onMount, onDestroy, getContext } from "svelte";
+	import { onMount, onDestroy, createEventDispatcher } from "svelte";
 	import { getDialogContext } from "../../../packages/dialog";
 	import { getFormFieldContext } from "../../../packages/form-field";
 	import { Use, UseState } from "../../../packages/common/hooks";
+	import { SliderChangeEvent } from "./";
 
 	export let disabled: boolean = false;
 	export let discrete: boolean = false;
@@ -29,6 +34,10 @@
 
 	$: if (value == null || value < min) value = min;
 	$: if (value > max) value = max;
+
+	const dispatch = createEventDispatcher<{
+		change: SliderChangeEvent;
+	}>();
 
 	const formFieldContext$ = getFormFieldContext();
 	const dialogContext$ = getDialogContext();
@@ -73,13 +82,17 @@
 			value = value - vMod;
 		}
 	}
-
-	function setFormFieldInput() {
+	function setFormFieldInput(slider: MDCSlider) {
 		$formFieldContext$?.setInput(slider as any);
 	}
 
 	function handleChange() {
 		value = slider.value;
+
+		dispatch("change", {
+			dom,
+			value,
+		});
 	}
 
 	export function layout() {
@@ -103,18 +116,20 @@
 	}
 </style>
 
-<Use effect once hook={setFormFieldInput} />
+<Use effect hook={() => setFormFieldInput(slider)} when={!!slider} />
 <UseState value={step} onUpdate={handleStepUpdate} />
 
 <div
 	bind:this={dom}
 	{...props}
 	{id}
-	class="mdc-slider {className}
-    {discrete ? 'mdc-slider--discrete' : ''}
-    {discrete && displayMarkers ? 'mdc-slider--display-markers' : ''}"
+	class={parseClassList([
+		className,
+		'mdc-slider',
+		[discrete, 'mdc-slider--discrete'],
+		[discrete && displayMarkers, 'mdc-slider--display-markers'],
+	])}
 	{style}
-	use:forwardDOMEvents
 	role="slider"
 	aria-disabled={disabled ? 'true' : 'false'}
 	aria-valuemin={min}

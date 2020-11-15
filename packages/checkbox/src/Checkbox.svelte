@@ -34,13 +34,24 @@
 
 	//#region exports
 	export let checked: boolean = false;
-	export let value: any = undefined;
+	export let value: string = undefined;
 	export let allowIndeterminated: boolean = false;
+	export let ripple: boolean = true;
+	export let expandedTouchTarget: boolean = true;
+	export let density: number = undefined;
 
 	export let name: string = undefined;
 	export let disabled: boolean = false;
 	export let required: boolean = false;
 	export let readonly: boolean = undefined;
+
+	$: if (density != undefined) {
+		if (density < -3) {
+			density = -3;
+		} else if (density > 0) {
+			density = 0;
+		}
+	}
 	//#endregion
 
 	let inputId: string = `${id}-input`;
@@ -55,7 +66,6 @@
 	const behaviour = getCheckboxBehaviour();
 
 	//#region Init contexts
-	//const itemContext$ = getItemContext();
 	const formFieldContext$ = getFormFieldContext();
 	const disableMDC = getDisableCheckboxMDCIstance();
 
@@ -67,9 +77,7 @@
 
 	let checkbox: MDCCheckbox;
 	onMount(async () => {
-		if (!disableMDC) {
-			checkbox = new MDCCheckbox(dom);
-		}
+		reistantiate();
 	});
 
 	$: if (checkbox) {
@@ -86,6 +94,17 @@
 		checkbox && checkbox.destroy();
 	});
 
+	function reistantiate() {
+		if (!disableMDC) {
+			checkbox?.destroy();
+			checkbox = new MDCCheckbox(dom);
+
+			if (!ripple) {
+				checkbox.ripple.destroy();
+			}
+		}
+	}
+
 	function isInputDisabled(
 		readonlyValue: typeof readonly = readonly,
 		disabledValue: typeof disabled = disabled
@@ -93,7 +112,7 @@
 		return readonlyValue ? readonlyValue : disabledValue;
 	}
 
-	function setFormFieldInput() {
+	function setFormFieldInput(checkbox: MDCCheckbox) {
 		$formFieldContext$?.setInput(checkbox);
 	}
 
@@ -151,47 +170,53 @@
 
 <svelte:options immutable={true} />
 
-<Use effect once hook={setFormFieldInput} when={!!checkbox} />
+<Use effect hook={() => setFormFieldInput(checkbox)} when={!!checkbox} />
 <UseState value={checked} onUpdate={handleValueChange} />
+<UseState value={ripple} onUpdate={reistantiate} />
 
 <Selectable bind:value bind:selected={checked}>
-	<div
-		bind:this={dom}
-		{...props}
-		{id}
-		class={parseClassList([
-			className,
-			'mdc-checkbox',
-			[disabled, 'mdc-checkbox--disabled'],
-			[
-				behaviour === 'data-table-header',
-				'mdc-data-table__header-row-checkbox',
-			],
-			[behaviour === 'data-table-row', 'mdc-data-table__row-checkbox'],
-		])}
-		{style}>
-		<input
-			bind:this={inputElement}
-			id={inputId}
-			class="mdc-checkbox__native-control"
-			type="checkbox"
-			disabled={isInputDisabled(readonly, disabled)}
-			{name}
-			{checked}
-			{readonly}
-			{value}
-			{required}
-			on:change={handleChange}
-			on:keyup={handleKeyPress} />
-		<div class="mdc-checkbox__background">
-			<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-				<path
-					class="mdc-checkbox__checkmark-path"
-					fill="none"
-					d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-			</svg>
-			<div class="mdc-checkbox__mixedmark" />
+	<div class={expandedTouchTarget ? 'mdc-touch-target-wrapper' : undefined}>
+		<div
+			bind:this={dom}
+			{...props}
+			{id}
+			class={parseClassList([
+				className,
+				'mdc-checkbox',
+				[expandedTouchTarget, 'mdc-checkbox--touch'],
+				[disabled, 'mdc-checkbox--disabled'],
+				[
+					behaviour === 'data-table-header',
+					'mdc-data-table__header-row-checkbox',
+				],
+				[behaviour === 'data-table-row', 'mdc-data-table__row-checkbox'],
+				[density, `smui-checkbox--dense--${Math.abs(density)}`],
+			])}
+			{style}>
+			<input
+				bind:this={inputElement}
+				id={inputId}
+				class="mdc-checkbox__native-control"
+				type="checkbox"
+				disabled={isInputDisabled(readonly, disabled)}
+				{name}
+				{checked}
+				{readonly}
+				{value}
+				{required}
+				data-indeterminate={checked == null ? 'true' : undefined}
+				on:change={handleChange}
+				on:keyup={handleKeyPress} />
+			<div class="mdc-checkbox__background">
+				<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+					<path
+						class="mdc-checkbox__checkmark-path"
+						fill="none"
+						d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+				</svg>
+				<div class="mdc-checkbox__mixedmark" />
+			</div>
+			<div class="mdc-checkbox__ripple" />
 		</div>
-		<div class="mdc-checkbox__ripple" />
 	</div>
 </Selectable>
