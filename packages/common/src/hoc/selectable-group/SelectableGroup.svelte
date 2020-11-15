@@ -17,7 +17,7 @@
 	export let value: any = undefined;
 	export let selectionType: SelectionType = "multi";
 	export let indexHasValues: boolean = undefined;
-	export let nullable: boolean = false;
+	export let nullable: boolean = undefined;
 	export let contextOverride$: Writable<SelectableGroupContext> = undefined;
 	export let id: string = `@smui/common/hoc/SelectableGroup:${count++}`;
 	export let initialized: boolean = false;

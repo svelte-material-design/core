@@ -8,11 +8,12 @@
 	import { createEventDispatcher, tick } from "svelte";
 	import { arrEquals } from "../../utils";
 	import { SelectableContext, SelectionType } from "../";
+	import { OnSelectableGroupChange } from "../";
 
 	export let value: any = undefined;
 	export let selectionType: SelectionType = "multi";
 	export let indexHasValues: boolean = undefined;
-	export let nullable: boolean = undefined;
+	export let nullable: boolean = false;
 	export const id: string = `@smui/common/hoc/UseSelectableGroup:${count++}`;
 
 	const items = new Set<SelectableContext>();
@@ -20,10 +21,7 @@
 	let initialized = false;
 
 	const dispatch = createEventDispatcher<{
-		change: {
-			value: typeof value;
-			selectedItemsIndex: number | number[];
-		};
+		change: OnSelectableGroupChange;
 		optionsUpdated: typeof items;
 		init: undefined;
 	}>();
@@ -90,7 +88,7 @@
 				if (isResetValue() && nullable) {
 					setResetValue();
 				} else if (itemsArray.some((item) => item.value === oldValue)) {
-					setValue(oldValue);
+					tick().then(() => setValue(oldValue));
 
 					return false;
 				} else {
@@ -255,7 +253,6 @@
 	}
 
 	export function registerItem(item: SelectableContext) {
-		console.log("register", item);
 		items.add(item);
 
 		tick().then(() => {
@@ -272,7 +269,6 @@
 	}
 
 	export function unregisterItem(item: SelectableContext) {
-		console.log("unregister", item);
 		items.delete(item);
 
 		tick().then(() => {

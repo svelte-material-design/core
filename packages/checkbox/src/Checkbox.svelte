@@ -54,15 +54,17 @@
 	}
 	//#endregion
 
+	const dispatch = createEventDispatcher<{
+		change: CheckboxChangeEvent;
+	}>();
+
 	let inputId: string = `${id}-input`;
 	let inputElement: HTMLInputElement;
 
 	$: $formFieldContext$?.setInputId(inputId);
-	$: if (!allowIndeterminated) tick().then(() => (checked ??= false));
+	$: if (!allowIndeterminated && checked == null)
+		tick().then(() => (checked ??= false)); // is tick needed?
 
-	const dispatch = createEventDispatcher<{
-		change: CheckboxChangeEvent;
-	}>();
 	const behaviour = getCheckboxBehaviour();
 
 	//#region Init contexts

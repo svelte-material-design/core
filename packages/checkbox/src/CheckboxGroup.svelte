@@ -18,6 +18,6 @@
 
 <svelte:options immutable={true} />
 
-<SelectableGroup on:change={handleChange} bind:value>
+<SelectableGroup on:change={handleChange} bind:value nullable>
 	<slot />
 </SelectableGroup>
