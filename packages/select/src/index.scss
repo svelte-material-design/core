@@ -1,4 +1,37 @@
 @use "smui-theme";
-@use "@material/select/mdc-select";
-@use "./mixins";
-@include mixins.smui-select-core-styles;
+@use "@material/select/select-theme";
+@use "@material/select/select";
+@use "@material/theme/custom-properties";
+@use "@material/shape";
+
+@mixin outlined-shape-radius($fallback: select-theme.$shape-radius) {
+	$shape-radius: custom-properties.create(
+		--smui-select--shape-radius,
+		$fallback
+	);
+	@include select-theme.outline-shape-radius($shape-radius);
+}
+
+@include select.core-styles;
+
+.smui-select {
+	display: contents;
+
+	.mdc-select--filled {
+		$shape-radius: custom-properties.create(
+			--smui-select--shape-radius,
+			select-theme.$shape-radius
+		);
+		@include select-theme.filled-shape-radius($shape-radius);
+	}
+
+	.mdc-select--outlined {
+		&:not(.mdc-select--with-leading-icon) {
+			@include outlined-shape-radius;
+		}
+
+		&.mdc-select--with-leading-icon {
+			@include outlined-shape-radius(0);
+		}
+	}
+}

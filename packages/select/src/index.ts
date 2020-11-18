@@ -1,5 +1,6 @@
-import Select from './Select.svelte';
-import Option from './Option.svelte';
+import Select from "./Select.svelte";
+import Option from "./Option.svelte";
 
-export * from './types';
-export {Select, Option};
+export { Select, Option };
+export * from "./SelectContext";
+export * from "./types";

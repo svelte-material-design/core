@@ -27,7 +27,7 @@
 	},
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@material/tab-bar": "^7.0.0",
+		"@material/tab-bar": "^8.0.0",
 		"@smui/common": "file:../common",
 		"@smui/tab-scroller": "file:../tab-scroller",
 		"@smui/tab": "file:../tab"

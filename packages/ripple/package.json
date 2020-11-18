@@ -28,7 +28,7 @@
 	},
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@material/ripple": "^7.0.0",
+		"@material/ripple": "^8.0.0",
 		"@smui/common": "file:../common"
 	},
 	"devDependencies": {

@@ -31,6 +31,9 @@
 	export let max: number = 100;
 	export let step: number = 0.1;
 	export let value: number = min;
+	export let ariaLabel: string = undefined;
+	export let ariaValueText: string | ((value: number) => string) = undefined;
+	export let tickMarks: boolean = false;
 
 	$: if (value == null || value < min) value = min;
 	$: if (value > max) value = max;
@@ -44,29 +47,16 @@
 
 	let slider: MDCSlider;
 	onMount(() => {
-		slider = new MDCSlider(dom);
-		slider.listen("MDCSlider:input", handleChange);
+		reistantiate();
 	});
 
 	$: if (slider) {
-		if (slider.disabled !== disabled) {
-			slider.disabled = disabled;
+		if (slider.getDisabled() !== disabled) {
+			slider.setDisabled(disabled);
 		}
 
-		if (slider.min !== min) {
-			slider.min = min;
-		}
-
-		if (slider.max !== max) {
-			slider.max = max;
-		}
-
-		if (slider.step !== step) {
-			slider.step = step;
-		}
-
-		if (slider.value !== value) {
-			slider.value = value;
+		if (slider.getValue() !== value) {
+			slider.setValue(value);
 		}
 
 		// if ($dialogContext$?.isOpen) slider.layout();
@@ -75,6 +65,28 @@
 	onDestroy(() => {
 		slider && slider.destroy();
 	});
+
+	function setAriaValueTextMapFn(
+		oldValue: typeof ariaValueText = undefined,
+		newAriaValueText = ariaValueText
+	) {
+		if (
+			typeof oldValue === "function" &&
+			typeof newAriaValueText !== "function"
+		) {
+			slider.setValueToAriaValueTextFn(undefined);
+		} else if (typeof newAriaValueText === "function") {
+			slider.setValueToAriaValueTextFn(newAriaValueText);
+		}
+	}
+
+	function reistantiate() {
+		slider?.destroy();
+		slider = new MDCSlider(dom);
+		slider.listen("MDCSlider:input", handleChange);
+
+		setAriaValueTextMapFn();
+	}
 
 	function handleStepUpdate() {
 		const vMod = value % step;
@@ -87,7 +99,7 @@
 	}
 
 	function handleChange() {
-		value = slider.value;
+		value = slider.getValue();
 
 		dispatch("change", {
 			dom,
@@ -95,16 +107,16 @@
 		});
 	}
 
+	function getAriaValueText(_value: typeof value) {
+		return typeof ariaValueText === "string"
+			? ariaValueText
+			: typeof ariaValueText === "function"
+			? ariaValueText(value)
+			: undefined;
+	}
+
 	export function layout() {
 		return slider.layout();
-	}
-
-	export function stepUp(amount = 1) {
-		return slider.stepUp(amount);
-	}
-
-	export function stepDown(amount = 1) {
-		return slider.stepDown(amount);
 	}
 
 	$: props.tabindex = props.tabindex || 0;
@@ -118,6 +130,8 @@
 
 <Use effect hook={() => setFormFieldInput(slider)} when={!!slider} />
 <UseState value={step} onUpdate={handleStepUpdate} />
+<UseState value={ariaValueText} onUpdate={setAriaValueTextMapFn} />
+<UseState value={[min, max, step]} onUpdate={reistantiate} />
 
 <div
 	bind:this={dom}
@@ -128,29 +142,59 @@
 		'mdc-slider',
 		[discrete, 'mdc-slider--discrete'],
 		[discrete && displayMarkers, 'mdc-slider--display-markers'],
+		[tickMarks, 'mdc-slider--tick-marks'],
 	])}
-	{style}
-	role="slider"
-	aria-disabled={disabled ? 'true' : 'false'}
-	aria-valuemin={min}
-	aria-valuemax={max}
-	aria-valuenow={value}
-	{...step === 0 ? {} : { 'data-step': step }}>
-	<div class="mdc-slider__track-container">
-		<div class="mdc-slider__track" />
-		{#if discrete && displayMarkers}
-			<div class="mdc-slider__track-marker-container" />
-		{/if}
+	data-step={step}
+	{style}>
+	<div class="mdc-slider__track">
+		<div class="mdc-slider__track--inactive" />
+		<div class="mdc-slider__track--active">
+			<div class="mdc-slider__track--active_fill" />
+		</div>
 	</div>
-	<div class="mdc-slider__thumb-container">
+	{#if tickMarks}
+		<div class="mdc-slider__tick-marks">
+			{#each Array(value).fill('') as _}
+				<div class="mdc-slider__tick-mark--active" />
+			{/each}
+			{#each Array(max - value).fill('') as _}
+				<div class="mdc-slider__tick-mark--inactive" />
+			{/each}
+		</div>
+	{/if}
+	<div
+		class="mdc-slider__thumb"
+		role="slider"
+		tabindex={disabled ? -1 : 0}
+		aria-disabled={disabled}
+		aria-valuemin={min}
+		aria-valuemax={max}
+		aria-valuenow={value}
+		aria-valuetext={getAriaValueText(value)}
+		aria-labelledby={$formFieldContext$ && $formFieldContext$.labelId}
+		aria-label={(!$formFieldContext$ || !$formFieldContext$.labelId) && ariaLabel ? ariaLabel : undefined}>
 		{#if discrete}
-			<div class="mdc-slider__pin">
-				<span class="mdc-slider__pin-value-marker" />
+			<div class="mdc-slider__value-indicator-container">
+				<div class="mdc-slider__value-indicator">
+					<span class="mdc-slider__value-indicator-text"> {value} </span>
+				</div>
 			</div>
 		{/if}
-		<svg class="mdc-slider__thumb" width="21" height="21">
-			<circle cx="10.5" cy="10.5" r="7.875" />
-		</svg>
-		<div class="mdc-slider__focus-ring" />
+		<div class="mdc-slider__thumb-knob" />
 	</div>
+	<!-- TODO: Range :D <div 
+		class="mdc-slider__thumb"
+		role="slider"
+		tabindex="0"
+		aria-label="Discrete range slider demo"
+		aria-valuemin="0"
+		aria-valuemax="100"
+		aria-valuenow="50">
+		<div class="mdc-slider__value-indicator-container">
+			<div class="mdc-slider__value-indicator">
+				<span class="mdc-slider__value-indicator-text"> 50 </span>
+			</div>
+		</div>
+		<div class="mdc-slider__thumb-knob" />
+	</div> -->
 </div>

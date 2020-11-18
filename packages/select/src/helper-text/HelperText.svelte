@@ -1,17 +1,16 @@
-<script context="module" lang="ts">
+<script lang="ts" context="module">
 	let count = 0;
 </script>
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "../../../../packages/common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	import { parseClassList } from "../../../../packages/common/functions";
+	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `SMUI-Select-HelperText-${count++}`;
+	export let id: string = `@smui/select/helper-text/HelperText:${count++}`;
 
-	export let dom: HTMLDivElement = undefined;
+	export let dom: HTMLParagraphElement = undefined;
 
 	import { BaseProps } from "../../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
@@ -20,12 +19,13 @@
 	// HelperText
 	import { MDCSelectHelperText } from "@material/select/helper-text";
 	import { onMount, onDestroy } from "svelte";
-	import { getInputFieldContext } from "../../../../packages/textfield";
+	import { getSelectContext } from "../";
 
 	export let validationMsg: boolean = false;
+	export let persistentValidationMsg: boolean = false;
 
-	const inputFieldContext$ = getInputFieldContext();
-	$: $inputFieldContext$?.setHelperTextId(id);
+	const selectContext$ = getSelectContext();
+	$: $selectContext$?.setHelperTextId(id);
 
 	let helperText: MDCSelectHelperText;
 	onMount(() => {
@@ -40,13 +40,17 @@
 <p
 	bind:this={dom}
 	{...props}
-	class="
-    mdc-select-helper-text
-    {className}
-    {validationMsg ? 'mdc-select-helper-text--validation-msg' : 'mdc-select-helper-text--validation-msg-persistent'}
-  "
+	{id}
+	class={parseClassList([
+		className,
+		'mdc-select-helper-text',
+		[
+			persistentValidationMsg,
+			'mdc-select-helper-text--validation-msg-persistent',
+		],
+		[validationMsg, 'mdc-select-helper-text--validation-msg'],
+	])}
 	{style}
-	aria-hidden="true"
-	use:forwardDOMEvents>
+	aria-hidden="true">
 	<slot />
 </p>

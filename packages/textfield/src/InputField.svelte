@@ -76,6 +76,8 @@
 	export let step: number = undefined;
 	export let min: number = undefined;
 	export let max: number = undefined;
+
+	export let ariaLabel: string = undefined;
 	//#endregion
 	//#endregion
 
@@ -215,7 +217,7 @@
 			aria-controls={helperTextId}
 			aria-describedby={helperTextId}
 			aria-labelledby={labelId}
-			aria-label={placeholder && !labelId ? placeholder : undefined}
+			aria-label={placeholder && !labelId ? placeholder : ariaLabel}
 			on:input={valueUpdater}
 			on:change={changeHandler}
 			use:forwardDOMEvents />

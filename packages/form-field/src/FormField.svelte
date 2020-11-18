@@ -25,8 +25,13 @@
 	export let noWrap: boolean = false;
 	export let vertical: boolean = false;
 
+	let labelId: string;
+	$: labelId = $$slots.label ? `${id}--label` : undefined;
+
 	let inputId: string;
 	const context$ = createFormFieldContext({
+		labelId,
+		inputId,
 		setInput(value) {
 			formField.input = value;
 		},
@@ -35,7 +40,7 @@
 		},
 	});
 
-	$: $context$ = { ...$context$, inputId };
+	$: $context$ = { ...$context$, labelId, inputId };
 
 	let formField: MDCFormField;
 	onMount(() => {
@@ -72,9 +77,15 @@
 	use:forwardDOMEvents>
 	<slot />
 	{#if $$slots.label}
-		<label for={inputId}>
-			<slot name="label" />
-		</label>
+		{#if inputId}
+			<label id={labelId} for={inputId}>
+				<slot name="label" />
+			</label>
+		{:else}
+			<span id={labelId}>
+				<slot name="label" />
+			</span>
+		{/if}
 	{/if}
 </div>
 

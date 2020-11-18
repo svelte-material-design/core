@@ -27,9 +27,9 @@
 	},
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@material/fab": "^7.0.0",
-		"@material/ripple": "^7.0.0",
-		"@material/feature-targeting": "^7.0.0",
+		"@material/fab": "^8.0.0",
+		"@material/ripple": "^8.0.0",
+		"@material/feature-targeting": "^8.0.0",
 		"@smui/common": "file:../common",
 		"@smui/ripple": "file:../ripple"
 	},

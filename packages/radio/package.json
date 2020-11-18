@@ -27,7 +27,7 @@
 	},
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@material/radio": "^7.0.0",
+		"@material/radio": "^8.0.0",
 		"@smui/common": "file:../common",
 		"@smui/form-field": "file:../form-field"
 	},

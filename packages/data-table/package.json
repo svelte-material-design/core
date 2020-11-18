@@ -27,7 +27,7 @@
 	},
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@material/data-table": "^7.0.0",
+		"@material/data-table": "^8.0.0",
 		"@smui/checkbox": "file:../checkbox",
 		"@smui/select": "file:../select",
 		"@smui/icon-button": "file:../icon-button",

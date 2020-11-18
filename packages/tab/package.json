@@ -27,7 +27,7 @@
 	},
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@material/tab": "^7.0.0",
+		"@material/tab": "^8.0.0",
 		"@smui/common": "file:../common",
 		"@smui/tab-indicator": "file:../tab-indicator"
 	},

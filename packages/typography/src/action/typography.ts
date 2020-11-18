@@ -3,7 +3,7 @@ import { TypographyVariant } from "../types";
 
 export function typography(
 	node: HTMLElement,
-	variant: TypographyVariant = "body1"
+	variant: TypographyVariant = "body2"
 ) {
 	const variantMemo = memo(variant);
 

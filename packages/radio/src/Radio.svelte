@@ -8,7 +8,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/slider/Slider:${count++}`;
+	export let id: string = `@smui/radio/Radio:${count++}`;
 
 	export let dom: HTMLInputElement = undefined;
 
@@ -55,7 +55,6 @@
 	$: $formFieldContext$?.setInputId(inputId);
 
 	//#region Init contexts
-	//let itemContext$ = getItemContext();
 	let formFieldContext$ = getFormFieldContext();
 
 	$: $formFieldContext$?.setInputId(inputId);

@@ -1,9 +1,10 @@
-@use "@material/radio";
+@use "@material/radio/radio";
+@use "@material/radio/radio-theme";
 
 @include radio.core-styles;
 
 @for $density from 1 to 4 {
 	.smui-radio--dense--#{$density} {
-		@include radio.density($density * -1);
+		@include radio-theme.density($density * -1);
 	}
 }
