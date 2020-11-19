@@ -177,7 +177,7 @@
 				`smui-input-field--outlined--dense--${Math.abs(density)}`,
 			],
 			[
-				variant == 'outlined' && $$slots.trailingIcon && density,
+				variant == 'outlined' && $$slots.leadingIcon && density,
 				`smui-input-field--outlined--with-leading-icon--dense--${Math.abs(
 					density
 				)}`,

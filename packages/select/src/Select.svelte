@@ -41,6 +41,7 @@
 	import { createSelectContext } from "./";
 	import { ExtractNamedSlot } from "../../common";
 
+	//#region exports
 	export let ripple: boolean = true;
 	export let lineRipple: boolean = true;
 	export let dirty = false;
@@ -57,9 +58,22 @@
 	export let readonly: boolean = false;
 	export let invalid: boolean = false;
 	export let required: boolean = false;
+
+	//#region theming
 	export let shapeRadius: string = undefined;
+	export let density: number = undefined;
+
+	$: if (density != undefined) {
+		if (density < -4) {
+			density = -4;
+		} else if (density > 0) {
+			density = 0;
+		}
+	}
+	//#endregion
 
 	$: invalid = customValidation ? !customValidation(value) : invalid;
+	//#endregion
 
 	let helperTextId: string;
 	let labelId: string;
@@ -198,13 +212,31 @@
 				[$$slots.leadingIcon, 'mdc-select--with-leading-icon'],
 				[invalid, 'mdc-select--invalid'],
 				[!$$slots.label, 'mdc-select--no-label'],
+				[
+					variant == 'filled' && !$$slots.leadingIcon && density,
+					`smui-input-field--filled--dense--${Math.abs(density)}`,
+				],
+				[
+					variant == 'filled' && $$slots.leadingIcon && density,
+					`smui-input-field--filled--with-leading-icon--dense--${Math.abs(
+						density
+					)}`,
+				],
+				[
+					variant == 'outlined' && !$$slots.leadingIcon && density,
+					`smui-input-field--outlined--dense--${Math.abs(density)}`,
+				],
+				[
+					variant == 'outlined' && $$slots.leadingIcon && density,
+					`smui-input-field--outlined--with-leading-icon--dense--${Math.abs(
+						density
+					)}`,
+				],
 			])}
 			style={parseClassList([
 				style,
-				[
-					shapeRadius != undefined && ~shapeRadius && shapeRadius !== '',
-					`--smui-select--shape-radius: ${shapeRadius};`,
-				],
+				[shapeRadius, `--smui-select--shape-radius: ${shapeRadius};`],
+				[density, `--smui-select--density: ${density};`],
 			])}
 			{title}>
 			<input type="hidden" {name} {readonly} {disabled} bind:value />

@@ -22,6 +22,7 @@
 			--smui-select--shape-radius,
 			select-theme.$shape-radius
 		);
+
 		@include select-theme.filled-shape-radius($shape-radius);
 	}
 
@@ -33,5 +34,23 @@
 		&.mdc-select--with-leading-icon {
 			@include outlined-shape-radius(0);
 		}
+	}
+}
+
+@for $density from 1 to 5 {
+	.smui-select--filled--dense--#{$density} {
+		@include select-theme.filled-density($density * -1);
+	}
+
+	.smui-select--filled--with-leading-icon--dense--#{$density} {
+		@include select-theme.filled-with-leading-icon-density($density * -1);
+	}
+
+	.smui-select--outlined--dense--#{$density} {
+		@include select-theme.outlined-density($density * -1);
+	}
+
+	.smui-select--outlined--with-leading-icon--dense--#{$density} {
+		@include select-theme.outlined-with-leading-icon-density($density * -1);
 	}
 }
