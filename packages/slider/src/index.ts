@@ -1,4 +1,5 @@
-import Slider from "./Slider.svelte";
+import ContinuousSlider from "./ContinuousSlider.svelte";
+import DiscreteSlider from "./DiscreteSlider.svelte";
 
-export { Slider };
+export { ContinuousSlider, DiscreteSlider };
 export * from "./types";
