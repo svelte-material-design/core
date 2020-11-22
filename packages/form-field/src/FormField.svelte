@@ -26,21 +26,25 @@
 	export let vertical: boolean = false;
 
 	let labelId: string;
-	$: labelId = $$slots.label ? `${id}--label` : undefined;
+	$: labelId = `${id}--label`;
 
 	let inputId: string;
 	const context$ = createFormFieldContext({
 		labelId,
 		inputId,
+		id,
 		setInput(value) {
 			formField.input = value;
 		},
 		setInputId(value: string) {
 			inputId = value;
 		},
+		setLabelId(value: string) {
+			labelId = value;
+		},
 	});
 
-	$: $context$ = { ...$context$, labelId, inputId };
+	$: $context$ = { ...$context$, labelId, inputId, id };
 
 	let formField: MDCFormField;
 	onMount(() => {

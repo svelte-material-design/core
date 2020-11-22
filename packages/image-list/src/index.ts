@@ -15,3 +15,4 @@ export {
 	Supporting,
 	Label,
 };
+export * from "./types";

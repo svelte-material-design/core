@@ -17,6 +17,9 @@
 	import { getFormFieldContext } from "./";
 
 	const formFieldContext$ = getFormFieldContext();
+
+	$: if (!id) id = `${$formFieldContext$.id}--label`;
+	$: $formFieldContext$.setLabelId(id);
 </script>
 
 <style>
@@ -30,7 +33,7 @@
 <label
 	bind:this={dom}
 	{...props}
-	{id}
+	id={id || $formFieldContext$.labelId}
 	class={className}
 	{style}
 	for={$formFieldContext$.inputId}

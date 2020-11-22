@@ -3,9 +3,12 @@ export interface SliderChangeEvent {
 	value: number;
 }
 
-export type SliderValueText = string | ((v: number) => string);
+export interface RangeSliderChangeEvent {
+	dom: HTMLDivElement;
+	value: [number, number];
+}
 
-export type SliderValue = number | [number, number];
+export type SliderValueText = string | ((v: number) => string);
 
 export interface SliderThumbProps {
 	value: number;

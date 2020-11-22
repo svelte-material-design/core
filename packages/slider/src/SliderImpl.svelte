@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { parseClassList, StringListToFilter } from "../../common/functions";
+	import { parseClassList } from "../../common/functions";
 	import { MDCSlider } from "@material/slider";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getFormFieldContext } from "../../form-field";
 	import { Use, UseState } from "../../common/hooks";
-	import { SliderChangeEvent, SliderValue, SliderValueText } from ".";
-	import { initValue } from "./initValue";
+	import {
+		SliderChangeEvent,
+		SliderValueText,
+		RangeSliderChangeEvent,
+	} from ".";
 	import SliderThumb, { OnMountedEvent } from "./SliderThumb.svelte";
-	import SliderImpl from "./SliderImpl.svelte";
 	import { BaseProps } from "../../common/dom/Props";
 
 	//#region exports
@@ -26,29 +28,29 @@
 	export let valueText: SliderValueText;
 	export let hideValueIndicator: boolean;
 
+	export let gap: number;
+	export let range: boolean;
 	export let min: number = undefined;
 	export let max: number = undefined;
 	export let step: number = undefined;
-	export let value: SliderValue = min;
+	export let value: [number] | [number, number] = range ? [min, max] : [min];
 
 	$: if (min < 0) min = 0;
-	$: if (max < min) max = min;
+	$: if (max < min) max = min + 1;
 	//#endregion
+
+	let width: number = undefined;
+	let resizeObserver: any;
 
 	let discrete: boolean;
 	$: discrete = !!step;
 
-	let range: boolean;
-	$: range = Array.isArray(value) && value.length === 2;
-
-	let _value: [number] | [number, number];
-	$: _value = initValue(value, min, max, step, range);
+	updateValue();
 
 	let thumbsInstances: SliderThumb[] = [];
 
 	const dispatch = createEventDispatcher<{
-		change: SliderChangeEvent;
-		mounted: undefined;
+		change: RangeSliderChangeEvent;
 	}>();
 
 	const formFieldContext$ = getFormFieldContext();
@@ -62,21 +64,51 @@
 	}
 
 	onMount(() => {
-		istantiate();
+		initResizeObserver();
+		instantiate();
 	});
 
 	onDestroy(() => {
 		destroy();
 	});
 
-	export function istantiate() {
+	function updateValue() {
+		const newValue = value.map((v) => {
+			if (v < min) return min;
+			if (v > max) return max;
+			return v;
+		}) as typeof value;
+
+		setValue(newValue);
+	}
+
+	function initResizeObserver() {
+		// @ts-ignore
+		resizeObserver = new ResizeObserver((entries) => {
+			const newWidth: number = entries[0].borderBoxSize[0].inlineSize;
+			if (width === undefined) {
+				width = newWidth;
+			} else if (width !== newWidth) {
+				width = newWidth;
+				instantiate();
+			}
+		});
+	}
+
+	export function instantiate() {
 		destroy();
 
-		slider = new MDCSlider(dom);
-		slider.listen("MDCSlider:input", handleChange);
+		updateValue();
 
-		thumbsInstances.forEach((thumb) => {
-			thumb?.istantiate?.();
+		tick().then(() => {
+			slider = new MDCSlider(dom);
+			slider.listen("MDCSlider:input", handleChange);
+
+			thumbsInstances.forEach((thumb) => {
+				thumb?.istantiate?.();
+			});
+
+			resizeObserver.observe(dom);
 		});
 	}
 
@@ -85,23 +117,24 @@
 			thumb?.destroy?.();
 		});
 
+		resizeObserver?.disconnect();
+
 		slider?.destroy();
 	}
 
-	function setValue(newValue: [number] | [number, number]) {
-		if (_value[0] !== newValue[0] || _value[1] !== newValue[1]) {
-			_value = [...newValue];
-
-			if (range) {
-				value = _value as [number, number];
-			} else {
-				value = _value[0] as number;
-			}
+	function setValue(newInnerValue: [number] | [number, number]) {
+		if (value?.[0] !== newInnerValue[0] || value?.[1] !== newInnerValue[1]) {
+			value = [...newInnerValue];
 		}
 	}
 
 	function handleChange() {
 		if (range) {
+			if (gap > slider.getValue() - slider.getValueStart()) {
+				slider.setValueStart(value[0]);
+				slider.setValue(value[1]);
+			}
+
 			setValue([slider.getValueStart(), slider.getValue()]);
 		} else {
 			setValue([slider.getValue()]);
@@ -109,37 +142,37 @@
 
 		dispatch("change", {
 			dom,
-			value: value[0],
-		});
+			value,
+		} as RangeSliderChangeEvent);
 	}
 
 	function setFormFieldInput(slider: MDCSlider) {
 		$formFieldContext$?.setInput(slider as any);
 	}
 
-	function handleValueUpdate() {
+	function handleValueUpdate(oldValue: typeof value) {
 		try {
 			if (range) {
-				if (slider.getValueStart() !== _value[0]) {
-					slider.setValueStart(_value[0]);
+				if (slider.getValueStart() !== value[0]) {
+					slider.setValueStart(value[0]);
 				}
 
-				if (slider.getValue() !== _value[1]) {
-					slider.setValue(_value[1]);
+				if (slider.getValue() !== value[1]) {
+					slider.setValue(value[1]);
 				}
 			} else {
-				if (slider.getValue() !== _value[0]) {
-					slider.setValue(_value[0]);
+				if (slider.getValue() !== value[0]) {
+					slider.setValue(value[0]);
 				}
 			}
 		} catch {}
 	}
 
 	function handleThumbMounted(thumb: OnMountedEvent, index: number) {
-		if (_value[index] !== thumb.value) {
-			const newValue = [..._value];
+		if (value[index] !== thumb.value) {
+			const newValue = [...value];
 			newValue[index] = thumb.value;
-			setValue(_value);
+			setValue(value);
 		}
 	}
 
@@ -152,14 +185,17 @@
 
 <style>
 	:global(.mdc-slider) {
-		min-width: 200px;
+		width: 180px;
 	}
 </style>
 
 <svelte:options immutable={true} />
 
 <Use effect hook={() => setFormFieldInput(slider)} when={!!slider} />
-<UseState value={[step, tickMarks, dom]} onUpdate={istantiate} />
+<UseState value={[value, step, min, max, range]} onUpdate={updateValue} />
+<UseState
+	value={[step, tickMarks, step, min, max, dom]}
+	onUpdate={instantiate} />
 <UseState {value} onUpdate={handleValueUpdate} />
 
 {#key range}
@@ -186,12 +222,12 @@
 		{#if tickMarks}
 			<div class="mdc-slider__tick-marks" />
 		{/if}
-		{#each _value as _val, index}
+		{#each value as _val, index}
 			<SliderThumb
 				bind:this={thumbsInstances[index]}
-				bind:value={_value[index]}
-				bind:min
-				bind:max
+				value={value[index]}
+				{min}
+				{max}
 				{disabled}
 				{ariaLabel}
 				{valueText}

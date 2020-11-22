@@ -27,9 +27,6 @@
 		destroyed: undefined;
 	}>();
 
-	$: if (value < min) value = min;
-	$: if (value > max) value = max;
-
 	let indicatorTextElement: HTMLDivElement;
 	let indicatorTextElementObserver: MutationObserver;
 
@@ -95,7 +92,7 @@
 
 <svelte:options immutable={true} />
 
-<UseState value={_valueText} onUpdate={updateValueText} />
+<UseState value={[_valueText, value]} onUpdate={updateValueText} />
 
 <input type="number" style="display: none;" bind:value {name} />
 
