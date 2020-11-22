@@ -22,7 +22,7 @@ export function memo<T = any>(val: T = undefined as T) {
 	return new Memo(val);
 }
 
-class Memo<T> {
+export class Memo<T> {
 	#val: T;
 
 	constructor(val: T) {

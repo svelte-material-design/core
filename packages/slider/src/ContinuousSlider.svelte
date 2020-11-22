@@ -7,25 +7,31 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/slider/Slider:${count++}`;
+	export let id: string = `@smui/slider/ContinuousSlider:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 
 	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = undefined;
+	export let props: BaseProps = {};
 	//#endregion
 
 	// Slider
 	import SliderImpl from "./SliderImpl.svelte";
+	import { SliderValue } from ".";
 
-	export let disabled: boolean = false;
 	export let min: number = 0;
 	export let max: number = 100;
-	export let value: number = min;
+	export let value: SliderValue = min;
+
+	export let disabled: boolean = false;
+
 	export let ariaLabel: string = undefined;
-	export let ariaValueText: string | ((value: number) => string) = undefined;
+
 	export let name: string = undefined;
+	export let title: string = undefined;
 </script>
+
+<svelte:options immutable={true} />
 
 <SliderImpl
 	class={className}
@@ -37,6 +43,6 @@
 	bind:max
 	bind:disabled
 	{name}
+	{title}
 	{ariaLabel}
-	{ariaValueText}
 	{props} />

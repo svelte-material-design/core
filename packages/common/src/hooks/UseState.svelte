@@ -3,16 +3,24 @@
 </script>
 
 <script lang="ts">
-	import { memo } from "../utils";
+	import { Memo, memo } from "../utils";
 	import Use from "./Use.svelte";
+	import { onMount, tick } from "svelte";
 
 	export let value: any;
 	export let onUpdate: (oldValue?: any) => void;
 	export const id: string = `../../../../packages/common/hooks/UseState-${count++}`;
 
-	const valueMemo = memo(value);
+	let valueMemo: Memo<any>;
+	onMount(() => {
+		tick().then(() => {
+			valueMemo = memo(value);
+		});
+	});
 
 	function onValueUpdate(value: any) {
+		if (valueMemo === undefined) return;
+
 		if (value !== valueMemo.val) {
 			const currentValueMemo = valueMemo.val;
 
@@ -37,4 +45,4 @@
 
 <svelte:options immutable={true} />
 
-<Use hook={() => onValueUpdate(value)} />
+<Use effect hook={() => onValueUpdate(value)} />

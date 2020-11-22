@@ -1,210 +1,205 @@
-<script lang="ts" context="module">
-	let count = 0;
-</script>
-
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../common/functions";
-	let className = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/slider/Slider:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// Slider
+	import { parseClassList, StringListToFilter } from "../../common/functions";
 	import { MDCSlider } from "@material/slider";
-	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import { getDialogContext } from "../../dialog";
+	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getFormFieldContext } from "../../form-field";
 	import { Use, UseState } from "../../common/hooks";
-	import { SliderChangeEvent } from ".";
+	import { SliderChangeEvent, SliderValue, SliderValueText } from ".";
+	import { initValue } from "./initValue";
+	import SliderThumb, { OnMountedEvent } from "./SliderThumb.svelte";
+	import SliderImpl from "./SliderImpl.svelte";
+	import { BaseProps } from "../../common/dom/Props";
 
 	//#region exports
-	export let disabled: boolean = false;
-	export let displayMarkers: boolean = false;
-	export let min: number = 0;
-	export let max: number = 100;
-	export let step: number = 0.1;
-	export let value: number = min;
-	export let ariaLabel: string = undefined;
-	export let ariaValueText: string | ((value: number) => string) = undefined;
-	export let tickMarks: boolean = false;
+	export let dom: HTMLDivElement;
+	export let id: string;
+	export let style: string;
+	let className: string;
+	export { className as class };
+	export let props: BaseProps = undefined;
 
+	export let tickMarks: boolean;
+	export let disabled: boolean;
 	export let name: string;
+	export let title: string;
+	export let ariaLabel: string;
+	export let valueText: SliderValueText;
+	export let hideValueIndicator: boolean;
+
+	export let min: number = undefined;
+	export let max: number = undefined;
+	export let step: number = undefined;
+	export let value: SliderValue = min;
 
 	$: if (min < 0) min = 0;
 	$: if (max < min) max = min;
-	$: if (value == null || value < min) value = min;
-	$: if (value > max) value = max;
 	//#endregion
 
-	//#region internal props
 	let discrete: boolean;
 	$: discrete = !!step;
 
-	let _ariaValueText: string;
-	$: _ariaValueText =
-		typeof ariaValueText === "string"
-			? ariaValueText
-			: typeof ariaValueText === "function"
-			? ariaValueText(value)
-			: undefined;
+	let range: boolean;
+	$: range = Array.isArray(value) && value.length === 2;
 
-	let indicatorTextElement: HTMLDivElement;
+	let _value: [number] | [number, number];
+	$: _value = initValue(value, min, max, step, range);
 
-	let indicatorTextElementObserver: MutationObserver;
-	//#endregion
+	let thumbsInstances: SliderThumb[] = [];
 
 	const dispatch = createEventDispatcher<{
 		change: SliderChangeEvent;
+		mounted: undefined;
 	}>();
 
 	const formFieldContext$ = getFormFieldContext();
-	const dialogContext$ = getDialogContext();
 
 	let slider: MDCSlider;
-	onMount(() => {
-		indicatorTextElementObserver = new MutationObserver((mutations) => {
-			indicatorTextElement.textContent = _ariaValueText ?? String(value);
-		});
-
-		reistantiate();
-	});
 
 	$: if (slider) {
 		if (slider.getDisabled() !== disabled) {
 			slider.setDisabled(disabled);
 		}
-
-		if (slider.getValue() !== value) {
-			slider.setValue(value);
-		}
-
-		// if ($dialogContext$?.isOpen) slider.layout();
 	}
+
+	onMount(() => {
+		istantiate();
+	});
 
 	onDestroy(() => {
 		destroy();
 	});
 
-	function reistantiate() {
+	export function istantiate() {
 		destroy();
 
 		slider = new MDCSlider(dom);
 		slider.listen("MDCSlider:input", handleChange);
 
-		indicatorTextElementObserver.observe(indicatorTextElement, {
-			childList: true,
+		thumbsInstances.forEach((thumb) => {
+			thumb?.istantiate?.();
 		});
 	}
 
 	function destroy() {
-		indicatorTextElementObserver?.disconnect();
+		thumbsInstances.forEach((thumb) => {
+			thumb?.destroy?.();
+		});
+
 		slider?.destroy();
 	}
 
-	function handleStepUpdate() {
-		const vMod = value % step;
-		if (vMod) {
-			value = value - vMod;
+	function setValue(newValue: [number] | [number, number]) {
+		if (_value[0] !== newValue[0] || _value[1] !== newValue[1]) {
+			_value = [...newValue];
+
+			if (range) {
+				value = _value as [number, number];
+			} else {
+				value = _value[0] as number;
+			}
 		}
 	}
+
+	function handleChange() {
+		if (range) {
+			setValue([slider.getValueStart(), slider.getValue()]);
+		} else {
+			setValue([slider.getValue()]);
+		}
+
+		dispatch("change", {
+			dom,
+			value: value[0],
+		});
+	}
+
 	function setFormFieldInput(slider: MDCSlider) {
 		$formFieldContext$?.setInput(slider as any);
 	}
 
-	function handleChange() {
-		value = slider.getValue();
+	function handleValueUpdate() {
+		try {
+			if (range) {
+				if (slider.getValueStart() !== _value[0]) {
+					slider.setValueStart(_value[0]);
+				}
 
-		dispatch("change", {
-			dom,
-			value,
-		});
+				if (slider.getValue() !== _value[1]) {
+					slider.setValue(_value[1]);
+				}
+			} else {
+				if (slider.getValue() !== _value[0]) {
+					slider.setValue(_value[0]);
+				}
+			}
+		} catch {}
 	}
 
-	export function layout() {
-		return slider.layout();
+	function handleThumbMounted(thumb: OnMountedEvent, index: number) {
+		if (_value[index] !== thumb.value) {
+			const newValue = [..._value];
+			newValue[index] = thumb.value;
+			setValue(_value);
+		}
+	}
+
+	function updateThumbsInstances() {
+		thumbsInstances = [...thumbsInstances];
 	}
 
 	$: props.tabindex = props.tabindex || 0;
 </script>
 
 <style>
-	.mdc-slider {
+	:global(.mdc-slider) {
 		min-width: 200px;
-	}
-
-	.mdc-slider__value-indicator-text {
-		white-space: nowrap;
 	}
 </style>
 
-<Use effect hook={() => setFormFieldInput(slider)} when={!!slider} />
-<UseState value={step} onUpdate={handleStepUpdate} />
-<UseState value={[min, max, step]} onUpdate={reistantiate} />
+<svelte:options immutable={true} />
 
-<div
-	bind:this={dom}
-	{...props}
-	{id}
-	class={parseClassList([
-		className,
-		'mdc-slider',
-		[step, 'mdc-slider--discrete'],
-		[tickMarks, 'mdc-slider--tick-marks'],
-	])}
-	data-step={step}
-	{style}>
-	<input type="number" style="display: none;" bind:value {name} />
-	<div class="mdc-slider__track">
-		<div class="mdc-slider__track--inactive" />
-		<div class="mdc-slider__track--active">
-			<div class="mdc-slider__track--active_fill" />
-		</div>
-	</div>
-	{#if tickMarks}
-		<div class="mdc-slider__tick-marks" />
-	{/if}
+<Use effect hook={() => setFormFieldInput(slider)} when={!!slider} />
+<UseState value={[step, tickMarks, dom]} onUpdate={istantiate} />
+<UseState {value} onUpdate={handleValueUpdate} />
+
+{#key range}
 	<div
-		class="mdc-slider__thumb"
-		role="slider"
-		tabindex={disabled ? -1 : 0}
-		aria-disabled={disabled}
-		aria-valuemin={min}
-		aria-valuemax={max}
-		aria-valuenow={0}
-		aria-valuetext={_ariaValueText}
-		aria-labelledby={$formFieldContext$ && $formFieldContext$.labelId}
-		aria-label={(!$formFieldContext$ || !$formFieldContext$.labelId) && ariaLabel ? ariaLabel : undefined}>
-		{#if discrete}
-			<div class="mdc-slider__value-indicator-container">
-				<div class="mdc-slider__value-indicator">
-					<span
-						bind:this={indicatorTextElement}
-						class="mdc-slider__value-indicator-text">{_ariaValueText != undefined ? _ariaValueText : value}</span>
-				</div>
-			</div>
-		{/if}
-		<div class="mdc-slider__thumb-knob" />
-	</div>
-	<!-- TODO: Range :D <div 
-		class="mdc-slider__thumb"
-		role="slider"
-		tabindex="0"
-		aria-label="Discrete range slider demo"
-		aria-valuemin="0"
-		aria-valuemax="100"
-		aria-valuenow="50">
-		<div class="mdc-slider__value-indicator-container">
-			<div class="mdc-slider__value-indicator">
-				<span class="mdc-slider__value-indicator-text"> 50 </span>
+		bind:this={dom}
+		{...props}
+		{id}
+		class={parseClassList([
+			className,
+			'mdc-slider',
+			[step, 'mdc-slider--discrete'],
+			[tickMarks, 'mdc-slider--tick-marks'],
+			[range, 'mdc-slider mdc-slider--range'],
+		])}
+		data-step={step}
+		{style}
+		{title}>
+		<div class="mdc-slider__track">
+			<div class="mdc-slider__track--inactive" />
+			<div class="mdc-slider__track--active">
+				<div class="mdc-slider__track--active_fill" />
 			</div>
 		</div>
-		<div class="mdc-slider__thumb-knob" />
-	</div> -->
-</div>
+		{#if tickMarks}
+			<div class="mdc-slider__tick-marks" />
+		{/if}
+		{#each _value as _val, index}
+			<SliderThumb
+				bind:this={thumbsInstances[index]}
+				bind:value={_value[index]}
+				bind:min
+				bind:max
+				{disabled}
+				{ariaLabel}
+				{valueText}
+				{discrete}
+				{hideValueIndicator}
+				{name}
+				on:mounted={(e) => handleThumbMounted(e.detail, index)}
+				on:destroyed={updateThumbsInstances} />
+		{/each}
+	</div>
+{/key}
