@@ -15,11 +15,16 @@
 
 	// Label
 	import { getFormFieldContext } from "./";
+	import { onDestroy } from "svelte";
 
 	const formFieldContext$ = getFormFieldContext();
 
 	$: if (!id) id = `${$formFieldContext$.id}--label`;
 	$: $formFieldContext$.setLabelId(id);
+
+	onDestroy(() => {
+		$formFieldContext$.setLabelId(undefined);
+	});
 </script>
 
 <style>
@@ -33,7 +38,7 @@
 <label
 	bind:this={dom}
 	{...props}
-	id={id || $formFieldContext$.labelId}
+	{id}
 	class={className}
 	{style}
 	for={$formFieldContext$.inputId}

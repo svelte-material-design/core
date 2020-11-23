@@ -29,7 +29,7 @@
 	export let hideValueIndicator: boolean;
 
 	export let gap: number;
-	export let range: boolean;
+	export let range: boolean = false;
 	export let min: number = undefined;
 	export let max: number = undefined;
 	export let step: number = undefined;
@@ -72,8 +72,25 @@
 		destroy();
 	});
 
+	function getNegativeGap() {
+		return range && value[1] - value[0] < gap
+			? Math.abs(value[1] - value[0] - gap)
+			: 0;
+	}
+
 	function updateValue() {
-		const newValue = value.map((v) => {
+		let newValue: [number] | [number, number] = [...value];
+
+		if (range) {
+			let negativeGap = getNegativeGap();
+			if (value[0] - negativeGap < min) newValue[0] = min;
+			else newValue[0] = value[0] - negativeGap;
+			negativeGap -= value[0] - newValue[0];
+			if (value[1] + negativeGap > max) newValue[1] = max;
+			else newValue[1] = value[1] + negativeGap;
+		}
+
+		newValue = newValue.map((v) => {
 			if (v < min) return min;
 			if (v > max) return max;
 			return v;
@@ -192,7 +209,7 @@
 <svelte:options immutable={true} />
 
 <Use effect hook={() => setFormFieldInput(slider)} when={!!slider} />
-<UseState value={[value, step, min, max, range]} onUpdate={updateValue} />
+<UseState value={[value, step, min, max, range, gap]} onUpdate={updateValue} />
 <UseState
 	value={[step, tickMarks, step, min, max, dom]}
 	onUpdate={instantiate} />

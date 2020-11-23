@@ -21,7 +21,6 @@
 	export let min: number = 0;
 	export let max: number = 100;
 	export let gap: number = 0;
-	export let step: number = 1;
 	export let value: [number, number] = [min, max];
 
 	export let disabled: boolean = false;
@@ -42,7 +41,6 @@
 	bind:value
 	bind:min
 	bind:max
-	bind:step
 	bind:disabled
 	range
 	{gap}
