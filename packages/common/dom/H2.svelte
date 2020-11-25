@@ -1,7 +1,5 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "../src/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -16,12 +14,6 @@
 	// H2
 </script>
 
-<h2
-	bind:this={dom}
-	{...props}
-	{id}
-	class={className}
-	{style}
-	use:forwardDOMEvents>
+<h2 bind:this={dom} {...props} {id} class={className} {style}>
 	<slot />
 </h2>

@@ -34,7 +34,7 @@
 	}
 
 	export function setValue(newValue: typeof value) {
-		valueMemo.val = newValue;
+		if (valueMemo) valueMemo.val = newValue;
 		value = newValue;
 	}
 

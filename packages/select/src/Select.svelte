@@ -191,7 +191,7 @@
 <UseState value={ripple} onUpdate={reistantiate} />
 <UseState value={lineRipple} onUpdate={reistantiate} />
 
-<div class={parseClassList([className, 'smui-select'])}>
+<div class={'smui-select'}>
 	<SelectableGroup
 		bind:value
 		selectionType="single"
@@ -204,6 +204,7 @@
 			{...props}
 			{id}
 			class={parseClassList([
+				className,
 				'mdc-select',
 				[variant === 'filled', 'mdc-select--filled'],
 				[variant === 'outlined', 'mdc-select--outlined'],

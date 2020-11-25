@@ -151,11 +151,6 @@
 			tick().then(() => {
 				inputElement.disabled = isInputDisabled();
 			});
-
-			dispatch("change", {
-				checked,
-				dom,
-			});
 		}
 	}
 
@@ -166,6 +161,11 @@
 			} else {
 				setChecked(checkbox.checked);
 			}
+
+			dispatch("change", {
+				checked,
+				dom,
+			});
 		}
 	}
 </script>

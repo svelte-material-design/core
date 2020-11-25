@@ -1,9 +1,22 @@
 <script lang="ts">
-	import { SelectableGroup } from "../../../packages/common/hoc";
+	import { createEventDispatcher } from "svelte";
 
-	export let value: any;
+	import { SelectableGroup } from "../../../packages/common/hoc";
+	import { SwitchGroupChangeEvent } from "./";
+
+	export let value: string[];
+
+	const dispatch = createEventDispatcher<{
+		change: SwitchGroupChangeEvent;
+	}>();
+
+	function handleChange() {
+		dispatch("change", {
+			value,
+		});
+	}
 </script>
 
-<SelectableGroup bind:value>
+<SelectableGroup bind:value nullable on:change={handleChange}>
 	<slot />
 </SelectableGroup>
