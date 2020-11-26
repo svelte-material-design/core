@@ -1,4 +1,5 @@
+import IndeterminateLinearProgress from "./IndeterminateLinearProgress.svelte";
 import LinearProgress from "./LinearProgress.svelte";
 
-export { LinearProgress };
+export { IndeterminateLinearProgress, LinearProgress };
 export * from "./LinearProgressContext";

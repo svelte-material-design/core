@@ -9,7 +9,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/linear-progress/LinearProgress:${count++}`;
+	export let id: string = `@smui/linear-progress/IndeterminateLinearProgress:${count++}`;
 	export let dom: HTMLDivElement = undefined;
 	export let props: BaseProps = undefined;
 	//#endregion
@@ -20,8 +20,6 @@
 	export let indeterminate: boolean = false;
 	export let reversed: boolean = false;
 	export let closed: boolean = false;
-	export let progress: number = 0;
-	export let buffer: number = 1;
 	export let ariaLabel: string = undefined;
 </script>
 
@@ -34,9 +32,7 @@
 	{id}
 	class={className}
 	{style}
-	indeterminate={false}
+	indeterminate={true}
 	{reversed}
 	{closed}
-	{progress}
-	{buffer}
 	{ariaLabel} />
