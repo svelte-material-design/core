@@ -17,7 +17,6 @@
 	// LinearProgress
 	import LinearProgressImpl from "./LinearProgressImpl.svelte";
 
-	export let indeterminate: boolean = false;
 	export let reversed: boolean = false;
 	export let closed: boolean = false;
 	export let progress: number = 0;

@@ -19,11 +19,12 @@
 
 	// Drawer
 	import { MDCDrawer } from "@material/drawer";
-	import { onMount, onDestroy, tick } from "svelte";
+	import { onDestroy, tick } from "svelte";
 	import { createDrawerContext } from "./DrawerContext";
 	import { DrawerVariant } from "./types";
-	import { Use } from "../../../packages/common/hooks";
+	import { UseState } from "../../../packages/common/hooks";
 	import Scrim from "./Scrim.svelte";
+	import { setCreateMDCListInstance } from "../../list";
 
 	export let variant: DrawerVariant = "permanent";
 	export let open: boolean = false;
@@ -33,6 +34,7 @@
 	let siblingTopAppBarFound = false;
 
 	$: if (!variant) variant = "permanent";
+	$: setCreateMDCListInstance(variant !== "dismissible" && variant !== "modal");
 
 	const context$ = createDrawerContext({
 		variant,
@@ -56,7 +58,7 @@
 		drawer && drawer.destroy();
 	});
 
-	function init(_variant?: typeof variant) {
+	function init() {
 		drawer?.list?.destroy();
 		drawer?.destroy();
 
@@ -98,7 +100,7 @@
 
 <svelte:options immutable={true} />
 
-<Use effect hook={() => init(variant)} />
+<UseState value={variant} onUpdate={init} />
 
 <aside
 	{...props}

@@ -4,12 +4,11 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "../../../../packages/common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	import { parseClassList } from "../../../common/functions";
+	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../../packages/list/Item:${count++}`;
+	export let id: string = `@smui/list/Item:${count++}`;
 
 	import { ItemRole, ListItemDOMElement } from "../types";
 	export let dom: ListItemDOMElement = undefined;
@@ -21,19 +20,17 @@
 	// Item
 	//#region import
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import { Ripple3 } from "../../../../packages/ripple";
 	import { Li, A } from "../../../../packages/common/dom";
 	import { getListContext } from "../";
-	import { createItemContext, ItemContext } from "./";
+	import { createItemContext, ItemContext, OnItemSelectedEvent } from ".";
 	import { getMenuSurfaceContext } from "../../../../packages/menu-surface";
-	import {
-		Selectable,
-		OnSelectableChange,
-	} from "../../../../packages/common/hoc";
+	import { OnSelectableChange } from "../../../../packages/common/hoc";
+	import { Selectable } from "../../../../packages/common/selectable";
+	import { Ripple3 } from "../../../../packages/ripple";
+	import { UseState } from "../../../../packages/common/hooks";
 	//#endregion
 
 	export let ripple: boolean = true;
-	export let color = undefined;
 	export let activated: boolean = false;
 	export let role: ItemRole = undefined; //TODO: forse si può togliere dagli export
 	export let selected: boolean = false;
@@ -43,20 +40,14 @@
 	export let value: any = undefined;
 
 	const dispatch = createEventDispatcher<{
-		selected: ListItemDOMElement;
+		selected: OnItemSelectedEvent;
 	}>();
 
-	let rippleClasses: string = "";
 	let selectable: Selectable;
+	let rippleClasses: string;
 
 	const listContext$ = getListContext();
 	const menuSurfaceContext$ = getMenuSurfaceContext();
-	const context$ = createItemContext({
-		sendOnSelected() {
-			dispatch("selected", dom);
-		},
-	});
-
 	$: if ($listContext$.role === "radiogroup") {
 		role = "radio";
 	} else if ($listContext$.role === "menu" || menuSurfaceContext$) {
@@ -67,9 +58,22 @@
 		role = "checkbox";
 	}
 
+	const context = ({
+		tabindex,
+		disabled,
+		selected,
+		value,
+		notifySelected() {
+			dispatch("selected", { dom, selected });
+		},
+		setTabIndex(newValue: number) {
+			tabindex = newValue;
+		},
+	} as any) as ItemContext;
+	const context$ = createItemContext({ ...context });
+
 	$: if (disabled && selected) selected = false;
 
-	const context = {} as ItemContext;
 	$: $context$ = {
 		...Object.assign(context, {
 			...$context$,
@@ -81,26 +85,8 @@
 		}),
 	};
 
-	function handleChange(event: CustomEvent<OnSelectableChange>) {
-		if (event.detail.selected) {
-			dispatch("selected", dom);
-		}
-	}
-
-	function onFocus() {
-		selectable.notifyFocus();
-	}
-
 	onMount(() => {
 		$listContext$.registerItem(context);
-
-		$context$ = {
-			...Object.assign(context, {
-				...$context$,
-				setSelected: selectable?.setSelected,
-				setValue: selectable?.setValue,
-			}),
-		};
 	});
 
 	onDestroy(() => {
@@ -109,46 +95,54 @@
 
 	$: props = {
 		...props,
-		tabindex,
 		href,
-		"aria-current": activated ? "page" : null,
+		tabindex,
+		"aria-current": activated ? "page" : undefined,
 		"data-value": value,
-		//"aria-selected": $listContext$.role === "listbox" ? selected : null, Lo setta MDC
-		// "aria-checked":
-		//   $listContext$.role === "group" || $listContext$.role === "radiogroup"
-		//     ? `${selected}`
-		//     : null,
+		"aria-selected": $listContext$.role === "listbox" ? selected : undefined,
+		"aria-checked":
+			$listContext$.role === "group" || $listContext$.role === "radiogroup"
+				? `${selected}`
+				: undefined,
 		role,
 	};
 </script>
 
+<svelte:options immutable={true} />
+
+<UseState value={ripple} onUpdate={() => $listContext$.reinitialize()} />
+
 <Selectable
 	bind:this={selectable}
-	bind:value
 	bind:selected
-	on:change={handleChange}
-	bind:tabindex>
+	group={$listContext$.group}
+	{dom}
+	{value}>
 	<svelte:component
 		this={$listContext$.isNav && href ? A : Li}
 		bind:dom
 		props={{ ...props }}
 		{id}
-		class="mdc-list-item {className}
-      {disabled ? 'mdc-list-item--disabled' : ''}
-      {(role === 'option' || role === 'menuitem') && selected ? 'mdc-list-item--selected' : ''}
-      {role === 'menuitem' && selected ? 'mdc-menu-item--selected' : ''}
-      {rippleClasses}"
-		{style}
-		on:domEvent={forwardDOMEvents}
-		on:focus={onFocus}>
+		class={parseClassList([
+			className,
+			'mdc-list-item',
+			[disabled, 'mdc-list-item--disabled'],
+			[
+				(role === 'option' || role === 'menuitem' || role === 'checkbox') &&
+					selected,
+				'mdc-list-item--selected',
+			],
+			[role === 'menuitem' && selected, 'mdc-menu-item--selected'],
+			rippleClasses,
+		])}
+		{style}>
+		{#if role === 'checkbox'}<input type="checkbox" checked={selected} />{/if}
 		{#if ripple}
 			<Ripple3
-				rippleElement="mdc-list-item__ripple"
-				{color}
-				target={dom}
-				keyboardEvents
-				bind:rippleClasses />
-		{/if}
+				bind:rippleClasses
+				rippleElement={'mdc-list-item__ripple'}
+				target={dom} />
+		{:else}<span class="mdc-list-item__ripple" />{/if}
 		<slot />
 	</svelte:component>
 </Selectable>

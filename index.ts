@@ -4,6 +4,7 @@ export * as card from "./card";
 export * as checkbox from "./checkbox";
 export * as chips from "./chips";
 export * as common from "./common";
+export * as commonSelectable from "./common/selectable";
 export * as dataTable from "./data-table";
 export * as dialog from "./dialog";
 export * as drawer from "./drawer";

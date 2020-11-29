@@ -4,8 +4,6 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "../../../packages/common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -18,25 +16,16 @@
 
 	// List
 	//#region imports
-	import { MDCList, MDCListActionEvent } from "@material/list";
-	import { onDestroy, createEventDispatcher } from "svelte";
-	import { Nav, Ul } from "../../../packages/common/dom";
-	import {
-		createListContext,
-		getCreateMDCListInstance,
-		ListRole,
-	} from "./ListContext";
-	import { ItemContext } from "./item";
+	import { createEventDispatcher, onMount, tick } from "svelte";
 	import { getMenuSurfaceContext } from "../../../packages/menu-surface";
-	import { getDrawerContext, DrawerVariant } from "../../../packages/drawer";
 	import {
-		SelectableGroup,
-		SelectionType,
-		OnSelectableGroupChange,
-	} from "../../../packages/common/hoc";
-	import { getDialogContext } from "../../../packages/dialog"; // TODO: fix circular dep
-	import { setDisableCheckboxMDCIstance } from "../../../packages/checkbox";
-	import { Use } from "../../../packages/common/hooks";
+		GroupBinding,
+		SingleSelectionGroup,
+		MultiSelectionGroup,
+	} from "../../common/selectable";
+	import ListImpl, { OnListActionEvent } from "./ListImpl.svelte";
+	import { ListRole, OnListChangeEvent } from "./types";
+	import { roleToSelectionType } from "./toleToSelectionType";
 	//#endregion
 
 	//#region exports
@@ -49,195 +38,114 @@
 	export let twoLine: boolean = false;
 	export let threeLine: boolean = false;
 	export let wrapFocus: boolean = false;
-	export let value: any = undefined;
-	export let indexHasValues: boolean = undefined;
+	export let value: string | string[] = undefined;
 	//#endregion
 
 	const dispatch = createEventDispatcher<{
-		change: {
-			value: typeof value;
-			dom: typeof dom;
-		};
+		change: OnListChangeEvent;
 	}>();
 
 	//#region local variables
-	const items = new Set<ItemContext>();
-	let selectableGroup: SelectableGroup;
+	$: selectionType = !nonInteractive ? roleToSelectionType(role) : null;
 
-	let selectionType: SelectionType = null;
+	let selectionGroup: SingleSelectionGroup | MultiSelectionGroup;
+	$: group = (selectionType ? {} : undefined) as GroupBinding;
 
+	const menuSurfaceContext$ = getMenuSurfaceContext();
 	$: if (menuSurfaceContext$) {
 		role = "menu";
 	}
-
-	$: if (
-		(!nonInteractive && role === "listbox") ||
-		role === "radiogroup" ||
-		role === "menu"
-	) {
-		selectionType = "single";
-	} else if (!nonInteractive && role === "group") {
-		selectionType = "multi";
-	} else {
-		selectionType = null;
-	}
 	//#endregion
 
-	//#region init contexts
-	const menuSurfaceContext$ = getMenuSurfaceContext();
-	const drawerContext$ = getDrawerContext();
-	const dialogContext$ = getDialogContext();
-
-	const shouldCreateMDCListInstance = getCreateMDCListInstance();
-	setDisableCheckboxMDCIstance(true);
-
-	const context$ = createListContext({
-		registerItem(item: ItemContext) {
-			items.add(item);
-		},
-		unregisterItem(item: ItemContext) {
-			items.delete(item);
-		},
+	onMount(async () => {
+		await tick();
+		console.log(group);
 	});
-
-	let component: typeof Nav | typeof Ul;
-	$: component = drawerContext$ ? Nav : Ul;
-
-	$: if (drawerContext$) {
-		wrapFocus = true;
-	}
-
-	// Try to use index as values if no items has value or indexHasValues is true
-	$: if (list && value == null) {
-		if (selectionType === "single") {
-			list.selectedIndex = -1;
-		} else if (selectionType === "multi") {
-			list.selectedIndex = [];
-		}
-	}
-
-	//#endregion
-
-	let list: MDCList;
-
-	$: if (list && $dialogContext$?.isOpen) list.layout();
-
-	// Keep context updated
-	$: $context$ = { ...$context$, role, isNav: !!drawerContext$, list };
 
 	// Keep MDCList properties updated
-	$: if (list) {
-		if (list.singleSelection !== (selectionType === "single")) {
-			list.singleSelection = selectionType === "single";
-		}
-
-		if (
-			orientation === "vertical" &&
-			(!list.vertical == null || list.vertical === false)
-		) {
-			list.vertical = true;
-		} else if (
-			orientation === "horizontal" &&
-			(list.vertical == null || list.vertical === true)
-		) {
-			list.vertical = false;
-		}
-
-		if (list.wrapFocus !== wrapFocus) {
-			list.wrapFocus = wrapFocus;
-		}
-
+	$: if (selectionGroup) {
 		if (role === "list") {
-			selectableGroup.setValue(null);
+			value = null;
 		}
 	}
 
-	onDestroy(() => {
-		list && list.destroy();
-	});
-
-	function init(domValue: typeof dom, drawerVariant: DrawerVariant) {
-		list?.destroy();
-
-		if (
-			shouldCreateMDCListInstance !== false &&
-			$drawerContext$?.variant !== "dismissible" &&
-			$drawerContext$?.variant !== "modal"
-		) {
-			list = new MDCList(dom);
-			list.listen("MDCList:action", handleAction);
-		}
-	}
-
-	function handleAction(event: MDCListActionEvent) {
-		const item = Array.from(items)[event.detail.index];
-
-		if (!list || !item || item.disabled) return;
-
+	async function handleAction({
+		targetIndex,
+		listSelectedIndex,
+	}: OnListActionEvent) {
 		if (selectionType) {
+			const item = selectionGroup.getItems()[targetIndex];
+
+			if (!item) return;
+
 			if (
-				(selectionType === "single" &&
-					list.selectedIndex === event.detail.index) ||
+				(selectionType === "single" && listSelectedIndex === targetIndex) ||
 				(selectionType === "multi" &&
-					(list.selectedIndex as number[]).includes(event.detail.index))
+					(listSelectedIndex as number[]).includes(targetIndex))
 			) {
-				selectableGroup.setItemSelected(event.detail.index, true);
+				selectionGroup.setSelected(item, true);
 			} else {
-				selectableGroup.setItemSelected(event.detail.index, false);
+				selectionGroup.setSelected(item, false);
 			}
-		} else {
-			item.sendOnSelected();
+
+			await tick();
+
+			dispatch("change", {
+				dom,
+				value,
+			});
 		}
 	}
 
-	function handleChange(event: CustomEvent<OnSelectableGroupChange>) {
-		if (list) {
-			if (selectionType === "single") {
-				list.selectedIndex = event.detail.selectedItemsIndex[0] ?? -1;
-			} else if (selectionType === "multi") {
-				list.selectedIndex = event.detail.selectedItemsIndex;
-			}
-		}
-
-		dispatch("change", {
-			value,
-			dom: dom,
-		});
-	}
-
-	$: props = {
-		...props,
-		role,
-		"aria-orientation": orientation,
-		"aria-hidden": menuSurfaceContext$ ? !$menuSurfaceContext$.open : null,
-		tabindex: role === "menu" ? "-1" : null,
-	};
+	$: component = selectionType
+		? selectionType === "single"
+			? SingleSelectionGroup
+			: MultiSelectionGroup
+		: undefined;
 </script>
 
-<Use
-	effect
-	hook={() => init(dom, $drawerContext$ ? $drawerContext$.variant : undefined)} />
-
-<SelectableGroup
-	bind:this={selectableGroup}
-	bind:value
-	{selectionType}
-	{indexHasValues}
-	on:change={handleChange}>
+{#if selectionType}
 	<svelte:component
 		this={component}
+		bind:this={selectionGroup}
+		bind:value
+		let:group>
+		<ListImpl
+			bind:dom
+			{props}
+			{id}
+			class={className}
+			{style}
+			{role}
+			{nonInteractive}
+			{orientation}
+			{dense}
+			{avatarList}
+			{twoLine}
+			{threeLine}
+			{wrapFocus}
+			{group}
+			on:action={(event) => handleAction(event.detail)}>
+			<slot />
+		</ListImpl>
+	</svelte:component>
+{:else}
+	<ListImpl
 		bind:dom
 		{props}
 		{id}
-		class="mdc-list {className}
-      {nonInteractive ? 'mdc-list--non-interactive' : ''}
-      {dense ? 'mdc-list--dense' : ''}
-      {avatarList ? 'mdc-list--avatar-list' : ''}
-      {twoLine ? 'mdc-list--two-line' : ''}
-      {threeLine && !twoLine ? 'smui-list--three-line' : ''}
-      {orientation === 'horizontal' ? 'smui-list--horizontal' : ''}"
+		class={className}
 		{style}
-		on:domEvent={forwardDOMEvents}>
+		{role}
+		{nonInteractive}
+		{orientation}
+		{dense}
+		{avatarList}
+		{twoLine}
+		{threeLine}
+		{wrapFocus}
+		{group}
+		on:action={(event) => handleAction(event.detail)}>
 		<slot />
-	</svelte:component>
-</SelectableGroup>
+	</ListImpl>
+{/if}

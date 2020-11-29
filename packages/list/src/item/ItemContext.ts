@@ -10,7 +10,12 @@ export { createItemContext, getItemContext };
 
 export interface ItemContext extends SelectableContext {
 	dom: ListItemDOMElement;
-	sendOnSelected(): void;
+	value: string;
+	selected: boolean;
+	disabled: boolean;
+	tabindex: number;
+	notifySelected(selected: boolean): void;
+	setTabIndex(tabindex: number): void;
 }
 
 export const [
