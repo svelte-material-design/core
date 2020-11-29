@@ -40,6 +40,7 @@
 	} from "../../../packages/common/hoc";
 	import { createSelectContext } from "./";
 	import { ExtractNamedSlot } from "../../common";
+	import { SingleSelectionGroup } from "../../common/selectable";
 
 	//#region exports
 	export let ripple: boolean = true;
@@ -78,7 +79,6 @@
 	let helperTextId: string;
 	let labelId: string;
 	$: labelId = $$slots.label ? `${id}--selected-text` : undefined;
-	let selectableGroupInitialized: boolean = false;
 	let selectedTextId: string;
 	$: selectedTextId = value ? `${id}--selected-text` : undefined;
 
@@ -101,7 +101,7 @@
 		reistantiate();
 	});
 
-	$: if (select && selectableGroupInitialized) {
+	$: if (select) {
 		if (select.disabled !== disabled) {
 			select.disabled = disabled;
 		}
@@ -192,13 +192,12 @@
 <UseState value={lineRipple} onUpdate={reistantiate} />
 
 <div class={'smui-select'}>
-	<SelectableGroup
+	<SingleSelectionGroup
 		bind:value
-		selectionType="single"
 		on:change={handleChange}
 		on:optionsUpdated={handleOptionsUpdated}
 		{nullable}
-		bind:initialized={selectableGroupInitialized}>
+		let:group>
 		<div
 			bind:this={dom}
 			{...props}
@@ -306,12 +305,12 @@
 			</div>
 
 			<Menu class="mdc-select__menu" fullWidth>
-				<List>
+				<List {group}>
 					<slot name="options" />
 				</List>
 			</Menu>
 		</div>
-	</SelectableGroup>
+	</SingleSelectionGroup>
 
 	<slot />
 </div>

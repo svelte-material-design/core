@@ -39,6 +39,8 @@
 	export let threeLine: boolean = false;
 	export let wrapFocus: boolean = false;
 	export let value: string | string[] = undefined;
+
+	export let group: GroupBinding = undefined;
 	//#endregion
 
 	const dispatch = createEventDispatcher<{
@@ -49,25 +51,14 @@
 	$: selectionType = !nonInteractive ? roleToSelectionType(role) : null;
 
 	let selectionGroup: SingleSelectionGroup | MultiSelectionGroup;
-	$: group = (selectionType ? {} : undefined) as GroupBinding;
-
-	const menuSurfaceContext$ = getMenuSurfaceContext();
-	$: if (menuSurfaceContext$) {
-		role = "menu";
-	}
-	//#endregion
-
-	onMount(async () => {
-		await tick();
-		console.log(group);
-	});
-
-	// Keep MDCList properties updated
 	$: if (selectionGroup) {
 		if (role === "list") {
 			value = null;
 		}
 	}
+	//#endregion
+
+	// Keep MDCList properties updated
 
 	async function handleAction({
 		targetIndex,
@@ -104,7 +95,7 @@
 		: undefined;
 </script>
 
-{#if selectionType}
+{#if selectionType && !group}
 	<svelte:component
 		this={component}
 		bind:this={selectionGroup}
