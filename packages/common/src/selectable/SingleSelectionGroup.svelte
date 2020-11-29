@@ -2,7 +2,12 @@
 	import { UseState } from "../../hooks";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import { beforeOrAfter } from "./domBeforeOrAfter";
-	import { GroupBinding, SelectableItem, GroupBindingContainer } from "./types";
+	import {
+		GroupBinding,
+		SelectableItem,
+		OnSelectionGroupOptionsChangeEvent,
+		OnSingleSelectionGroupChangeEvent,
+	} from "./types";
 
 	export let items: SelectableItem[] = [];
 	export let value: string = undefined;
@@ -18,9 +23,8 @@
 	});
 
 	const dispatch = createEventDispatcher<{
-		change: {
-			value: string;
-		};
+		change: OnSingleSelectionGroupChangeEvent;
+		optionsChange: OnSelectionGroupOptionsChangeEvent;
 	}>();
 
 	//checkAndFixValue();
@@ -118,13 +122,17 @@
 		}
 	}
 
-	function updateItem(item: SelectableItem) {
+	async function updateItem(item: SelectableItem) {
 		console.warn("updateItem", item);
 		const newValue = item.selected ? item.value : undefined;
+
 		if (newValue !== value) {
 			setValue(newValue);
 			updateItems();
 			updateItemsRef();
+
+			await tick();
+
 			dispatch("change", {
 				value,
 			});
@@ -143,9 +151,15 @@
 				value,
 			});
 		}
+
+		await tick();
+
+		dispatch("optionsChange", {
+			items,
+		});
 	}
 
-	function registerItem(item: SelectableItem) {
+	async function registerItem(item: SelectableItem) {
 		items.push(item);
 		sortItems();
 		if (mounted) {
@@ -157,6 +171,12 @@
 				});
 			}
 		}
+
+		await tick();
+
+		dispatch("optionsChange", {
+			items,
+		});
 	}
 
 	function sortItems() {

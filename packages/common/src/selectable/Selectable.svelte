@@ -54,7 +54,7 @@
 		});
 
 		if (mounted) {
-			await tick();
+			// await tick(); Causes issues when value gets updated due to a selectable update, force the user to place 2 tick to get the value updated
 			group?.updateItem(context);
 		}
 	}

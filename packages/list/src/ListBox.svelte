@@ -10,7 +10,7 @@
 	export let id: string = `@smui/list/List:${count++}`;
 
 	export let dom: HTMLDivElement | HTMLUListElement = undefined;
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -23,12 +23,12 @@
 		MultiSelectionGroup,
 	} from "../../common/selectable";
 	import ListImpl, { OnListActionEvent } from "./ListImpl.svelte";
-	import { ListOrientation, ListRole, OnListChangeEvent } from "./types";
-	import { roleToSelectionType } from "./toleToSelectionType";
+	import { ListOrientation, OnListChangeEvent } from "./types";
+	import { SelectionType } from "../../common/hoc";
 	//#endregion
 
 	//#region exports
-	export let role: ListRole = "list";
+	export let multiSelection: boolean = false;
 	export let orientation: ListOrientation = "vertical";
 
 	export let dense: boolean = false;
@@ -39,11 +39,6 @@
 	export let value: string | string[] = undefined;
 
 	export let group: GroupBinding = undefined;
-
-	$: if (role == undefined) role = "list";
-	$: if (role === "list") {
-		value = undefined;
-	}
 	//#endregion
 
 	const dispatch = createEventDispatcher<{
@@ -51,7 +46,8 @@
 	}>();
 
 	//#region local variables
-	$: selectionType = roleToSelectionType(role);
+	let selectionType: SelectionType;
+	$: selectionType = multiSelection ? "multi" : "single";
 
 	let selectionGroup: SingleSelectionGroup | MultiSelectionGroup;
 	//#endregion
@@ -105,7 +101,8 @@
 			{id}
 			class={className}
 			{style}
-			{role}
+			role="listbox"
+			ariaMultiselectable={multiSelection}
 			{selectionType}
 			{orientation}
 			{dense}
@@ -113,7 +110,6 @@
 			{twoLine}
 			{threeLine}
 			{wrapFocus}
-			{group}
 			on:action={(event) => handleAction(event.detail)}>
 			<slot />
 		</ListImpl>
@@ -125,7 +121,8 @@
 		{id}
 		class={className}
 		{style}
-		{role}
+		role="listbox"
+		ariaMultiselectable={multiSelection}
 		{selectionType}
 		{orientation}
 		{dense}

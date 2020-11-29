@@ -4,15 +4,16 @@ export interface CheckboxContext {
 	value: any;
 }
 
-const [setCheckboxBehaviour, getCheckboxBehaviour] = createContextPropBuilder<
-	CheckboxBehaviour
->();
+const [
+	setCheckboxBehaviour,
+	getCheckboxBehaviour,
+] = createContextPropBuilder<CheckboxBehaviour>();
 export { setCheckboxBehaviour, getCheckboxBehaviour };
 
 export type CheckboxBehaviour = "data-table-header" | "data-table-row";
 
 const [
-	setDisableCheckboxMDCIstance,
-	getDisableCheckboxMDCIstance,
+	setCreateCheckboxMDCIstance,
+	getCreateCheckboxMDCIstance,
 ] = createContextPropBuilder<boolean>();
-export { setDisableCheckboxMDCIstance, getDisableCheckboxMDCIstance };
+export { setCreateCheckboxMDCIstance, getCreateCheckboxMDCIstance };

@@ -14,3 +14,15 @@ export interface GroupBinding {
 export class GroupBindingContainer {
 	group: GroupBinding = {} as GroupBinding;
 }
+
+export interface OnSingleSelectionGroupChangeEvent {
+	value: string;
+}
+
+export interface OnSelectionGroupOptionsChangeEvent {
+	items: SelectableItem[];
+}
+
+export interface OnMultiSelectionGroupChangeEvent {
+	value: string;
+}

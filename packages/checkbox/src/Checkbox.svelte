@@ -23,7 +23,7 @@
 	import {
 		CheckboxContext,
 		getCheckboxBehaviour,
-		getDisableCheckboxMDCIstance,
+		getCreateCheckboxMDCIstance,
 	} from "./";
 	import { getFormFieldContext } from "../../../packages/form-field";
 	import { Selectable } from "../../../packages/common/hoc";
@@ -69,7 +69,7 @@
 
 	//#region Init contexts
 	const formFieldContext$ = getFormFieldContext();
-	const disableMDC = getDisableCheckboxMDCIstance();
+	const createMDCInstance = getCreateCheckboxMDCIstance();
 
 	const context = {} as CheckboxContext;
 	$: Object.assign(context, {
@@ -97,7 +97,7 @@
 	});
 
 	function reistantiate() {
-		if (!disableMDC) {
+		if (createMDCInstance !== false) {
 			checkbox?.destroy();
 			checkbox = new MDCCheckbox(dom);
 
@@ -131,14 +131,16 @@
 	}
 
 	function updateMDCValue() {
-		if (!checkbox.indeterminate && checked === null) {
-			checkbox.indeterminate = true;
-		} else if (checkbox.indeterminate && checked !== null) {
-			checkbox.indeterminate = false;
-		}
+		if (checkbox) {
+			if (!checkbox.indeterminate && checked === null) {
+				checkbox.indeterminate = true;
+			} else if (checkbox.indeterminate && checked !== null) {
+				checkbox.indeterminate = false;
+			}
 
-		if (checkbox.value !== value) {
-			checkbox.value = value;
+			if (checkbox.value !== value) {
+				checkbox.value = value;
+			}
 		}
 	}
 

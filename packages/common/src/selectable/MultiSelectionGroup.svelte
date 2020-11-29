@@ -165,7 +165,7 @@
 
 	function setValue(newValue: string[]) {
 		value = newValue;
-		valueState?.setValue(value);
+		valueState?.setValue?.(value);
 	}
 
 	export function getItems() {

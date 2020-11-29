@@ -24,30 +24,35 @@
 	import { getListContext } from "../";
 	import { createItemContext, ItemContext, OnItemSelectedEvent } from ".";
 	import { getMenuSurfaceContext } from "../../../../packages/menu-surface";
-	import { OnSelectableChange } from "../../../../packages/common/hoc";
 	import { Selectable } from "../../../../packages/common/selectable";
 	import { Ripple3 } from "../../../../packages/ripple";
 	import { UseState } from "../../../../packages/common/hooks";
+
 	//#endregion
 
+	//#region exports
 	export let ripple: boolean = true;
 	export let activated: boolean = false;
-	export let role: ItemRole = undefined; //TODO: forse si può togliere dagli export
 	export let selected: boolean = false;
 	export let disabled: boolean = false;
 	export let tabindex: number = -1;
 	export let href: string = undefined;
 	export let value: any = undefined;
+	export let ariaLabel: string = undefined;
+	export let title: string = undefined;
+	//#endregion
 
 	const dispatch = createEventDispatcher<{
-		selected: OnItemSelectedEvent;
+		change: OnItemSelectedEvent;
 	}>();
 
+	//#region locals
 	let selectable: Selectable;
 	let rippleClasses: string;
-
+	let role: ItemRole = undefined;
 	const listContext$ = getListContext();
 	const menuSurfaceContext$ = getMenuSurfaceContext();
+
 	$: if ($listContext$.role === "radiogroup") {
 		role = "radio";
 	} else if ($listContext$.role === "menu" || menuSurfaceContext$) {
@@ -58,13 +63,19 @@
 		role = "checkbox";
 	}
 
+	$: if (!$listContext$.selectionType) {
+		selected = undefined;
+	}
+	//#endregion
+
 	const context = ({
 		tabindex,
 		disabled,
 		selected,
 		value,
+		role,
 		notifySelected() {
-			dispatch("selected", { dom, selected });
+			dispatch("change", { dom, selected });
 		},
 		setTabIndex(newValue: number) {
 			tabindex = newValue;
@@ -82,6 +93,7 @@
 			tabindex,
 			dom,
 			value,
+			role,
 		}),
 	};
 
@@ -105,6 +117,8 @@
 				? `${selected}`
 				: undefined,
 		role,
+		"aria-label": ariaLabel,
+		title: title,
 	};
 </script>
 
@@ -128,21 +142,22 @@
 			'mdc-list-item',
 			[disabled, 'mdc-list-item--disabled'],
 			[
-				(role === 'option' || role === 'menuitem' || role === 'checkbox') &&
-					selected,
+				(role === 'option' || role === 'menuitem') && selected,
 				'mdc-list-item--selected',
 			],
 			[role === 'menuitem' && selected, 'mdc-menu-item--selected'],
 			rippleClasses,
 		])}
 		{style}>
-		{#if role === 'checkbox'}<input type="checkbox" checked={selected} />{/if}
+		{#if role === 'option' && $listContext$.role === 'listbox' && $listContext$.selectionType === 'multi'}
+			<input style="display: none;" type="checkbox" checked={selected} />
+		{/if}
 		{#if ripple}
 			<Ripple3
 				bind:rippleClasses
 				rippleElement={'mdc-list-item__ripple'}
 				target={dom} />
 		{:else}<span class="mdc-list-item__ripple" />{/if}
-		<slot />
+		<slot {selected} />
 	</svelte:component>
 </Selectable>

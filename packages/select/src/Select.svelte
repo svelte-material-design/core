@@ -97,7 +97,7 @@
 	setCreateMDCMenuInstance(false);
 
 	let select: MDCSelect;
-	onMount(() => {
+	onMount(async () => {
 		reistantiate();
 	});
 
@@ -127,22 +127,18 @@
 		select?.destroy();
 		select = new MDCSelect(dom);
 
-		select.listen("MDCSelect:change", (event: MDCSelectEvent) => {
-			setValue(event.detail.value);
-			dirty = true;
-		});
+		select.listen("MDCSelect:change", handleChange);
 
 		setSelectValue(value);
 	}
 
-	function handleChange(event: CustomEvent<OnSelectableGroupChange>) {
-		if (select) {
-			setSelectValue(value);
-		}
+	function handleChange(event: MDCSelectEvent) {
+		setValue(event.detail.value);
+		dirty = true;
 
 		dispatch("change", {
 			value,
-			index: event.detail.selectedItemsIndex[0],
+			dom,
 		});
 	}
 
@@ -158,8 +154,13 @@
 		value = newValue;
 	}
 
-	function handleOptionsUpdated() {
-		select.layoutOptions();
+	async function handleOptionsUpdated() {
+		if (select.value !== value) {
+			select.layoutOptions();
+			select.layout();
+		} else {
+			select.layoutOptions();
+		}
 	}
 
 	function onValueChange(oldValue: any) {
@@ -194,8 +195,7 @@
 <div class={'smui-select'}>
 	<SingleSelectionGroup
 		bind:value
-		on:change={handleChange}
-		on:optionsUpdated={handleOptionsUpdated}
+		on:optionsChange={handleOptionsUpdated}
 		{nullable}
 		let:group>
 		<div

@@ -19,7 +19,7 @@
 	// Radio
 	import { MDCRadio } from "@material/radio";
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import { RadioContext } from "./RadioContext";
+	import { getCreateRadioMDCIstance, RadioContext } from "./RadioContext";
 	import { getFormFieldContext } from "../../../packages/form-field";
 	import { Selectable } from "../../../packages/common/hoc";
 	import { RadioChangeEvent } from "./";
@@ -50,11 +50,13 @@
 		change: RadioChangeEvent;
 	}>();
 
+	let inputElement: HTMLInputElement;
 	let inputId: string = `${id}--input`;
 
 	$: $formFieldContext$?.setInputId(inputId);
 
 	//#region Init contexts
+	let createMDCInstance = getCreateRadioMDCIstance();
 	let formFieldContext$ = getFormFieldContext();
 
 	$: $formFieldContext$?.setInputId(inputId);
@@ -71,7 +73,7 @@
 
 	let radio: MDCRadio;
 	onMount(() => {
-		reistantiate();
+		istantiate();
 	});
 
 	$: if (radio) {
@@ -96,13 +98,15 @@
 		radio && radio.destroy();
 	});
 
-	function reistantiate() {
-		radio?.destroy();
+	function istantiate() {
+		if (createMDCInstance !== false) {
+			radio?.destroy();
 
-		radio = new MDCRadio(dom);
+			radio = new MDCRadio(dom);
 
-		if (!ripple) {
-			radio.ripple.destroy();
+			if (!ripple) {
+				radio.ripple.destroy();
+			}
 		}
 	}
 
@@ -111,7 +115,7 @@
 	}
 
 	function handleChange() {
-		checked = radio.checked;
+		checked = inputElement.checked;
 
 		dispatch("change", {
 			dom,
@@ -130,7 +134,7 @@
 <svelte:options immutable={true} />
 
 <Use effect hook={() => setFormFieldInput(radio)} when={!!radio} />
-<UseState value={ripple} onUpdate={reistantiate} />
+<UseState value={ripple} onUpdate={istantiate} />
 
 <Selectable bind:value bind:selected={checked}>
 	<div class={expandedTouchTarget ? 'mdc-touch-target-wrapper' : undefined}>
@@ -147,6 +151,7 @@
 			])}
 			{style}>
 			<input
+				bind:this={inputElement}
 				class="mdc-radio__native-control"
 				id={inputId}
 				type="radio"

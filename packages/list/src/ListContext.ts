@@ -4,7 +4,10 @@ import {
 	createContextPropBuilder,
 } from "../../../packages/common";
 import { MDCList } from "@material/list";
-import { SelectableGroupContext } from "../../../packages/common/hoc";
+import {
+	SelectableGroupContext,
+	SelectionType,
+} from "../../../packages/common/hoc";
 import { GroupBinding, GroupBindingContainer } from "../../common/selectable";
 import { ListRole } from "./types";
 
@@ -17,10 +20,11 @@ export const [
 ] = createContextPropBuilder<boolean>();
 
 export interface ListContext extends SelectableGroupContext {
-	role: ListRole;
+	role: ListRole | "listbox";
 	isNav: boolean;
 	list: MDCList;
 	group: GroupBinding;
+	selectionType: SelectionType;
 	registerItem(item: ItemContext): void;
 	unregisterItem(item: ItemContext): void;
 	reinitialize(): void;
