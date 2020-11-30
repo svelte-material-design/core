@@ -11,8 +11,8 @@
 	export let style: string = undefined;
 	export let id: string = `../../../packages/select/Option:${count++}`;
 
-	import { ListItemDOMElement, Text } from "../../../packages/list";
-	export let dom: ListItemDOMElement = undefined;
+	import { Text } from "../../../packages/list";
+	export let dom: HTMLLIElement = undefined;
 
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};

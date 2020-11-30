@@ -52,7 +52,7 @@
 	let selectionGroup: SingleSelectionGroup | MultiSelectionGroup;
 	//#endregion
 
-	// Keep MDCList properties updated
+	$: console.log(selectionGroup?.getItems());
 
 	async function handleAction({
 		targetIndex,
@@ -110,6 +110,7 @@
 			{twoLine}
 			{threeLine}
 			{wrapFocus}
+			{group}
 			on:action={(event) => handleAction(event.detail)}>
 			<slot />
 		</ListImpl>

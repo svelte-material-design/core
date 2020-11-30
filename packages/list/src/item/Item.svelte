@@ -10,8 +10,8 @@
 	export let style: string = undefined;
 	export let id: string = `@smui/list/Item:${count++}`;
 
-	import { ItemRole, ListItemDOMElement } from "../types";
-	export let dom: ListItemDOMElement = undefined;
+	import { ItemRole } from "../types";
+	export let dom: HTMLLIElement = undefined;
 
 	import { BaseProps } from "../../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
@@ -40,6 +40,8 @@
 	export let value: any = undefined;
 	export let ariaLabel: string = undefined;
 	export let title: string = undefined;
+
+	export let role: ItemRole = undefined;
 	//#endregion
 
 	const dispatch = createEventDispatcher<{
@@ -49,21 +51,22 @@
 	//#region locals
 	let selectable: Selectable;
 	let rippleClasses: string;
-	let role: ItemRole = undefined;
 	const listContext$ = getListContext();
 	const menuSurfaceContext$ = getMenuSurfaceContext();
 
-	$: if ($listContext$.role === "radiogroup") {
-		role = "radio";
+	let _role = role;
+	$: _role = role;
+	$: if (!role && $listContext$.role === "radiogroup") {
+		_role = "radio";
 	} else if ($listContext$.role === "menu" || menuSurfaceContext$) {
-		role = "menuitem";
+		_role = "menuitem";
 	} else if ($listContext$.role === "listbox") {
-		role = "option";
+		_role = "option";
 	} else if ($listContext$.role === "group") {
-		role = "checkbox";
+		_role = "checkbox";
 	}
 
-	$: if (!$listContext$.selectionType) {
+	$: if (!$listContext$.selectionType || disabled) {
 		selected = undefined;
 	}
 	//#endregion
@@ -73,7 +76,7 @@
 		disabled,
 		selected,
 		value,
-		role,
+		role: _role,
 		notifySelected() {
 			dispatch("change", { dom, selected });
 		},
@@ -83,8 +86,6 @@
 	} as any) as ItemContext;
 	const context$ = createItemContext({ ...context });
 
-	$: if (disabled && selected) selected = false;
-
 	$: $context$ = {
 		...Object.assign(context, {
 			...$context$,
@@ -93,7 +94,7 @@
 			tabindex,
 			dom,
 			value,
-			role,
+			role: _role,
 		}),
 	};
 
@@ -116,7 +117,7 @@
 			$listContext$.role === "group" || $listContext$.role === "radiogroup"
 				? `${selected}`
 				: undefined,
-		role,
+		role: _role,
 		"aria-label": ariaLabel,
 		title: title,
 	};
@@ -132,24 +133,23 @@
 	group={$listContext$.group}
 	{dom}
 	{value}>
-	<svelte:component
-		this={$listContext$.isNav && href ? A : Li}
-		bind:dom
-		props={{ ...props }}
+	<li
+		bind:this={dom}
+		{...props}
 		{id}
 		class={parseClassList([
 			className,
 			'mdc-list-item',
 			[disabled, 'mdc-list-item--disabled'],
 			[
-				(role === 'option' || role === 'menuitem') && selected,
+				(_role === 'option' || _role === 'menuitem') && selected,
 				'mdc-list-item--selected',
 			],
-			[role === 'menuitem' && selected, 'mdc-menu-item--selected'],
+			[_role === 'menuitem' && selected, 'mdc-menu-item--selected'],
 			rippleClasses,
 		])}
 		{style}>
-		{#if role === 'option' && $listContext$.role === 'listbox' && $listContext$.selectionType === 'multi'}
+		{#if _role === 'option' && $listContext$.role === 'listbox' && $listContext$.selectionType === 'multi'}
 			<input style="display: none;" type="checkbox" checked={selected} />
 		{/if}
 		{#if ripple}
@@ -159,5 +159,5 @@
 				target={dom} />
 		{:else}<span class="mdc-list-item__ripple" />{/if}
 		<slot {selected} />
-	</svelte:component>
+	</li>
 </Selectable>

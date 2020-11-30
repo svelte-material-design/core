@@ -27,7 +27,6 @@
 	import { Nav, Ul } from "../../../packages/common/dom";
 	import { createListContext, getCreateMDCListInstance } from "./ListContext";
 	import { getMenuSurfaceContext } from "../../../packages/menu-surface";
-	import { getDrawerContext } from "../../../packages/drawer";
 	import { SelectionType } from "../../../packages/common/hoc";
 	import { GroupBinding } from "../../common/selectable";
 	import { ListRole, ListOrientation, ItemContext } from ".";
@@ -42,7 +41,9 @@
 	export let avatarList: boolean = false;
 	export let twoLine: boolean = false;
 	export let threeLine: boolean = false;
+
 	export let wrapFocus: boolean = false;
+	export let isNav: boolean = false;
 
 	export let group: GroupBinding;
 	export let selectionType: SelectionType = undefined;
@@ -57,11 +58,6 @@
 
 	const menuSurfaceContext$ = getMenuSurfaceContext();
 
-	const drawerContext$ = getDrawerContext();
-	$: if (drawerContext$) {
-		wrapFocus = true;
-	}
-
 	let items = new Set<ItemContext>();
 	const shouldCreateMDCListInstance = getCreateMDCListInstance();
 
@@ -72,7 +68,7 @@
 	const context$ = createListContext({
 		group,
 		role,
-		isNav: !!drawerContext$,
+		isNav,
 		selectionType,
 		registerItem(item: ItemContext) {
 			items.add(item);
@@ -91,7 +87,7 @@
 	$: $context$ = {
 		...$context$,
 		role,
-		isNav: !!drawerContext$,
+		isNav,
 		list,
 		selectionType,
 	};
@@ -129,13 +125,9 @@
 	}
 
 	async function initialize() {
-		list?.destroy();
+		if (shouldCreateMDCListInstance !== false) {
+			list?.destroy();
 
-		if (
-			shouldCreateMDCListInstance !== false &&
-			$drawerContext$?.variant !== "dismissible" &&
-			$drawerContext$?.variant !== "modal"
-		) {
 			list = new MDCList(dom);
 			list.listen("MDCList:action", handleAction);
 		}
@@ -171,7 +163,7 @@
 		}
 	}
 
-	$: component = drawerContext$ ? Nav : Ul;
+	$: component = isNav ? Nav : Ul;
 
 	$: props = {
 		...props,

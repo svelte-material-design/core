@@ -26,7 +26,7 @@
 	} from "@material/data-table";
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
 	import { SelectableGroup } from "../../../packages/common/hoc";
-	import { setDisableCheckboxMDCIstance } from "../../../packages/checkbox";
+	import { setCreateCheckboxMDCIstance } from "../../../packages/checkbox";
 	import { getDialogContext } from "../../../packages/dialog";
 	import { createDataTableContext } from "./DataTableContext";
 	import { SortEventDetail } from "./";
@@ -46,7 +46,7 @@
 
 	let selectableGroup: SelectableGroup;
 
-	setDisableCheckboxMDCIstance(true);
+	setCreateCheckboxMDCIstance(true);
 	const dialogContext$ = getDialogContext();
 
 	let dataTable: MDCDataTable;

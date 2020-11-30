@@ -1,53 +1,52 @@
-<script lang="ts">
-	// Base
-	import { DOMEventsForwarder } from "../../../packages/common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
-	export { className as class };
-	export let style: string = "";
+<script context="module" lang="ts">
+	let count = 0;
+</script>
 
-	export let dom: HTMLButtonElement | HTMLAnchorElement = null;
-	import { BaseProps } from "../../../packages/common/dom/Props";
+<script lang="ts">
+	//#region Base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@smui/list/Separator:${count++}`;
+
+	export let dom: HTMLLIElement | HTMLHRElement = undefined;
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
+	//#endregion
 
 	// Separator
-	import { Li, Hr } from "../../../packages/common/dom";
+	import { getListContext } from "./ListContext";
+	import { parseClassList } from "../../common/functions";
 
-	export let group: boolean = false;
-	export let nav: boolean = false;
 	export let padded: boolean = false;
 	export let inset: boolean = false;
 
-	const component = group || nav ? Hr : Li;
+	const listContext$ = getListContext();
 </script>
 
-<svelte:component
-	this={component}
-	bind:dom
-	props={{ ...props, role: component === Li ? 'separator' : null }}
-	on:domEvent={forwardDOMEvents}
-	class=" mdc-list-divider {className}
-  {padded ? 'mdc-list-divider--padded' : ''}
-  {inset ? 'mdc-list-divider--inset' : ''}"
-	{style} />
-
-<!-- {#if group || nav}
-  <hr
-    use:useActions={use}
-    use:forwardEvents
-    class=" mdc-list-divider {className}
-    {padded ? 'mdc-list-divider--padded' : ''}
-    {inset ? 'mdc-list-divider--inset' : ''}
-    "
-    {...props} />
+{#if $listContext$.isNav}
+	<hr
+		bind:this={dom}
+		{...props}
+		{id}
+		class={parseClassList([
+			className,
+			'mdc-list-divider',
+			[padded, 'mdc-list-divider--padded'],
+			[inset, 'mdc-list-divider--inset'],
+		])}
+		{style} />
 {:else}
-  <li
-    use:useActions={use}
-    use:forwardEvents
-    class=" mdc-list-divider {className}
-    {padded ? 'mdc-list-divider--padded' : ''}
-    {inset ? 'mdc-list-divider--inset' : ''}
-    "
-    role="separator"
-    {...props} />
-{/if} -->
+	<li
+		bind:this={dom}
+		{...props}
+		{id}
+		class={parseClassList([
+			className,
+			'mdc-list-divider',
+			[padded, 'mdc-list-divider--padded'],
+			[inset, 'mdc-list-divider--inset'],
+		])}
+		{style}
+		role="separator" />
+{/if}

@@ -23,7 +23,11 @@
 	//#endregion
 
 	// PageSize
-	import { Option, Select, OnSelectChangeEventDetail } from "../../../../packages/select";
+	import {
+		Option,
+		Select,
+		OnSelectChangeEventDetail,
+	} from "../../../../packages/select";
 	import { createEventDispatcher } from "svelte";
 	import { getPaginationContext } from "./PaginationContext";
 
@@ -75,8 +79,10 @@
 		nullable={false}
 		value={pageSizeSelectValue}
 		on:change={(event) => handlePageSizeChange(event.detail)}>
-		{#each pageSizeOptions as option (option)}
-			<Option value={'' + option}>{option}</Option>
-		{/each}
+		<div slot="options">
+			{#each pageSizeOptions as option (option)}
+				<Option value={'' + option}>{option}</Option>
+			{/each}
+		</div>
 	</Select>
 </div>

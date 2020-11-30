@@ -33,13 +33,8 @@
 	import { setCreateMDCMenuInstance } from "../../../packages/menu";
 	import { Span } from "../../../packages/common/dom";
 	import { OnSelectChangeEventDetail, SelectVariant } from "./";
-	import { Use, UseState } from "../../../packages/common/hooks";
-	import {
-		OnSelectableGroupChange,
-		SelectableGroup,
-	} from "../../../packages/common/hoc";
+	import { UseState } from "../../../packages/common/hooks";
 	import { createSelectContext } from "./";
-	import { ExtractNamedSlot } from "../../common";
 	import { SingleSelectionGroup } from "../../common/selectable";
 
 	//#region exports
