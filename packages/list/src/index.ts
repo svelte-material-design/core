@@ -8,6 +8,8 @@ import Label from "./Label.svelte";
 import Group from "./Group.svelte";
 import Subheader from "./Subheader.svelte";
 import Separator from "./Separator.svelte";
+import LeadingContent from "./LeadingContent.svelte";
+import TrailingContent from "./TrailingContent.svelte";
 
 export {
 	ListBox,
@@ -20,10 +22,13 @@ export {
 	Group,
 	Subheader,
 	Separator,
+	LeadingContent,
+	TrailingContent,
 };
 export * from "./ListContext";
 export * from "./types";
 export * from "./graphic";
 export * from "./item";
 export * from "./icon";
+export * from "./leading";
 export * from "./nav-list";

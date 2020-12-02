@@ -4,7 +4,11 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../common/functions";
+	import {
+		createSlotClassListHandler,
+		parseClassList,
+		SlotClassListHandler,
+	} from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -20,7 +24,6 @@
 	// Item
 	//#region import
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import { Li, A } from "../../../../packages/common/dom";
 	import { getListContext } from "../";
 	import { createItemContext, ItemContext, OnItemSelectedEvent } from ".";
 	import { getMenuSurfaceContext } from "../../../../packages/menu-surface";
@@ -98,12 +101,32 @@
 		}),
 	};
 
+	let leadingSlotClassHandler: SlotClassListHandler;
+	let trailingSlotClassHandler: SlotClassListHandler;
+
 	onMount(() => {
 		$listContext$.registerItem(context);
+
+		if ($$slots.leading) {
+			const slotElement = dom.querySelector("[slot=leading]") as HTMLElement;
+			leadingSlotClassHandler = createSlotClassListHandler(slotElement, [
+				"mdc-list-item__graphic",
+			]);
+		}
+
+		if ($$slots.trailing) {
+			const slotElement = dom.querySelector("[slot=trailing]") as HTMLElement;
+			trailingSlotClassHandler = createSlotClassListHandler(slotElement, [
+				"mdc-list-item__meta",
+			]);
+		}
 	});
 
 	onDestroy(() => {
 		$listContext$.unregisterItem(context);
+
+		leadingSlotClassHandler?.destroy();
+		trailingSlotClassHandler?.destroy();
 	});
 
 	$: props = {
@@ -158,6 +181,8 @@
 				rippleElement={'mdc-list-item__ripple'}
 				target={dom} />
 		{:else}<span class="mdc-list-item__ripple" />{/if}
+		<slot name="leading" />
 		<slot {selected} />
+		<slot name="trailing" />
 	</li>
 </Selectable>

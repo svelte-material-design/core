@@ -4,7 +4,10 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../../packages/common/functions";
+	import {
+		isSlot,
+		parseClassList,
+	} from "../../../../packages/common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -22,10 +25,13 @@
 		GraphicElement,
 		GraphicType,
 	} from "../../../../packages/common/components";
+	import { onMount } from "svelte";
 
 	export let type: GraphicType = "icon";
 	export let role: "button" = undefined;
 	export let ariaLabel: string = undefined;
+
+	let position: "leading" | "trailing" = "leading";
 
 	$: tabindex = role === "button" ? 0 : -1;
 
@@ -36,17 +42,22 @@
 		role,
 		tabindex,
 	};
+
+	onMount(() => {
+		if (isSlot(dom, "trailing")) {
+			position = "trailing";
+		}
+	});
 </script>
 
 <svelte:options immutable={true} />
-
 <Graphic
 	bind:dom
 	{props}
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-list-item__graphic',
+		[position === 'trailing', 'smui-list__trailing-icon'],
 		[type === 'icon' && className == undefined, 'material-icons'],
 	])}
 	{style}

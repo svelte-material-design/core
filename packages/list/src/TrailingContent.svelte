@@ -16,8 +16,10 @@
 	export let props: BaseProps = {};
 	//#endregion
 
-	// Meta
+	// TrailingContent
 </script>
+
+<svelte:options immutable={true} />
 
 <span
 	bind:this={dom}

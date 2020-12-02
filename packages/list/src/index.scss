@@ -1,6 +1,7 @@
 @use "smui-theme";
 @use "@material/list";
 @use "./mixins";
+@use "./icon";
 
 @include list.core-styles();
 @include mixins.smui-list-core-styles();

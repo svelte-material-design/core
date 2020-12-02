@@ -25,20 +25,26 @@
 	import { MDCList, MDCListActionEvent } from "@material/list";
 	import { onDestroy, createEventDispatcher, onMount, tick } from "svelte";
 	import { Nav, Ul } from "../../../packages/common/dom";
-	import { createListContext, getCreateMDCListInstance } from "./ListContext";
 	import { getMenuSurfaceContext } from "../../../packages/menu-surface";
 	import { SelectionType } from "../../../packages/common/hoc";
 	import { GroupBinding } from "../../common/selectable";
-	import { ListRole, ListOrientation, ItemContext } from ".";
+	import {
+		ListRole,
+		ListOrientation,
+		ItemContext,
+		ListType,
+		createListContext,
+		getCreateMDCListInstance,
+	} from ".";
 	//#endregion
 
 	//#region exports
 	export let role: ListRole | "listbox" = "list";
 	export let orientation: ListOrientation = "vertical";
 	export let ariaMultiselectable: boolean = undefined;
+	export let type: ListType = "textual";
 
 	export let dense: boolean = false;
-	export let avatarList: boolean = false;
 	export let twoLine: boolean = false;
 	export let threeLine: boolean = false;
 
@@ -186,10 +192,15 @@
 		className,
 		'mdc-list',
 		[dense, 'mdc-list--dense'],
-		[avatarList, 'mdc-list--avatar-list'],
 		[twoLine, 'mdc-list--two-line'],
 		[threeLine && !twoLine, 'smui-list--three-line'],
 		[orientation === 'horizontal', 'smui-list--horizontal'],
+		[type === 'textual', 'mdc-list--textual-list'],
+		[type === 'avatar', 'mdc-list--avatar-list'],
+		[type === 'icon', 'mdc-list--icon-list'],
+		[type === 'image', 'mdc-list--image-list'],
+		[type === 'thumbnail', 'mdc-list--thumbnail-list'],
+		[type === 'video', 'mdc-list--video-list'],
 	])}
 	{style}>
 	<slot />

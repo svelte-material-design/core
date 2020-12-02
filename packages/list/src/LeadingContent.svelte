@@ -8,7 +8,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/list/TrailingContent:${count++}`;
+	export let id: string = `@smui/list/LeadingContent:${count++}`;
 
 	export let dom: HTMLSpanElement = undefined;
 
@@ -16,14 +16,16 @@
 	export let props: BaseProps = {};
 	//#endregion
 
-	// Meta
+	// LeadingContent
 </script>
+
+<svelte:options immutable={true} />
 
 <span
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-list-item__meta'])}
+	class={parseClassList([className, 'mdc-list-item__graphic'])}
 	{style}>
 	<slot />
 </span>

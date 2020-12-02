@@ -23,16 +23,18 @@
 		MultiSelectionGroup,
 	} from "../../common/selectable";
 	import ListImpl, { OnListActionEvent } from "./ListImpl.svelte";
-	import { ListOrientation, ListRole, OnListChangeEvent } from "./types";
+	import { ListOrientation, ListRole, OnListChangeEvent, ListType } from ".";
 	import { roleToSelectionType } from "./toleToSelectionType";
+	import { setCreateCheckboxMDCIstance } from "../../../packages/checkbox";
+	import { setCreateRadioMDCIstance } from "../../../packages/radio";
 	//#endregion
 
 	//#region exports
 	export let role: ListRole = "list";
 	export let orientation: ListOrientation = "vertical";
+	export let type: ListType = "textual";
 
 	export let dense: boolean = false;
-	export let avatarList: boolean = false;
 	export let twoLine: boolean = false;
 	export let threeLine: boolean = false;
 	export let wrapFocus: boolean = false;
@@ -43,6 +45,18 @@
 	$: if (role == undefined) role = "list";
 	$: if (role === "list") {
 		value = undefined;
+	}
+
+	$: if (role === "group") {
+		setCreateCheckboxMDCIstance(false);
+	} else {
+		setCreateCheckboxMDCIstance(true);
+	}
+
+	$: if (role === "radiogroup") {
+		setCreateRadioMDCIstance(false);
+	} else {
+		setCreateRadioMDCIstance(true);
 	}
 	//#endregion
 
@@ -108,8 +122,8 @@
 			{role}
 			{selectionType}
 			{orientation}
+			{type}
 			{dense}
-			{avatarList}
 			{twoLine}
 			{threeLine}
 			{wrapFocus}
@@ -128,8 +142,8 @@
 		{role}
 		{selectionType}
 		{orientation}
+		{type}
 		{dense}
-		{avatarList}
 		{twoLine}
 		{threeLine}
 		{wrapFocus}

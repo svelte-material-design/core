@@ -18,13 +18,7 @@
 
 	// Select
 	import { MDCSelect, MDCSelectEvent } from "@material/select";
-	import {
-		onMount,
-		onDestroy,
-		setContext,
-		createEventDispatcher,
-		tick,
-	} from "svelte";
+	import { onMount, onDestroy, createEventDispatcher } from "svelte";
 	import { Menu } from "../../../packages/menu";
 	import { List } from "../../../packages/list";
 	import { FloatingLabel } from "../../../packages/floating-label";

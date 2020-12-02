@@ -9,7 +9,7 @@ import {
 	SelectionType,
 } from "../../../packages/common/hoc";
 import { GroupBinding, GroupBindingContainer } from "../../common/selectable";
-import { ListRole } from "./types";
+import { ListRole, ListType } from "./types";
 
 const [createListContext, getListContext] = createContextBuilder<ListContext>();
 export { createListContext, getListContext };

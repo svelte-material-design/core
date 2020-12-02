@@ -6,3 +6,11 @@ export interface OnListChangeEvent {
 	value: string | string[];
 	dom: HTMLDivElement | HTMLUListElement;
 }
+
+export type ListType =
+	| "textual"
+	| "avatar"
+	| "icon"
+	| "image"
+	| "thumbnail"
+	| "video";

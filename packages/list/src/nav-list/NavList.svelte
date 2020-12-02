@@ -16,15 +16,15 @@
 
 	// List
 	//#region imports
-	import { ListOrientation } from "../";
+	import { ListOrientation, ListType } from "../";
 	import ListImpl from "../ListImpl.svelte";
 	//#endregion
 
 	//#region exports
 	export let orientation: ListOrientation = "vertical";
+	export let type: ListType = "textual";
 
 	export let dense: boolean = false;
-	export let avatarList: boolean = false;
 	export let twoLine: boolean = false;
 	export let threeLine: boolean = false;
 	//#endregion
@@ -38,8 +38,8 @@
 	{style}
 	role="list"
 	{orientation}
+	{type}
 	{dense}
-	{avatarList}
 	{twoLine}
 	{threeLine}
 	wrapFocus

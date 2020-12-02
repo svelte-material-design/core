@@ -15,15 +15,20 @@
 	//#endregion
 
 	// NavList
-	import { NavList, ListOrientation } from "../../../../packages/list";
+	import {
+		NavList,
+		ListOrientation,
+		ListType,
+	} from "../../../../packages/list";
 
 	//#region exports
 	export let orientation: ListOrientation = "vertical";
+	export let type: ListType = "textual";
 
 	export let dense: boolean = false;
-	export let avatarList: boolean = false;
 	export let twoLine: boolean = false;
 	export let threeLine: boolean = false;
+
 	//#endregion
 </script>
 
@@ -34,8 +39,8 @@
 	class={className}
 	{style}
 	{orientation}
+	{type}
 	{dense}
-	{avatarList}
 	{twoLine}
 	{threeLine}>
 	<slot />
