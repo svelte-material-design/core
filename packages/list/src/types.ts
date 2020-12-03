@@ -14,3 +14,5 @@ export type ListType =
 	| "image"
 	| "thumbnail"
 	| "video";
+
+export type ListItemsRows = 1 | 2 | 3;

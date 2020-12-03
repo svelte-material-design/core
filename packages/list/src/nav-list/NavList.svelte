@@ -16,17 +16,16 @@
 
 	// List
 	//#region imports
-	import { ListOrientation, ListType } from "../";
+	import { ListOrientation, ListType, ListItemsRows } from "../";
 	import ListImpl from "../ListImpl.svelte";
 	//#endregion
 
 	//#region exports
 	export let orientation: ListOrientation = "vertical";
 	export let type: ListType = "textual";
+	export let itemsRows: ListItemsRows = 1;
 
 	export let dense: boolean = false;
-	export let twoLine: boolean = false;
-	export let threeLine: boolean = false;
 	//#endregion
 </script>
 
@@ -38,10 +37,9 @@
 	{style}
 	role="list"
 	{orientation}
+	{itemsRows}
 	{type}
 	{dense}
-	{twoLine}
-	{threeLine}
 	wrapFocus
 	isNav>
 	<slot />

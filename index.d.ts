@@ -32,3 +32,5 @@ export * as tabScroller from "./tab-scroller";
 export * as textfield from "./textfield";
 export * as topAppBar from "./top-app-bar";
 export * as typography from "./typography";
+
+declare module "*.module.scss";

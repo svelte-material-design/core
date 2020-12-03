@@ -21,6 +21,7 @@ function createDirectSlotHandler(
 
 	let updateMutationHandler = (classList: StringListToFilter) => {
 		directSlotFn = createMutationHandler(classList);
+		directSlotFn(target);
 	};
 
 	directSlotObserver = new MutationObserver((mutations) => {
@@ -60,6 +61,15 @@ function createSvelteFragmentSlotHandler(
 
 	let updateMutationHandler = (classList: StringListToFilter) => {
 		svelteFragmentChildFn = createMutationHandler(classList);
+		elementChilds(target.childNodes).forEach((child) =>
+			svelteFragmentChildFn(child as HTMLElement)
+		);
+	};
+
+	let elementChilds = (childs: NodeListOf<ChildNode> | NodeList) => {
+		return Array.from(childs).filter(
+			(node) => node.nodeType === Node.ELEMENT_NODE
+		);
 	};
 
 	svelteFragmentSlotObserver = new MutationObserver((mutations) => {
@@ -68,16 +78,14 @@ function createSvelteFragmentSlotHandler(
 		});
 
 		relevantMutations.forEach((mutation) => {
-			Array.from(mutation.addedNodes)
-				.filter((node) => node.nodeType === Node.ELEMENT_NODE)
-				.forEach((child) => {
-					svelteFragmentChildFn(child as HTMLElement);
+			elementChilds(mutation.addedNodes).forEach((child) => {
+				svelteFragmentChildFn(child as HTMLElement);
 
-					svelteFragmentChildrenObserver.observe(child, {
-						attributeFilter: ["class"],
-						attributes: true,
-					});
+				svelteFragmentChildrenObserver.observe(child, {
+					attributeFilter: ["class"],
+					attributes: true,
 				});
+			});
 		});
 	});
 

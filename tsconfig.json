@@ -5,7 +5,7 @@
 		"declaration": true,
 		"emitDeclarationOnly": true,
 		"types": [
-			"svelte"
+			"svelte",
 		],
 		"baseUrl": ".",
 		"moduleResolution": "node",

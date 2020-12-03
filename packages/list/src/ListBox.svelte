@@ -23,7 +23,12 @@
 		MultiSelectionGroup,
 	} from "../../common/selectable";
 	import ListImpl, { OnListActionEvent } from "./ListImpl.svelte";
-	import { ListOrientation, OnListChangeEvent, ListType } from ".";
+	import {
+		ListOrientation,
+		OnListChangeEvent,
+		ListType,
+		ListItemsRows,
+	} from ".";
 	import { SelectionType } from "../../common/hoc";
 	//#endregion
 
@@ -31,10 +36,9 @@
 	export let multiSelection: boolean = false;
 	export let orientation: ListOrientation = "vertical";
 	export let type: ListType = "textual";
+	export let itemsRows: ListItemsRows = 1;
 
 	export let dense: boolean = false;
-	export let twoLine: boolean = false;
-	export let threeLine: boolean = false;
 	export let wrapFocus: boolean = false;
 	export let value: string | string[] = undefined;
 
@@ -105,10 +109,9 @@
 			ariaMultiselectable={multiSelection}
 			{selectionType}
 			{orientation}
+			{itemsRows}
 			{type}
 			{dense}
-			{twoLine}
-			{threeLine}
 			{wrapFocus}
 			{group}
 			on:action={(event) => handleAction(event.detail)}>
@@ -126,10 +129,9 @@
 		ariaMultiselectable={multiSelection}
 		{selectionType}
 		{orientation}
+		{itemsRows}
 		{type}
 		{dense}
-		{twoLine}
-		{threeLine}
 		{wrapFocus}
 		{group}
 		on:action={(event) => handleAction(event.detail)}>
