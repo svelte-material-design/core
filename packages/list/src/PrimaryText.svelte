@@ -18,6 +18,8 @@
 	// PrimaryText
 </script>
 
+<svelte:options immutable={true} />
+
 <span
 	bind:this={dom}
 	{...props}

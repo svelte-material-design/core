@@ -12,15 +12,14 @@
 	export let items: SelectableItem[] = [];
 	export let value: string = undefined;
 	export let nullable: boolean = true;
-	export let group: GroupBinding = {} as GroupBinding;
 
 	let valueState: UseState;
 	let mounted: boolean = false;
-	Object.assign(group, {
+	let group: GroupBinding = {
 		registerItem,
 		unregisterItem,
 		updateItem,
-	});
+	};
 
 	const dispatch = createEventDispatcher<{
 		change: OnSingleSelectionGroupChangeEvent;

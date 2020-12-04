@@ -4,8 +4,8 @@
 
 <script lang="ts">
 	import { UseState } from "../../hooks";
-	import { onDestroy, onMount, tick } from "svelte";
-	import { GroupBinding, SelectableItem } from "./types";
+	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
+	import { GroupBinding, OnSelectableChangeEvent, SelectableItem } from "./";
 
 	export let group: GroupBinding;
 	export let value: string;
@@ -15,10 +15,19 @@
 	let mounted: boolean = false;
 	let selectedState: UseState;
 
+	const dispatch = createEventDispatcher<{
+		change: OnSelectableChangeEvent;
+	}>();
+
 	const context: SelectableItem = {
 		setSelected(newValue: boolean) {
-			console.warn("setSelected", selected, newValue);
-			_setSelected(newValue);
+			if (selected !== newValue) {
+				_setSelected(newValue);
+
+				tick().then(() => {
+					dispatch("change", { selected });
+				});
+			}
 		},
 	} as SelectableItem;
 

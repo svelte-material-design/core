@@ -11,14 +11,13 @@
 	export let style: string = undefined;
 	export let id: string = `../../../packages/select/Option:${count++}`;
 
-	import { Text } from "../../../packages/list";
 	export let dom: HTMLLIElement = undefined;
 
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
-	import { Item } from "../../../packages/list";
+	import { Item, Content } from "../../../packages/list";
 
 	export let value: string = "";
 	export let selected: boolean = undefined;
@@ -38,9 +37,9 @@
 	{disabled}
 	role="option"
 	on:domEvent={forwardDOMEvents}>
-	<Text>
+	<Content>
 		<slot />
-	</Text>
+	</Content>
 </Item>
 
 <!-- {#if enhanced}

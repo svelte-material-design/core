@@ -29,6 +29,8 @@
 	//#endregion
 </script>
 
+<svelte:options immutable={true} />
+
 <ListImpl
 	bind:dom
 	{props}

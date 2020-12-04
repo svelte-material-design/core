@@ -23,9 +23,9 @@
 
 	// Item
 	//#region import
-	import { onMount, onDestroy, createEventDispatcher } from "svelte";
+	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getListContext } from "../";
-	import { createItemContext, ItemContext, OnItemSelectedEvent } from ".";
+	import { ItemContext, OnItemSelectedEvent } from ".";
 	import { getMenuSurfaceContext } from "../../../../packages/menu-surface";
 	import { Selectable } from "../../../../packages/common/selectable";
 	import { Ripple3 } from "../../../../packages/ripple";
@@ -80,33 +80,27 @@
 		selected,
 		value,
 		role: _role,
-		notifySelected() {
-			dispatch("change", { dom, selected });
-		},
 		setTabIndex(newValue: number) {
 			tabindex = newValue;
 		},
 	} as any) as ItemContext;
-	const context$ = createItemContext({ ...context });
 
-	$: $context$ = {
-		...Object.assign(context, {
-			...$context$,
-			disabled,
-			selected,
-			tabindex,
-			dom,
-			value,
-			role: _role,
-		}),
-	};
+	$: Object.assign(context, {
+		disabled,
+		selected,
+		tabindex,
+		dom,
+		value,
+		role: _role,
+	});
 
 	let leadingSlotClassHandler: SlotClassListHandler;
 	let trailingSlotClassHandler: SlotClassListHandler;
 
-	onMount(() => {
-		$listContext$.registerItem(context);
+	$: listRole =
+		$listContext$.dom === dom?.parentElement ? $listContext$.role : undefined;
 
+	onMount(async () => {
 		if ($$slots.leading) {
 			const slotElement = dom.querySelector("[slot=leading]") as HTMLElement;
 			leadingSlotClassHandler = createSlotClassListHandler(slotElement, [
@@ -120,14 +114,26 @@
 				"mdc-list-item__meta",
 			]);
 		}
+
+		await tick();
+
+		if ($listContext$.dom === dom.parentElement) {
+			$listContext$.registerItem(context);
+		}
 	});
 
 	onDestroy(() => {
-		$listContext$.unregisterItem(context);
+		if (dom && $listContext$.dom === dom.parentElement) {
+			$listContext$.unregisterItem(context);
+		}
 
 		leadingSlotClassHandler?.destroy();
 		trailingSlotClassHandler?.destroy();
 	});
+
+	function handleChange() {
+		dispatch("change", { dom, selected });
+	}
 
 	$: props = {
 		...props,
@@ -135,9 +141,9 @@
 		tabindex,
 		"aria-current": activated ? "page" : undefined,
 		"data-value": value,
-		"aria-selected": $listContext$.role === "listbox" ? selected : undefined,
+		"aria-selected": listRole === "listbox" ? selected : undefined,
 		"aria-checked":
-			$listContext$.role === "group" || $listContext$.role === "radiogroup"
+			listRole === "group" || listRole === "radiogroup"
 				? `${selected}`
 				: undefined,
 		role: _role,
@@ -155,7 +161,8 @@
 	bind:selected
 	group={$listContext$.group}
 	{dom}
-	{value}>
+	{value}
+	on:change={handleChange}>
 	<li
 		bind:this={dom}
 		{...props}
@@ -172,7 +179,7 @@
 			rippleClasses,
 		])}
 		{style}>
-		{#if _role === 'option' && $listContext$.role === 'listbox' && $listContext$.selectionType === 'multi'}
+		{#if _role === 'option' && listRole === 'listbox' && $listContext$.selectionType === 'multi'}
 			<input style="display: none;" type="checkbox" checked={selected} />
 		{/if}
 		{#if ripple}

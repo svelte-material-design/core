@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script context="module" lang="ts">
 	let count = 0;
 </script>
 
@@ -8,30 +8,23 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/list/LeadingContent:${count++}`;
+	export let id: string = `@smui/list/SubHeader:${count++}`;
 
-	export let dom: HTMLImageElement = undefined;
-
+	export let dom: HTMLDivElement = undefined;
 	import { BaseProps } from "../../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
-	// LeadingImage
-	export let alt: string;
-	export let src: string = undefined;
-	export let srcset: string = undefined;
-	export let loading: "eager" | "lazy" = undefined;
+	// Subheader
 </script>
 
 <svelte:options immutable={true} />
 
-<img
+<h3
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-list-item__graphic'])}
-	{style}
-	{alt}
-	{src}
-	{srcset}
-	{loading} />
+	class={parseClassList([className, 'mdc-list-group__subheader'])}
+	{style}>
+	<slot />
+</h3>

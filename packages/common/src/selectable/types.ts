@@ -26,3 +26,7 @@ export interface OnSelectionGroupOptionsChangeEvent {
 export interface OnMultiSelectionGroupChangeEvent {
 	value: string;
 }
+
+export interface OnSelectableChangeEvent {
+	selected: boolean;
+}

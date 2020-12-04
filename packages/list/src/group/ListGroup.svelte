@@ -4,27 +4,27 @@
 
 <script lang="ts">
 	//#region Base
+	import { parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/list/SecondaryText:${count++}`;
+	export let id: string = `@smui/list/Group:${count++}`;
 
-	export let dom: HTMLSpanElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	import { parseClassList } from "../../common/functions";
+	export let dom: HTMLDivElement = undefined;
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
-	// PrimaryText
+	// Group
 </script>
 
 <svelte:options immutable={true} />
 
-<span
+<div
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-list-item__secondary-text'])}
+	class={parseClassList([className, 'mdc-list-group'])}
 	{style}>
 	<slot />
-</span>
+</div>

@@ -43,24 +43,12 @@
 		disabled,
 		selected,
 	} as any) as ItemContext;
-	const context$ = createItemContext({ ...context });
 
-	$: $context$ = {
-		...Object.assign(context, {
-			...$context$,
-			disabled,
-			selected,
-			dom,
-		}),
-	};
-
-	// onMount(() => {
-	// 	$listContext$.registerItem(context);
-	// });
-
-	// onDestroy(() => {
-	// 	$listContext$.unregisterItem(context);
-	// });
+	$: Object.assign(context, {
+		disabled,
+		selected,
+		dom,
+	});
 </script>
 
 <svelte:options immutable={true} />

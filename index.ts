@@ -16,6 +16,7 @@ export * as imageList from "./image-list";
 export * as lineRipple from "./line-ripple";
 export * as linearProgress from "./linear-progress";
 export * as list from "./list";
+export * as listGroup from "./list/group";
 export * as menu from "./menu";
 export * as menuSurface from "./menu-surface";
 export * as notchedOutline from "./notched-outline";

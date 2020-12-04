@@ -25,6 +25,8 @@
 	const listContext$ = getListContext();
 </script>
 
+<svelte:options immutable={true} />
+
 {#if $listContext$.isNav}
 	<hr
 		bind:this={dom}

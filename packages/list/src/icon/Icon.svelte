@@ -51,6 +51,7 @@
 </script>
 
 <svelte:options immutable={true} />
+
 <Graphic
 	bind:dom
 	{props}

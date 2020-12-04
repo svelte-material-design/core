@@ -1,22 +1,21 @@
-<script lang="ts" context="module">
+<script context="module" lang="ts">
 	let count = 0;
 </script>
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/list/TrailingContent:${count++}`;
+	export let id: string = `@smui/list/Text:${count++}`;
 
 	export let dom: HTMLSpanElement = undefined;
-
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
+	import { parseClassList } from "../../common/functions";
 	export let props: BaseProps = {};
 	//#endregion
 
-	// TrailingContent
+	// Text
 </script>
 
 <svelte:options immutable={true} />
@@ -25,7 +24,7 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-list-item__meta'])}
+	class={parseClassList([className, 'mdc-list-item__text'])}
 	{style}>
 	<slot />
 </span>

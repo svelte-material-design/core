@@ -93,11 +93,12 @@
 		: undefined;
 </script>
 
-{#if selectionType && !group}
+{#if selectionType}
 	<svelte:component
 		this={component}
 		bind:this={selectionGroup}
 		bind:value
+		{group}
 		let:group>
 		<ListImpl
 			bind:dom

@@ -15,11 +15,8 @@
 	//#endregion
 
 	// NavList
-	import {
-		NavList,
-		ListOrientation,
-		ListType,
-	} from "../../../../packages/list";
+	import { NavList } from "../../../../packages/list/nav-list";
+	import { ListOrientation, ListType } from "../../../../packages/list";
 
 	//#region exports
 	export let orientation: ListOrientation = "vertical";

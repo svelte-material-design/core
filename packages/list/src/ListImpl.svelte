@@ -92,6 +92,7 @@
 	});
 	$: $context$ = {
 		...$context$,
+		dom,
 		role,
 		isNav,
 		list,
@@ -156,17 +157,6 @@
 			targetIndex: event.detail.index,
 			listSelectedIndex: list.selectedIndex,
 		});
-
-		if (selectionType) {
-			const itemElement = list.listElements[event.detail.index];
-			const item = Array.from(items).find((item) => item.dom === itemElement);
-
-			if (!list || !item || item.disabled) return;
-
-			await tick();
-
-			item.notifySelected(item.selected);
-		}
 	}
 
 	$: component = isNav ? Nav : Ul;
