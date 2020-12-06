@@ -26,6 +26,7 @@
 	export let itemsRows: ListItemsRows = 1;
 
 	export let dense: boolean = false;
+	export let wrapFocus: boolean = true;
 	//#endregion
 </script>
 
@@ -42,7 +43,7 @@
 	{itemsRows}
 	{type}
 	{dense}
-	wrapFocus
+	{wrapFocus}
 	isNav>
 	<slot />
 </ListImpl>

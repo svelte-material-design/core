@@ -22,7 +22,6 @@
 	//#region exports
 	export let ripple: boolean = true;
 	export let activated: boolean = false;
-	export let selected: boolean = false;
 	export let disabled: boolean = false;
 	export let href: string = undefined;
 	export let ariaLabel: string = undefined;
@@ -48,7 +47,8 @@
 	{title}
 	{disabled}
 	{activated}
-	{selected}
 	{ariaLabel}>
+	<slot name="leading" slot="leading" />
 	<slot />
+	<slot name="trailing" slot="trailing" />
 </NavItem>

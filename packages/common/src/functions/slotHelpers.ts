@@ -5,6 +5,10 @@ export function createSlotClassListHandler(
 	target: HTMLElement,
 	classList: StringListToFilter
 ): SlotClassListHandler {
+	if (!target) {
+		return;
+	}
+
 	if (target.tagName === "SVELTE-FRAGMENT") {
 		return createSvelteFragmentSlotHandler(target, classList);
 	} else {

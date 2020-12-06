@@ -39,7 +39,7 @@
 	export let itemsRows: ListItemsRows = 1;
 
 	export let dense: boolean = false;
-	export let wrapFocus: boolean = false;
+	export let wrapFocus: boolean = true;
 	export let value: string | string[] = undefined;
 
 	export let group: GroupBinding = undefined;

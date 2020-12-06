@@ -4,11 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import {
-		createSlotClassListHandler,
-		parseClassList,
-		SlotClassListHandler,
-	} from "../../../common/functions";
+	import { parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -28,18 +24,16 @@
 	import { ItemContext, OnItemSelectedEvent } from ".";
 	import { getMenuSurfaceContext } from "../../../../packages/menu-surface";
 	import { Selectable } from "../../../../packages/common/selectable";
-	import { Ripple3 } from "../../../../packages/ripple";
 	import { UseState } from "../../../../packages/common/hooks";
+	import ItemContent from "./ItemContent.svelte";
 
 	//#endregion
 
 	//#region exports
 	export let ripple: boolean = true;
-	export let activated: boolean = false;
 	export let selected: boolean = false;
 	export let disabled: boolean = false;
 	export let tabindex: number = -1;
-	export let href: string = undefined;
 	export let value: any = undefined;
 	export let ariaLabel: string = undefined;
 	export let title: string = undefined;
@@ -94,27 +88,10 @@
 		role: _role,
 	});
 
-	let leadingSlotClassHandler: SlotClassListHandler;
-	let trailingSlotClassHandler: SlotClassListHandler;
-
 	$: listRole =
 		$listContext$.dom === dom?.parentElement ? $listContext$.role : undefined;
 
 	onMount(async () => {
-		if ($$slots.leading) {
-			const slotElement = dom.querySelector("[slot=leading]") as HTMLElement;
-			leadingSlotClassHandler = createSlotClassListHandler(slotElement, [
-				"mdc-list-item__graphic",
-			]);
-		}
-
-		if ($$slots.trailing) {
-			const slotElement = dom.querySelector("[slot=trailing]") as HTMLElement;
-			trailingSlotClassHandler = createSlotClassListHandler(slotElement, [
-				"mdc-list-item__meta",
-			]);
-		}
-
 		await tick();
 
 		if ($listContext$.dom === dom.parentElement) {
@@ -126,30 +103,11 @@
 		if (dom && $listContext$.dom === dom.parentElement) {
 			$listContext$.unregisterItem(context);
 		}
-
-		leadingSlotClassHandler?.destroy();
-		trailingSlotClassHandler?.destroy();
 	});
 
 	function handleChange() {
 		dispatch("change", { dom, selected });
 	}
-
-	$: props = {
-		...props,
-		href,
-		tabindex,
-		"aria-current": activated ? "page" : undefined,
-		"data-value": value,
-		"aria-selected": listRole === "listbox" ? selected : undefined,
-		"aria-checked":
-			listRole === "group" || listRole === "radiogroup"
-				? `${selected}`
-				: undefined,
-		role: _role,
-		"aria-label": ariaLabel,
-		title: title,
-	};
 </script>
 
 <svelte:options immutable={true} />
@@ -178,18 +136,18 @@
 			[_role === 'menuitem' && selected, 'mdc-menu-item--selected'],
 			rippleClasses,
 		])}
-		{style}>
-		{#if _role === 'option' && listRole === 'listbox' && $listContext$.selectionType === 'multi'}
-			<input style="display: none;" type="checkbox" checked={selected} />
-		{/if}
-		{#if ripple}
-			<Ripple3
-				bind:rippleClasses
-				rippleElement={'mdc-list-item__ripple'}
-				target={dom} />
-		{:else}<span class="mdc-list-item__ripple" />{/if}
-		<slot name="leading" />
-		<slot {selected} />
-		<slot name="trailing" />
+		{style}
+		{title}
+		{tabindex}
+		aria-selected={listRole === 'listbox' ? selected : undefined}
+		data-value={value}
+		role={_role}
+		aria-label={ariaLabel}
+		aria-checked={listRole === 'group' || listRole === 'radiogroup' ? `${selected}` : undefined}>
+		<ItemContent {selected} role={_role} {ripple} itemDom={dom} {listRole}>
+			<slot name="leading" slot="leading" />
+			<slot />
+			<slot name="trailing" slot="trailing" />
+		</ItemContent>
 	</li>
 </Selectable>

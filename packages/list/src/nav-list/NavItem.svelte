@@ -21,17 +21,19 @@
 	import { createItemContext, ItemContext, getListContext } from "../";
 	import { Ripple3 } from "../../../ripple";
 	import { UseState } from "../../../common/hooks";
+	import ItemContent from "../item/ItemContent.svelte";
 
 	//#endregion
 
 	//#region exports
 	export let ripple: boolean = true;
 	export let activated: boolean = false;
-	export let selected: boolean = false;
 	export let disabled: boolean = false;
-	export let href: string = undefined;
+	export let tabindex: number = -1;
 	export let ariaLabel: string = undefined;
 	export let title: string = undefined;
+
+	export let href: string = undefined;
 	//#endregion
 
 	//#region locals
@@ -41,12 +43,10 @@
 
 	const context = ({
 		disabled,
-		selected,
 	} as any) as ItemContext;
 
 	$: Object.assign(context, {
 		disabled,
-		selected,
 		dom,
 	});
 </script>
@@ -63,19 +63,18 @@
 		className,
 		'mdc-list-item',
 		[disabled, 'mdc-list-item--disabled'],
-		[selected, 'mdc-list-item--selected'],
+		[activated, 'mdc-list-item--activated'],
 		rippleClasses,
 	])}
 	{style}
 	{href}
 	{title}
+	{tabindex}
 	aria-label={ariaLabel}
 	aria-current={activated ? 'page' : undefined}>
-	{#if ripple}
-		<Ripple3
-			bind:rippleClasses
-			rippleElement={'mdc-list-item__ripple'}
-			target={dom} />
-	{:else}<span class="mdc-list-item__ripple" />{/if}
-	<slot {selected} />
+	<ItemContent {ripple} itemDom={dom} listRole="list">
+		<slot name="leading" slot="leading" />
+		<slot />
+		<slot name="trailing" slot="trailing" />
+	</ItemContent>
 </a>
