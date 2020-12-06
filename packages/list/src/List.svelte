@@ -23,13 +23,7 @@
 		MultiSelectionGroup,
 	} from "../../common/selectable";
 	import ListImpl, { OnListActionEvent } from "./ListImpl.svelte";
-	import {
-		ListOrientation,
-		ListRole,
-		OnListChangeEvent,
-		ListType,
-		ListItemsRows,
-	} from ".";
+	import { ListOrientation, ListRole, OnListChangeEvent, ListType } from ".";
 	import { roleToSelectionType } from "./toleToSelectionType";
 	import { setCreateCheckboxMDCIstance } from "../../../packages/checkbox";
 	import { setCreateRadioMDCIstance } from "../../../packages/radio";
@@ -39,9 +33,11 @@
 	export let role: ListRole = "list";
 	export let orientation: ListOrientation = "vertical";
 	export let type: ListType = "textual";
-	export let itemsRows: ListItemsRows = 1;
+	export let itemsRows: number = 1;
 
 	export let dense: boolean = false;
+	export let density: number = 0;
+
 	export let wrapFocus: boolean = true;
 	export let value: string | string[] = undefined;
 
@@ -130,6 +126,7 @@
 			{itemsRows}
 			{type}
 			{dense}
+			{density}
 			{wrapFocus}
 			{group}
 			on:action={(event) => handleAction(event.detail)}>
@@ -149,6 +146,7 @@
 		{itemsRows}
 		{type}
 		{dense}
+		{density}
 		{wrapFocus}
 		{group}
 		on:action={(event) => handleAction(event.detail)}>

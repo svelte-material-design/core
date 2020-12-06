@@ -23,14 +23,6 @@ https://github.com/material-components/material-components-web/issues/31
 				height: 88px;
 			}
 		}
-
-		&.mdc-list--dense {
-			.mdc-list-item {
-				@include mixins.targets($feat-structure) {
-					height: 76px;
-				}
-			}
-		}
 	}
 
 	.smui-list--horizontal {

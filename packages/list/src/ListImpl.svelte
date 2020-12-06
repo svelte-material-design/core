@@ -35,7 +35,6 @@
 		ListType,
 		createListContext,
 		getCreateMDCListInstance,
-		ListItemsRows,
 	} from ".";
 	//#endregion
 
@@ -44,9 +43,21 @@
 	export let orientation: ListOrientation = "vertical";
 	export let ariaMultiselectable: boolean = undefined;
 	export let type: ListType = "textual";
-	export let itemsRows: ListItemsRows = 1;
+	export let itemsRows: number = 1;
+	$: if (itemsRows > 3) {
+		itemsRows = 3;
+	} else if (itemsRows < 1) {
+		itemsRows = 1;
+	}
 
 	export let dense: boolean = false;
+	export let density: number = 0;
+	$: if (itemsRows === 1) {
+		if (density > 0) density = 0;
+		else if (density < -4) density = -4;
+	} else {
+		density = 0;
+	}
 
 	export let wrapFocus: boolean = false;
 	export let isNav: boolean = false;
@@ -183,6 +194,7 @@
 		className,
 		'mdc-list',
 		[dense, 'mdc-list--dense'],
+		[density, `smui-list--density--${Math.abs(density)}`],
 		[itemsRows === 2, 'mdc-list--two-line'],
 		[itemsRows === 3, 'smui-list--three-line'],
 		[orientation === 'horizontal', 'smui-list--horizontal'],

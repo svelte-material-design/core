@@ -5,3 +5,9 @@
 
 @include list.core-styles();
 @include mixins.smui-list-core-styles();
+
+@for $density from 1 to 5 {
+	.smui-list--density--#{$density} {
+		@include list.single-line-density($density * -1);
+	}
+}
