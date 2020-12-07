@@ -1,5 +1,5 @@
 import ListGroup from "./ListGroup.svelte";
 import ListGroupSeparator from "./ListGroupSeparator.svelte";
-import Subheader from "./Subheader.svelte";
+import SubHeader from "./SubHeader.svelte";
 
-export { ListGroup, ListGroupSeparator, Subheader };
+export { ListGroup, ListGroupSeparator, SubHeader };
