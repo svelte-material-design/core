@@ -1,59 +1,65 @@
-<script context="module">
-	import { Corner, CornerBit, MDCMenuDistance } from "@material/menu-surface";
-
-	export { Corner, CornerBit };
+<script context="module" lang="ts">
+	let count = 0;
 </script>
 
 <script lang="ts">
 	//#region Base
 	import { DOMEventsForwarder } from "../../../packages/common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
+	export let id: string = `@smui/menu-surface/MenuSurface:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
-
 	import { BaseProps } from "../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// MenuSurface
 	import { MDCMenuSurface } from "@material/menu-surface";
-	import { onMount, onDestroy } from "svelte";
+	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import {
 		createMenuSurfaceContext,
 		getCreateMDCMenuSurfaceInstance,
 	} from "./MenuSurfaceContext";
+	import { UseState } from "../../common/hooks";
+	import { parseClassList } from "../../common/functions";
+	import { Corner, MenuSurfaceVariant, MDCMenuDistance } from ".";
 
-	export let fixed: boolean = false;
 	export let open: boolean = false;
 	export let quickOpen: boolean = false;
 	export let anchorCorner: Corner = Corner.BOTTOM_LEFT;
-	export let fullWidth: boolean = false;
+	export let anchorMargin: MDCMenuDistance = undefined;
+	export let variant: MenuSurfaceVariant = undefined;
+
+	const dispatch = createEventDispatcher<{
+		open: undefined;
+		close: undefined;
+	}>();
 
 	const shouldCreateMDCMenuSurfaceInstance = getCreateMDCMenuSurfaceInstance();
 
 	const context$ = createMenuSurfaceContext();
-	let anchorElement: HTMLElement = null; // It seems not worthy to export this prop because makes API confusing since the only anchor that makes sense is the parent
+	let anchorElement: HTMLElement;
+	let _open: boolean = open;
 
-	$: $context$.open = open;
+	$: $context$.open = _open;
 
 	let menuSurface: MDCMenuSurface;
 	onMount(async () => {
 		if (shouldCreateMDCMenuSurfaceInstance !== false) {
 			menuSurface = new MDCMenuSurface(dom);
-			menuSurface.listen("MDCMenuSurface:closed", updateOpen);
-			menuSurface.listen("MDCMenuSurface:opened", updateOpen);
+			menuSurface.listen("MDCMenuSurface:opened", handleOpen);
+			menuSurface.listen("MDCMenuSurface:closed", handleClose);
 		}
 
 		if (!anchorElement) anchorElement = dom.parentElement;
 	});
 
 	$: if (menuSurface) {
-		if (menuSurface.isOpen() !== open) {
-			if (open) {
+		if (menuSurface.isOpen() !== _open) {
+			if (_open) {
 				menuSurface.open();
 			} else {
 				menuSurface.close();
@@ -69,12 +75,20 @@
 		}
 	}
 
-	$: if (menuSurface && fixed != null) {
-		menuSurface.setFixedPosition(fixed);
+	$: if (menuSurface) {
+		if (variant === "fixed") {
+			menuSurface.setFixedPosition(true);
+		} else {
+			menuSurface.setFixedPosition(false);
+		}
 	}
 
 	$: if (menuSurface && ~anchorCorner) {
 		menuSurface.setAnchorCorner(anchorCorner);
+	}
+
+	$: if (menuSurface && anchorMargin) {
+		menuSurface.setAnchorMargin(anchorMargin);
 	}
 
 	$: if (
@@ -89,80 +103,45 @@
 		anchorElement?.classList.remove("mdc-menu-surface--anchor");
 	});
 
-	function updateOpen() {
+	async function handleOpen() {
+		_open = open = true;
+		await tick();
+		dispatch("open");
+	}
+
+	async function handleClose() {
+		_open = open = false;
+		await tick();
+		dispatch("close");
+	}
+
+	function handleOpenValueUpdate() {
 		if (menuSurface) {
-			open = menuSurface.isOpen();
+			if (open) {
+				menuSurface.open();
+			} else {
+				menuSurface.close();
+			}
 		}
-	}
-
-	export function setOpen(value) {
-		open = value;
-	}
-
-	export function setAnchorCorner(corner: Corner) {
-		return menuSurface.setAnchorCorner(corner);
-	}
-
-	export function setAnchorMargin(margin: Partial<MDCMenuDistance>) {
-		return menuSurface.setAnchorMargin(margin);
-	}
-
-	export function setFixedPosition(isFixed) {
-		fixed = isFixed;
-		return menuSurface.setFixedPosition(isFixed);
-	}
-
-	export function setAbsolutePosition(x: number, y: number) {
-		return menuSurface.setAbsolutePosition(x, y);
-	}
-
-	export function setMenuSurfaceAnchorElement(element: Element) {
-		return menuSurface.setMenuSurfaceAnchorElement(element);
-	}
-
-	export function setIsHoisted(isHoisted: boolean) {
-		return menuSurface.setIsHoisted(isHoisted);
-	}
-
-	export function getDefaultFoundation() {
-		return menuSurface.getDefaultFoundation();
 	}
 </script>
 
 <svelte:options immutable={true} />
 
+<UseState value={open} onUpdate={handleOpenValueUpdate} />
+
 <div
 	bind:this={dom}
 	{...props}
 	{id}
-	class="mdc-menu-surface {className}
-    {fixed ? 'mdc-menu-surface--fixed' : ''}
-    {open ? 'mdc-menu-surface--open' : ''}
-    {fullWidth ? 'mdc-menu-surface--fullwidth' : ''}"
+	class={parseClassList([
+		className,
+		'mdc-menu-surface',
+		[variant === 'fixed', 'mdc-menu-surface--fixed'],
+		[_open, 'mdc-menu-surface--open'],
+		[variant === 'fullwidth', 'mdc-menu-surface--fullwidth'],
+	])}
 	{style}
 	use:forwardDOMEvents>
 	<slot />
 </div>
-
-<!-- <div
-  bind:this={dom}
-  use:useActions={use}
-  class="mdc-menu-surface {className}
-    {fixed ? 'mdc-menu-surface--fixed' : ''}
-    {isStatic ? 'mdc-menu-surface--open' : ''}
-    {isStatic ? 'smui-menu-surface--static' : ''}"
-  use:listenEvents={[{ eventName: 'MDCMenuSurface:closed', listener: updateOpen }, { eventName: 'MDCMenuSurface:opened', listener: updateOpen }]}
-  {...exclude($$props, [
-    'use',
-    'class',
-    'static',
-    'anchor',
-    'fixed',
-    'open',
-    'quickOpen',
-    'anchorElement',
-    'anchorCorner',
-    'element',
-  ])}>
-  <slot />
-</div> -->
