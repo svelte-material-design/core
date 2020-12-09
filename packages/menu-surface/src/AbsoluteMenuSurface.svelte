@@ -7,7 +7,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/menu-surface/MenuSurface:${count++}`;
+	export let id: string = `@smui/menu-surface/AbsoluteMenuSurface:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 	import { BaseProps } from "../../../packages/common/dom/Props";
@@ -19,9 +19,10 @@
 		MenuSurfaceAnchorCorner,
 		MenuSurfaceVariant,
 		MDCMenuDistance,
+		AbsoluteMenuSurfacePosition,
 	} from ".";
 	import MenuSurfaceImpl from "./MenuSurfaceImpl.svelte";
-	import { onMount } from "svelte";
+	import { Use } from "../../common/hooks";
 
 	export let open: boolean = false;
 	export let quickOpen: boolean = false;
@@ -30,15 +31,21 @@
 	export let anchorMargin: MDCMenuDistance = undefined;
 	export let variant: MenuSurfaceVariant = undefined;
 
-	let anchor: HTMLElement;
-	onMount(() => {
-		anchor = dom.parentElement;
-	});
+	export let anchor: HTMLElement = undefined;
+	export let position: AbsoluteMenuSurfacePosition = undefined;
+
+	let menuSurfaceImpl: MenuSurfaceImpl = undefined;
+
+	function setPosition() {
+		const menuSurface = menuSurfaceImpl?.getMDCInstance();
+		menuSurface.setAbsolutePosition(position.x, position.y);
+	}
 </script>
 
 <svelte:options immutable={true} />
 
 <MenuSurfaceImpl
+	bind:this={menuSurfaceImpl}
 	bind:dom
 	bind:open
 	{...props}
@@ -51,6 +58,10 @@
 	{anchorFlipRtl}
 	{anchorMargin}
 	{variant}
-	hoisted={false}>
+	hoisted={true}
+	on:open
+	on:close>
 	<slot />
 </MenuSurfaceImpl>
+
+<Use effect hook={setPosition} when={!!position} />
