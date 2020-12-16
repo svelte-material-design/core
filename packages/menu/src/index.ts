@@ -1,7 +1,8 @@
 import Menu from "./Menu.svelte";
+import Separator from "./Separator.svelte";
 
-import SelectionGroup from "./SelectionGroup.svelte";
-import SelectionGroupIcon from "./SelectionGroupIcon.svelte";
-
-export { Menu, SelectionGroup, SelectionGroupIcon };
+export { Menu, Separator };
 export * from "./MenuContext";
+export * from "./selection-group";
+export * from "./types";
+export * from "./item";

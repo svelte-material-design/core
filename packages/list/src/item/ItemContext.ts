@@ -13,8 +13,3 @@ export interface ItemContext {
 	tabindex: number;
 	setTabIndex(tabindex: number): void;
 }
-
-export const [
-	setIsSelectionGroup,
-	getIsSelectionGroup,
-] = createContextPropBuilder<boolean>();

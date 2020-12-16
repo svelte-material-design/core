@@ -7,24 +7,19 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/list/Text:${count++}`;
+	export let id: string = `@smui/menu/SecondaryText:${count++}`;
 
 	export let dom: HTMLSpanElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	import { parseClassList } from "../../common/functions";
+	import { BaseProps } from "../../../../packages/common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
-	// Text
+	// SecondaryText
+	import { SecondaryText } from "../../../../packages/list";
 </script>
 
 <svelte:options immutable={true} />
 
-<span
-	bind:this={dom}
-	{...props}
-	{id}
-	class={parseClassList([className, 'mdc-list-item__text'])}
-	{style}>
+<SecondaryText bind:dom {props} {id} class={className} {style}>
 	<slot />
-</span>
+</SecondaryText>

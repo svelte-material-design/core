@@ -7,15 +7,15 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/list/PrimaryText:${count++}`;
+	export let id: string = `@smui/list/Text:${count++}`;
 
 	export let dom: HTMLSpanElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	import { parseClassList } from "../../common/functions";
+	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { parseClassList } from "../../../../packages/common/functions";
 	export let props: BaseProps = {};
 	//#endregion
 
-	// PrimaryText
+	// Text
 </script>
 
 <svelte:options immutable={true} />
@@ -24,7 +24,7 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-list-item__primary-text'])}
+	class={parseClassList([className, 'mdc-list-item__text'])}
 	{style}>
 	<slot />
 </span>

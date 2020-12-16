@@ -1,161 +1,83 @@
+<script context="module" lang="ts">
+	let count = 0;
+</script>
+
 <script lang="ts">
-	// Base
-	import { DOMEventsForwarder } from "../../../packages/common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	//#region Base
+	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
+	export let id: string = `@smui/menu/Menu:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 	import { BaseProps } from "../../../packages/common/dom/Props";
-	export let props: BaseProps = {};
+	export let props: BaseProps = undefined;
+	//#endregion
 
 	// Menu
-	import {
-		Corner,
-		DefaultFocusState,
-		MDCMenu,
-		MDCMenuFoundation,
-	} from "@material/menu";
-	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import { MenuSurface } from "../../../packages/menu-surface";
 	import { MDCMenuDistance } from "@material/menu-surface";
-	import { getCreateMDCMenuIstance } from "./MenuContext";
-	import { setCreateMDCListInstance } from "../../../packages/list";
-	import { setCreateMDCMenuSurfaceInstance } from "../../../packages/menu-surface";
+	import { MenuAnchorCorner, MenuVariant } from ".";
+	import { ListOrientation, ListType } from "../../../packages/list";
+	import { Menu } from "./internal";
+	import { SelectionType } from "../../../packages/common/hoc";
 
+	//#region exports
+	//#region list
+	export let orientation: ListOrientation = "vertical";
+	export let type: ListType = "textual";
+	export let itemsRows: number = 1;
+
+	export let dense: boolean = false;
+	export let density: number = 0;
+	//#endregion
+
+	//#region menu surface
 	export let open: boolean = false;
 	export let quickOpen: boolean = false;
-	export let anchorCorner: Corner = undefined;
+	export let anchorFlipRtl: boolean = true;
+	export let anchorCorner: MenuAnchorCorner = "bottom-start";
+	$: anchorCorner = anchorCorner ? anchorCorner : "bottom-start";
+	export let anchorMargin: MDCMenuDistance = undefined;
+	export let variant: MenuVariant = undefined;
+
+	export let hoisted: boolean;
+	//#endregion
+
+	//#region common
 	export let wrapFocus: boolean = false;
-	export let fullWidth: boolean = false;
+	//#endregion
 
-	const dispatch = createEventDispatcher<{
-		selected: { item: Element; index: number };
-	}>();
-
-	setCreateMDCListInstance(false);
-	setCreateMDCMenuSurfaceInstance(false);
-	const shouldCreateMDCMenuInstance = getCreateMDCMenuIstance();
-
-	let menu: MDCMenu;
-	onMount(async () => {
-		if (shouldCreateMDCMenuInstance !== false) {
-			menu = new MDCMenu(dom);
-			menu.listen("MDCMenu:selected", handleSelected);
-			menu.listen("MDCMenuSurface:closed", updateOpen);
-			menu.listen("MDCMenuSurface:opened", updateOpen);
-		}
-	});
-
-	$: if (menu) {
-		if (menu.open !== open) {
-			menu.open = open;
-		}
-
-		if (menu.wrapFocus !== wrapFocus) {
-			menu.wrapFocus = wrapFocus;
-		}
-
-		if (menu.quickOpen !== quickOpen) {
-			menu.wrapFocus = quickOpen;
-		}
-	}
-
-	if (menu && ~anchorCorner) {
-		menu.setAnchorCorner(anchorCorner);
-	}
-
-	onDestroy(() => {
-		menu && menu.destroy();
-	});
-
-	function handleSelected(
-		event: CustomEvent<{ item: Element; index: number }>
-	) {
-		dispatch("selected", event.detail);
-		updateOpen();
-	}
-
-	function updateOpen() {
-		open = menu.open;
-	}
-
-	export function setOpen(value) {
-		open = value;
-	}
-
-	export function getItems() {
-		return menu.items;
-	}
-
-	export function setDefaultFocusState(focusState: DefaultFocusState) {
-		return menu.setDefaultFocusState(focusState);
-	}
-
-	export function setAnchorCorner(corner: Corner) {
-		return menu.setAnchorCorner(corner);
-	}
-
-	export function setAnchorMargin(margin: Partial<MDCMenuDistance>) {
-		return menu.setAnchorMargin(margin);
-	}
-
-	export function setSelectedIndex(index: number) {
-		return menu.setSelectedIndex(index);
-	}
-
-	export function setEnabled(index: number, isEnabled: boolean) {
-		return menu.setEnabled(index, isEnabled);
-	}
-
-	export function getOptionByIndex(index: number): Element {
-		return menu.getOptionByIndex(index);
-	}
-
-	export function setFixedPosition(isFixed: boolean) {
-		return menu.setFixedPosition(isFixed);
-	}
-
-	export function setIsHoisted(isHoisted: boolean) {
-		return menu.setIsHoisted(isHoisted);
-	}
-
-	export function setAbsolutePosition(x: number, y: number) {
-		return menu.setAbsolutePosition(x, y);
-	}
-
-	export function setAnchorElement(element: Element) {
-		return menu.setAnchorElement(element);
-	}
-
-	export function getDefaultFoundation(): MDCMenuFoundation {
-		return menu.getDefaultFoundation();
-	}
+	export let selectionType: SelectionType = undefined;
+	export let value: string | string[] = undefined;
+	//#endregion
 </script>
 
-<MenuSurface
+<svelte:options immutable={true} />
+
+<Menu
 	bind:dom
+	bind:open
+	bind:value
+	{props}
 	{id}
-	props={{ ...props }}
-	class="mdc-menu {className}"
+	class={className}
 	{style}
-	{open}
 	{quickOpen}
 	{anchorCorner}
-	{fullWidth}
-	on:domEvent={forwardDOMEvents}>
+	{anchorFlipRtl}
+	{anchorMargin}
+	{variant}
+	{hoisted}
+	{wrapFocus}
+	{orientation}
+	{type}
+	{itemsRows}
+	{dense}
+	{density}
+	{selectionType}
+	on:open
+	on:close
+	on:select
+	on:change>
 	<slot />
-</MenuSurface>
-
-<!-- <MenuSurface
-  bind:element
-  use={[...use]}
-  class="mdc-menu {className}"
-  on:MDCMenu:selected={updateOpen}
-  on:MDCMenuSurface:closed={updateOpen}
-  on:MDCMenuSurface:opened={updateOpen}
-  {...exclude($$props, ['use', 'class', 'wrapFocus'])}>
-  <slot />
-</MenuSurface> -->
+</Menu>

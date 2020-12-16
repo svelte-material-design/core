@@ -4,30 +4,28 @@
 
 <script lang="ts">
 	//#region Base
+	import { parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/menu-surface/MenuSurface:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// MenuSurface
-	import { MDCMenuSurface, CornerBit } from "@material/menu-surface";
+	import { MDCMenuSurface } from "@material/menu-surface";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
-	import {
-		createMenuSurfaceContext,
-		getCreateMDCMenuSurfaceInstance,
-	} from "./MenuSurfaceContext";
-	import { UseState } from "../../common/hooks";
-	import { parseClassList } from "../../common/functions";
+	import { createMenuSurfaceContext } from "../MenuSurfaceContext";
+	import { UseState } from "../../../common/hooks";
 	import {
 		MenuSurfaceVariant,
 		MDCMenuDistance,
 		MenuSurfaceAnchorCorner,
-	} from ".";
+	} from "..";
+	import { smuiToMDCCorner } from "../functions";
 
 	export let open: boolean = false;
 	export let quickOpen: boolean = false;
@@ -40,12 +38,12 @@
 	export let hoisted: boolean;
 	export let anchor: HTMLElement;
 
+	export let disableMDCInstance: boolean = false;
+
 	const dispatch = createEventDispatcher<{
 		open: undefined;
 		close: undefined;
 	}>();
-
-	const shouldCreateMDCMenuSurfaceInstance = getCreateMDCMenuSurfaceInstance();
 
 	const context$ = createMenuSurfaceContext();
 	let _open: boolean = open;
@@ -76,17 +74,9 @@
 		}
 	}
 
-	$: if (menuSurface && ~anchorCorner) {
-		const horizontalPositionBit = anchorCorner.includes("end")
-			? CornerBit.RIGHT
-			: 0;
-		const verticalPositionBit = anchorCorner.includes("bottom")
-			? CornerBit.BOTTOM
-			: 0;
-		const anchorCornerBit = horizontalPositionBit | verticalPositionBit;
-		const finalCorner =
-			anchorCornerBit | (anchorFlipRtl ? CornerBit.FLIP_RTL : 0);
-		menuSurface.setAnchorCorner(finalCorner);
+	$: if (menuSurface && anchorCorner) {
+		const corner = smuiToMDCCorner(anchorCorner, anchorFlipRtl);
+		menuSurface.setAnchorCorner(corner);
 	}
 
 	$: if (menuSurface && anchorMargin) {
@@ -112,7 +102,7 @@
 	});
 
 	function initialize() {
-		if (shouldCreateMDCMenuSurfaceInstance !== false) {
+		if (!disableMDCInstance) {
 			menuSurface?.destroy();
 			menuSurface = new MDCMenuSurface(dom);
 			menuSurface.listen("MDCMenuSurface:opened", handleOpen);
@@ -126,7 +116,7 @@
 			anchor.classList.add("mdc-menu-surface--anchor");
 		}
 
-		if (shouldCreateMDCMenuSurfaceInstance !== false) {
+		if (!disableMDCInstance) {
 			if (menuSurface.anchorElement !== anchor) {
 				menuSurface.anchorElement = anchor;
 			}

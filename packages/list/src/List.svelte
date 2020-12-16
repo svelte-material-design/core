@@ -18,13 +18,13 @@
 	//#region imports
 	import { createEventDispatcher, tick } from "svelte";
 	import {
-		GroupBinding,
+		SelectionGroupBinding,
 		SingleSelectionGroup,
 		MultiSelectionGroup,
 	} from "../../common/selectable";
-	import ListImpl, { OnListActionEvent } from "./ListImpl.svelte";
+	import { ListImpl, OnListActionEvent } from "./internal";
 	import { ListOrientation, ListRole, OnListChangeEvent, ListType } from ".";
-	import { roleToSelectionType } from "./toleToSelectionType";
+	import { roleToSelectionType } from "./roleToSelectionType";
 	import { setCreateCheckboxMDCIstance } from "../../../packages/checkbox";
 	import { setCreateRadioMDCIstance } from "../../../packages/radio";
 	//#endregion
@@ -41,7 +41,7 @@
 	export let wrapFocus: boolean = true;
 	export let value: string | string[] = undefined;
 
-	export let group: GroupBinding = undefined;
+	export let group: SelectionGroupBinding = undefined;
 
 	$: if (role == undefined) role = "list";
 	$: if (role === "list") {
@@ -95,7 +95,6 @@
 			await tick();
 
 			dispatch("change", {
-				dom,
 				value,
 			});
 		}

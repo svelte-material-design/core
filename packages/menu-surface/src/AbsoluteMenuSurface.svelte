@@ -21,7 +21,7 @@
 		MDCMenuDistance,
 		AbsoluteMenuSurfacePosition,
 	} from ".";
-	import MenuSurfaceImpl from "./MenuSurfaceImpl.svelte";
+	import { MenuSurfaceImpl } from "./internal";
 	import { Use } from "../../common/hooks";
 
 	export let open: boolean = false;

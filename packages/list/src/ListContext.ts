@@ -1,24 +1,16 @@
 import { ItemContext } from "./item";
-import {
-	createContextBuilder,
-	createContextPropBuilder,
-} from "../../../packages/common";
+import { createContextBuilder } from "../../../packages/common";
 import { SelectionType } from "../../../packages/common/hoc";
-import { ListRole } from "./types";
-import { GroupBinding } from "../../common/selectable";
+import { ListImplRole } from "./internal";
+import { SelectionGroupBinding } from "../../common/selectable";
 
 const [createListContext, getListContext] = createContextBuilder<ListContext>();
 export { createListContext, getListContext };
 
-export const [
-	setCreateMDCListInstance,
-	getCreateMDCListInstance,
-] = createContextPropBuilder<boolean>();
-
 export interface ListContext {
 	dom: HTMLDivElement | HTMLUListElement;
-	role: ListRole | "listbox";
-	group: GroupBinding;
+	role: ListImplRole;
+	group: SelectionGroupBinding;
 	isNav: boolean;
 	selectionType: SelectionType;
 	registerItem(item: ItemContext): void;

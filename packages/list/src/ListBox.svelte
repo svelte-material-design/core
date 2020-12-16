@@ -18,11 +18,11 @@
 	//#region imports
 	import { createEventDispatcher, tick } from "svelte";
 	import {
-		GroupBinding,
+		SelectionGroupBinding,
 		SingleSelectionGroup,
 		MultiSelectionGroup,
 	} from "../../common/selectable";
-	import ListImpl, { OnListActionEvent } from "./ListImpl.svelte";
+	import { ListImpl, OnListActionEvent } from "./internal";
 	import { ListOrientation, OnListChangeEvent, ListType } from ".";
 	import { SelectionType } from "../../common/hoc";
 	//#endregion
@@ -39,7 +39,7 @@
 	export let wrapFocus: boolean = true;
 	export let value: string | string[] = undefined;
 
-	export let group: GroupBinding = undefined;
+	export let group: SelectionGroupBinding = undefined;
 	//#endregion
 
 	const dispatch = createEventDispatcher<{
@@ -77,7 +77,6 @@
 			await tick();
 
 			dispatch("change", {
-				dom,
 				value,
 			});
 		}

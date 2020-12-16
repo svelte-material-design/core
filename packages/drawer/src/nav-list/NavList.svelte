@@ -15,19 +15,22 @@
 	//#endregion
 
 	// NavList
-	import { NavList } from "../../../../packages/list/nav-list";
+	import { NavList } from "../../../../packages/list/src/internal";
 	import { ListOrientation, ListType } from "../../../../packages/list";
+	import { getDrawerContext } from "../DrawerContext";
 
 	//#region exports
 	export let orientation: ListOrientation = "vertical";
 	export let type: ListType = "textual";
 
 	export let dense: boolean = false;
-	export let twoLine: boolean = false;
-	export let threeLine: boolean = false;
-
+	export let itemsRows: number = 1;
 	//#endregion
+
+	const drawerContext$ = getDrawerContext();
 </script>
+
+<svelte:options immutable={true} />
 
 <NavList
 	bind:dom
@@ -38,7 +41,7 @@
 	{orientation}
 	{type}
 	{dense}
-	{twoLine}
-	{threeLine}>
+	{itemsRows}
+	disableMDCInstance={$drawerContext$.variant === 'dismissible' || $drawerContext$.variant === 'modal'}>
 	<slot />
 </NavList>

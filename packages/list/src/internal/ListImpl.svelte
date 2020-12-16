@@ -9,14 +9,14 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/list/List:${count++}`;
 
 	export let dom: HTMLDivElement | HTMLUListElement = undefined;
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -24,22 +24,21 @@
 	//#region imports
 	import { MDCList, MDCListActionEvent } from "@material/list";
 	import { onDestroy, createEventDispatcher, onMount, tick } from "svelte";
-	import { Nav, Ul } from "../../../packages/common/dom";
-	import { getMenuSurfaceContext } from "../../../packages/menu-surface";
-	import { SelectionType } from "../../../packages/common/hoc";
-	import { GroupBinding } from "../../common/selectable";
+	import { Nav, Ul } from "../../../common/dom";
+	import { SelectionType } from "../../../common/hoc";
+	import { SelectionGroupBinding } from "../../../common/selectable";
 	import {
 		ListRole,
 		ListOrientation,
 		ItemContext,
 		ListType,
 		createListContext,
-		getCreateMDCListInstance,
-	} from ".";
+	} from "..";
+	import { getMenuSurfaceContext } from "../../../menu-surface";
 	//#endregion
 
 	//#region exports
-	export let role: ListRole | "listbox" = "list";
+	export let role: ListRole | "listbox" | "menu" = "list";
 	export let orientation: ListOrientation = "vertical";
 	export let ariaMultiselectable: boolean = undefined;
 	export let type: ListType = "textual";
@@ -62,8 +61,10 @@
 	export let wrapFocus: boolean = false;
 	export let isNav: boolean = false;
 
-	export let group: GroupBinding;
+	export let group: SelectionGroupBinding;
 	export let selectionType: SelectionType = undefined;
+
+	export let disableMDCInstance: boolean = false;
 	//#endregion
 
 	const dispatch = createEventDispatcher<{
@@ -76,11 +77,6 @@
 	const menuSurfaceContext$ = getMenuSurfaceContext();
 
 	let items = new Set<ItemContext>();
-	const shouldCreateMDCListInstance = getCreateMDCListInstance();
-
-	$: if (menuSurfaceContext$) {
-		role = "menu";
-	}
 
 	const context$ = createListContext({
 		group,
@@ -144,7 +140,7 @@
 	}
 
 	async function initialize() {
-		if (shouldCreateMDCListInstance !== false) {
+		if (!disableMDCInstance) {
 			list?.destroy();
 
 			list = new MDCList(dom);

@@ -1,25 +1,29 @@
 <script lang="ts">
 	import { UseState } from "../../hooks";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
-	import { beforeOrAfter } from "./domBeforeOrAfter";
 	import {
-		GroupBinding,
+		ComponentsGroupStore,
+		createComponentsGroupStore,
+	} from "../components-group";
+	import {
 		SelectableItem,
 		OnSelectionGroupOptionsChangeEvent,
 		OnSingleSelectionGroupChangeEvent,
 	} from "./types";
+	import { SelectionGroupBinding } from ".";
 
-	export let items: SelectableItem[] = [];
 	export let value: string = undefined;
 	export let nullable: boolean = true;
 
-	let valueState: UseState;
-	let mounted: boolean = false;
-	let group: GroupBinding = {
+	let items$: ComponentsGroupStore = createComponentsGroupStore();
+	let group: SelectionGroupBinding = {
+		items$,
+		updateItem,
 		registerItem,
 		unregisterItem,
-		updateItem,
 	};
+	let valueState: UseState;
+	let mounted: boolean = false;
 
 	const dispatch = createEventDispatcher<{
 		change: OnSingleSelectionGroupChangeEvent;
@@ -41,8 +45,8 @@
 		} else {
 			if (value != undefined && value.length > 0) {
 				updateItems();
-				if (!items.some((item) => item.selected) && items.length) {
-					value = items[0].value;
+				if (!$items$.some((item) => item.selected) && $items$.length) {
+					value = $items$[0].value;
 				}
 			} else {
 				updateValue();
@@ -60,7 +64,7 @@
 	function updateItems() {
 		if (destroyed) return;
 
-		items.forEach((item) => {
+		$items$.forEach((item) => {
 			if (value === item.value && !item.selected) {
 				item.setSelected(true);
 			} else if (value !== item.value && item.selected) {
@@ -73,7 +77,7 @@
 		if (typeof value !== "string") {
 			if (Array.isArray(value) && typeof value[0] === "string") {
 				value = value[0];
-			} else if (nullable || !items.length) {
+			} else if (nullable || !$items$.length) {
 				if (value != undefined) {
 					value = undefined;
 				}
@@ -86,14 +90,14 @@
 
 		if (
 			!nullable &&
-			items.length &&
-			(!value || !items.some((item) => item.value === value))
+			$items$.length &&
+			(!value || !$items$.some((item) => item.value === value))
 		) {
-			value = items[0].value;
+			value = $items$[0].value;
 		}
 
 		if (value) {
-			const item = items.find((item) => item.value === value);
+			const item = $items$.find((item) => item.value === value);
 			if (item && !item.selected) {
 				item.setSelected(true);
 			}
@@ -104,20 +108,24 @@
 	}
 
 	function updateItemsRef() {
-		items = [...items];
+		$items$ = [...$items$];
 	}
 
 	function getItemIndex(item: SelectableItem) {
-		return items.indexOf(item);
+		return $items$.indexOf(item);
 	}
 
 	function updateValue() {
-		const newValue = items.find((items) => items.selected)?.value;
+		const newValue = $items$.find(($items$) => $items$.selected)?.value;
 
 		if (nullable) {
 			value = newValue;
 		} else {
-			value = newValue ? newValue : items.length ? items[0].value : undefined;
+			value = newValue
+				? newValue
+				: $items$.length
+				? $items$[0].value
+				: undefined;
 		}
 	}
 
@@ -139,10 +147,7 @@
 	}
 
 	async function unregisterItem(item: SelectableItem) {
-		const index = getItemIndex(item);
-		if (~index) {
-			items = items.slice(0, index).concat(items.slice(index + 1));
-		}
+		items$.unregisterItem(item);
 
 		if (value === item.value) {
 			setValue(undefined);
@@ -154,13 +159,12 @@
 		await tick();
 
 		dispatch("optionsChange", {
-			items,
+			items: $items$,
 		});
 	}
 
 	async function registerItem(item: SelectableItem) {
-		items.push(item);
-		sortItems();
+		items$.registerItem(item);
 		if (mounted) {
 			const oldValue = value;
 			updateValue();
@@ -174,15 +178,8 @@
 		await tick();
 
 		dispatch("optionsChange", {
-			items,
+			items: $items$,
 		});
-	}
-
-	function sortItems() {
-		if (typeof window !== "undefined") {
-			items.sort((a, b) => beforeOrAfter(a.dom, b.dom));
-		}
-		updateItemsRef();
 	}
 
 	function setValue(newValue: string) {
@@ -193,14 +190,14 @@
 		} else if (nullable && !newValue) {
 			value = undefined;
 		} else if (!nullable && !newValue) {
-			value = items.length ? items[0].value : undefined;
+			value = $items$.length ? $items$[0].value : undefined;
 		}
 
 		valueState?.setValue(value);
 	}
 
 	export function getItems() {
-		return items;
+		return $items$;
 	}
 
 	export function setSelected(item: SelectableItem, selected: boolean) {
@@ -213,6 +210,10 @@
 			updateItems();
 			updateItemsRef();
 		}
+	}
+
+	export function getBindings() {
+		return group;
 	}
 </script>
 

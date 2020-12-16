@@ -16,7 +16,7 @@
 
 	// Separator
 	import { getListContext } from "./ListContext";
-	import { parseClassList } from "../../common/functions";
+	import { Separator } from "./internal/separator";
 
 	export let insetPadding: boolean = false;
 	export let insetLeading: boolean = false;
@@ -27,31 +27,13 @@
 
 <svelte:options immutable={true} />
 
-{#if $listContext$.isNav}
-	<hr
-		bind:this={dom}
-		{...props}
-		{id}
-		class={parseClassList([
-			className,
-			'mdc-list-divider',
-			[insetPadding, 'mdc-list-divider--inset-padding'],
-			[insetLeading, 'mdc-list-divider--inset-leading'],
-			[insetTrailing, 'mdc-list-divider--inset-trailing'],
-		])}
-		{style} />
-{:else}
-	<li
-		bind:this={dom}
-		{...props}
-		{id}
-		class={parseClassList([
-			className,
-			'mdc-list-divider',
-			[insetPadding, 'mdc-list-divider--inset-padding'],
-			[insetLeading, 'mdc-list-divider--inset-leading'],
-			[insetTrailing, 'mdc-list-divider--inset-trailing'],
-		])}
-		{style}
-		role="separator" />
-{/if}
+<Separator
+	bind:dom
+	{props}
+	{id}
+	class={className}
+	{style}
+	{insetPadding}
+	{insetLeading}
+	{insetTrailing}
+	isNav={$listContext$.isNav} />

@@ -21,7 +21,7 @@
 	import { createItemContext, ItemContext, getListContext } from "../";
 	import { Ripple3 } from "../../../ripple";
 	import { UseState } from "../../../common/hooks";
-	import ItemContent from "../item/ItemContent.svelte";
+	import ItemContent from "../internal/item/ItemContent.svelte";
 
 	//#endregion
 
@@ -72,7 +72,7 @@
 	{tabindex}
 	aria-label={ariaLabel}
 	aria-current={activated ? 'page' : undefined}>
-	<ItemContent {ripple} itemDom={dom} listRole="list">
+	<ItemContent bind:rippleClasses {ripple} itemDom={dom}>
 		<slot name="leading" slot="leading" />
 		<slot />
 		<slot name="trailing" slot="trailing" />

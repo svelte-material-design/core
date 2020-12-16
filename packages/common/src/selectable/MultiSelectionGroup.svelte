@@ -1,20 +1,29 @@
 <script lang="ts">
 	import { UseState } from "../../hooks";
 	import { onDestroy, onMount, tick } from "svelte";
-	import { beforeOrAfter } from "./domBeforeOrAfter";
-	import { GroupBinding, SelectableItem } from "./types";
+	import {
+		ComponentsGroupStore,
+		createComponentsGroupStore,
+	} from "../components-group";
+	import {
+		SelectableItem,
+		OnSelectionGroupOptionsChangeEvent,
+		OnSingleSelectionGroupChangeEvent,
+	} from "./types";
+	import { SelectionGroupBinding } from ".";
 
-	export let items: SelectableItem[] = [];
 	export let value: string[] = undefined;
 	export let nullable: boolean = true;
 
-	let valueState: UseState;
-	let mounted: boolean = false;
-	let group: GroupBinding = {
+	let items$: ComponentsGroupStore = createComponentsGroupStore();
+	let group: SelectionGroupBinding = {
+		items$,
+		updateItem,
 		registerItem,
 		unregisterItem,
-		updateItem,
 	};
+	let valueState: UseState;
+	let mounted: boolean = false;
 
 	onMount(async () => {
 		checkAndFixValue();
@@ -29,8 +38,8 @@
 		} else {
 			if (value != undefined && value.length > 0) {
 				updateItems();
-				if (!isSomeItemSelected() && items.length) {
-					value = [items[0].value];
+				if (!isSomeItemSelected() && $items$.length) {
+					value = [$items$[0].value];
 				}
 			} else {
 				updateValue();
@@ -48,7 +57,7 @@
 	function updateItems() {
 		if (destroyed) return;
 
-		items.forEach((item) => {
+		$items$.forEach((item) => {
 			if (
 				(nullable && value === null) ||
 				(!item.selected && value.includes(item.value))
@@ -64,7 +73,7 @@
 		if (!Array.isArray(value)) {
 			if (typeof value === "string") {
 				value = [value];
-			} else if (nullable || !items.length) {
+			} else if (nullable || !$items$.length) {
 				if (value != undefined) {
 					value = undefined;
 				}
@@ -77,23 +86,23 @@
 
 		if (!nullable) {
 			if (
-				items.length &&
-				(!items.some((item) => value.includes(item.value)) ||
+				$items$.length &&
+				(!$items$.some((item) => value.includes(item.value)) ||
 					value == undefined ||
 					!value.length)
 			) {
-				setValue([items[0].value]);
+				setValue([$items$[0].value]);
 			}
 		}
 
 		value?.forEach((itemValue) => {
-			const item = items.find((item) => item.value === itemValue);
+			const item = $items$.find((item) => item.value === itemValue);
 			if (item && !item.selected) {
 				item.setSelected(true);
 			}
 		});
 
-		items
+		$items$
 			.filter((item) => !value || !value.includes(item.value))
 			.forEach((item) => {
 				if (item.selected) {
@@ -105,25 +114,25 @@
 	}
 
 	function updateItemsRef() {
-		items = [...items];
+		$items$ = [...$items$];
 	}
 
 	function getItemIndex(item: SelectableItem) {
-		return items.indexOf(item);
+		return $items$.indexOf(item);
 	}
 
 	function updateValue() {
-		let newValue = items
-			.filter((items) => items.selected)
-			.map((items) => items.value);
+		let newValue = $items$
+			.filter(($items$) => $items$.selected)
+			.map(($items$) => $items$.value);
 
 		if (nullable) {
 			setValue(newValue);
 		} else {
 			newValue = newValue.length
 				? newValue
-				: items.length
-				? [items[0].value]
+				: $items$.length
+				? [$items$[0].value]
 				: [];
 			setValue(newValue);
 		}
@@ -137,30 +146,19 @@
 	}
 
 	function unregisterItem(item: SelectableItem) {
-		const index = getItemIndex(item);
-		if (~index) {
-			items = items.slice(0, index).concat(items.slice(index + 1));
-		}
+		items$.unregisterItem(item);
 		updateValue();
 	}
 
 	function registerItem(item: SelectableItem) {
-		items.push(item);
-		sortItems();
+		items$.registerItem(item);
 		if (mounted) {
 			updateValue();
 		}
 	}
 
-	function sortItems() {
-		if (typeof window !== "undefined") {
-			items.sort((a, b) => beforeOrAfter(a.dom, b.dom));
-		}
-		updateItemsRef();
-	}
-
 	function isSomeItemSelected() {
-		return items.length && items.some((item) => item.selected);
+		return $items$.length && $items$.some((item) => item.selected);
 	}
 
 	function setValue(newValue: string[]) {
@@ -169,7 +167,7 @@
 	}
 
 	export function getItems() {
-		return items;
+		return $items$;
 	}
 
 	export function setSelected(item: SelectableItem, selected: boolean) {
@@ -178,6 +176,10 @@
 			updateItemsRef();
 			updateValue();
 		}
+	}
+
+	export function getBindings() {
+		return group;
 	}
 </script>
 

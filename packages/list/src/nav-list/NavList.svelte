@@ -11,13 +11,13 @@
 
 	export let dom: HTMLDivElement = undefined;
 	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
+	export let props: BaseProps = undefined;
 	//#endregion
 
 	// List
 	//#region imports
 	import { ListOrientation, ListType } from "../";
-	import ListImpl from "../ListImpl.svelte";
+	import { NavList } from "../internal";
 	//#endregion
 
 	//#region exports
@@ -34,19 +34,17 @@
 
 <svelte:options immutable={true} />
 
-<ListImpl
+<NavList
 	bind:dom
 	{props}
 	{id}
 	class={className}
 	{style}
-	role="list"
 	{orientation}
 	{itemsRows}
 	{type}
 	{dense}
 	{density}
-	{wrapFocus}
-	isNav>
+	{wrapFocus}>
 	<slot />
-</ListImpl>
+</NavList>

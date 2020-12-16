@@ -1,23 +1,19 @@
 <script lang="ts">
-	import { Ripple3 } from "../../../../packages/ripple";
-	import { getListContext, ItemRole, ListRole } from "../";
+	import { Ripple3 } from "../../../../../packages/ripple";
+	import { ItemRole } from ".";
 	import { onDestroy, onMount, tick } from "svelte";
 	import {
 		createSlotClassListHandler,
 		SlotClassListHandler,
-	} from "../../../common/functions";
+	} from "../../../../../packages/common/functions";
 
-	export let role: ItemRole = undefined;
 	export let selected: boolean = undefined;
 	export let ripple: boolean;
 	export let itemDom: HTMLElement;
-	export let listRole: ListRole | "listbox";
+	export let rippleClasses: string;
 
-	let rippleClasses: string;
 	let leadingSlotClassHandler: SlotClassListHandler;
 	let trailingSlotClassHandler: SlotClassListHandler;
-
-	const listContext$ = getListContext();
 
 	onMount(async () => {
 		await tick();
@@ -49,9 +45,6 @@
 
 <svelte:options immutable={true} />
 
-{#if role === 'option' && listRole === 'listbox' && $listContext$.selectionType === 'multi'}
-	<input style="display: none;" type="checkbox" checked={selected} />
-{/if}
 {#if ripple}
 	<Ripple3
 		bind:rippleClasses

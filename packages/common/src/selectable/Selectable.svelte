@@ -5,12 +5,18 @@
 <script lang="ts">
 	import { UseState } from "../../hooks";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
-	import { GroupBinding, OnSelectableChangeEvent, SelectableItem } from "./";
+	import {
+		SelectionGroupBinding,
+		OnSelectableChangeEvent,
+		SelectableItem,
+	} from "./";
 
-	export let group: GroupBinding;
+	export let group: SelectionGroupBinding;
 	export let value: string;
 	export let dom: HTMLElement;
 	export let selected: boolean;
+	let componentContext: any;
+	export { componentContext as context };
 
 	let mounted: boolean = false;
 	let selectedState: UseState;
@@ -28,6 +34,9 @@
 					dispatch("change", { selected });
 				});
 			}
+		},
+		getComponentContext() {
+			return componentContext;
 		},
 	} as SelectableItem;
 

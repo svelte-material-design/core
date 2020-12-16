@@ -24,7 +24,6 @@
 	import { DrawerVariant } from "./types";
 	import { UseState } from "../../../packages/common/hooks";
 	import Scrim from "./Scrim.svelte";
-	import { setCreateMDCListInstance } from "../../list";
 
 	export let variant: DrawerVariant = "permanent";
 	export let open: boolean = false;
@@ -34,7 +33,6 @@
 	let siblingTopAppBarFound = false;
 
 	$: if (!variant) variant = "permanent";
-	$: setCreateMDCListInstance(variant !== "dismissible" && variant !== "modal");
 
 	const context$ = createDrawerContext({
 		variant,

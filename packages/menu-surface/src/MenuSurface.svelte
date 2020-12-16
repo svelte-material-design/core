@@ -20,8 +20,7 @@
 		MenuSurfaceVariant,
 		MDCMenuDistance,
 	} from ".";
-	import MenuSurfaceImpl from "./MenuSurfaceImpl.svelte";
-	import { onMount } from "svelte";
+	import { MenuSurface } from "./internal";
 
 	export let open: boolean = false;
 	export let quickOpen: boolean = false;
@@ -29,16 +28,11 @@
 	export let anchorFlipRtl: boolean = true;
 	export let anchorMargin: MDCMenuDistance = undefined;
 	export let variant: MenuSurfaceVariant = undefined;
-
-	let anchor: HTMLElement;
-	onMount(() => {
-		anchor = dom.parentElement;
-	});
 </script>
 
 <svelte:options immutable={true} />
 
-<MenuSurfaceImpl
+<MenuSurface
 	bind:dom
 	bind:open
 	{...props}
@@ -46,11 +40,9 @@
 	class={className}
 	{style}
 	{quickOpen}
-	{anchor}
 	{anchorCorner}
 	{anchorFlipRtl}
 	{anchorMargin}
-	{variant}
-	hoisted={false}>
+	{variant}>
 	<slot />
-</MenuSurfaceImpl>
+</MenuSurface>

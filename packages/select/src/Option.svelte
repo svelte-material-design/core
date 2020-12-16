@@ -9,7 +9,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../packages/select/Option:${count++}`;
+	export let id: string = `@smui/select/Option:${count++}`;
 
 	export let dom: HTMLLIElement = undefined;
 
@@ -17,44 +17,34 @@
 	export let props: BaseProps = {};
 	//#endregion
 
-	import { Item, Content } from "../../../packages/list";
+	import { Item } from "../../../packages/list/src/internal";
+	import { Content } from "../../../packages/list";
+	import { Selectable } from "../../../packages/common/selectable";
+	import { getSelectContext } from "./SelectContext";
 
 	export let value: string = "";
 	export let selected: boolean = undefined;
 	export let disabled: boolean = false;
 
 	$: if (value == null) value = "";
+
+	let selectedContext$ = getSelectContext();
 </script>
 
-<Item
-	bind:dom
-	{...props}
-	{id}
-	class={className}
-	{style}
-	{value}
-	{selected}
-	{disabled}
-	role="option"
-	on:domEvent={forwardDOMEvents}>
-	<Content>
-		<slot />
-	</Content>
-</Item>
-
-<!-- {#if enhanced}
-  <Item
-    use={[forwardEvents, ...use]}
-    data-value={value}
-    {selected}
-    {...props}
-  ><slot></slot></Item>
-{:else}
-  <option
-    use:useActions={use}
-    use:forwardEvents
-    {value}
-    {...selectedProp}
-    {...props}
-  ><slot></slot></option>
-{/if} -->
+<Selectable bind:selected {value} {dom} group={$selectedContext$.group}>
+	<Item
+		bind:dom
+		{...props}
+		{id}
+		class={className}
+		{style}
+		{value}
+		{selected}
+		{disabled}
+		role="option"
+		on:domEvent={forwardDOMEvents}>
+		<Content>
+			<slot />
+		</Content>
+	</Item>
+</Selectable>

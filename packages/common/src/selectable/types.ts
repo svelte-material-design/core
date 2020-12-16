@@ -1,18 +1,11 @@
+import { ComponentsGroupStore } from "../components-group";
+
 export interface SelectableItem {
 	selected: boolean;
 	dom: HTMLElement;
 	value: string;
 	setSelected(value: boolean): void;
-}
-
-export interface GroupBinding {
-	registerItem(item: SelectableItem): void;
-	unregisterItem(item: SelectableItem): void;
-	updateItem(item: SelectableItem): void;
-}
-
-export class GroupBindingContainer {
-	group: GroupBinding = {} as GroupBinding;
+	getComponentContext(): any;
 }
 
 export interface OnSingleSelectionGroupChangeEvent {
@@ -30,3 +23,14 @@ export interface OnMultiSelectionGroupChangeEvent {
 export interface OnSelectableChangeEvent {
 	selected: boolean;
 }
+
+export interface SelectionGroupBinding<
+	T extends SelectableItem = SelectableItem
+> {
+	items$: ComponentsGroupStore<T>;
+	updateItem(item: T): void | Promise<void>;
+	registerItem(item: T): void | Promise<void>;
+	unregisterItem(item: T): void | Promise<void>;
+}
+
+export type SelectionType = "single" | "multi";
