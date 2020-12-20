@@ -1,5 +1,4 @@
-import { StringListToFilter } from ".";
-import { filterStringList } from "./filterStringList";
+import { StringListToFilter, filterStringList } from ".";
 
 export function createSlotClassListHandler(
 	target: HTMLElement,

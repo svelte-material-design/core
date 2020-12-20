@@ -1,0 +1,4 @@
+@use '@material/theme/theme-color';
+@forward "@material/snackbar/variables" with (
+	$action-ink-color: theme-color.prop-value(primary) !default,
+);

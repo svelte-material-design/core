@@ -1,4 +1,7 @@
 @use "smui-theme";
-@use "./mixins";
+@use "./variables";
+@use "@material/icon-button";
+@use "@material/button";
+@use "@material/snackbar";
 
-@include mixins.smui-snackbar-core-styles;
+@include snackbar.core-styles;

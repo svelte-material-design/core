@@ -28,7 +28,7 @@
 	}
 
 	export function getBindings() {
-		selectionGroup?.getBindings();
+		return selectionGroup?.getBindings();
 	}
 </script>
 

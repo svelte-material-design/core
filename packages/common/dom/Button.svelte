@@ -16,8 +16,6 @@
 	export let id: string = undefined;
 
 	export let dom: HTMLButtonElement = undefined;
-
-	export let props: ButtonProps = {};
 	//#endregion
 
 	// Button
@@ -25,7 +23,7 @@
 
 <button
 	bind:this={dom}
-	{...props}
+	{...$$restProps}
 	{id}
 	class={className}
 	{style}

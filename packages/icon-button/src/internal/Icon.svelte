@@ -1,9 +1,8 @@
 <script lang="ts">
 	//#region  imports
-	import { GraphicType } from "../../../packages/common/components";
-	import { parseClassList } from "../../../packages/common/functions";
-	import { getIconButtonToggleContext, IconDOM } from ".";
-	import { Icon } from "./internal";
+	import { Graphic, GraphicType } from "../../../../packages/common/components";
+	import { parseClassList } from "../../../../packages/common/functions";
+	import { IconDOM } from "..";
 	//#endregion
 
 	//#region exports
@@ -19,25 +18,21 @@
 	//#endregion
 
 	//#region implementation
-	const iconButtonToggleContext$ = getIconButtonToggleContext();
 	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
-<Icon
+<Graphic
 	bind:dom
 	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
+		'mdc-icon-button__icon',
 		[type === 'icon' && className == undefined, 'material-icons'],
-		[
-			iconButtonToggleContext$ && $iconButtonToggleContext$.active,
-			'mdc-icon-button__icon--on',
-		],
 	])}
 	{style}
 	{type}>
 	<slot />
-</Icon>
+</Graphic>

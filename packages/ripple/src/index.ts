@@ -1,7 +1,7 @@
-export {Ripple, RippleProps} from "./Ripple";
-import Ripple2 from "./Ripple2.svelte";
+export { RippleProps } from "./Ripple";
 import Ripple3 from "./Ripple3.svelte";
+import Ripple from "./Ripple.svelte";
 import UseRipple from "./UseRipple.svelte";
 
 export * from "./UseRipple.svelte";
-export {Ripple2, Ripple3, UseRipple}
+export { Ripple, Ripple3, UseRipple };

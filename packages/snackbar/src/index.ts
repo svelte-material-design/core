@@ -1,7 +1,7 @@
 import Snackbar from "./Snackbar.svelte";
-import Actions from "./Actions.svelte";
-import Action from "./Action.svelte";
-import { Label } from "../../../packages/common/dom";
+import Content from "./Content.svelte";
 
+export { Snackbar, Content };
+export * from "./action";
 export * from "./SnackbarContext";
-export { Actions, Action, Label, Snackbar };
+export * from "./types";

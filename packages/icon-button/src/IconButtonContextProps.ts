@@ -1,4 +1,7 @@
-import { createContextPropBuilder } from "../../../packages/common";
+import {
+	createContextBuilder,
+	createContextPropBuilder,
+} from "../../../packages/common";
 
 const [
 	setIconButtonBehaviour,
@@ -10,3 +13,12 @@ type IconButtonBehaviour =
 	| "card:action"
 	| "top-app-bar:navigation"
 	| "top-app-bar:action";
+
+export const [
+	setIconButtonToggleContext,
+	getIconButtonToggleContext,
+] = createContextBuilder<IconButtonToggle>();
+
+export interface IconButtonToggle {
+	active: boolean;
+}

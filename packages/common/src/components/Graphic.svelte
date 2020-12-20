@@ -7,8 +7,8 @@
 	export let style: string = undefined;
 	export let id: string = undefined;
 
-	import { GraphicElement, GraphicType } from "./types";
-	export let dom: GraphicElement = undefined;
+	import { GraphicDOM, GraphicType } from "./types";
+	export let dom: GraphicDOM = undefined;
 
 	import { BaseProps } from "../../dom/Props";
 	export let props: BaseProps = {};

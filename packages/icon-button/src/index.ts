@@ -5,3 +5,4 @@ import Icon from "./Icon.svelte";
 export { IconButton, IconButtonToggle, Icon };
 export * from "./IconButtonContextProps";
 export * from "./IconButton.svelte";
+export * from "./types";

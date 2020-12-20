@@ -1,9 +1,13 @@
+<script context="module" lang="ts">
+	let count: number = 0;
+</script>
+
 <script lang="ts">
 	//#region  imports
-	import { GraphicType } from "../../../packages/common/components";
-	import { parseClassList } from "../../../packages/common/functions";
-	import { getIconButtonToggleContext, IconDOM } from ".";
-	import { Icon } from "./internal";
+	import { parseClassList } from "../../../../packages/common/functions";
+	import { GraphicType } from "../../../../packages/common/components";
+	import { Icon } from "../../../../packages/icon-button/src/internal";
+	import { IconDOM } from "..";
 	//#endregion
 
 	//#region exports
@@ -11,15 +15,11 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
+	export let id: string = `@smui/snackbar/Icon:${count++}`;
 	export let dom: IconDOM = undefined;
 	//#endregion
 
 	export let type: GraphicType = "icon";
-	//#endregion
-
-	//#region implementation
-	const iconButtonToggleContext$ = getIconButtonToggleContext();
 	//#endregion
 </script>
 
@@ -31,11 +31,8 @@
 	{id}
 	class={parseClassList([
 		className,
+		'mdc-icon-button__icon',
 		[type === 'icon' && className == undefined, 'material-icons'],
-		[
-			iconButtonToggleContext$ && $iconButtonToggleContext$.active,
-			'mdc-icon-button__icon--on',
-		],
 	])}
 	{style}
 	{type}>

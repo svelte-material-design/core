@@ -1,3 +1,2 @@
-export * from "./filterStringList";
-export * from "./parseClassList";
+export * from "./stringList";
 export * from "./slotHelpers";
