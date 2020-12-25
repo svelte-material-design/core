@@ -1,6 +1,7 @@
 import Tab from "./Tab.svelte";
-import Label from "../../../packages/common/dom/Label.svelte";
+import Content from "./internal/Content.svelte";
 import { Icon } from "../../../packages/common/dom";
+import { TabIndicator } from "../../../packages/tab-indicator/src/internal";
 
-export { Tab, Label, Icon };
-export * from "./TabContext";
+export { Tab, Icon, Content, TabIndicator };
+export * from "./types";

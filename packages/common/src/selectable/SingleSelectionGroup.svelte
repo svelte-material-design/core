@@ -15,7 +15,7 @@
 	export let value: string = undefined;
 	export let nullable: boolean = true;
 
-	let items$: ComponentsGroupStore = createComponentsGroupStore();
+	let items$ = createComponentsGroupStore<SelectableItem>();
 	let group: SelectionGroupBinding = {
 		items$,
 		updateItem,

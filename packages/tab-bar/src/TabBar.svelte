@@ -1,63 +1,54 @@
+<script context="module" lang="ts">
+	let count: number = 0;
+</script>
+
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = undefined;
-
-	export let dom: HTMLDivElement = null;
-
-	import { BaseProps } from "../../../packages/common/dom/Props";
-	export let props: BaseProps = {};
+	//#region imports
+	import { onDestroy, onMount } from "svelte";
+	import { MDCTabBar, MDCTabBarActivatedEvent } from "@material/tab-bar";
+	import { UseState } from "../../../packages/common/hooks";
+	import { TabScroller, TabIndicatorTransition } from ".";
+	import { parseClassList } from "../../../packages/common/functions";
+	import { SingleSelectionGroup } from "../../common/selectable";
+	import { setTabBarContext } from "./TabBarContext";
 	//#endregion
 
-	// TabBar
-	import { MDCTabBar, MDCTabBarActivatedEvent } from "@material/tab-bar";
-	import { onMount, onDestroy } from "svelte";
-	import { SelectableContext, SelectableGroup } from "../../../packages/common/hoc";
-	import { UseState, Use } from "../../../packages/common/hooks";
-	import {
-		setCreateMDCTabScrollerInstance,
-		TabScroller,
-	} from "../../../packages/tab-scroller";
-	import { setCreateMDCTabInstance } from "../../../packages/tab";
+	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@smui/snackbar/Snackbar:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
 	export let focusOnActivate: boolean = true;
-	export let useAutomaticActivation: boolean = true;
-	export let active: any = undefined;
-
-	let tabs: Set<SelectableContext> = undefined;
-
-	let selectableGroup: SelectableGroup;
-
-	$: if (selectableGroup) {
-		tabs = selectableGroup.getItems();
-	}
-
-	setCreateMDCTabScrollerInstance(false);
-	setCreateMDCTabInstance(false);
+	export let activateOnKeyboardNavigation: boolean = true;
+	export let active: string = undefined;
+	export let transition: TabIndicatorTransition;
+	//#endregion
 
 	let tabBar: MDCTabBar;
-	onMount(() => {
-		tabBar = new MDCTabBar(dom);
+	let selectionGroup: SingleSelectionGroup;
 
-		tabBar.listen("MDCTabBar:activated", (event: MDCTabBarActivatedEvent) => {
-			const index = event.detail.index;
-			active = getTabsKeys()[index];
-		});
+	const context$ = setTabBarContext({
+		transition,
+	});
+	$: $context$ = { ...$context$, transition };
+
+	onMount(() => {
+		$context$ = { ...$context$, group: selectionGroup.getBindings() };
+
+		initialize();
 	});
 
-	function init() {
+	function initialize() {
+		tabBar?.destroy();
+		tabBar = new MDCTabBar(dom);
+		tabBar.listen("MDCTabBar:activated", handleActivated);
 		if (active) {
-			const activeTabIndex = getTabsKeys().indexOf(getActiveTab());
+			const activeTabIndex = getTabs().indexOf(getActiveTab());
 			tabBar.activateTab(activeTabIndex);
-		} else {
-			const firstTab = getTabsKeys()[0];
-			if (firstTab != null) {
-				active = firstTab;
-			}
 		}
 	}
 
@@ -66,32 +57,34 @@
 			tabBar.focusOnActivate = focusOnActivate;
 		}
 
-		if (tabBar.useAutomaticActivation !== useAutomaticActivation) {
-			tabBar.useAutomaticActivation = useAutomaticActivation;
+		if (tabBar.useAutomaticActivation !== activateOnKeyboardNavigation) {
+			tabBar.useAutomaticActivation = activateOnKeyboardNavigation;
 		}
 	}
 
 	onDestroy(() => {
-		tabBar && tabBar.destroy();
+		tabBar?.destroy();
 	});
 
-	function onActiveTabChange() {
+	function handleActivated(event: MDCTabBarActivatedEvent) {
+		const index = event.detail.index;
+		active = getTabs()[index];
+	}
+
+	function handleActiveValueChange() {
 		if (tabBar) {
-			const activeIndex = getTabsKeys().indexOf(active);
-			activateTab(activeIndex);
+			const activeIndex = getTabs().indexOf(active);
+			tabBar.activateTab(activeIndex);
 		}
 	}
 
 	function getActiveTab() {
-		return getTabsKeys().find((tab) => tab === active);
+		return getTabs().find((tab) => tab === active);
 	}
 
-	function getTabsKeys() {
+	function getTabs(): string[] {
+		const tabs = selectionGroup.getItems();
 		return tabs ? Array.from(tabs).map((item) => item.value) : [];
-	}
-
-	export function activateTab(index: number) {
-		return tabBar.activateTab(index);
 	}
 
 	export function scrollIntoView(index: number) {
@@ -101,24 +94,18 @@
 
 <svelte:options immutable={true} />
 
-<UseState value={active} onUpdate={onActiveTabChange} />
+<UseState value={active} onUpdate={handleActiveValueChange} />
 
-<SelectableGroup
-	bind:this={selectableGroup}
-	selectionType="single"
-	bind:value={active}>
+<SingleSelectionGroup bind:this={selectionGroup} bind:value={active}>
 	<div
 		bind:this={dom}
-		{...props}
+		{...$$restProps}
 		{id}
-		class="mdc-tab-bar {className}"
+		class={parseClassList([className, 'mdc-tab-bar'])}
 		{style}
-		role="tablist"
-		use:forwardDOMEvents>
+		role="tablist">
 		<TabScroller>
 			<slot />
 		</TabScroller>
 	</div>
-</SelectableGroup>
-
-<Use effect once hook={init} />
+</SingleSelectionGroup>

@@ -1,58 +1,41 @@
+<script context="module" lang="ts">
+	let count: number = 0;
+</script>
+
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = undefined;
-
-	export let dom: HTMLButtonElement = null;
-
-	import { BaseProps } from "../../../packages/common/dom/Props";
-	export let props: BaseProps = {};
+	//#region imports
+	import { UseState } from "../../../packages/common/hooks";
+	import { MDCTab } from "@material/tab";
+	import { onMount, onDestroy } from "svelte";
+	import { Tab } from "./internal";
+	import { setLabelBehaviour } from "../../../packages/common/dom/LabelContext";
+	import { setIconBehaviour } from "../../../packages/common/dom";
 	//#endregion
 
-	// Tab
-	import { MDCTab } from "@material/tab";
-	import { onMount, onDestroy, setContext, getContext } from "svelte";
-	import { getCreateMDCTabInstance } from "./TabContext";
-	import { setLabelBehaviour } from "../../../packages/common/dom/LabelContext";
-	import { Selectable } from "../../../packages/common/hoc";
-	import { setIconBehaviour } from "../../../packages/common/dom";
-	import {
-		setCreateMDCTabIndicatorInstance,
-		TabIndicator,
-	} from "../../../packages/tab-indicator";
-	import { UseState } from "../../../packages/common/hooks";
-	import { ExtractNamedSlot } from "../../../packages/common/components";
+	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@smui/tab/Tab:${count++}`;
+	export let dom: HTMLButtonElement = undefined;
+	//#endregion
 
 	export let ripple: boolean = true;
 	export let key: any = undefined;
 	export let active: boolean = false;
 	export let stacked: boolean = false;
-	export let minWidth: boolean = false;
-	export let indicatorSpanOnlyContent: boolean = false;
+	export let useMinWidth: boolean = false;
 	export let focusOnActivate: boolean = true;
+	//#endregion
 
-	let instantiate = getCreateMDCTabInstance();
+	let tab: MDCTab;
 
 	setIconBehaviour("tab");
 	setLabelBehaviour("tab");
-	setCreateMDCTabIndicatorInstance(false);
 
-	let tab: MDCTab;
 	onMount(async () => {
-		if (instantiate !== false) {
-			tab = new MDCTab(dom);
-			tab.listen("MDCTab:interacted", interactedHandler);
-
-			if (active) {
-				tab.activate();
-			} else {
-				tab.deactivate();
-			}
-		}
+		initialize();
 	});
 
 	$: if (tab) {
@@ -62,8 +45,20 @@
 	}
 
 	onDestroy(() => {
-		tab && tab.destroy();
+		tab?.destroy();
 	});
+
+	function initialize() {
+		tab?.destroy();
+		tab = new MDCTab(dom);
+		tab.listen("MDCTab:interacted", interactedHandler);
+
+		if (active) {
+			tab.activate();
+		} else {
+			tab.deactivate();
+		}
+	}
 
 	function interactedHandler() {
 		active = tab.active;
@@ -104,44 +99,17 @@
 
 <UseState value={active} onUpdate={onActiveChange} />
 
-<Selectable bind:value={key} bind:selected={active}>
-	<button
-		bind:this={dom}
-		{...props}
-		{id}
-		class="
-      mdc-tab
-      {className}
-      {active ? 'mdc-tab--active' : ''}
-      {stacked ? 'mdc-tab--stacked' : ''}
-      {minWidth ? 'mdc-tab--min-width' : ''}
-    "
-		{style}
-		role="tab"
-		aria-selected={active}
-		tabindex={active ? 0 : -1}
-		use:forwardDOMEvents>
-		<span class="mdc-tab__content">
-			<slot />
-			{#if indicatorSpanOnlyContent}
-				{#if $$slots.tabIndicator}
-					<ExtractNamedSlot>
-						<slot name="tabIndicator" {active} />
-					</ExtractNamedSlot>
-				{:else}
-					<TabIndicator {active} />
-				{/if}
-			{/if}
-		</span>
-		{#if !indicatorSpanOnlyContent}
-			{#if $$slots.tabIndicator}
-				<ExtractNamedSlot>
-					<slot name="tabIndicator" {active} />
-				</ExtractNamedSlot>
-			{:else}
-				<TabIndicator {active} />
-			{/if}
-		{/if}
-		{#if ripple}<span class="mdc-tab__ripple" />{/if}
-	</button>
-</Selectable>
+<Tab
+	{...$$restProps}
+	bind:dom
+	{id}
+	class={className}
+	{style}
+	{active}
+	{key}
+	{focusOnActivate}
+	{useMinWidth}
+	{ripple}
+	{stacked}>
+	<slot />
+</Tab>

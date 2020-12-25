@@ -1,35 +1,38 @@
+<script context="module" lang="ts">
+	let count: number = 0;
+</script>
+
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = undefined;
-
-	export let dom: HTMLDivElement = null;
-
-	import { BaseProps } from "../../../packages/common/dom/Props";
-	export let props: BaseProps = {};
+	//#region imports
+	import { onDestroy, onMount } from "svelte";
+	import { TabScroller } from "./internal";
+	import { MDCTabScroller } from "@material/tab-scroller";
 	//#endregion
 
-	// TabScroller
-	import { MDCTabScroller } from "@material/tab-scroller";
-	import { onMount, onDestroy } from "svelte";
-	import { getCreateMDCTabScrollerInstance } from "./TabScrollerContext";
-
-	let instantiate = getCreateMDCTabScrollerInstance();
+	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@smui/tab-scroller/TabScroller:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
+	//#endregion
 
 	let tabScroller: MDCTabScroller;
+
 	onMount(async () => {
-		if (instantiate !== false) {
-			tabScroller = new MDCTabScroller(dom);
-		}
+		initialize();
 	});
 
 	onDestroy(() => {
-		tabScroller && tabScroller.destroy();
+		tabScroller?.destroy();
 	});
+
+	function initialize() {
+		tabScroller?.destroy();
+		tabScroller = new MDCTabScroller(dom);
+	}
 
 	export function scrollTo(scrollX: number) {
 		return tabScroller.scrollTo(scrollX);
@@ -48,16 +51,4 @@
 	}
 </script>
 
-<div
-	bind:this={dom}
-	{...props}
-	{id}
-	class="mdc-tab-scroller {className}"
-	{style}
-	use:forwardDOMEvents>
-	<div class="mdc-tab-scroller__scroll-area">
-		<div class="mdc-tab-scroller__scroll-content">
-			<slot />
-		</div>
-	</div>
-</div>
+<TabScroller {...$$restProps} bind:dom {id} class={className} {style} />

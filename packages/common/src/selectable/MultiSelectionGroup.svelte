@@ -5,17 +5,13 @@
 		ComponentsGroupStore,
 		createComponentsGroupStore,
 	} from "../components-group";
-	import {
-		SelectableItem,
-		OnSelectionGroupOptionsChangeEvent,
-		OnSingleSelectionGroupChangeEvent,
-	} from "./types";
+	import { SelectableItem } from "./types";
 	import { SelectionGroupBinding } from ".";
 
 	export let value: string[] = undefined;
 	export let nullable: boolean = true;
 
-	let items$: ComponentsGroupStore = createComponentsGroupStore();
+	let items$ = createComponentsGroupStore<SelectableItem>();
 	let group: SelectionGroupBinding = {
 		items$,
 		updateItem,
