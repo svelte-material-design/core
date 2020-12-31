@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	import { createEventDispatcher, tick } from "svelte";
-	import { UseState } from "../../hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 
 	export let selected: boolean = false;
 	export let disabled: boolean = false;

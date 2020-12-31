@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import { UseState } from "../../hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import {
 		SelectionGroupBinding,

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { MDCTextField } from "@material/textfield";
-	import { Use, UseState } from "../../../packages/common/hooks";
+	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	import { onDestroy } from "svelte";
 	import { InputFieldVariant } from "./";
 	import { StringListToFilter } from "../../../packages/common/functions";

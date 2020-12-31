@@ -26,7 +26,7 @@
 	import { LineRipple } from "../../../packages/line-ripple";
 	import UseTextField from "./UseTextField.svelte";
 	import { InputFieldCustomValidation, FullWidthTextFieldType } from "./";
-	import { UseState } from "../../../packages/common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 
 	//#region exports
 	//#region UseTextField props

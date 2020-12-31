@@ -21,8 +21,8 @@
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getListContext } from "../";
 	import { ItemContext, OnItemSelectedEvent } from ".";
-	import { Selectable } from "../../../../packages/common/selectable";
-	import { UseState } from "../../../../packages/common/hooks";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/esm/selectable";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { Item } from "../internal";
 
 	//#endregion

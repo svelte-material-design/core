@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	import { Writable } from "svelte/store";
-	import { Use, UseState } from "../../hooks";
+	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	import {
 		getSelectableContext,
 		SelectableContext,

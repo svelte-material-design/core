@@ -6,10 +6,10 @@
 	//#region imports
 	import { onDestroy, onMount } from "svelte";
 	import { MDCTabBar, MDCTabBarActivatedEvent } from "@material/tab-bar";
-	import { UseState } from "../../../packages/common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { TabScroller, TabIndicatorTransition } from ".";
 	import { parseClassList } from "../../../packages/common/functions";
-	import { SingleSelectionGroup } from "../../common/selectable";
+	import { SingleSelectionGroup } from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { setTabBarContext } from "./TabBarContext";
 	//#endregion
 

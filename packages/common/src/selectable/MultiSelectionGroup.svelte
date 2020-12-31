@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { UseState } from "../../hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { onDestroy, onMount, tick } from "svelte";
 	import {
 		ComponentsGroupStore,

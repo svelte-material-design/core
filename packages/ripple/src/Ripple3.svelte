@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Use } from "../../../packages/common/hooks";
+	import { Use } from "@raythurnevoid/svelte-hooks";
 	import { UseRipple } from ".";
 	import { RippleProps } from "./Ripple";
 

@@ -23,7 +23,7 @@
 		SliderChangeEvent,
 	} from ".";
 	import { createEventDispatcher } from "svelte";
-	import { UseState } from "../../common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 
 	export let min: number = 0;
 	export let max: number = 100;

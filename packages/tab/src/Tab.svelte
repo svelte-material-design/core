@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { UseState } from "../../../packages/common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { MDCTab } from "@material/tab";
 	import { onMount, onDestroy } from "svelte";
 	import { Tab } from "./internal";

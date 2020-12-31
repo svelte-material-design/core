@@ -19,7 +19,7 @@
 	import { MDCMenuSurface } from "@material/menu-surface";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { createMenuSurfaceContext } from "../MenuSurfaceContext";
-	import { UseState } from "../../../common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import {
 		MenuSurfaceVariant,
 		MDCMenuDistance,

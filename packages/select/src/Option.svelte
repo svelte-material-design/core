@@ -19,7 +19,7 @@
 
 	import { Item } from "../../../packages/list/src/internal";
 	import { Content } from "../../../packages/list";
-	import { Selectable } from "../../../packages/common/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { getSelectContext } from "./SelectContext";
 
 	export let value: string = "";

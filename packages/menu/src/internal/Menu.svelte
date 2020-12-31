@@ -25,7 +25,7 @@
 	import {
 		SelectionGroupBinding,
 		SelectionGroup,
-	} from "../../../../packages/common/selectable";
+	} from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { createEventDispatcher, onMount, tick } from "svelte";
 
 	//#region exports

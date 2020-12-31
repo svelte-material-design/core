@@ -2,7 +2,7 @@ import { ItemContext } from "./item";
 import { createContextBuilder } from "../../../packages/common";
 import { SelectionType } from "../../../packages/common/hoc";
 import { ListImplRole } from "./internal";
-import { SelectionGroupBinding } from "../../common/selectable";
+import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 
 const [createListContext, getListContext] = createContextBuilder<ListContext>();
 export { createListContext, getListContext };

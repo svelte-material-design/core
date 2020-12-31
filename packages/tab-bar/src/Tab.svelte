@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region imports
-	import { Selectable } from "../../../packages/common/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { Tab } from "../../../packages/tab/src/internal";
 	import { getTabBarContext, setTabContext } from "./TabBarContext";
 	//#endregion

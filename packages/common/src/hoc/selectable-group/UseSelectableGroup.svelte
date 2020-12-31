@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import { Use, UseState } from "../../hooks";
+	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	import { initTabIndex } from "../initTabIndex";
 	import { createEventDispatcher, tick } from "svelte";
 	import { arrEquals } from "../../utils";

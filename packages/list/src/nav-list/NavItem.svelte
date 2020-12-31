@@ -20,7 +20,7 @@
 	//#region import
 	import { createItemContext, ItemContext, getListContext } from "../";
 	import { Ripple3 } from "../../../ripple";
-	import { UseState } from "../../../common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import ItemContent from "../internal/item/ItemContent.svelte";
 
 	//#endregion

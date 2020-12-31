@@ -14,7 +14,7 @@
 	import { parseClassList } from "../../../packages/common/functions";
 	import { MDCLinearProgress } from "@material/linear-progress";
 	import { onMount, onDestroy, tick } from "svelte";
-	import { UseDebounce, UseState } from "../../../packages/common/hooks";
+	import { UseDebounce, UseState } from "@raythurnevoid/svelte-hooks";
 	import { getCreateMDCLinearProgressInstance } from ".";
 
 	export let indeterminate: boolean = false;

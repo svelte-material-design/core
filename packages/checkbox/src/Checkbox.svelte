@@ -29,7 +29,7 @@
 	import { Selectable } from "../../../packages/common/hoc";
 	import { createEventDispatcher } from "svelte";
 	import { CheckboxChangeEvent } from "./types";
-	import { Use, UseState } from "../../common/hooks";
+	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	//#endregion
 
 	//#region exports

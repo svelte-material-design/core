@@ -22,7 +22,7 @@
 	import { onDestroy, tick } from "svelte";
 	import { createDrawerContext } from "./DrawerContext";
 	import { DrawerVariant } from "./types";
-	import { UseState } from "../../../packages/common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import Scrim from "./Scrim.svelte";
 
 	export let variant: DrawerVariant = "permanent";

@@ -41,7 +41,7 @@
 	import { getChipSetContext } from "./ChipSetContext";
 	import { ChipContext, createChipContext } from "./ChipContext";
 	import { Selectable } from "../../../packages/common/hoc";
-	import { Use, UseState } from "../../../packages/common/hooks";
+	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 
 	export let value: any = null;
 	export let ripple: boolean = true;

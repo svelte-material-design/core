@@ -11,7 +11,7 @@
 		setSelectableGroupContext,
 	} from "./SelectableGroupContext";
 	import { Writable } from "svelte/store";
-	import { Use, UseState } from "../../hooks";
+	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	import { createEventDispatcher } from "svelte";
 
 	export let value: any = undefined;

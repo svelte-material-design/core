@@ -22,7 +22,7 @@
 		AbsoluteMenuSurfacePosition,
 	} from ".";
 	import { MenuSurfaceImpl } from "./internal";
-	import { Use } from "../../common/hooks";
+	import { Use } from "@raythurnevoid/svelte-hooks";
 
 	export let open: boolean = false;
 	export let quickOpen: boolean = false;

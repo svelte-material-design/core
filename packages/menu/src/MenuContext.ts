@@ -1,5 +1,5 @@
 import { createContextBuilder } from "../../../packages/common";
-import { SelectionGroupBinding } from "../../../packages/common/selectable";
+import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 import { SelectionType } from "../../../packages/common/hoc";
 import { ItemContext } from ".";
 

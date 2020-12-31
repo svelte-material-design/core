@@ -3,7 +3,7 @@
 	import { MDCSlider } from "@material/slider";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getFormFieldContext } from "../../form-field";
-	import { Use, UseState } from "../../common/hooks";
+	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	import {
 		SliderChangeEvent,
 		SliderValueText,

@@ -3,7 +3,7 @@
 	import { TabIndicator } from "./internal";
 	import { MDCTabIndicator } from "@material/tab-indicator";
 	import { onMount, onDestroy } from "svelte";
-	import { UseState } from "../../../packages/common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { TabIndicatorTransition } from ".";
 	//#endregion
 

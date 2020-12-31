@@ -62,7 +62,9 @@
 		"@material/textfield": "^8.0.0",
 		"@material/theme": "^8.0.0",
 		"@material/top-app-bar": "^8.0.0",
-		"@material/typography": "^8.0.0"
+		"@material/typography": "^8.0.0",
+		"@raythurnevoid/svelte-hooks": "^0.0.2",
+		"@raythurnevoid/svelte-group-components": "^0.0.5"
 	},
 	"devDependencies": {
 		"lerna": "^3.22.1",

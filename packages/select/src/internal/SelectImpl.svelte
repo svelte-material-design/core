@@ -14,19 +14,19 @@
 
 	// Select
 	import { MDCSelect, MDCSelectEvent } from "@material/select";
-	import { onMount, onDestroy, createEventDispatcher } from "svelte";
+	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { Menu } from "../../../../packages/menu/src/internal";
 	import { FloatingLabel } from "../../../../packages/floating-label";
 	import { LineRipple } from "../../../../packages/line-ripple";
 	import { NotchedOutline } from "../../../../packages/notched-outline";
 	import { Span } from "../../../../packages/common/dom";
-	import { UseState } from "../../../../packages/common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import {
 		createSelectContext,
 		OnSelectChangeEventDetail,
 		SelectVariant,
 	} from "..";
-	import { SelectionGroupBinding } from "../../../../packages/common/selectable";
+	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 
 	//#region exports
 	export let ripple: boolean = true;
@@ -165,12 +165,23 @@
 		if (readonly) event.stopImmediatePropagation();
 	}
 
-	export function updateOptions() {
+	export async function updateOptions() {
+		const oldValue = value;
+
 		if (select.value !== value) {
 			select.layoutOptions();
 			select.layout();
 		} else {
 			select.layoutOptions();
+		}
+
+		await tick();
+
+		if (oldValue !== value) {
+			dispatch("change", {
+				value,
+				dom,
+			});
 		}
 	}
 </script>

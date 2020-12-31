@@ -26,7 +26,7 @@
 	import { onDestroy, createEventDispatcher, onMount, tick } from "svelte";
 	import { Nav, Ul } from "../../../common/dom";
 	import { SelectionType } from "../../../common/hoc";
-	import { SelectionGroupBinding } from "../../../common/selectable";
+	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import {
 		ListRole,
 		ListOrientation,

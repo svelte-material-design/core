@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { UseState } from "../../hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import {
 		ComponentsGroupStore,
@@ -149,18 +149,21 @@
 	async function unregisterItem(item: SelectableItem) {
 		items$.unregisterItem(item);
 
-		if (value === item.value) {
-			setValue(undefined);
-			dispatch("change", {
-				value,
-			});
-		}
-
 		await tick();
 
 		dispatch("optionsChange", {
 			items: $items$,
 		});
+
+		if (value === item.value) {
+			setValue(undefined);
+
+			await tick();
+
+			dispatch("change", {
+				value,
+			});
+		}
 	}
 
 	async function registerItem(item: SelectableItem) {

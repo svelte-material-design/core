@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount, tick } from "svelte";
 	import { SMUIRipple } from "./SMUIRipple";
-	import { UseState } from "../../../packages/common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { parseClassList } from "../../../packages/common/functions";
 
 	export let target: HTMLElement;

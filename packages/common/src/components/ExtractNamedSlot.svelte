@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Use } from "../hooks";
+	import { Use } from "@raythurnevoid/svelte-hooks";
 
 	let dom: HTMLDivElement;
 

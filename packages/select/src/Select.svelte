@@ -20,7 +20,7 @@
 	import {
 		SelectionGroup,
 		SelectionGroupBinding,
-	} from "../../common/selectable";
+	} from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { SelectImpl } from "./internal";
 
 	//#region exports

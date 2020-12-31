@@ -16,7 +16,7 @@
 	import {
 		SelectionGroupBinding,
 		SingleSelectionGroup,
-	} from "../../../../packages/common/selectable";
+	} from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { ListImpl, OnListActionEvent } from "../../../list/src/internal";
 	import {
 		ListOrientation,

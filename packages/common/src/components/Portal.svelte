@@ -1,6 +1,6 @@
 <script lang="ts">
 	// import { onDestroy } from "svelte";
-	import { Use } from "../hooks";
+	import { Use } from "@raythurnevoid/svelte-hooks";
 
 	export let target: HTMLElement;
 

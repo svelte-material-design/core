@@ -27,7 +27,7 @@
 	import { createChipSetContext } from "./ChipSetContext";
 	import { ChipContext } from "./ChipContext";
 	import { arrRemove, arrAdd, arrHas } from "../../../packages/common/utils";
-	import { Use, UseState } from "../../../packages/common/hooks";
+	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 
 	export let value: any = undefined;
 	export let variant: ChipSetVariant = null;

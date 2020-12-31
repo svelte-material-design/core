@@ -12,7 +12,7 @@
 	export let dom: HTMLDivElement = null;
 
 	import { BaseProps } from "../../../packages/common/dom/Props";
-	import { UseState } from "../../../packages/common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { onDestroy, onMount } from "svelte";
 	export let props: BaseProps = {};
 	//#endregion

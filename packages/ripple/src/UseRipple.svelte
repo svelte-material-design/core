@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	import { RippleProps } from "./Ripple";
-	import { Use } from "../../../packages/common/hooks";
+	import { Use } from "@raythurnevoid/svelte-hooks";
 	import { onDestroy } from "svelte";
 	import { SMUIRipple } from "./SMUIRipple";
 	import { parseClassList } from "../../common/functions";

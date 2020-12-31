@@ -2,7 +2,7 @@ import {
 	createContextBuilder,
 	createContextPropBuilder,
 } from "../../../packages/common";
-import { SelectionGroupBinding } from "../../../packages/common/selectable";
+import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 
 export const [
 	createSelectContext,

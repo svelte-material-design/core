@@ -42,7 +42,7 @@
 	//#region imports
 	import { onDestroy, onMount, tick } from "svelte";
 	import { createEventDispatcher } from "svelte";
-	import { UseState } from "../../../packages/common/hooks";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import SnackbarBase from "./internal/SnackbarBase.svelte";
 	import { OnSnackbarClose } from ".";
 	//#endregion

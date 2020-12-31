@@ -21,7 +21,7 @@
 		SelectionGroupBinding,
 		SingleSelectionGroup,
 		MultiSelectionGroup,
-	} from "../../common/selectable";
+	} from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { ListImpl, OnListActionEvent } from "./internal";
 	import { ListOrientation, ListRole, OnListChangeEvent, ListType } from ".";
 	import { roleToSelectionType } from "./roleToSelectionType";
