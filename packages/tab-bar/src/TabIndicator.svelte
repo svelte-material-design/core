@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from "svelte";
+
 	//#region imports
 	import { TabIndicator } from "../../../packages/tab-indicator/src/internal";
 	import { getTabBarContext, getTabContext } from "./TabBarContext";
@@ -16,6 +18,10 @@
 
 	let tabBarContext$ = getTabBarContext();
 	let tabContext$ = getTabContext();
+
+	onMount(() => {
+		$tabBarContext$.reinitialize();
+	});
 </script>
 
 <svelte:options immutable={true} />

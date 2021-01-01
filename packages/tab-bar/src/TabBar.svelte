@@ -4,10 +4,11 @@
 
 <script lang="ts">
 	//#region imports
-	import { onDestroy, onMount } from "svelte";
+	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import { MDCTabBar, MDCTabBarActivatedEvent } from "@material/tab-bar";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { TabScroller, TabIndicatorTransition } from ".";
+	import type { OnTabBarChange, TabContext } from ".";
 	import { parseClassList } from "../../../packages/common/functions";
 	import { SingleSelectionGroup } from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { setTabBarContext } from "./TabBarContext";
@@ -28,11 +29,24 @@
 	export let transition: TabIndicatorTransition;
 	//#endregion
 
+	const dispatch = createEventDispatcher<{
+		change: OnTabBarChange;
+	}>();
+
 	let tabBar: MDCTabBar;
 	let selectionGroup: SingleSelectionGroup;
+	let initialized: boolean = false;
 
 	const context$ = setTabBarContext({
 		transition,
+		setActive(tab: TabContext) {
+			active = tab.key;
+		},
+		reinitialize() {
+			if (initialized) {
+				initialize();
+			}
+		},
 	});
 	$: $context$ = { ...$context$, transition };
 
@@ -40,6 +54,7 @@
 		$context$ = { ...$context$, group: selectionGroup.getBindings() };
 
 		initialize();
+		initialized = true;
 	});
 
 	function initialize() {
@@ -66,25 +81,48 @@
 		tabBar?.destroy();
 	});
 
-	function handleActivated(event: MDCTabBarActivatedEvent) {
+	async function handleActivated(event: MDCTabBarActivatedEvent) {
 		const index = event.detail.index;
-		active = getTabs()[index];
+		active = getTabs()[index].key;
+
+		await tick();
+
+		dispatch("change", {
+			dom,
+			index,
+			active,
+		});
+
+		const tabContext = selectionGroup
+			.getItems()
+			[index].getComponentContext() as TabContext;
+
+		tabContext.setActive(true);
 	}
 
-	function handleActiveValueChange() {
+	async function handleActiveValueChange(oldValue: string) {
 		if (tabBar) {
-			const activeIndex = getTabs().indexOf(active);
-			tabBar.activateTab(activeIndex);
+			if (active) {
+				const activeIndex = getTabs().findIndex((tab) => tab.key === active);
+				tabBar.activateTab(activeIndex);
+			} else {
+				const previouslyActiveTab = getTabs().find(
+					(tab) => tab.key === oldValue
+				);
+				previouslyActiveTab.setActive(false);
+				await tick();
+				initialize();
+			}
 		}
 	}
 
 	function getActiveTab() {
-		return getTabs().find((tab) => tab === active);
+		return getTabs().find((tab) => tab.key === active);
 	}
 
-	function getTabs(): string[] {
+	function getTabs(): TabContext[] {
 		const tabs = selectionGroup.getItems();
-		return tabs ? Array.from(tabs).map((item) => item.value) : [];
+		return tabs ? tabs.map((item) => item.getComponentContext()) : [];
 	}
 
 	export function scrollIntoView(index: number) {
@@ -96,7 +134,10 @@
 
 <UseState value={active} onUpdate={handleActiveValueChange} />
 
-<SingleSelectionGroup bind:this={selectionGroup} bind:value={active}>
+<SingleSelectionGroup
+	bind:this={selectionGroup}
+	bind:value={active}
+	on:optionsChange={initialize}>
 	<div
 		bind:this={dom}
 		{...$$restProps}

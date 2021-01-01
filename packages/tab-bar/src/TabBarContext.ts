@@ -10,6 +10,8 @@ export const [
 export interface TabBarContext {
 	transition: TabIndicatorTransition;
 	group: SelectionGroupBinding;
+	setActive: (TabContext) => void;
+	reinitialize: () => void;
 }
 
 export const [
@@ -18,5 +20,7 @@ export const [
 ] = createContextBuilder<TabContext>();
 
 export interface TabContext {
+	key: string;
 	active: boolean;
+	setActive: (active: boolean) => void;
 }
