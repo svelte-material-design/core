@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "../../../packages/common/events";
+	import { DOMEventsForwarder } from "../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -9,12 +9,12 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Text
-	import { Icon } from "../../../packages/common/dom";
+	import { Icon } from "../../common/dom";
 </script>
 
 <svelte:options immutable={true} />

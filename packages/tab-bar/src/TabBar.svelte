@@ -9,7 +9,7 @@
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { TabScroller, TabIndicatorTransition } from ".";
 	import type { OnTabBarChange, TabContext } from ".";
-	import { parseClassList } from "../../../packages/common/functions";
+	import { parseClassList } from "../../common/functions";
 	import { SingleSelectionGroup } from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { setTabBarContext } from "./TabBarContext";
 	//#endregion

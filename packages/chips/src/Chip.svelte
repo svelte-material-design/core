@@ -15,17 +15,17 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import { parseClassList } from "../../common/functions";
+	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../packages/chips/Chip:${count++}`;
+	export let id: string = `../../chips/Chip:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -40,7 +40,7 @@
 	import { createEventDispatcher, onDestroy } from "svelte";
 	import { getChipSetContext } from "./ChipSetContext";
 	import { ChipContext, createChipContext } from "./ChipContext";
-	import { Selectable } from "../../../packages/common/hoc";
+	import { Selectable } from "../../common/hoc";
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 
 	export let value: any = null;

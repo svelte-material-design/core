@@ -1,4 +1,2 @@
-node_modules
-/packages/**/bare.css
-.npmrc
-/**/*.d.ts
+/node_modules/
+/lib/

@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "../../../packages/common/events";
+	import { DOMEventsForwarder } from "../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -9,12 +9,12 @@
 
 	export let dom: HTMLButtonElement | HTMLAnchorElement = null;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Action
-	import { Button, ButtonColor } from "../../../packages/button";
+	import { Button, ButtonColor } from "../../button";
 
 	export let ripple: boolean = true;
 	export let type: ButtonColor = "primary";

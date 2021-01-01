@@ -4,8 +4,8 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../../packages/common/functions";
-	import { DOMEventsForwarder } from "../../../../packages/common/events";
+	import { parseClassList } from "../../../common/functions";
+	import { DOMEventsForwarder } from "../../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -14,7 +14,7 @@
 
 	export let dom: GraphicElement = undefined;
 
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -23,7 +23,7 @@
 		Graphic,
 		GraphicElement,
 		GraphicType,
-	} from "../../../../packages/common/components";
+	} from "../../../common/components";
 	import { MDCTextFieldIcon } from "@material/textfield/icon";
 	import { onDestroy, onMount } from "svelte";
 	import { getInputFieldContext } from "../";

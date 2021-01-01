@@ -7,7 +7,7 @@
 	export let id: string = undefined;
 
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = undefined;
 	//#endregion
 
@@ -20,8 +20,8 @@
 		OnMenuItemSelectedEvent,
 	} from "..";
 	import { MenuImpl, OnMenuImplSelect } from ".";
-	import { ListOrientation, ListType } from "../../../../packages/list";
-	import { SelectionType } from "../../../../packages/common/hoc";
+	import { ListOrientation, ListType } from "../../../list";
+	import { SelectionType } from "../../../common/hoc";
 	import {
 		SelectionGroupBinding,
 		SelectionGroup,

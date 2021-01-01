@@ -4,13 +4,10 @@
 
 <script lang="ts">
 	//#region imports
-	import { Ripple } from "../../../packages/ripple";
+	import { Ripple } from "../../ripple";
 	import { getButtonBehaviour, ButtonColor, ButtonVariant } from ".";
-	import { Button, A } from "../../../packages/common/dom";
-	import {
-		parseClassList,
-		parseStylesList,
-	} from "../../../packages/common/functions";
+	import { Button, A } from "../../common/dom";
+	import { parseClassList, parseStylesList } from "../../common/functions";
 	import { themeColor } from "../../common/theme";
 	//#endregion
 

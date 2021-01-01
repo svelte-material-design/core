@@ -11,14 +11,14 @@
 
 	export let dom: HTMLLIElement = undefined;
 
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Item
 	//#region import
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { Item } from "../../../../packages/list/src/internal";
+	import { Item } from "../../../list/src/internal";
 	import { getMenuContext } from "..";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { ItemContext } from ".";

@@ -4,7 +4,7 @@
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createEventDispatcher, tick } from "svelte";
 	import type { OnTabChange, TabContext } from ".";
-	import { Tab } from "../../../packages/tab/src/internal";
+	import { Tab } from "../../tab/src/internal";
 	import { getTabBarContext, setTabContext } from "./TabBarContext";
 	//#endregion
 

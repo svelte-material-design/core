@@ -1,7 +1,7 @@
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import { parseClassList } from "../../common/functions";
+	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -9,14 +9,14 @@
 	export let id: string = "";
 
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Dialog
 	import { onMount, createEventDispatcher } from "svelte";
 	import { createDialogContext } from "./DialogContext";
-	import { memo } from "../../../packages/common/utils";
+	import { memo } from "../../common/utils";
 	import { MDCDialog, MDCDialogCloseEvent } from "@material/dialog";
 	import { OnCloseEventDetail } from "./";
 

@@ -4,10 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import {
-		isSlot,
-		parseClassList,
-	} from "../../../../packages/common/functions";
+	import { isSlot, parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -15,7 +12,7 @@
 
 	export let dom: GraphicElement = undefined;
 
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -24,7 +21,7 @@
 		Graphic,
 		GraphicElement,
 		GraphicType,
-	} from "../../../../packages/common/components";
+	} from "../../../common/components";
 	import { onMount } from "svelte";
 
 	export let type: GraphicType = "icon";

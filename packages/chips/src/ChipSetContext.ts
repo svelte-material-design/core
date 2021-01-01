@@ -1,10 +1,11 @@
-import { createContextBuilder } from "../../../packages/common/context";
+import { createContextBuilder } from "../../common/context";
 import { ChipContext } from "./ChipContext";
 import { ChipSetVariant } from "./types";
 
-export const [createChipSetContext, getChipSetContext] = createContextBuilder<
-	ChipSetContext
->();
+export const [
+	createChipSetContext,
+	getChipSetContext,
+] = createContextBuilder<ChipSetContext>();
 
 export interface ChipSetContext {
 	readonly variant: ChipSetVariant;

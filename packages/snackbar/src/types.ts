@@ -1,6 +1,6 @@
-import { GraphicType } from "../../../packages/common/components";
+import { GraphicType } from "../../common/components";
 
-export { IconDOM } from "../../../packages/icon-button";
+export { IconDOM } from "../../icon-button";
 
 export interface OnSnackbarClose {
 	dom: HTMLDivElement;

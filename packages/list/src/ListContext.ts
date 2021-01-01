@@ -1,6 +1,6 @@
 import { ItemContext } from "./item";
-import { createContextBuilder } from "../../../packages/common";
-import { SelectionType } from "../../../packages/common/hoc";
+import { createContextBuilder } from "../../common";
+import { SelectionType } from "../../common/hoc";
 import { ListImplRole } from "./internal";
 import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 

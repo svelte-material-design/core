@@ -11,7 +11,7 @@
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 

@@ -1,8 +1,9 @@
-import { createContextBuilder } from "../../../packages/common";
+import { createContextBuilder } from "../../common";
 
-const [createDialogContext, getDialogContext] = createContextBuilder<
-	DialogContext
->();
+const [
+	createDialogContext,
+	getDialogContext,
+] = createContextBuilder<DialogContext>();
 export { createDialogContext, getDialogContext };
 
 export interface DialogContext {

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -12,7 +12,7 @@
 
 	export let dom: HTMLParagraphElement = undefined;
 
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 

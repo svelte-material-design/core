@@ -1,4 +1,4 @@
-import { BaseProps } from "../../../packages/common/dom/Props";
+import { BaseProps } from "../../common/dom/Props";
 
 export interface RippleProps extends BaseProps {
 	unbounded?: boolean;

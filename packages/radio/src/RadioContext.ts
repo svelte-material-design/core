@@ -1,4 +1,4 @@
-import { createContextPropBuilder } from "../../../packages/common";
+import { createContextPropBuilder } from "../../common";
 
 export interface RadioContext {
 	value: any;

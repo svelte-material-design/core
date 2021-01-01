@@ -1,7 +1,7 @@
 @use "smui-theme";
 @use "@material/textfield";
 @use "@material/floating-label";
-// @use "../../../packages/notched-outline";
+// @use "../../notched-outline";
 
 @include textfield.core-styles;
 

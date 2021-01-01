@@ -6,27 +6,27 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import { parseClassList } from "../../common/functions";
+	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../packages/chips/ChipSet:${count++}`;
+	export let id: string = `../../chips/ChipSet:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// ChipSet
 	import { MDCChipSet } from "@material/chips";
 	import { onDestroy } from "svelte";
-	import { SelectableGroup } from "../../../packages/common/hoc";
+	import { SelectableGroup } from "../../common/hoc";
 	import { createChipSetContext } from "./ChipSetContext";
 	import { ChipContext } from "./ChipContext";
-	import { arrRemove, arrAdd, arrHas } from "../../../packages/common/utils";
+	import { arrRemove, arrAdd, arrHas } from "../../common/utils";
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 
 	export let value: any = undefined;

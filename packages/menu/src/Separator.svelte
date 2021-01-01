@@ -15,7 +15,7 @@
 	//#endregion
 
 	// Separator
-	import { Separator } from "../../../packages/list/src/internal/separator";
+	import { Separator } from "../../list/src/internal/separator";
 
 	export let insetPadding: boolean = false;
 	export let insetLeading: boolean = false;

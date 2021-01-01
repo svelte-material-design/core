@@ -15,8 +15,8 @@
 	//#endregion
 
 	// NavList
-	import { NavList } from "../../../../packages/list/src/internal";
-	import { ListOrientation, ListType } from "../../../../packages/list";
+	import { NavList } from "../../../list/src/internal";
+	import { ListOrientation, ListType } from "../../../list";
 	import { getDrawerContext } from "../DrawerContext";
 
 	//#region exports

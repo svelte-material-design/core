@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Ripple3 } from "../../../../../packages/ripple";
+	import { Ripple3 } from "../../../../ripple";
 	import { ItemRole } from ".";
 	import { onDestroy, onMount, tick } from "svelte";
 	import {
 		createSlotClassListHandler,
 		SlotClassListHandler,
-	} from "../../../../../packages/common/functions";
+	} from "../../../../common/functions";
 
 	export let selected: boolean = undefined;
 	export let ripple: boolean;

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -12,7 +12,7 @@
 
 	export let dom: GraphicElement = undefined;
 
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -21,7 +21,7 @@
 		Graphic,
 		GraphicElement,
 		GraphicType,
-	} from "../../../../packages/common/components";
+	} from "../../../common/components";
 	import { onDestroy, onMount } from "svelte";
 	import { getSelectContext } from "../";
 	import { MDCSelectIcon } from "@material/select/icon";

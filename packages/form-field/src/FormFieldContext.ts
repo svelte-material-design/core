@@ -1,4 +1,4 @@
-import { createContextBuilder } from "../../../packages/common";
+import { createContextBuilder } from "../../common";
 import { MDCFormField, MDCFormFieldInput } from "@material/form-field";
 
 const [

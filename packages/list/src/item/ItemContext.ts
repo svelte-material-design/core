@@ -1,7 +1,7 @@
 import {
 	createContextBuilder,
 	createContextPropBuilder,
-} from "../../../../packages/common";
+} from "../../../common";
 
 const [createItemContext, getItemContext] = createContextBuilder<ItemContext>();
 export { createItemContext, getItemContext };

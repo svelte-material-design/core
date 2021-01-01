@@ -5,7 +5,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -14,13 +14,13 @@
 
 	export let dom: HTMLInputElement = undefined;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Fab
-	import { Ripple3 } from "../../../packages/ripple";
-	import { parseClassList } from "../../../packages/common/functions";
+	import { Ripple3 } from "../../ripple";
+	import { parseClassList } from "../../common/functions";
 
 	export let ripple: boolean = true;
 	export let color: FabColor = "secondary";

@@ -1,8 +1,9 @@
-import { createContextBuilder } from "../../../../packages/common";
+import { createContextBuilder } from "../../../common";
 
-const [createHelperTextContext, getHelperTextContext] = createContextBuilder<
-	HelperTextContext
->();
+const [
+	createHelperTextContext,
+	getHelperTextContext,
+] = createContextBuilder<HelperTextContext>();
 export { createHelperTextContext, getHelperTextContext };
 
 export interface HelperTextContext {

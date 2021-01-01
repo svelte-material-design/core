@@ -4,9 +4,9 @@
 
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../../../packages/common/functions";
-	import { GraphicType } from "../../../../packages/common/components";
-	import { Icon } from "../../../../packages/icon-button/src/internal";
+	import { parseClassList } from "../../../common/functions";
+	import { GraphicType } from "../../../common/components";
+	import { Icon } from "../../../icon-button/src/internal";
 	import { IconDOM } from "..";
 	//#endregion
 

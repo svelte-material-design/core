@@ -4,8 +4,8 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import { parseClassList } from "../../common/functions";
+	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -14,14 +14,14 @@
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// LineRipple
 	import { MDCLineRipple } from "@material/line-ripple";
 	import { onMount, onDestroy } from "svelte";
-	import { getCSSVariable } from "../../../packages/common/theme";
+	import { getCSSVariable } from "../../common/theme";
 	import defaults from "./line-ripple.module.scss";
 
 	export let active = false;

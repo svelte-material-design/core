@@ -4,17 +4,17 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
-	import { DOMEventsForwarder } from "../../../packages/common/events";
+	import { parseClassList } from "../../common/functions";
+	import { DOMEventsForwarder } from "../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../packages/data-table/LinearProgress:${count++}`;
+	export let id: string = `../../data-table/LinearProgress:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -22,7 +22,7 @@
 	import {
 		LinearProgress,
 		setCreateMDCLinearProgressInstance,
-	} from "../../../packages/linear-progress";
+	} from "../../linear-progress";
 
 	export let ariaLabel: string = undefined;
 

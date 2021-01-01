@@ -1,11 +1,9 @@
-import {
-	createContextPropBuilder,
-	createContextBuilder,
-} from "../../../packages/common";
+import { createContextPropBuilder, createContextBuilder } from "../../common";
 
-const [setRowBehaviour, getRowBehaviour] = createContextPropBuilder<
-	RowBehaviour
->();
+const [
+	setRowBehaviour,
+	getRowBehaviour,
+] = createContextPropBuilder<RowBehaviour>();
 export { setRowBehaviour, getRowBehaviour };
 
 export type RowBehaviour = "header";

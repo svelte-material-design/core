@@ -1,9 +1,10 @@
 import { SortDirection } from "./";
-import { createContextBuilder } from "../../../packages/common";
+import { createContextBuilder } from "../../common";
 
-export const [createHeadCellContext, getHeadCellContext] = createContextBuilder<
-	HeadCellContext
->();
+export const [
+	createHeadCellContext,
+	getHeadCellContext,
+] = createContextBuilder<HeadCellContext>();
 
 interface HeadCellContext {
 	setSort(enabled: boolean): void;

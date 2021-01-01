@@ -10,8 +10,8 @@
 	export let id: string = `@smui/list/SecondaryText:${count++}`;
 
 	export let dom: HTMLSpanElement = undefined;
-	import { BaseProps } from "../../../../packages/common/dom/Props";
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { BaseProps } from "../../../common/dom/Props";
+	import { parseClassList } from "../../../common/functions";
 	export let props: BaseProps = {};
 	//#endregion
 

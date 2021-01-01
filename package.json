@@ -2,13 +2,21 @@
 	"name": "@svelte-material-ui-test/core",
 	"version": "2.0.0-alpha.5",
 	"description": "",
-	"main": "./index.ts",
-	"types": "./index.d.ts",
+	"main": "cjs/index.js",
+	"module": "esm/index.ts",
 	"exports": {
 		".": "./"
 	},
 	"scripts": {
-		"tsc": "tsc",
+		"clean-lib": "del-cli lib",
+		"copy:package": "copyfiles package.json lib",
+		"copy:cjs": "copyfiles --up 1 packages/**/*.* lib/cjs",
+		"copy:esm": "copyfiles --up 1 packages/**/*.* lib/esm",
+		"tsc:cjs": "tsc -p tsconfig.lib.cjs.json",
+		"tsc:esm": "tsc -p tsconfig.lib.esm.json",
+		"lib": "npm-run-all clean-lib copy:package copy:cjs copy:esm tsc:cjs",
+		"prepackage": "npm run lib",
+		"package": "npm publish ./lib --access public",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
@@ -71,6 +79,9 @@
 		"svelte-preprocess": "^4.5.2",
 		"typescript": "^4.0.5",
 		"sass": "^1.29.0",
-		"svelte": "^3.29.4"
+		"svelte": "^3.29.4",
+		"copyfiles": "^2.4.1",
+		"del-cli": "^3.0.1",
+		"npm-run-all": "^4.1.5"
 	}
 }

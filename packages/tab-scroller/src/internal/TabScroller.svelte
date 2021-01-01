@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { parseClassList } from "../../../common/functions";
 	//#endregion
 
 	//#region exports

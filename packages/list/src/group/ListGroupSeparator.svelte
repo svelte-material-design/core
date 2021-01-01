@@ -10,12 +10,12 @@
 	export let id: string = `@smui/list/ListGroupSeparator:${count++}`;
 
 	export let dom: HTMLHRElement = undefined;
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Separator
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { parseClassList } from "../../../common/functions";
 
 	export let insetPadding: boolean = false;
 	export let insetLeading: boolean = false;

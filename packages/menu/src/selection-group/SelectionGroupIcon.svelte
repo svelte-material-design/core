@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -12,16 +12,13 @@
 
 	export let dom: GraphicElement = undefined;
 
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = undefined;
 	//#endregion
 
 	// Icon
-	import { Icon } from "../../../../packages/list";
-	import {
-		GraphicElement,
-		GraphicType,
-	} from "../../../../packages/common/components";
+	import { Icon } from "../../../list";
+	import { GraphicElement, GraphicType } from "../../../common/components";
 
 	export let type: GraphicType = "icon";
 	export let role: "button" = undefined;

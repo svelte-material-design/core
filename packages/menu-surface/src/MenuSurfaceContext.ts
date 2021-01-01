@@ -1,7 +1,4 @@
-import {
-	createContextBuilder,
-	createContextPropBuilder,
-} from "../../../packages/common";
+import { createContextBuilder, createContextPropBuilder } from "../../common";
 
 export const [
 	createMenuSurfaceContext,

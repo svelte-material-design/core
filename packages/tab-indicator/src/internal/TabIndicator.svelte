@@ -2,7 +2,7 @@
 	import { onMount } from "svelte";
 
 	//#region imports
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { parseClassList } from "../../../common/functions";
 	import { TabIndicatorTransition } from "..";
 	//#endregion
 

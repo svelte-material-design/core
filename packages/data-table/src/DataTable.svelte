@@ -4,17 +4,17 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import { parseClassList } from "../../common/functions";
+	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../packages/data-table/DataTable:${count++}`;
+	export let id: string = `../../data-table/DataTable:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -25,9 +25,9 @@
 		SortActionEventDetail,
 	} from "@material/data-table";
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import { SelectableGroup } from "../../../packages/common/hoc";
-	import { setCreateCheckboxMDCIstance } from "../../../packages/checkbox";
-	import { getDialogContext } from "../../../packages/dialog";
+	import { SelectableGroup } from "../../common/hoc";
+	import { setCreateCheckboxMDCIstance } from "../../checkbox";
+	import { getDialogContext } from "../../dialog";
 	import { createDataTableContext } from "./DataTableContext";
 	import { SortEventDetail } from "./";
 

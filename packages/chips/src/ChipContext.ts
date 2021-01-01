@@ -1,9 +1,10 @@
 import { MDCChip } from "@material/chips";
-import { createContextBuilder } from "../../../packages/common";
+import { createContextBuilder } from "../../common";
 
-export const [createChipContext, getChipContext] = createContextBuilder<
-	ChipContext
->();
+export const [
+	createChipContext,
+	getChipContext,
+] = createContextBuilder<ChipContext>();
 
 export interface ChipContext {
 	chip: MDCChip;

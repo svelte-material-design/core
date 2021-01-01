@@ -10,12 +10,12 @@
 	export let id: string = `@smui/menu/Content:${count++}`;
 
 	export let dom: HTMLSpanElement = undefined;
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Content
-	import { Content } from "../../../../packages/list";
+	import { Content } from "../../../list";
 </script>
 
 <svelte:options immutable={true} />

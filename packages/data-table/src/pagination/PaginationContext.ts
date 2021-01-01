@@ -1,4 +1,4 @@
-import { createContextBuilder } from "../../../../packages/common";
+import { createContextBuilder } from "../../../common";
 
 export const [
 	createPaginationContext,

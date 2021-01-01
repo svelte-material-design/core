@@ -1,6 +1,6 @@
-import { createContextBuilder } from "../../../packages/common";
+import { createContextBuilder } from "../../common";
 import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
-import { SelectionType } from "../../../packages/common/hoc";
+import { SelectionType } from "../../common/hoc";
 import { ItemContext } from ".";
 
 export const [

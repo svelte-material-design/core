@@ -10,7 +10,7 @@
 	export let id: string = `@smui/list/List:${count++}`;
 
 	export let dom: HTMLDivElement | HTMLUListElement = undefined;
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -25,8 +25,8 @@
 	import { ListImpl, OnListActionEvent } from "./internal";
 	import { ListOrientation, ListRole, OnListChangeEvent, ListType } from ".";
 	import { roleToSelectionType } from "./roleToSelectionType";
-	import { setCreateCheckboxMDCIstance } from "../../../packages/checkbox";
-	import { setCreateRadioMDCIstance } from "../../../packages/radio";
+	import { setCreateCheckboxMDCIstance } from "../../checkbox";
+	import { setCreateRadioMDCIstance } from "../../radio";
 	//#endregion
 
 	//#region exports

@@ -8,8 +8,8 @@
 	import { MDCTab } from "@material/tab";
 	import { onMount, onDestroy } from "svelte";
 	import { Tab } from "./internal";
-	import { setLabelBehaviour } from "../../../packages/common/dom/LabelContext";
-	import { setIconBehaviour } from "../../../packages/common/dom";
+	import { setLabelBehaviour } from "../../common/dom/LabelContext";
+	import { setIconBehaviour } from "../../common/dom";
 	//#endregion
 
 	//#region exports

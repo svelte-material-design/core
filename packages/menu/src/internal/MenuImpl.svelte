@@ -1,28 +1,28 @@
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
 
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Menu
 	import { MDCMenu } from "@material/menu";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
-	import { MenuSurface } from "../../../../packages/menu-surface/src/internal";
+	import { MenuSurface } from "../../../menu-surface/src/internal";
 	import { MDCMenuDistance } from "@material/menu-surface";
 	import { MenuAnchorCorner, MenuVariant, createMenuContext } from "..";
 	import { List, OnMenuImplSelect } from ".";
-	import { ListOrientation, ListType } from "../../../../packages/list";
-	import { smuiToMDCCorner } from "../../../../packages/menu-surface/functions";
+	import { ListOrientation, ListType } from "../../../list";
+	import { smuiToMDCCorner } from "../../../menu-surface/functions";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { createComponentsGroupStore } from "../../../../packages/common/components-group";
-	import { SelectionType } from "../../../../packages/common/hoc";
+	import { createComponentsGroupStore } from "../../../common/components-group";
+	import { SelectionType } from "../../../common/hoc";
 	import { ItemContext } from "../item";
 	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
+	import { parseClassList } from "../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -12,7 +12,7 @@
 
 	export let dom: HTMLInputElement = undefined;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -20,8 +20,8 @@
 	import { MDCRadio } from "@material/radio";
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
 	import { getCreateRadioMDCIstance, RadioContext } from "./RadioContext";
-	import { getFormFieldContext } from "../../../packages/form-field";
-	import { Selectable } from "../../../packages/common/hoc";
+	import { getFormFieldContext } from "../../form-field";
+	import { Selectable } from "../../common/hoc";
 	import { RadioChangeEvent } from "./";
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 

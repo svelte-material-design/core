@@ -1,5 +1,5 @@
-import { createContextBuilder } from "../../../packages/common";
-import { TabIndicatorTransition } from "../../../packages/tab-indicator";
+import { createContextBuilder } from "../../common";
+import { TabIndicatorTransition } from "../../tab-indicator";
 import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 
 export const [

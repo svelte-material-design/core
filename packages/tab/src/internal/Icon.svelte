@@ -1,7 +1,7 @@
 <script lang="ts">
 	//#region  imports
-	import { Graphic, GraphicType } from "../../../../packages/common/components";
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { Graphic, GraphicType } from "../../../common/components";
+	import { parseClassList } from "../../../common/functions";
 	import { IconDOM } from "..";
 	//#endregion
 

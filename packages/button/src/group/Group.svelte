@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Base
-	import { DOMEventsForwarder } from "../../../../packages/common/actions";
+	import { DOMEventsForwarder } from "../../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	export let dom: HTMLDivElement = null;
 	let className = "";

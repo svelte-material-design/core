@@ -1,3 +1,3 @@
 import "./src/index.scss";
-import "../../packages/menu/index.scss";
+import "../menu/index.scss";
 export * from "./src";

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../packages/common/functions";
+	import { parseClassList } from "../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;

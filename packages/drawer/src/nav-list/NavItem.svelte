@@ -16,7 +16,7 @@
 	//#endregion
 
 	// NavItem
-	import { NavItem } from "../../../../packages/list/nav-list";
+	import { NavItem } from "../../../list/nav-list";
 	import { getDrawerContext } from "../DrawerContext";
 
 	//#region exports

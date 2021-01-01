@@ -10,16 +10,16 @@
 	export let id: string = `@smui/menu/Menu:${count++}`;
 
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = undefined;
 	//#endregion
 
 	// Menu
 	import { MDCMenuDistance } from "@material/menu-surface";
 	import { MenuAnchorCorner, MenuVariant } from ".";
-	import { ListOrientation, ListType } from "../../../packages/list";
+	import { ListOrientation, ListType } from "../../list";
 	import { Menu } from "./internal";
-	import { SelectionType } from "../../../packages/common/hoc";
+	import { SelectionType } from "../../common/hoc";
 
 	//#region exports
 	//#region list

@@ -4,7 +4,7 @@
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { OnSnackbarOpen, OnSnackbarClose } from "..";
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { parseClassList } from "../../../common/functions";
 	//#endregion
 
 	//#region exports

@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../../packages/common/functions";
+	import { parseClassList } from "../../../common/functions";
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
@@ -8,18 +8,18 @@
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Select
 	import { MDCSelect, MDCSelectEvent } from "@material/select";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
-	import { Menu } from "../../../../packages/menu/src/internal";
-	import { FloatingLabel } from "../../../../packages/floating-label";
-	import { LineRipple } from "../../../../packages/line-ripple";
-	import { NotchedOutline } from "../../../../packages/notched-outline";
-	import { Span } from "../../../../packages/common/dom";
+	import { Menu } from "../../../menu/src/internal";
+	import { FloatingLabel } from "../../../floating-label";
+	import { LineRipple } from "../../../line-ripple";
+	import { NotchedOutline } from "../../../notched-outline";
+	import { Span } from "../../../common/dom";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import {
 		createSelectContext,

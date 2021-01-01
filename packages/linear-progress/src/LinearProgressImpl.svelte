@@ -11,7 +11,7 @@
 	//#endregion
 
 	// LinearProgressImpl
-	import { parseClassList } from "../../../packages/common/functions";
+	import { parseClassList } from "../../common/functions";
 	import { MDCLinearProgress } from "@material/linear-progress";
 	import { onMount, onDestroy, tick } from "svelte";
 	import { UseDebounce, UseState } from "@raythurnevoid/svelte-hooks";

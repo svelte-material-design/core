@@ -6,10 +6,10 @@
 
 <script lang="ts">
 	//#region imports
-	import { Button, A } from "../../../packages/common/dom";
+	import { Button, A } from "../../common/dom";
 	import { getIconButtonBehaviour } from "./IconButtonContextProps";
-	import { Ripple } from "../../../packages/ripple";
-	import { parseClassList } from "../../../packages/common/functions";
+	import { Ripple } from "../../ripple";
+	import { parseClassList } from "../../common/functions";
 	import { IconButtonDOM } from ".";
 	//#endregion
 

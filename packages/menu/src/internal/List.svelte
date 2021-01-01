@@ -6,7 +6,7 @@
 	export let id: string = undefined;
 
 	export let dom: HTMLUListElement = undefined;
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = undefined;
 	//#endregion
 
@@ -18,11 +18,7 @@
 		SingleSelectionGroup,
 	} from "@raythurnevoid/svelte-group-components/esm/selectable";
 	import { ListImpl, OnListActionEvent } from "../../../list/src/internal";
-	import {
-		ListOrientation,
-		OnListChangeEvent,
-		ListType,
-	} from "../../../../packages/list";
+	import { ListOrientation, OnListChangeEvent, ListType } from "../../../list";
 	//#endregion
 
 	//#region exports

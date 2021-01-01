@@ -4,8 +4,8 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../../../packages/common/functions";
-	import { IconButton } from "../../../../packages/icon-button";
+	import { parseClassList } from "../../../common/functions";
+	import { IconButton } from "../../../icon-button";
 	//#endregion
 
 	//#region exports

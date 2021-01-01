@@ -2,7 +2,7 @@
 	import { onDestroy, onMount, tick } from "svelte";
 	import { SMUIRipple } from "./SMUIRipple";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { parseClassList } from "../../../packages/common/functions";
+	import { parseClassList } from "../../common/functions";
 
 	export let target: HTMLElement;
 	export let unbounded: boolean = undefined;

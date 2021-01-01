@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
 
-	import { SelectableGroup } from "../../../packages/common/hoc";
+	import { SelectableGroup } from "../../common/hoc";
 	import { SwitchGroupChangeEvent } from "./";
 
 	export let value: string[];

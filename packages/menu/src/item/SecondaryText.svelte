@@ -10,12 +10,12 @@
 	export let id: string = `@smui/menu/SecondaryText:${count++}`;
 
 	export let dom: HTMLSpanElement = undefined;
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// SecondaryText
-	import { SecondaryText } from "../../../../packages/list";
+	import { SecondaryText } from "../../../list";
 </script>
 
 <svelte:options immutable={true} />

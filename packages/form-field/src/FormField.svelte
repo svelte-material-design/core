@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -12,7 +12,7 @@
 	export let id: string = `@smui/form-field/FormField:${counter++}`;
 
 	export let dom: HTMLDivElement = null;
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 

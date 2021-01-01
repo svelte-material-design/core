@@ -3,7 +3,7 @@
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	import { onDestroy } from "svelte";
 	import { InputFieldVariant } from "./";
-	import { StringListToFilter } from "../../../packages/common/functions";
+	import { StringListToFilter } from "../../common/functions";
 
 	export let dom: HTMLLabelElement = null;
 	export let ripple: boolean = true;

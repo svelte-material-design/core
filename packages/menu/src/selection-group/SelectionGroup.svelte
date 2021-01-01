@@ -10,7 +10,7 @@
 	export let id: string = `@smui/menu/Group:${count++}`;
 
 	export let dom: HTMLLIElement = undefined;
-	import { BaseProps } from "../../../../packages/common/dom/Props";
+	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 

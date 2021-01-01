@@ -18,8 +18,8 @@
 	// Switch
 	import { MDCSwitch } from "@material/switch";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
-	import { Selectable } from "../../../packages/common/hoc";
-	import { getFormFieldContext } from "../../../packages/form-field";
+	import { Selectable } from "../../common/hoc";
+	import { getFormFieldContext } from "../../form-field";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { parseClassList } from "../../common/src/functions";
 	import { SwitchChangeEvent } from ".";

@@ -1,8 +1,9 @@
-import { createContextBuilder } from "../../../packages/common";
+import { createContextBuilder } from "../../common";
 
-const [createInputFieldContext, getInputFieldContext] = createContextBuilder<
-	InputFieldContext
->();
+const [
+	createInputFieldContext,
+	getInputFieldContext,
+] = createContextBuilder<InputFieldContext>();
 export { createInputFieldContext, getInputFieldContext };
 
 export interface InputFieldContext {

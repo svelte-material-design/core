@@ -1,18 +1,18 @@
 <script lang="ts">
 	// Base
-	import { DOMEventsForwarder } from "../../../packages/common/events";
+	import { DOMEventsForwarder } from "../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
 	export let style: string = null;
 
 	export let dom: HTMLButtonElement = null;
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 
 	// MenuButton
 	import { Button } from "./";
-	import { Menu } from "../../../packages/menu";
+	import { Menu } from "../../menu";
 	import { DefaultFocusState } from "@material/menu";
 
 	export let ripple: boolean = true;

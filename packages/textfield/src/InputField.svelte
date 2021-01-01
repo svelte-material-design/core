@@ -4,11 +4,8 @@
 
 <script lang="ts">
 	//#region Base
-	import {
-		parseClassList,
-		StringListToFilter,
-	} from "../../../packages/common/functions";
-	import { DOMEventsForwarder } from "../../../packages/common/actions";
+	import { parseClassList, StringListToFilter } from "../../common/functions";
+	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = undefined;
 	export { className as class };
@@ -17,18 +14,18 @@
 
 	export let dom: HTMLLabelElement = undefined;
 
-	import { BaseProps } from "../../../packages/common/dom/Props";
+	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// TextField
 	import { InputFieldType, InputFieldVariant } from "./";
-	import { FloatingLabel } from "../../../packages/floating-label";
-	import { LineRipple } from "../../../packages/line-ripple";
+	import { FloatingLabel } from "../../floating-label";
+	import { LineRipple } from "../../line-ripple";
 	import { createInputFieldContext } from "./TextFieldContext";
-	import { NotchedOutline } from "../../../packages/notched-outline";
+	import { NotchedOutline } from "../../notched-outline";
 	import UseTextField from "./UseTextField.svelte";
-	import { Span } from "../../../packages/common/dom";
+	import { Span } from "../../common/dom";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { getFormFieldContext } from "../../form-field";
 
