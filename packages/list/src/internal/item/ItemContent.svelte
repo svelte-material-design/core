@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { Ripple3 } from "../../../../ripple";
-	import { ItemRole } from ".";
 	import { onDestroy, onMount, tick } from "svelte";
 	import {
 		createSlotClassListHandler,
@@ -8,9 +6,7 @@
 	} from "../../../../common/functions";
 
 	export let selected: boolean = undefined;
-	export let ripple: boolean;
 	export let itemDom: HTMLElement;
-	export let rippleClasses: string;
 
 	let leadingSlotClassHandler: SlotClassListHandler;
 	let trailingSlotClassHandler: SlotClassListHandler;
@@ -45,12 +41,7 @@
 
 <svelte:options immutable={true} />
 
-{#if ripple}
-	<Ripple3
-		bind:rippleClasses
-		rippleElement={'mdc-list-item__ripple'}
-		target={itemDom} />
-{:else}<span class="mdc-list-item__ripple" />{/if}
+<span class="mdc-list-item__ripple" />
 <slot name="leading" />
 <slot {selected} />
 <slot name="trailing" />

@@ -1,6 +1,32 @@
 @use "smui-theme";
 @use "@material/button";
-@use "./mixins";
+@use "@material/ripple";
 
 @include button.core-styles;
-@include mixins.smui-button-core-styles;
+
+.smui-button--color-secondary {
+	@include button.ink-color(secondary);
+
+	&.mdc-button--raised,
+	&.mdc-button--unelevated {
+		@include button.container-fill-color(secondary);
+		@include button.ink-color(on-secondary);
+	}
+
+	&.mdc-button--outlined {
+		@include button.outline-color(secondary);
+	}
+
+	&,
+	& .mdc-button__ripple {
+		@include ripple.states(secondary, false);
+	}
+
+	&.mdc-button--raised,
+	&.mdc-button--unelevated {
+		&,
+		& .mdc-button__ripple {
+			@include ripple.states(on-secondary, false);
+		}
+	}
+}

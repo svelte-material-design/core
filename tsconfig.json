@@ -16,11 +16,10 @@
 		}
 	},
 	"include": [
-		"./index.ts"
+		"index.ts",
+		"packages/**/*"
 	],
 	"exclude": [
 		"**/node_modules/**/*",
-		"**/site_old/**/*",
-		"**/site/**/*"
 	]
 }

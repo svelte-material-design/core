@@ -1,24 +1,13 @@
-<script lang="ts" context="module">
-	import { BaseProps } from "./Props";
-
-	export interface ButtonProps extends BaseProps {
-		disabled?: boolean;
-	}
-</script>
-
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../src/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLButtonElement = undefined;
 	//#endregion
-
-	// Button
+	//#endregion
 </script>
 
 <button
@@ -27,6 +16,12 @@
 	{id}
 	class={className}
 	{style}
-	use:forwardDOMEvents>
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur>
 	<slot />
 </button>

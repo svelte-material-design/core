@@ -18,11 +18,10 @@
 
 	// Item
 	//#region import
-	import { createItemContext, ItemContext, getListContext } from "../";
-	import { Ripple3 } from "../../../ripple";
+	import { ItemContext, getListContext } from "../";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import ItemContent from "../internal/item/ItemContent.svelte";
-
+	import { Ripple } from "../../../ripple";
 	//#endregion
 
 	//#region exports
@@ -55,26 +54,28 @@
 
 <UseState value={ripple} onUpdate={() => $listContext$.reinitialize()} />
 
-<a
-	bind:this={dom}
-	{...props}
-	{id}
-	class={parseClassList([
-		className,
-		'mdc-list-item',
-		[disabled, 'mdc-list-item--disabled'],
-		[activated, 'mdc-list-item--activated'],
-		rippleClasses,
-	])}
-	{style}
-	{href}
-	{title}
-	{tabindex}
-	aria-label={ariaLabel}
-	aria-current={activated ? 'page' : undefined}>
-	<ItemContent bind:rippleClasses {ripple} itemDom={dom}>
-		<slot name="leading" slot="leading" />
-		<slot />
-		<slot name="trailing" slot="trailing" />
-	</ItemContent>
-</a>
+<Ripple let:rippleClasses target={ripple ? dom : undefined}>
+	<a
+		bind:this={dom}
+		{...props}
+		{id}
+		class={parseClassList([
+			className,
+			'mdc-list-item',
+			[disabled, 'mdc-list-item--disabled'],
+			[activated, 'mdc-list-item--activated'],
+			rippleClasses,
+		])}
+		{style}
+		{href}
+		{title}
+		{tabindex}
+		aria-label={ariaLabel}
+		aria-current={activated ? 'page' : undefined}>
+		<ItemContent itemDom={dom}>
+			<slot name="leading" slot="leading" />
+			<slot />
+			<slot name="trailing" slot="trailing" />
+		</ItemContent>
+	</a>
+</Ripple>

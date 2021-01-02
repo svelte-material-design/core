@@ -1,25 +1,18 @@
 <script lang="ts">
-	// Base
 	import { parseClassList } from "../../common/functions";
-	import { DOMEventsForwarder } from "../../common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
+	import { Graphic, GraphicDOM, GraphicType } from "../../common/components";
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
-	export let dom: GraphicElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-
-	// Icon
-	import {
-		Graphic,
-		GraphicElement,
-		GraphicType,
-	} from "../../common/components";
+	export let dom: GraphicDOM = undefined;
+	//#endregion
 
 	export let type: GraphicType = "icon";
+	//#endregion
 
 	$: props = {
 		...props,
@@ -31,7 +24,7 @@
 
 <Graphic
 	bind:dom
-	{props}
+	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -39,7 +32,6 @@
 		[type === 'icon' && className == undefined, 'material-icons'],
 	])}
 	{style}
-	{type}
-	on:domEvent={forwardDOMEvents}>
+	{type}>
 	<slot />
 </Graphic>

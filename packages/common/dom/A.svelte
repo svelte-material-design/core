@@ -1,36 +1,30 @@
-<script lang="ts" context="module">
-	import { BaseProps } from "../dom/Props";
-
-	export interface AProps extends BaseProps {
-		target?: string;
-		href?: string;
-	}
-</script>
-
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../src/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLAnchorElement = undefined;
-
-	export let props: AProps = {};
 	//#endregion
 
-	// A
+	export let href: string = undefined;
+	//#endregion
 </script>
 
 <a
 	bind:this={dom}
-	{...props}
+	{...$$restProps}
 	{id}
 	class={className}
 	{style}
-	href={props.href}
-	use:forwardDOMEvents>
+	{href}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur>
 	<slot />
 </a>

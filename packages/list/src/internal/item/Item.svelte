@@ -23,7 +23,7 @@
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import ItemContent from "./ItemContent.svelte";
 	import { ListImplRole } from "../types";
-
+	import { Ripple } from "../../../../ripple";
 	//#endregion
 
 	//#region exports
@@ -49,32 +49,34 @@
 
 <UseState value={ripple} onUpdate={() => $listContext$.reinitialize()} />
 
-<li
-	bind:this={dom}
-	{...props}
-	{id}
-	class={parseClassList([
-		className,
-		'mdc-list-item',
-		[disabled, 'mdc-list-item--disabled'],
-		[
-			(role === 'option' || role === 'menuitem') && selected,
-			'mdc-list-item--selected',
-		],
-		[role === 'menuitem' && selected, 'mdc-menu-item--selected'],
-		rippleClasses,
-	])}
-	{style}
-	{title}
-	{tabindex}
-	aria-selected={listRole === 'listbox' ? selected : undefined}
-	data-value={value}
-	{role}
-	aria-label={ariaLabel}
-	aria-checked={listRole === 'group' || listRole === 'radiogroup' ? `${selected}` : undefined}>
-	<ItemContent bind:rippleClasses {selected} {ripple} itemDom={dom}>
-		<slot name="leading" slot="leading" />
-		<slot />
-		<slot name="trailing" slot="trailing" />
-	</ItemContent>
-</li>
+<Ripple let:rippleClasses target={ripple ? dom : undefined}>
+	<li
+		bind:this={dom}
+		{...props}
+		{id}
+		class={parseClassList([
+			className,
+			'mdc-list-item',
+			[disabled, 'mdc-list-item--disabled'],
+			[
+				(role === 'option' || role === 'menuitem') && selected,
+				'mdc-list-item--selected',
+			],
+			[role === 'menuitem' && selected, 'mdc-menu-item--selected'],
+			rippleClasses,
+		])}
+		{style}
+		{title}
+		{tabindex}
+		aria-selected={listRole === 'listbox' ? selected : undefined}
+		data-value={value}
+		{role}
+		aria-label={ariaLabel}
+		aria-checked={listRole === 'group' || listRole === 'radiogroup' ? `${selected}` : undefined}>
+		<ItemContent {selected} itemDom={dom}>
+			<slot name="leading" slot="leading" />
+			<slot />
+			<slot name="trailing" slot="trailing" />
+		</ItemContent>
+	</li>
+</Ripple>

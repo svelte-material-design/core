@@ -7,8 +7,7 @@
 	import { Ripple } from "../../ripple";
 	import { getButtonBehaviour, ButtonColor, ButtonVariant } from ".";
 	import { Button, A } from "../../common/dom";
-	import { parseClassList, parseStylesList } from "../../common/functions";
-	import { themeColor } from "../../common/theme";
+	import { parseClassList } from "../../common/functions";
 	//#endregion
 
 	//#region exports
@@ -22,26 +21,15 @@
 
 	export let ripple: boolean = true;
 	export let color: ButtonColor = "primary";
-	export let variant: ButtonVariant = undefined;
+	export let variant: ButtonVariant = "default";
 	export let disabled: boolean = false;
-	export let density: number = undefined;
 	export let href: string = undefined;
-
-	//#region theming
-	export let inkColor: string = undefined;
-	//#endregion
 	//#endregion
 
 	//#region implementation
 	const behaviour = getButtonBehaviour();
 	let component: typeof Button | typeof A;
 	$: component = href == null || disabled ? Button : A;
-
-	$: {
-		// Check and fix density
-		if (density > 3) density = 3;
-		else if (density < 0) density = 0;
-	}
 	//#endregion
 </script>
 
@@ -56,9 +44,8 @@
 		class={parseClassList([
 			className,
 			'mdc-button',
-			[variant, `mdc-button--${variant}`],
+			[variant && variant !== 'default', `mdc-button--${variant}`],
 			[color === 'secondary', 'smui-button--color-secondary'],
-			[density != null, `smui-button--dense--${density}`],
 			[
 				behaviour === 'card:action',
 				'mdc-card__action mdc-card__action--button',
@@ -66,13 +53,16 @@
 			[behaviour === 'top-app-bar:action', 'mdc-top-app-bar__action-item'],
 			[ripple, rippleClasses],
 		])}
-		style={parseStylesList([
-			[inkColor, `--smui-button--ink-color: ${themeColor(inkColor)}`],
-			style,
-		])}
+		{style}
 		{disabled}
 		{href}
-		on:click>
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur>
 		{#if ripple}<span class="mdc-button__ripple" />{/if}
 		<slot />
 	</svelte:component>
