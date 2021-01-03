@@ -1,18 +1,5 @@
 <script lang="ts">
-	//#region Base
 	import { parseClassList } from "../../../common/functions";
-	let className = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = undefined;
-
-	export let dom: HTMLDivElement = undefined;
-
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// Select
 	import { MDCSelect, MDCSelectEvent } from "@material/select";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { Menu } from "../../../menu/src/internal";
@@ -29,6 +16,14 @@
 	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 
 	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
+
 	export let ripple: boolean = true;
 	export let lineRipple: boolean = true;
 	export let dirty = false;
@@ -45,6 +40,8 @@
 	export let invalid: boolean = false;
 	export let required: boolean = false;
 
+	$: invalid = customValidation ? !customValidation(value) : invalid;
+
 	//#region theming
 	export let shapeRadius: string = undefined;
 	export let density: number = undefined;
@@ -56,9 +53,7 @@
 			density = 0;
 		}
 	}
-	//#endregion
 
-	$: invalid = customValidation ? !customValidation(value) : invalid;
 	export let group: SelectionGroupBinding;
 
 	//#region slots
@@ -144,15 +139,6 @@
 		value = newValue;
 	}
 
-	async function handleOptionsUpdated() {
-		if (select.value !== value) {
-			select.layoutOptions();
-			select.layout();
-		} else {
-			select.layoutOptions();
-		}
-	}
-
 	function onValueChange(oldValue: any) {
 		setSelectValue(value);
 
@@ -168,12 +154,8 @@
 	export async function updateOptions() {
 		const oldValue = value;
 
-		if (select.value !== value) {
-			select.layoutOptions();
-			select.layout();
-		} else {
-			select.layoutOptions();
-		}
+		select.layoutOptions();
+		select.layout();
 
 		await tick();
 
@@ -205,7 +187,7 @@
 <div class={'smui-select'}>
 	<div
 		bind:this={dom}
-		{...props}
+		{...$$restProps}
 		{id}
 		class={parseClassList([
 			className,

@@ -1,25 +1,18 @@
 <script lang="ts">
-	// Base
-	import { DOMEventsForwarder } from "../../actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	import { GraphicDOM, GraphicType } from "./types";
+	import { parseClassList } from "../functions";
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
-	import { GraphicDOM, GraphicType } from "./types";
 	export let dom: GraphicDOM = undefined;
-
-	import { BaseProps } from "../../dom/Props";
-	export let props: BaseProps = {};
-
-	// Icon
-	import { parseClassList } from "../functions";
+	//#endregion
 
 	export let type: GraphicType = "icon";
-	export let ariaHidden: boolean = undefined;
-
-	$: props = { ...props, "aria-hidden": ariaHidden };
+	//#endregion
 </script>
 
 <svelte:options immutable={true} />
@@ -27,34 +20,31 @@
 {#if type === 'svg'}
 	<svg
 		bind:this={dom}
-		{...props}
+		{...$$restProps}
 		{id}
 		class={className}
 		{style}
-		xmlns="http://www.w3.org/2000/svg"
-		use:forwardDOMEvents>
+		xmlns="http://www.w3.org/2000/svg">
 		<slot />
 	</svg>
 {:else if type === 'icon'}
 	<i
 		bind:this={dom}
-		{...props}
+		{...$$restProps}
 		{id}
 		class={parseClassList([
 			[className === undefined, 'material-icons'],
 			className,
 		])}
-		{style}
-		use:forwardDOMEvents>
+		{style}>
 		<slot />
 	</i>
 {:else if type === 'img'}
 	<img
 		bind:this={dom}
-		{...props}
-		alt={props.alt}
+		{...$$restProps}
+		alt={$$restProps.alt}
 		{id}
 		class={className}
-		{style}
-		use:forwardDOMEvents />
+		{style} />
 {/if}

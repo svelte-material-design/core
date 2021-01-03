@@ -1,21 +1,4 @@
-<script lang="ts" context="module">
-	let count = 0;
-</script>
-
 <script lang="ts">
-	//#region Base
-	let className = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/select/Select:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// Select
 	import { SelectVariant } from "./";
 	import {
 		SelectionGroup,
@@ -24,6 +7,14 @@
 	import { SelectImpl } from "./internal";
 
 	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
+
 	export let ripple: boolean = true;
 	export let lineRipple: boolean = true;
 	export let dirty = false;
@@ -68,7 +59,7 @@
 	<SelectImpl
 		bind:this={selectImpl}
 		bind:dom
-		{props}
+		{...$$restProps}
 		{id}
 		class={className}
 		{style}

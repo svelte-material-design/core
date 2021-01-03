@@ -21,7 +21,7 @@
 
 	export let ripple: boolean = true;
 	export let color: ButtonColor = "primary";
-	export let variant: ButtonVariant = "default";
+	export let variant: ButtonVariant = "text";
 	export let disabled: boolean = false;
 	export let href: string = undefined;
 	//#endregion
@@ -44,7 +44,7 @@
 		class={parseClassList([
 			className,
 			'mdc-button',
-			[variant && variant !== 'default', `mdc-button--${variant}`],
+			[variant && variant !== 'text', `mdc-button--${variant}`],
 			[color === 'secondary', 'smui-button--color-secondary'],
 			[
 				behaviour === 'card:action',

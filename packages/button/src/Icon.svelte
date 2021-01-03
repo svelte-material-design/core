@@ -13,11 +13,6 @@
 
 	export let type: GraphicType = "icon";
 	//#endregion
-
-	$: props = {
-		...props,
-		"aria-hidden": true,
-	};
 </script>
 
 <svelte:options immutable={true} />
@@ -32,6 +27,7 @@
 		[type === 'icon' && className == undefined, 'material-icons'],
 	])}
 	{style}
-	{type}>
+	{type}
+	aria-hidden>
 	<slot />
 </Graphic>
