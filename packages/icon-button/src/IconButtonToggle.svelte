@@ -7,7 +7,8 @@
 	import { MDCIconButtonToggle } from "@material/icon-button";
 	import { onDestroy, onMount } from "svelte";
 	import IconButton from "./IconButton.svelte";
-	import { IconButtonDOM, setIconButtonToggleContext } from ".";
+	import { setIconButtonToggleContext } from ".";
+	import type { IconButtonDOM, SwitchableString } from ".";
 	//#endregion
 
 	//#region exports
@@ -22,12 +23,8 @@
 	export let ripple: boolean = true;
 	export let active: boolean = false;
 	export let disabled: boolean = false;
-	export let title:
-		| string
-		| {
-				on: string;
-				off: string;
-		  } = undefined;
+	export let title: SwitchableString = undefined;
+	export let ariaLabel: SwitchableString = undefined;
 	//#endregion
 
 	//#region implementation
@@ -50,8 +47,7 @@
 	});
 
 	$: {
-		// On active change
-		if (toggleButton?.on !== active) {
+		if (toggleButton && toggleButton.on !== active) {
 			toggleButton.on = active;
 		}
 	}
@@ -60,17 +56,17 @@
 		toggleButton && toggleButton.destroy();
 	});
 
-	$: props = {
-		...props,
-		"data-aria-label-on":
-			props["data-aria-label-on"] || typeof title === "string"
-				? title
-				: title?.on,
-		"data-aria-label-off":
-			props["data-aria-label-off"] || typeof title === "string"
-				? title
-				: title?.off,
-	};
+	function getOnOffData(data: SwitchableString, active: boolean) {
+		if (!data || typeof data === "string") {
+			return data;
+		} else {
+			if (active) {
+				return data.on;
+			} else {
+				return data.off;
+			}
+		}
+	}
 	//#endregion
 </script>
 
@@ -79,12 +75,13 @@
 <IconButton
 	bind:dom
 	{...$$restProps}
-	{...props}
 	{id}
 	class={className}
 	{style}
 	{disabled}
-	title={typeof title === 'string' ? title : active ? title && title.on : title && title.off}
-	ripple={false}>
+	ripple={false}
+	title={getOnOffData(title, active)}
+	data-aria-label-on={getOnOffData(ariaLabel, true) || getOnOffData(title, true)}
+	data-aria-label-off={getOnOffData(ariaLabel, false) || getOnOffData(title, false)}>
 	<slot />
 </IconButton>

@@ -10,7 +10,7 @@
 	import { getIconButtonBehaviour } from "./IconButtonContextProps";
 	import { Ripple } from "../../ripple";
 	import { parseClassList } from "../../common/functions";
-	import { IconButtonDOM } from ".";
+	import type { IconButtonDOM } from ".";
 	//#endregion
 
 	//#region exports

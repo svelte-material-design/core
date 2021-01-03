@@ -1,8 +1,6 @@
-import Button from "./Button.svelte";
-import Label from "./Label.svelte";
-import Icon from "./Icon.svelte";
-import MenuButton from "./MenuButton.svelte";
-
-export { Button, Label, Icon, MenuButton };
+export { default as Button } from "./Button.svelte";
+export { default as Label } from "./Label.svelte";
+export { default as Icon } from "./Icon.svelte";
+export { default as MenuButton } from "./MenuButton.svelte";
 export * from "./types";
 export * from "./ButtonContext";

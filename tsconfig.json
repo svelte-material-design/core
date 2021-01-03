@@ -1,19 +1,14 @@
 {
+	"extends": "@tsconfig/svelte/tsconfig.json",
 	"compilerOptions": {
-		"module": "ES2015",
-		"target": "ES2019",
-		"declaration": true,
-		"emitDeclarationOnly": true,
-		"types": [
-			"svelte",
-		],
 		"baseUrl": ".",
-		"moduleResolution": "node",
-		"paths": {
-			"@svelte-material-ui-test/core/*": [
-				"./*"
-			]
-		}
+		"target": "ES2019",
+		"lib": [
+			"DOM",
+			"ES2020",
+		],
+		"allowSyntheticDefaultImports": true,
+		"keyofStringsOnly": true
 	},
 	"include": [
 		"index.ts",
