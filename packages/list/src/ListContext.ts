@@ -1,10 +1,10 @@
-import { ItemContext } from "./item";
-import { createContextBuilder } from "../../common";
-import { SelectionType } from "../../common/hoc";
-import { ListImplRole } from "./internal";
-import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import type { ItemContext } from "./item";
+import type { SelectionType } from "../../common/hoc";
+import type { ListImplRole } from "./internal";
+import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 
-const [createListContext, getListContext] = createContextBuilder<ListContext>();
+const [createListContext, getListContext] = createContextStore<ListContext>();
 export { createListContext, getListContext };
 
 export interface ListContext {

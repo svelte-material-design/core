@@ -1,9 +1,9 @@
-import { createContextBuilder } from "../../../common";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
 const [
 	createHelperTextContext,
 	getHelperTextContext,
-] = createContextBuilder<HelperTextContext>();
+] = createContextStore<HelperTextContext>();
 export { createHelperTextContext, getHelperTextContext };
 
 export interface HelperTextContext {

@@ -1,17 +1,17 @@
-import { createContextBuilder, createContextPropBuilder } from "../../common";
-import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
+import {
+	createContextStore,
+	createContext,
+} from "@raythurnevoid/svelte-context-enhanced";
+import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
 
 export const [
 	createSelectContext,
 	getSelectContext,
-] = createContextBuilder<SelectContext>();
+] = createContextStore<SelectContext>();
 
 interface SelectContext {
 	group: SelectionGroupBinding;
 	setHelperTextId(helperTextId: string): void;
 }
 
-export const [
-	setNativeSelect,
-	getNativeSelect,
-] = createContextPropBuilder<boolean>();
+export const [setNativeSelect, getNativeSelect] = createContext<boolean>();

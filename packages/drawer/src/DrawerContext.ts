@@ -1,10 +1,10 @@
-import { createContextBuilder } from "../../common";
-import { DrawerVariant } from "./types";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import type { DrawerVariant } from "./types";
 
 const [
 	createDrawerContext,
 	getDrawerContext,
-] = createContextBuilder<DrawerContext>();
+] = createContextStore<DrawerContext>();
 export { createDrawerContext, getDrawerContext };
 
 export interface DrawerContext {

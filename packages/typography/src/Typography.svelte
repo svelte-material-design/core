@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import { TypographyVariant } from "./";
+	import type { TypographyVariant } from ".";
 	import { H1, H2, H3, H4, H5, H6, P, Span } from "../../common/dom";
 
 	function getDefaultComponent(variant: TypographyVariant) {

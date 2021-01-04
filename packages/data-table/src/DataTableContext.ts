@@ -1,9 +1,9 @@
-import { createContextBuilder } from "../../common";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
 export const [
 	createDataTableContext,
 	getDataTableContext,
-] = createContextBuilder<DataTableContext>();
+] = createContextStore<DataTableContext>();
 
 interface DataTableContext {
 	syncDom(): void;

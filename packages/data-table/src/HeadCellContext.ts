@@ -1,10 +1,10 @@
-import { SortDirection } from "./";
-import { createContextBuilder } from "../../common";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import type { SortDirection } from "./";
 
 export const [
 	createHeadCellContext,
 	getHeadCellContext,
-] = createContextBuilder<HeadCellContext>();
+] = createContextStore<HeadCellContext>();
 
 interface HeadCellContext {
 	setSort(enabled: boolean): void;

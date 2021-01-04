@@ -1,9 +1,9 @@
-import { createContextBuilder } from "../../../common";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
 export const [
 	createPaginationContext,
 	getPaginationContext,
-] = createContextBuilder<PaginationContext>();
+] = createContextStore<PaginationContext>();
 
 interface PaginationContext {
 	setPageSize(pageSize: number): void;

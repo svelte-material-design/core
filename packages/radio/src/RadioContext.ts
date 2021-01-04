@@ -1,4 +1,4 @@
-import { createContextPropBuilder } from "../../common";
+import { createContext } from "@raythurnevoid/svelte-context-enhanced";
 
 export interface RadioContext {
 	value: any;
@@ -8,4 +8,4 @@ export interface RadioContext {
 export const [
 	setCreateRadioMDCIstance,
 	getCreateRadioMDCIstance,
-] = createContextPropBuilder<boolean>();
+] = createContext<boolean>();

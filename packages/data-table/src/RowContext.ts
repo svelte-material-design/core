@@ -1,14 +1,14 @@
-import { createContextPropBuilder, createContextBuilder } from "../../common";
+import {
+	createContextStore,
+	createContext,
+} from "@raythurnevoid/svelte-context-enhanced";
 
-const [
-	setRowBehaviour,
-	getRowBehaviour,
-] = createContextPropBuilder<RowBehaviour>();
+const [setRowBehaviour, getRowBehaviour] = createContext<RowBehaviour>();
 export { setRowBehaviour, getRowBehaviour };
 
 export type RowBehaviour = "header";
 
-const [createRowContext, getRowContext] = createContextBuilder<RowContext>();
+const [createRowContext, getRowContext] = createContextStore<RowContext>();
 export { createRowContext, getRowContext };
 
 export interface RowContext {

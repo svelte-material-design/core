@@ -1,9 +1,9 @@
-import { createContextBuilder } from "../../common";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
 const [
 	createInputFieldContext,
 	getInputFieldContext,
-] = createContextBuilder<InputFieldContext>();
+] = createContextStore<InputFieldContext>();
 export { createInputFieldContext, getInputFieldContext };
 
 export interface InputFieldContext {

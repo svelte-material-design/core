@@ -1,9 +1,9 @@
-import { createContextPropBuilder } from "../../common";
+import { createContext } from "@raythurnevoid/svelte-context-enhanced";
 
 const [
 	setButtonBehaviour,
 	getButtonBehaviour,
-] = createContextPropBuilder<ButtonBehaviour>();
+] = createContext<ButtonBehaviour>();
 export { setButtonBehaviour, getButtonBehaviour };
 
 type ButtonBehaviour = "card:action" | "top-app-bar:action";

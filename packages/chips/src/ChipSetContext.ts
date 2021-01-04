@@ -1,11 +1,11 @@
-import { createContextBuilder } from "../../common/context";
-import { ChipContext } from "./ChipContext";
-import { ChipSetVariant } from "./types";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import type { ChipContext } from "./ChipContext";
+import type { ChipSetVariant } from "./types";
 
 export const [
 	createChipSetContext,
 	getChipSetContext,
-] = createContextBuilder<ChipSetContext>();
+] = createContextStore<ChipSetContext>();
 
 export interface ChipSetContext {
 	readonly variant: ChipSetVariant;

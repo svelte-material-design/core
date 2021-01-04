@@ -1,14 +1,17 @@
-import { createContextBuilder } from "../../context";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
-const [setSelectableContext, getSelectableContext] = createContextBuilder<SelectableContext>();
-export {setSelectableContext, getSelectableContext};
+const [
+	setSelectableContext,
+	getSelectableContext,
+] = createContextStore<SelectableContext>();
+export { setSelectableContext, getSelectableContext };
 
 export interface SelectableContext {
-  readonly value: any;
-  readonly selected: boolean;
-  readonly tabindex: number;
-  readonly disabled: boolean;
-  setSelected(selected: boolean): void;
-  setValue(value: any): void;
-  setTabIndex(tabindex: number): void;
+	readonly value: any;
+	readonly selected: boolean;
+	readonly tabindex: number;
+	readonly disabled: boolean;
+	setSelected(selected: boolean): void;
+	setValue(value: any): void;
+	setTabIndex(tabindex: number): void;
 }

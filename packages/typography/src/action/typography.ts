@@ -1,5 +1,5 @@
 import { memo } from "../../../common/src/utils";
-import { TypographyVariant } from "../types";
+import type { TypographyVariant } from "..";
 
 export function typography(
 	node: HTMLElement,

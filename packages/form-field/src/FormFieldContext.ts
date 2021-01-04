@@ -1,10 +1,10 @@
-import { createContextBuilder } from "../../common";
-import { MDCFormField, MDCFormFieldInput } from "@material/form-field";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import type { MDCFormField, MDCFormFieldInput } from "@material/form-field";
 
 const [
 	createFormFieldContext,
 	getFormFieldContext,
-] = createContextBuilder<FormFieldContext>();
+] = createContextStore<FormFieldContext>();
 export { createFormFieldContext, getFormFieldContext };
 
 export interface FormFieldContext {

@@ -1,9 +1,6 @@
-import {
-	createContextBuilder,
-	createContextPropBuilder,
-} from "../../../common";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
-const [createItemContext, getItemContext] = createContextBuilder<ItemContext>();
+const [createItemContext, getItemContext] = createContextStore<ItemContext>();
 export { createItemContext, getItemContext };
 
 export interface ItemContext {

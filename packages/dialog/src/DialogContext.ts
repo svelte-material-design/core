@@ -1,9 +1,9 @@
-import { createContextBuilder } from "../../common";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
 const [
 	createDialogContext,
 	getDialogContext,
-] = createContextBuilder<DialogContext>();
+] = createContextStore<DialogContext>();
 export { createDialogContext, getDialogContext };
 
 export interface DialogContext {

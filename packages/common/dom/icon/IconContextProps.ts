@@ -1,8 +1,6 @@
-import { createContextPropBuilder } from "../../context";
+import { createContext } from "@raythurnevoid/svelte-context-enhanced";
 
-const [setIconBehaviour, getIconBehaviour] = createContextPropBuilder<
-	IconBehaviour
->();
+const [setIconBehaviour, getIconBehaviour] = createContext<IconBehaviour>();
 export { setIconBehaviour, getIconBehaviour };
 
 type IconBehaviour = "fab" | "tab";

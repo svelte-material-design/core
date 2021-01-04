@@ -1,12 +1,12 @@
-import { createContextBuilder } from "../../common";
-import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
-import { SelectionType } from "../../common/hoc";
-import { ItemContext } from ".";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
+import type { SelectionType } from "../../common/hoc";
+import type { ItemContext } from ".";
 
 export const [
 	createMenuContext,
 	getMenuContext,
-] = createContextBuilder<MenuContext>();
+] = createContextStore<MenuContext>();
 
 export interface MenuContext {
 	open: boolean;

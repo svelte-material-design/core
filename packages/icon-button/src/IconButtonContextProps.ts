@@ -1,9 +1,12 @@
-import { createContextBuilder, createContextPropBuilder } from "../../common";
+import {
+	createContextStore,
+	createContext,
+} from "@raythurnevoid/svelte-context-enhanced";
 
 const [
 	setIconButtonBehaviour,
 	getIconButtonBehaviour,
-] = createContextPropBuilder<IconButtonBehaviour>();
+] = createContext<IconButtonBehaviour>();
 export { setIconButtonBehaviour, getIconButtonBehaviour };
 
 type IconButtonBehaviour =
@@ -14,7 +17,7 @@ type IconButtonBehaviour =
 export const [
 	setIconButtonToggleContext,
 	getIconButtonToggleContext,
-] = createContextBuilder<IconButtonToggle>();
+] = createContextStore<IconButtonToggle>();
 
 export interface IconButtonToggle {
 	active: boolean;

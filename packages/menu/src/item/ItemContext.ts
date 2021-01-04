@@ -1,9 +1,9 @@
-import { createContextBuilder } from "../../../common";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
 export const [
 	createItemContext,
 	getItemContext,
-] = createContextBuilder<ItemContext>();
+] = createContextStore<ItemContext>();
 
 export interface ItemContext {
 	setSelected(selected: boolean): void;

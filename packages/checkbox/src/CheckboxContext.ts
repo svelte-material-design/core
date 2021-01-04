@@ -1,4 +1,4 @@
-import { createContextPropBuilder } from "../../common";
+import { createContext } from "@raythurnevoid/svelte-context-enhanced";
 
 export interface CheckboxContext {
 	value: any;
@@ -7,7 +7,7 @@ export interface CheckboxContext {
 const [
 	setCheckboxBehaviour,
 	getCheckboxBehaviour,
-] = createContextPropBuilder<CheckboxBehaviour>();
+] = createContext<CheckboxBehaviour>();
 export { setCheckboxBehaviour, getCheckboxBehaviour };
 
 export type CheckboxBehaviour = "data-table-header" | "data-table-row";
@@ -15,5 +15,5 @@ export type CheckboxBehaviour = "data-table-header" | "data-table-row";
 const [
 	setCreateCheckboxMDCIstance,
 	getCreateCheckboxMDCIstance,
-] = createContextPropBuilder<boolean>();
+] = createContext<boolean>();
 export { setCreateCheckboxMDCIstance, getCreateCheckboxMDCIstance };
