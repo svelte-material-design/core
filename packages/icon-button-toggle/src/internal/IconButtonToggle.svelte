@@ -1,9 +1,13 @@
 <script lang="ts">
 	//#region imports
-	import { MDCIconButtonToggle } from "@material/icon-button";
-	import { onDestroy, onMount } from "svelte";
+	import {
+		MDCIconButtonToggle,
+		MDCIconButtonToggleEventDetail,
+	} from "@material/icon-button";
+	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import { IconButton } from "../../../icon-button/src/internal";
-	import type { IconButtonDOM, SwitchableString, IconButtonColor } from "..";
+	import type { IconButtonColor, OnIconButtonToggleChange } from "..";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	//#endregion
 
 	//#region exports
@@ -12,58 +16,64 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: IconButtonDOM = undefined;
+	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
 	export let active: boolean = false;
 	export let disabled: boolean = false;
-	export let title: SwitchableString = undefined;
-	export let ariaLabel: SwitchableString = undefined;
 	export let color: IconButtonColor = undefined;
+	export let ariaLabelOn: string = undefined;
+	export let ariaLabelOff: string = undefined;
 	//#endregion
 
 	//#region implementation
-	let toggleButton: MDCIconButtonToggle;
-	onMount(() => {
-		toggleButton = new MDCIconButtonToggle(dom);
-		if (!ripple) {
-			toggleButton.ripple.destroy();
-		}
+	const dispatch = createEventDispatcher<{
+		change: OnIconButtonToggleChange;
+	}>();
 
-		toggleButton.listen(
-			"MDCIconButtonToggle:change",
-			(event: CustomEvent<{ isOn: boolean }>) => {
-				active = event.detail.isOn;
-			}
-		);
+	let toggleButton: MDCIconButtonToggle;
+
+	onMount(() => {
+		initialize();
 	});
 
-	$: {
-		if (toggleButton && toggleButton.on !== active) {
-			toggleButton.on = active;
-		}
+	$: if (toggleButton && toggleButton.on !== active) {
+		toggleButton.on = active;
 	}
 
 	onDestroy(() => {
 		toggleButton && toggleButton.destroy();
 	});
 
-	function getOnOffData(data: SwitchableString, active: boolean) {
-		if (!data || typeof data === "string") {
-			return data;
-		} else {
-			if (active) {
-				return data.on;
-			} else {
-				return data.off;
-			}
+	function initialize() {
+		toggleButton?.destroy();
+		toggleButton = new MDCIconButtonToggle(dom);
+		if (!ripple) {
+			toggleButton.ripple.destroy();
 		}
+
+		toggleButton.listen("MDCIconButtonToggle:change", handleChange);
+	}
+
+	async function handleChange(
+		event: CustomEvent<MDCIconButtonToggleEventDetail>
+	) {
+		active = event.detail.isOn;
+
+		await tick();
+
+		dispatch("change", {
+			dom,
+			active,
+		});
 	}
 	//#endregion
 </script>
 
 <svelte:options immutable={true} />
+
+<UseState value={ripple} onUpdate={initialize} />
 
 <IconButton
 	bind:dom
@@ -74,8 +84,7 @@
 	{disabled}
 	{color}
 	ripple={false}
-	title={getOnOffData(title, active)}
-	data-aria-label-on={getOnOffData(ariaLabel, true) || getOnOffData(title, true)}
-	data-aria-label-off={getOnOffData(ariaLabel, false) || getOnOffData(title, false)}>
+	data-aria-label-on={ariaLabelOn}
+	data-aria-label-off={ariaLabelOff}>
 	<slot />
 </IconButton>

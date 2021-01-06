@@ -16,6 +16,9 @@
 
 	export let type: IconType = "icon";
 	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:options immutable={true} />

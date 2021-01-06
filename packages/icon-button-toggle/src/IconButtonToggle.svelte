@@ -5,7 +5,7 @@
 <script lang="ts">
 	//#region imports
 	import { IconButtonToggle } from "./internal";
-	import type { IconButtonDOM, SwitchableString, IconButtonColor } from ".";
+	import type { IconButtonColor } from ".";
 	//#endregion
 
 	//#region exports
@@ -14,15 +14,15 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/icon-button-toggle/IconButtonToggle:${count++}`;
-	export let dom: IconButtonDOM = undefined;
+	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
 	export let active: boolean = false;
 	export let disabled: boolean = false;
-	export let title: SwitchableString = undefined;
-	export let ariaLabel: SwitchableString = undefined;
 	export let color: IconButtonColor = undefined;
+	export let ariaLabelOn: string = undefined;
+	export let ariaLabelOff: string = undefined;
 	//#endregion
 </script>
 
@@ -37,8 +37,8 @@
 	bind:active
 	{disabled}
 	{ripple}
-	{title}
-	{ariaLabel}
-	{color}>
+	{color}
+	{ariaLabelOn}
+	{ariaLabelOff}>
 	<slot />
 </IconButtonToggle>
