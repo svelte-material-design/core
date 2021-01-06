@@ -1,3 +1,13 @@
-@use "./mixins";
+@use "smui-theme";
+@use "@material/icon-button";
+@use "@material/feature-targeting";
 
-@include mixins.core-styles();
+@include icon-button.core-styles;
+
+.svmd-icon-button--color--primary {
+	@include icon-button.ink-color(primary);
+}
+
+.svmd-icon-button--color--secondary {
+	@include icon-button.ink-color(secondary);
+}

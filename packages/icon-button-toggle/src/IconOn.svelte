@@ -1,8 +1,8 @@
 <script lang="ts">
 	//#region  imports
-	import { Graphic, GraphicType } from "../../common/components";
+	import type { IconType, IconDOM } from ".";
 	import { parseClassList } from "../../common/functions";
-	import type { IconDOM } from "..";
+	import { Icon } from "../../icon-button/src";
 	//#endregion
 
 	//#region exports
@@ -14,25 +14,22 @@
 	export let dom: IconDOM = undefined;
 	//#endregion
 
-	export let type: GraphicType = "icon";
-	//#endregion
-
-	//#region implementation
+	export let type: IconType = "icon";
 	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
-<Graphic
+<Icon
 	bind:dom
 	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-icon-button__icon',
 		[type === 'icon' && className == undefined, 'material-icons'],
+		'mdc-icon-button__icon--on',
 	])}
 	{style}
 	{type}>
 	<slot />
-</Graphic>
+</Icon>

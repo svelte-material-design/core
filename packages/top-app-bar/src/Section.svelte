@@ -7,21 +7,17 @@
 	export let style: string = "";
 
 	export let dom: HTMLAnchorElement | HTMLButtonElement = null;
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Section
-	import { setIconButtonBehaviour } from "../../icon-button";
 	import { setButtonBehaviour } from "../../button";
 
 	export let align = "start";
 	export let toolbar = false;
 
 	setButtonBehaviour("top-app-bar:action");
-	setIconButtonBehaviour(
-		toolbar ? "top-app-bar:action" : "top-app-bar:navigation"
-	);
 </script>
 
 <section

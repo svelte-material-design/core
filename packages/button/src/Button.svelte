@@ -15,13 +15,14 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/button/Button:${count++}`;
+	export let id: string = `@svmd/button/Button:${count++}`;
 	export let dom: HTMLButtonElement | HTMLAnchorElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
 	export let color: ButtonColor = "primary";
 	export let variant: ButtonVariant = "text";
+	$: variant = variant ?? "text";
 	export let disabled: boolean = false;
 	export let href: string = undefined;
 	//#endregion
@@ -44,8 +45,8 @@
 		class={parseClassList([
 			className,
 			'mdc-button',
-			[variant && variant !== 'text', `mdc-button--${variant}`],
-			[color === 'secondary', 'smui-button--color-secondary'],
+			[variant, `mdc-button--${variant}`],
+			[color === 'secondary', 'svmd-button--color--secondary'],
 			[
 				behaviour === 'card:action',
 				'mdc-card__action mdc-card__action--button',

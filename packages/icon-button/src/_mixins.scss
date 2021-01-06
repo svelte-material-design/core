@@ -1,7 +1,0 @@
-@use "@material/icon-button";
-// @use "../../ripple";
-@use "@material/feature-targeting";
-
-@mixin core-styles($query: feature-targeting.all()) {
-	@include icon-button.core-styles($query: $query);
-}

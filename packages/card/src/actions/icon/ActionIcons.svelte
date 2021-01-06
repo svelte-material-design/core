@@ -1,7 +1,7 @@
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
-	import { DOMEventsForwarder } from "../../common/actions";
+	import { parseClassList } from "../../../../common/functions";
+	import { DOMEventsForwarder } from "../../../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className = "";
 	export { className as class };
@@ -10,7 +10,7 @@
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 </script>

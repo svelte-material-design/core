@@ -1,14 +1,9 @@
-<script context="module" lang="ts">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
 	//#region imports
 	import { MDCIconButtonToggle } from "@material/icon-button";
 	import { onDestroy, onMount } from "svelte";
-	import IconButton from "./IconButton.svelte";
-	import { setIconButtonToggleContext } from ".";
-	import type { IconButtonDOM, SwitchableString } from ".";
+	import { IconButton } from "../../../icon-button/src/internal";
+	import type { IconButtonDOM, SwitchableString, IconButtonColor } from "..";
 	//#endregion
 
 	//#region exports
@@ -16,7 +11,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/button/IconButtonToggle:${count++}`;
+	export let id: string = undefined;
 	export let dom: IconButtonDOM = undefined;
 	//#endregion
 
@@ -25,12 +20,10 @@
 	export let disabled: boolean = false;
 	export let title: SwitchableString = undefined;
 	export let ariaLabel: SwitchableString = undefined;
+	export let color: IconButtonColor = undefined;
 	//#endregion
 
 	//#region implementation
-	const context$ = setIconButtonToggleContext({ active });
-	$: $context$ = { ...$context$, active };
-
 	let toggleButton: MDCIconButtonToggle;
 	onMount(() => {
 		toggleButton = new MDCIconButtonToggle(dom);
@@ -79,6 +72,7 @@
 	class={className}
 	{style}
 	{disabled}
+	{color}
 	ripple={false}
 	title={getOnOffData(title, active)}
 	data-aria-label-on={getOnOffData(ariaLabel, true) || getOnOffData(title, true)}

@@ -1,32 +1,21 @@
 @use "smui-theme";
 @use "@material/button";
 @use "@material/ripple";
+@use "@material/theme";
 
 @include button.core-styles;
 
-.smui-button--color-secondary {
-	@include button.ink-color(secondary);
-
-	&.mdc-button--raised,
-	&.mdc-button--unelevated {
-		@include button.container-fill-color(secondary);
-		@include button.ink-color(on-secondary);
+.mdc-button--raised,
+.mdc-button--unelevated {
+	&.svmd-button--color--secondary {
+		@include button.filled-accessible(theme.$secondary);
 	}
+}
 
-	&.mdc-button--outlined {
-		@include button.outline-color(secondary);
-	}
-
-	&,
-	& .mdc-button__ripple {
-		@include ripple.states(secondary, false);
-	}
-
-	&.mdc-button--raised,
-	&.mdc-button--unelevated {
-		&,
-		& .mdc-button__ripple {
-			@include ripple.states(on-secondary, false);
-		}
+.mdc-button--text,
+.mdc-button--outlined {
+	&.svmd-button--color--secondary {
+		@include button.ink-color(theme.$secondary);
+		@include button.outline-color(theme.$secondary);
 	}
 }

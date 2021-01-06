@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { GraphicDOM, GraphicType } from "./types";
+	import type { GraphicDOM, GraphicType } from "./types";
 	import { parseClassList } from "../functions";
 
 	//#region exports

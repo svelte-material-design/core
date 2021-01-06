@@ -6,3 +6,4 @@ export type { GraphicDOM as IconDOM } from "../../common/components";
 export type ButtonComponent = typeof Button | typeof A;
 export type ButtonVariant = "text" | "raised" | "unelevated" | "outlined";
 export type ButtonColor = "primary" | "secondary";
+export type ButtonDOM = HTMLButtonElement | HTMLAnchorElement;

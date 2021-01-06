@@ -4,9 +4,9 @@
 
 <script lang="ts">
 	//#region imports
-	import { IconButton } from "./internal";
-	import { parseClassList } from "../../common/functions";
-	import type { IconButtonDOM, IconButtonColor } from ".";
+	import { IconButton } from "../../../../icon-button/src/internal";
+	import { parseClassList } from "../../../../common/functions";
+	import type { IconButtonDOM, IconButtonColor } from "../..";
 	//#endregion
 
 	//#region exports
@@ -14,7 +14,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/button/IconButton:${count++}`;
+	export let id: string = `@svmd/card/iconAction:${count++}`;
 	export let dom: IconButtonDOM = undefined;
 	//#endregion
 
@@ -32,18 +32,16 @@
 	bind:dom
 	{...$$restProps}
 	{id}
-	class={parseClassList([className])}
+	class={parseClassList([
+		className,
+		'mdc-card__action',
+		'mdc-card__action--icon',
+	])}
 	{style}
 	{disabled}
 	{href}
 	{color}
 	{ripple}
-	on:click
-	on:mousedown
-	on:mouseup
-	on:keydown
-	on:keyup
-	on:focus
-	on:blur>
+	on:click>
 	<slot />
 </IconButton>
