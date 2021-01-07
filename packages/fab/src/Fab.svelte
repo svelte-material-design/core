@@ -1,54 +1,62 @@
 <script context="module" lang="ts">
-	export type FabColor = "primary" | "secondary";
-	export type FabVariant = "extended" | "mini";
+	let count: number = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region imports
+	import { parseClassList } from "../../common/functions";
+	import { Ripple } from "../../ripple";
+	import type { FabColor, FabVariant } from ".";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
-
-	export let dom: HTMLInputElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	export let id: string = `@svmd/fab/Fab:${count++}`;
+	export let dom: HTMLButtonElement = undefined;
 	//#endregion
-
-	// Fab
-	import { Ripple3 } from "../../ripple";
-	import { parseClassList } from "../../common/functions";
 
 	export let ripple: boolean = true;
 	export let color: FabColor = "secondary";
 	export let show: boolean = true;
-	export let ariaLabel: string = undefined;
-	export let variant: FabVariant = undefined;
+	export let variant: FabVariant = "regular";
+	$: variant = variant ?? "regular";
+	export let accessibleTouch: boolean = false;
+	//#endregion
 
-	let rippleClasses: string;
+	//#region implementation
+	//#endregion
 </script>
 
-<button
-	bind:this={dom}
-	{...props}
-	{id}
-	class={parseClassList([
-		className,
-		'mdc-fab',
-		[variant === 'mini', 'mdc-fab--mini'],
-		[variant === 'extended', 'mdc-fab--extended'],
-		[!show, 'mdc-fab--exited'],
-		[color === 'primary', 'smui-fab--color-primary'],
-		rippleClasses,
-	])}
-	{style}
-	aria-label={ariaLabel}
-	use:forwardDOMEvents>
-	{#if ripple}
-		<Ripple3 rippleElement="mdc-fab__ripple" target={dom} bind:rippleClasses />
-	{/if}
-	<slot />
-</button>
+<Ripple target={ripple ? dom : undefined} let:rippleClasses>
+	<button
+		bind:this={dom}
+		{...$$restProps}
+		{id}
+		class={parseClassList([
+			className,
+			'mdc-fab',
+			[variant === 'mini', 'mdc-fab--mini'],
+			[variant === 'extended', 'mdc-fab--extended'],
+			[!show, 'mdc-fab--exited'],
+			[color === 'primary', 'svmd-fab--color--primary'],
+			[accessibleTouch, 'mdc-fab--touch'],
+			rippleClasses,
+		])}
+		{style}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur>
+		<span class="mdc-fab__ripple" />
+		<slot />
+		{#if accessibleTouch}
+			<div class="mdc-fab__touch" />
+		{/if}
+	</button>
+</Ripple>

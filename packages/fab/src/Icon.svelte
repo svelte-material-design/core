@@ -1,32 +1,31 @@
 <script lang="ts">
-	// Base
-	import { DOMEventsForwarder } from "../../common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region  imports
+	import { Graphic } from "../../common/components";
+	import { parseClassList } from "../../common/functions";
+	import type { IconDOM, IconType } from ".";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
+	export let dom: IconDOM = undefined;
+	//#endregion
 
-	export let dom: GraphicElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	export let type: IconType = "icon";
+	//#endregion
 
-	// Icon
-	import {
-		Graphic,
-		GraphicElement,
-		GraphicType,
-	} from "../../common/components";
-	import { parseClassList } from "../../common/functions";
-
-	export let type: GraphicType = "icon";
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
 <Graphic
 	bind:dom
-	{props}
+	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -34,7 +33,6 @@
 		[type === 'icon' && className == undefined, 'material-icons'],
 	])}
 	{style}
-	{type}
-	on:domEvent={forwardDOMEvents}>
+	{type}>
 	<slot />
 </Graphic>

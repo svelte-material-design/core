@@ -1,6 +1,4 @@
-import Fab from "./Fab.svelte";
-import Label from "./Label.svelte";
-import Icon from "./Icon.svelte";
-
-export { Fab, Label, Icon };
-export * from "./Fab.svelte";
+export { default as Fab } from "./Fab.svelte";
+export { default as Label } from "./Label.svelte";
+export { default as Icon } from "./Icon.svelte";
+export * from "./types";

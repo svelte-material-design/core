@@ -25,6 +25,7 @@
 	$: variant = variant ?? "text";
 	export let disabled: boolean = false;
 	export let href: string = undefined;
+	export let accessibleTouch: boolean = false;
 	//#endregion
 
 	//#region implementation
@@ -52,6 +53,7 @@
 				'mdc-card__action mdc-card__action--button',
 			],
 			[behaviour === 'top-app-bar:action', 'mdc-top-app-bar__action-item'],
+			[accessibleTouch, 'mdc-button--touch'],
 			[ripple, rippleClasses],
 		])}
 		{style}
@@ -64,7 +66,12 @@
 		on:keyup
 		on:focus
 		on:blur>
-		{#if ripple}<span class="mdc-button__ripple" />{/if}
+		{#if ripple}
+			<div class="mdc-button__ripple" />
+		{/if}
 		<slot />
+		{#if accessibleTouch}
+			<div class="mdc-button__touch" />
+		{/if}
 	</svelte:component>
 </Ripple>

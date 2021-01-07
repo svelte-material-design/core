@@ -1,29 +1,29 @@
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region  imports
+	import { parseClassList } from "../../common/functions";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
-	export let dom: HTMLDivElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	export let dom: HTMLSpanElement = undefined;
+	//#endregion
 	//#endregion
 
-	// Label
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
 <span
 	bind:this={dom}
-	{...props}
+	{...$$restProps}
 	{id}
-	class="{className || ''} mdc-fab__label"
-	{style}
-	use:forwardDOMEvents>
+	class={parseClassList([className, 'mdc-fab__label'])}
+	{style}>
 	<slot />
 </span>

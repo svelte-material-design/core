@@ -20,7 +20,6 @@
 	$: color = color ?? "inherit";
 	export let href: string = undefined;
 	export let disabled: boolean = false;
-	// export let variant: TODO: allow support of variants, using Button underneath
 	//#endregion
 
 	//#region implementation

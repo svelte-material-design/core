@@ -1,6 +1,10 @@
 @use "smui-theme";
+@use "@material/feature-targeting";
 @use "@material/fab";
-@use "./mixins";
+@use "@material/theme";
 
 @include fab.core-styles;
-@include mixins.smui-fab-core-styles;
+
+.svmd-fab--color--primary {
+	@include fab.accessible(theme.$primary);
+}

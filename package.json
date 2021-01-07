@@ -70,6 +70,7 @@
 		"@material/textfield": "^9.0.0",
 		"@material/theme": "^9.0.0",
 		"@material/top-app-bar": "^9.0.0",
+		"@material/touch-target": "^9.0.0",
 		"@material/typography": "^9.0.0",
 		"@raythurnevoid/svelte-hooks": "^0.0.2",
 		"@raythurnevoid/svelte-group-components": "^0.0.5",

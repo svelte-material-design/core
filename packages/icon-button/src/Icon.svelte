@@ -1,8 +1,8 @@
 <script lang="ts">
 	//#region  imports
-	import { Graphic, GraphicType } from "../../common/components";
+	import { Graphic } from "../../common/components";
 	import { parseClassList } from "../../common/functions";
-	import type { IconDOM } from "..";
+	import type { IconDOM, IconType } from ".";
 	//#endregion
 
 	//#region exports
@@ -14,7 +14,7 @@
 	export let dom: IconDOM = undefined;
 	//#endregion
 
-	export let type: GraphicType = "icon";
+	export let type: IconType = "icon";
 	//#endregion
 
 	//#region implementation

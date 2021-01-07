@@ -25,6 +25,9 @@
 	export let ariaLabelOn: string = undefined;
 	export let ariaLabelOff: string = undefined;
 	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:options immutable={true} />
