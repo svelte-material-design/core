@@ -23,7 +23,7 @@
 	bind:this={dom}
 	{...$$restProps}
 	{id}
-	class={parseClassList([className, 'svmd-card__content'])}
+	class={parseClassList([className, 'mdc-card__content'])}
 	{style}>
 	<slot />
 </div>

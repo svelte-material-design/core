@@ -39,6 +39,12 @@
 	{variant}
 	{disabled}
 	{accessibleTouch}
-	on:click>
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur>
 	<slot />
 </Button>
