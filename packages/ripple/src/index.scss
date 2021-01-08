@@ -1,3 +1,13 @@
 @use "smui-theme";
-@use "@material/ripple/mdc-ripple";
 @use "@material/ripple";
+@use "@material/theme";
+
+@include ripple.core-styles;
+
+.mdc-ripple-surface--primary {
+	@include ripple.states(theme.$primary);
+}
+
+.mdc-ripple-surface--secondary {
+	@include ripple.states(theme.$secondary);
+}

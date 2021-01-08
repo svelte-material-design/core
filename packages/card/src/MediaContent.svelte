@@ -1,17 +1,19 @@
 <script lang="ts">
-	//#region Base
+	//#region imports
 	import { parseClassList } from "../../common/functions";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLDivElement = undefined;
+	//#endregion
+	//#endregion
 
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#region implementation
 	//#endregion
 </script>
 
@@ -19,10 +21,9 @@
 
 <div
 	bind:this={dom}
-	{...props}
+	{...$$restProps}
 	{id}
 	class={parseClassList([className, 'mdc-card__media-content'])}
-	{style}
-	use:forwardDOMEvents>
+	{style}>
 	<slot />
 </div>

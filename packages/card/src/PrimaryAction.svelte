@@ -1,45 +1,38 @@
 <script lang="ts">
-	//#region Base
+	//#region imports
 	import { parseClassList } from "../../common/functions";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	import { Ripple } from "../../ripple";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLDivElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// PrimaryAction
-	import { UseRipple, RippleProps } from "../../ripple";
-
 	export let ripple: boolean = true;
-	export let color: RippleProps["color"] = undefined;
-	export let padded: boolean = false;
-	export let tabindex: number = 0;
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
-<div
-	bind:this={dom}
-	{...props}
-	{id}
-	class={parseClassList([
-		className,
-		'mdc-card__primary-action',
-		[padded, 'smui-card__primary-action--padded'],
-	])}
-	{style}
-	{tabindex}
-	use:forwardDOMEvents>
-	<slot />
-</div>
-
-{#if ripple}
-	<UseRipple target={dom} {color} />
-{/if}
+<Ripple target={ripple ? dom : undefined} let:rippleClasses>
+	<div
+		bind:this={dom}
+		{...$$restProps}
+		{id}
+		class={parseClassList([
+			className,
+			'mdc-card__primary-action',
+			rippleClasses,
+		])}
+		{style}>
+		<slot />
+	</div>
+</Ripple>

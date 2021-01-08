@@ -12,6 +12,9 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:options immutable={true} />

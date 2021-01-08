@@ -1,32 +1,30 @@
-<script context="module" lang="ts">
-	export type AspectRatio = "square" | "16x9";
-</script>
-
 <script lang="ts">
-	//#region Base
+	//#region imports
 	import { parseClassList } from "../../common/functions";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	import type { AspectRatio } from ".";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLDivElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// Media
 	export let aspectRatio: AspectRatio = "square";
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
 <div
 	bind:this={dom}
-	{...props}
+	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -34,7 +32,6 @@
 		[aspectRatio === 'square', 'mdc-card__media--square'],
 		[aspectRatio === '16x9', 'mdc-card__media--16-9'],
 	])}
-	{style}
-	use:forwardDOMEvents>
+	{style}>
 	<slot />
 </div>

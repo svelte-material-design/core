@@ -1,39 +1,40 @@
 <script context="module" lang="ts">
-	export type CardVariant = "raised" | "outlined";
+	let count: number = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
+	//#region imports
+	import type { CardVariant } from ".";
 	import { parseClassList } from "../../common/functions";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
-
+	export let id: string = `@svmd/card/Card:${count++}`;
 	export let dom: HTMLDivElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// Card
 	export let variant: CardVariant = "raised";
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
 <div
 	bind:this={dom}
-	{...props}
+	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
 		'mdc-card',
 		[variant === 'outlined', 'mdc-card--outlined'],
 	])}
-	{style}
-	use:forwardDOMEvents>
+	{style}>
 	<slot />
 </div>

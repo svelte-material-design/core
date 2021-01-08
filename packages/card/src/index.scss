@@ -1,9 +1,9 @@
+@use "smui-theme";
 @use "@material/card";
 
 @include card.core-styles;
 
-.smui-card__content,
-.smui-card__primary-action--padded {
+.svmd-card__content {
 	padding: 1em;
 }
 

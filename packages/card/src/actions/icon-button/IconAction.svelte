@@ -1,7 +1,3 @@
-<script context="module" lang="ts">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
 	//#region imports
 	import { IconButton } from "../../../../icon-button/src/internal";
@@ -14,7 +10,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/card/iconAction:${count++}`;
+	export let id: string = undefined;
 	export let dom: IconButtonDOM = undefined;
 	//#endregion
 
@@ -22,7 +18,9 @@
 	export let color: IconButtonColor = undefined;
 	export let href: string = undefined;
 	export let disabled: boolean = false;
-	// export let variant: TODO: allow support of variants, using Button underneath
+	//#endregion
+
+	//#region implementation
 	//#endregion
 </script>
 
