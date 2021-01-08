@@ -1,11 +1,8 @@
-<script lang="ts" context="module">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
 	//#region imports
-	import type { ButtonColor, ButtonVariant } from ".";
-	import { Button as InternalButton } from "./internal";
+	import { Button } from "../../../../button/src";
+	import { parseClassList } from "../../../../common/functions";
+	import type { ButtonColor, ButtonVariant } from "../..";
 	//#endregion
 
 	//#region exports
@@ -13,42 +10,35 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/button/Button:${count++}`;
-	export let dom: HTMLButtonElement | HTMLAnchorElement = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
 	export let color: ButtonColor = "primary";
 	export let variant: ButtonVariant = "text";
 	export let disabled: boolean = false;
-	export let href: string = undefined;
 	export let accessibleTouch: boolean = false;
-	//#endregion
-
-	//#region implementation
 	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
-<InternalButton
+<Button
 	bind:dom
 	{...$$restProps}
 	{id}
-	class={className}
-	{variant}
+	class={parseClassList([
+		className,
+		'mdc-card__action',
+		'mdc-card__action--button',
+	])}
+	{style}
 	{ripple}
 	{color}
-	{style}
+	{variant}
 	{disabled}
-	{href}
 	{accessibleTouch}
-	on:click
-	on:mousedown
-	on:mouseup
-	on:keydown
-	on:keyup
-	on:focus
-	on:blur>
+	on:click>
 	<slot />
-</InternalButton>
+</Button>

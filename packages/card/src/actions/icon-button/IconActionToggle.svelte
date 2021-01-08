@@ -1,12 +1,8 @@
-<script context="module" lang="ts">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
 	//#region imports
 	import { IconButtonToggle } from "../../../../icon-button-toggle/src/internal";
 	import { parseClassList } from "../../../../common/functions";
-	import type { IconButtonDOM, IconButtonColor } from "../..";
+	import type { IconButtonColor } from "../..";
 	//#endregion
 
 	//#region exports
@@ -14,7 +10,7 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/card/iconAction:${count++}`;
+	export let id: string = undefined;
 	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 

@@ -4,3 +4,5 @@ export type {
 	IconType,
 	IconDOM,
 } from "../../icon-button";
+
+export type { TypographyVariant } from "../../typography";

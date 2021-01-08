@@ -6,3 +6,12 @@
 .smui-card__primary-action--padded {
 	padding: 1em;
 }
+
+.svmd-card__horizontal-layout {
+	display: flex;
+	flex-direction: row;
+
+	.mdc-card__media {
+		width: 40%;
+	}
+}
