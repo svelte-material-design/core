@@ -31,7 +31,6 @@
 		"Ray Thurne <monkeythedev@gmail.com>"
 	],
 	"license": "ISC",
-	"type": "module",
 	"dependencies": {
 		"@material/banner": "^9.0.0",
 		"@material/base": "^9.0.0",

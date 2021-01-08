@@ -1,8 +1,9 @@
 <script lang="ts">
 	//#region imports
-	import { IconButtonToggle } from "../../../../icon-button-toggle/src/internal";
+	import { Button } from "../../../../button/src";
 	import { parseClassList } from "../../../../common/functions";
-	import type { IconButtonColor } from "../..";
+	import type { ButtonColor, ButtonVariant } from "../..";
+	import { setActionType } from "../ActionsContext";
 	//#endregion
 
 	//#region exports
@@ -15,35 +16,34 @@
 	//#endregion
 
 	export let ripple: boolean = true;
-	export let active: boolean = false;
+	export let color: ButtonColor = "primary";
+	export let variant: ButtonVariant = "text";
 	export let disabled: boolean = false;
-	export let color: IconButtonColor = undefined;
-	export let ariaLabelOn: string = undefined;
-	export let ariaLabelOff: string = undefined;
+	export let accessibleTouch: boolean = false;
 	//#endregion
 
 	//#region implementation
+	setActionType("button");
 	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
-<IconButtonToggle
+<Button
 	bind:dom
 	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
 		'mdc-card__action',
-		'mdc-card__action--icon',
+		'mdc-card__action--button',
 	])}
 	{style}
-	bind:active
-	{disabled}
-	{color}
 	{ripple}
-	{ariaLabelOn}
-	{ariaLabelOff}
+	{color}
+	{variant}
+	{disabled}
+	{accessibleTouch}
 	on:click
 	on:mousedown
 	on:mouseup
@@ -52,4 +52,4 @@
 	on:focus
 	on:blur>
 	<slot />
-</IconButtonToggle>
+</Button>

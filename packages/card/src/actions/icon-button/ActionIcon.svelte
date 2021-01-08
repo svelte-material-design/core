@@ -1,8 +1,9 @@
 <script lang="ts">
 	//#region imports
-	import { Button } from "../../../../button/src";
+	import { IconButton } from "../../../../icon-button/src/internal";
 	import { parseClassList } from "../../../../common/functions";
-	import type { ButtonColor, ButtonVariant } from "../..";
+	import type { IconButtonDOM, IconButtonColor } from "../..";
+	import { setActionType } from "../ActionsContext";
 	//#endregion
 
 	//#region exports
@@ -11,34 +12,36 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLButtonElement = undefined;
+	export let dom: IconButtonDOM = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
-	export let color: ButtonColor = "primary";
-	export let variant: ButtonVariant = "text";
+	export let color: IconButtonColor = undefined;
+	export let href: string = undefined;
 	export let disabled: boolean = false;
-	export let accessibleTouch: boolean = false;
+	//#endregion
+
+	//#region implementation
+	setActionType("icon");
 	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
-<Button
+<IconButton
 	bind:dom
 	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
 		'mdc-card__action',
-		'mdc-card__action--button',
+		'mdc-card__action--icon',
 	])}
 	{style}
-	{ripple}
-	{color}
-	{variant}
 	{disabled}
-	{accessibleTouch}
+	{href}
+	{color}
+	{ripple}
 	on:click
 	on:mousedown
 	on:mouseup
@@ -47,4 +50,4 @@
 	on:focus
 	on:blur>
 	<slot />
-</Button>
+</IconButton>

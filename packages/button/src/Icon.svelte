@@ -1,6 +1,8 @@
 <script lang="ts">
+	//#region  imports
 	import { parseClassList } from "../../common/functions";
 	import { Graphic, GraphicDOM, GraphicType } from "../../common/components";
+	//#endregion
 
 	//#region exports
 	//#region base
