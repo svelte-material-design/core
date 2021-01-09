@@ -17,7 +17,6 @@
 
 	export let ripple: boolean = true;
 	export let color: IconButtonColor = undefined;
-	$: color = color ?? "inherit";
 	export let href: string = undefined;
 	export let disabled: boolean = false;
 	//#endregion

@@ -10,24 +10,15 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLElement = undefined;
+	export let dom: HTMLHeadingElement = undefined;
 	//#endregion
-
-	export let variant: TypographyVariant = "headline6";
-	export let component: any = undefined;
 	//#endregion
 
 	//#region implementation
+	const variant: TypographyVariant = "headline6";
 	//#endregion
 </script>
 
-<Typography
-	bind:dom
-	{...$$restProps}
-	{id}
-	class={className}
-	{style}
-	{variant}
-	{component}>
+<Typography bind:dom {...$$restProps} {id} class={className} {style} {variant}>
 	<slot />
 </Typography>

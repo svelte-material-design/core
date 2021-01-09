@@ -46,6 +46,7 @@
 	{ripple}
 	{ariaLabelOn}
 	{ariaLabelOff}
+	on:change
 	on:click
 	on:mousedown
 	on:mouseup

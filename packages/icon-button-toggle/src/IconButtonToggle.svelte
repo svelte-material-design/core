@@ -39,6 +39,14 @@
 	{ripple}
 	{color}
 	{ariaLabelOn}
-	{ariaLabelOff}>
+	{ariaLabelOff}
+	on:change
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur>
 	<slot />
 </IconButtonToggle>

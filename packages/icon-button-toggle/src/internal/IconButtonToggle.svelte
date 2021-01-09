@@ -85,6 +85,13 @@
 	{color}
 	ripple={false}
 	data-aria-label-on={ariaLabelOn}
-	data-aria-label-off={ariaLabelOff}>
+	data-aria-label-off={ariaLabelOff}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur>
 	<slot />
 </IconButton>

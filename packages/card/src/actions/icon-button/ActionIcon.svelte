@@ -17,7 +17,6 @@
 
 	export let ripple: boolean = true;
 	export let color: IconButtonColor = undefined;
-	export let href: string = undefined;
 	export let disabled: boolean = false;
 	//#endregion
 
@@ -39,7 +38,6 @@
 	])}
 	{style}
 	{disabled}
-	{href}
 	{color}
 	{ripple}
 	on:click
