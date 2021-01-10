@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../common/functions";
+	import { Section } from ".";
 	//#endregion
 
 	//#region exports
@@ -19,11 +19,13 @@
 
 <svelte:options immutable={true} />
 
-<div
-	bind:this={dom}
+<Section
+	bind:dom
 	{id}
-	class={parseClassList([className, 'mdc-top-app-bar__row'])}
+	class={className}
 	{style}
-	{...$$restProps}>
+	{...$$restProps}
+	align="end"
+	role="toolbar">
 	<slot />
-</div>
+</Section>

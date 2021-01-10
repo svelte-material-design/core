@@ -1,5 +1,6 @@
 <script lang="ts">
 	//#region imports
+	import "../../../../icon-button";
 	import { IconButton } from "../../../../icon-button/src/internal";
 	import { parseClassList } from "../../../../common/functions";
 	import type { IconButtonDOM, IconButtonColor } from ".";
@@ -29,17 +30,13 @@
 
 <IconButton
 	bind:dom
-	{...$$restProps}
 	{id}
-	class={parseClassList([
-		className,
-		'mdc-card__action',
-		'mdc-card__action--icon',
-	])}
+	class={parseClassList([className, 'mdc-top-app-bar__action-item'])}
 	{style}
 	{disabled}
 	{color}
 	{ripple}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup

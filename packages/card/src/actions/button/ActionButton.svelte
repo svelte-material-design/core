@@ -2,7 +2,7 @@
 	//#region imports
 	import { Button } from "../../../../button/src";
 	import { parseClassList } from "../../../../common/functions";
-	import type { ButtonColor, ButtonVariant } from "../..";
+	import type { ButtonColor, ButtonVariant } from ".";
 	import { setActionType } from "../ActionsContext";
 	//#endregion
 

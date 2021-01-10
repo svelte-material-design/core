@@ -1,4 +1,7 @@
+@use "smui-theme";
 @use "@material/top-app-bar/mdc-top-app-bar";
-@use "./mixins";
+@use "@material/top-app-bar";
 
-@include mixins.smui-top-app-bar-core-styles;
+.svmd-top-app-bar--color--secondary {
+	@include top-app-bar.fill-color-accessible(secondary);
+}

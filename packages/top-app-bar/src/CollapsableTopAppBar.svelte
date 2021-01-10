@@ -1,0 +1,116 @@
+<script context="module" lang="ts">
+	let count: number = 0;
+</script>
+
+<script lang="ts">
+	//#region  imports
+	import { onMount, onDestroy, createEventDispatcher } from "svelte";
+	import { parseClassList } from "../../common/functions";
+	import type {
+		OnTopAppBarCollapsedChange,
+		TopAppBarColor,
+		TopAppBarVariant,
+	} from ".";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
+	import { TopAppBar } from "./internal";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/top-app-bar/CollapsableTopAppBar:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
+
+	export let color: TopAppBarColor = "primary";
+	export let dense: boolean = false;
+	export let prominent: boolean = false;
+	export let scrollTarget: HTMLElement = undefined;
+	export let alwaysCollapsed: boolean = false;
+
+	export let collapsed: boolean = alwaysCollapsed ?? false;
+	//#endregion
+
+	//#region implementation
+	const dispatch = createEventDispatcher<{
+		change: OnTopAppBarCollapsedChange;
+	}>();
+
+	let topAppBar: TopAppBar;
+	let observer: MutationObserver;
+
+	let contentClass: string;
+	$: if (!dense && !prominent) {
+		contentClass = "mdc-top-app-bar--short-fixed-adjust";
+	} else {
+		contentClass = undefined;
+	}
+
+	onMount(() => {
+		observer = new MutationObserver(() => {
+			collapsed = dom.classList.contains("mdc-top-app-bar--short-collapsed");
+			dispatch("change", {
+				dom,
+				collapsed,
+			});
+		});
+	});
+
+	onDestroy(() => {
+		observer?.disconnect();
+	});
+
+	function beforeInitialization() {
+		observer?.disconnect();
+	}
+
+	function afterInitialization() {
+		observer.observe(dom, {
+			attributes: true,
+			attributeFilter: ["class"],
+		});
+
+		collapsed = isCollapsed();
+	}
+
+	function initialize() {
+		beforeInitialization();
+		topAppBar.initialize();
+		afterInitialization();
+	}
+
+	function isCollapsed() {
+		return dom?.classList.contains("mdc-top-app-bar--short-collapsed") ?? false;
+	}
+	//#endregion
+</script>
+
+<svelte:options immutable={true} />
+
+<UseState value={alwaysCollapsed} onUpdate={initialize} />
+
+<TopAppBar
+	bind:this={topAppBar}
+	bind:dom
+	{id}
+	class={parseClassList([
+		className,
+		'mdc-top-app-bar--short',
+		[alwaysCollapsed, 'mdc-top-app-bar--short-collapsed'],
+	])}
+	{style}
+	variant="standard"
+	{color}
+	{dense}
+	{prominent}
+	{scrollTarget}
+	{contentClass}
+	{...$$restProps}
+	on:beforeInitialization={beforeInitialization}
+	on:afterInitialization={afterInitialization}
+	let:class={contentClass}>
+	<slot />
+	<slot name="content" slot="content" class={contentClass} />
+</TopAppBar>

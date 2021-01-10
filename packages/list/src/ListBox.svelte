@@ -53,8 +53,6 @@
 	let selectionGroup: SingleSelectionGroup | MultiSelectionGroup;
 	//#endregion
 
-	$: console.log(selectionGroup?.getItems());
-
 	async function handleAction({
 		targetIndex,
 		listSelectedIndex,

@@ -1,7 +1,7 @@
 <script lang="ts">
 	//#region imports
 	import { Ripple } from "../../../ripple";
-	import { getButtonBehaviour, ButtonColor, ButtonVariant } from "..";
+	import type { ButtonColor, ButtonVariant } from "..";
 	import { Button, A } from "../../../common/dom";
 	import { parseClassList } from "../../../common/functions";
 	//#endregion
@@ -24,7 +24,6 @@
 	//#endregion
 
 	//#region implementation
-	const behaviour = getButtonBehaviour();
 	let component: typeof Button | typeof A;
 	$: component = href == null || disabled ? Button : A;
 	//#endregion
@@ -43,11 +42,6 @@
 			'mdc-button',
 			[variant, `mdc-button--${variant}`],
 			[color === 'secondary', 'svmd-button--color--secondary'],
-			[
-				behaviour === 'card:action',
-				'mdc-card__action mdc-card__action--button',
-			],
-			[behaviour === 'top-app-bar:action', 'mdc-top-app-bar__action-item'],
 			[accessibleTouch, 'mdc-button--touch'],
 			[ripple, rippleClasses],
 		])}

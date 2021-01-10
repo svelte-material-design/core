@@ -47,7 +47,6 @@
 	const context$ = setTabContext(context);
 
 	$: $context$ = { ...Object.assign(context, { ...$context$, key, active }) };
-	$: console.log($context$);
 
 	function handleActiveChange() {
 		if (active) {

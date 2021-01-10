@@ -1,45 +1,36 @@
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
-	export { className as class };
-	export let style: string = "";
-
-	export let dom: HTMLAnchorElement | HTMLButtonElement = null;
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#region  imports
+	import { parseClassList } from "../../common/functions";
 	//#endregion
 
-	// Section
-	import { setButtonBehaviour } from "../../button";
+	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
 	export let align = "start";
-	export let toolbar = false;
+	//#endregion
 
-	setButtonBehaviour("top-app-bar:action");
+	//#region implementation
+	//#endregion
 </script>
+
+<svelte:options immutable={true} />
 
 <section
 	bind:this={dom}
-	{...props}
-	class="mdc-top-app-bar__section {className}
-    {align === 'start' ? 'mdc-top-app-bar__section--align-start' : ''}
-    {align === 'end' ? 'mdc-top-app-bar__section--align-end' : ''}"
+	{id}
+	class={parseClassList([
+		className,
+		'mdc-top-app-bar__section',
+		[align === 'start', 'mdc-top-app-bar__section--align-start'],
+		[align === 'end', 'mdc-top-app-bar__section--align-end'],
+	])}
 	{style}
-	use:forwardDOMEvents
-	{...toolbar ? { role: 'toolbar' } : {}}>
+	{...$$restProps}>
 	<slot />
 </section>
-
-<!-- <section
-  use:useActions={use}
-  use:forwardEvents
-  class=" mdc-top-app-bar__section {className}
-  {align === 'start' ? 'mdc-top-app-bar__section--align-start' : ''}
-  {align === 'end' ? 'mdc-top-app-bar__section--align-end' : ''}
-  "
-  {...toolbar ? { role: 'toolbar' } : {}}
-  {...exclude($$props, ['use', 'class', 'align', 'toolbar'])}>
-  <slot />
-</section> -->

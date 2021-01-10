@@ -1,9 +1,9 @@
 <script lang="ts">
-	//#region imports
+	//#region  imports
+	import "../../../../icon-button";
 	import { IconButton } from "../../../../icon-button/src/internal";
 	import { parseClassList } from "../../../../common/functions";
-	import type { IconButtonDOM, IconButtonColor } from ".";
-	import { setActionType } from "../ActionsContext";
+	import type { IconButtonColor } from ".";
 	//#endregion
 
 	//#region exports
@@ -12,7 +12,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: IconButtonDOM = undefined;
+	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
@@ -21,7 +21,6 @@
 	//#endregion
 
 	//#region implementation
-	setActionType("icon");
 	//#endregion
 </script>
 
@@ -29,17 +28,13 @@
 
 <IconButton
 	bind:dom
-	{...$$restProps}
 	{id}
-	class={parseClassList([
-		className,
-		'mdc-card__action',
-		'mdc-card__action--icon',
-	])}
+	class={parseClassList([className, 'mdc-top-app-bar__navigation-icon'])}
 	{style}
 	{disabled}
 	{color}
 	{ripple}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup

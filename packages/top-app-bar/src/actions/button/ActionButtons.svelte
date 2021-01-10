@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../common/functions";
+	import { parseClassList } from "../../../../common/functions";
 	//#endregion
 
 	//#region exports
@@ -12,9 +12,6 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 	//#endregion
-
-	//#region implementation
-	//#endregion
 </script>
 
 <svelte:options immutable={true} />
@@ -22,7 +19,7 @@
 <div
 	bind:this={dom}
 	{id}
-	class={parseClassList([className, 'mdc-top-app-bar__row'])}
+	class={parseClassList([className, 'mdc-card__action-buttons'])}
 	{style}
 	{...$$restProps}>
 	<slot />

@@ -1,7 +1,9 @@
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../common/functions";
-	import { A, Span } from "../../common/dom";
+	import type { IconDOM, IconType } from ".";
+	import { Icon } from "../../../icon-button/src";
+	import { Icon as ButtonIcon } from "../../../button/src";
+	import { getActionType } from "./ActionsContext";
 	//#endregion
 
 	//#region exports
@@ -10,25 +12,26 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLAnchorElement | HTMLSpanElement = undefined;
+	export let dom: IconDOM = undefined;
 	//#endregion
 
-	export let href: string = undefined;
+	export let type: IconType = "icon";
 	//#endregion
 
 	//#region implementation
-	let component = href ? A : Span;
+	const parent = getActionType();
 	//#endregion
 </script>
 
 <svelte:options immutable={true} />
 
 <svelte:component
-	this={component}
+	this={parent === 'icon' ? Icon : ButtonIcon}
 	bind:dom
 	{id}
-	class={parseClassList([className, 'mdc-top-app-bar__title'])}
+	class={className}
 	{style}
+	{type}
 	{...$$restProps}>
 	<slot />
 </svelte:component>
