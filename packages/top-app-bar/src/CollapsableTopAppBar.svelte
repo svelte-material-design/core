@@ -6,11 +6,7 @@
 	//#region  imports
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
 	import { parseClassList } from "../../common/functions";
-	import type {
-		OnTopAppBarCollapsedChange,
-		TopAppBarColor,
-		TopAppBarVariant,
-	} from ".";
+	import type { OnTopAppBarCollapsedChange, TopAppBarColor } from ".";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { TopAppBar } from "./internal";
 	//#endregion
@@ -50,11 +46,17 @@
 
 	onMount(() => {
 		observer = new MutationObserver(() => {
-			collapsed = dom.classList.contains("mdc-top-app-bar--short-collapsed");
-			dispatch("change", {
-				dom,
-				collapsed,
-			});
+			const newCollapsed = isCollapsed();
+			setTimeout(
+				() => {
+					collapsed = newCollapsed;
+					dispatch("change", {
+						dom,
+						collapsed,
+					});
+				},
+				!newCollapsed ? 100 : 0
+			);
 		});
 	});
 
@@ -108,6 +110,7 @@
 	{scrollTarget}
 	{contentClass}
 	{...$$restProps}
+	slots={$$slots}
 	on:beforeInitialization={beforeInitialization}
 	on:afterInitialization={afterInitialization}
 	let:class={contentClass}>

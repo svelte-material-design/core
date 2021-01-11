@@ -90,7 +90,9 @@
 		[dense, 'mdc-top-app-bar--dense'],
 	])}
 	{style}>
-	<slot class={contentClass} />
+	<div class="mdc-top-app-bar__row">
+		<slot class={contentClass} />
+	</div>
 </header>
 {#if $$slots.content && slots && slots.content}
 	<div class={parseClassList([contentClassName, contentClass])}>
