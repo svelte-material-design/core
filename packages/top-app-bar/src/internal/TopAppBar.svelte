@@ -3,7 +3,11 @@
 	import { MDCTopAppBar } from "@material/top-app-bar";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { parseClassList } from "../../../common/functions";
-	import type { TopAppBarVariant, TopAppBarColor } from "..";
+	import type {
+		TopAppBarVariant,
+		TopAppBarColor,
+		OnTopAppBarNavClick,
+	} from "..";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	//#endregion
 
@@ -31,6 +35,7 @@
 	const dispatch = createEventDispatcher<{
 		beforeInitialization: void;
 		afterInitialization: void;
+		nav: OnTopAppBarNavClick;
 	}>();
 	let topAppBar: MDCTopAppBar;
 
@@ -63,6 +68,9 @@
 	export function initialize() {
 		topAppBar?.destroy();
 		topAppBar = new MDCTopAppBar(dom);
+		topAppBar.listen("MDCTopAppBar:nav", () => {
+			dispatch("nav");
+		});
 		updateScrollTarget();
 	}
 

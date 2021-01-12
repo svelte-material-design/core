@@ -43,6 +43,7 @@
 	{scrollTarget}
 	{...$$restProps}
 	slots={$$slots}
+	on:nav
 	let:class={contentClass}>
 	<slot />
 	<slot name="content" slot="content" class={contentClass} />

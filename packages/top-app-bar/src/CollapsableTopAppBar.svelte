@@ -113,6 +113,7 @@
 	slots={$$slots}
 	on:beforeInitialization={beforeInitialization}
 	on:afterInitialization={afterInitialization}
+	on:nav
 	let:class={contentClass}>
 	<slot />
 	<slot name="content" slot="content" class={contentClass} />
