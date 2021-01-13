@@ -25,7 +25,6 @@
 
 <Graphic
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -33,6 +32,7 @@
 		[type === 'icon' && className == undefined, 'material-icons'],
 	])}
 	{style}
-	{type}>
+	{type}
+	{...$$restProps}>
 	<slot />
 </Graphic>

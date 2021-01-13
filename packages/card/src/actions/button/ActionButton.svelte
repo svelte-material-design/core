@@ -31,7 +31,6 @@
 
 <Button
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -44,6 +43,7 @@
 	{variant}
 	{disabled}
 	{accessibleTouch}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup

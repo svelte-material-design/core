@@ -24,7 +24,6 @@
 
 <div
 	bind:this={dom}
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -32,6 +31,7 @@
 		[aspectRatio === 'square', 'mdc-card__media--square'],
 		[aspectRatio === '16x9', 'mdc-card__media--16-9'],
 	])}
-	{style}>
+	{style}
+	{...$$restProps}>
 	<slot />
 </div>

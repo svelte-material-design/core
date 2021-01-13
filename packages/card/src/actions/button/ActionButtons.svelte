@@ -18,9 +18,9 @@
 
 <div
 	bind:this={dom}
-	{...$$restProps}
 	{id}
 	class={parseClassList([className, 'mdc-card__action-buttons'])}
-	{style}>
+	{style}
+	{...$$restProps}>
 	<slot />
 </div>

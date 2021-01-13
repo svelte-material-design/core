@@ -33,7 +33,6 @@
 
 <InternalButton
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={className}
 	{variant}
@@ -43,6 +42,7 @@
 	{disabled}
 	{href}
 	{accessibleTouch}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup

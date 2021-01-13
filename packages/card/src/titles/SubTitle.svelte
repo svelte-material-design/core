@@ -19,6 +19,6 @@
 	//#endregion
 </script>
 
-<Typography bind:dom {...$$restProps} {id} class={className} {style} {variant}>
+<Typography bind:dom {id} class={className} {style} {variant} {...$$restProps}>
 	<slot />
 </Typography>

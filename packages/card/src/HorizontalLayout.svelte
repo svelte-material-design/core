@@ -21,9 +21,9 @@
 
 <div
 	bind:this={dom}
-	{...$$restProps}
 	{id}
 	class={parseClassList([className, 'svmd-card__horizontal-layout'])}
-	{style}>
+	{style}
+	{...$$restProps}>
 	<slot />
 </div>

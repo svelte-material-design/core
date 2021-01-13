@@ -18,6 +18,7 @@
 	{...$$restProps}
 	{id}
 	class={parseClassList([className, 'mdc-button__label'])}
-	{style}>
+	{style}
+	{...$$restProps}>
 	<slot />
 </span>

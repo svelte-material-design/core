@@ -30,7 +30,6 @@
 
 <IconButtonToggle
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={className}
 	{style}
@@ -40,6 +39,7 @@
 	{color}
 	{ariaLabelOn}
 	{ariaLabelOff}
+	{...$$restProps}
 	on:change
 	on:click
 	on:mousedown

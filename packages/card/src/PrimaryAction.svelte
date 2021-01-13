@@ -25,7 +25,6 @@
 <Ripple target={ripple ? dom : undefined} let:rippleClasses>
 	<div
 		bind:this={dom}
-		{...$$restProps}
 		{id}
 		class={parseClassList([
 			className,
@@ -34,6 +33,7 @@
 		])}
 		{style}
 		tab-index="0"
+		{...$$restProps}
 		on:click
 		on:mousedown
 		on:mouseup

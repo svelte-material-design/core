@@ -29,7 +29,6 @@
 
 <IconButton
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -40,6 +39,7 @@
 	{disabled}
 	{color}
 	{ripple}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup

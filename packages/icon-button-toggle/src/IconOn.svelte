@@ -25,7 +25,6 @@
 
 <Icon
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -33,6 +32,7 @@
 		'mdc-icon-button__icon--on',
 	])}
 	{style}
-	{type}>
+	{type}
+	{...$$restProps}>
 	<slot />
 </Icon>

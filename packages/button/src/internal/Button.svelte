@@ -35,7 +35,6 @@
 	<svelte:component
 		this={component}
 		bind:dom
-		{...$$restProps}
 		{id}
 		class={parseClassList([
 			className,
@@ -48,6 +47,7 @@
 		{style}
 		{disabled}
 		{href}
+		{...$$restProps}
 		on:click
 		on:mousedown
 		on:mouseup

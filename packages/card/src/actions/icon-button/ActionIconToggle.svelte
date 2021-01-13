@@ -32,7 +32,6 @@
 
 <IconButtonToggle
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -46,6 +45,7 @@
 	{ripple}
 	{ariaLabelOn}
 	{ariaLabelOff}
+	{...$$restProps}
 	on:change
 	on:click
 	on:mousedown

@@ -87,7 +87,6 @@
 
 <header
 	bind:this={dom}
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -97,7 +96,8 @@
 		[prominent, 'mdc-top-app-bar--prominent'],
 		[dense, 'mdc-top-app-bar--dense'],
 	])}
-	{style}>
+	{style}
+	{...$$restProps}>
 	<div class="mdc-top-app-bar__row">
 		<slot class={contentClass} />
 	</div>

@@ -24,7 +24,6 @@
 
 <Graphic
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
@@ -33,6 +32,7 @@
 	])}
 	{style}
 	{type}
-	aria-hidden>
+	aria-hidden
+	{...$$restProps}>
 	<slot />
 </Graphic>

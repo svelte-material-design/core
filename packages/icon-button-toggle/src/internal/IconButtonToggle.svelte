@@ -77,7 +77,6 @@
 
 <IconButton
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={className}
 	{style}
@@ -86,6 +85,7 @@
 	ripple={false}
 	data-aria-label-on={ariaLabelOn}
 	data-aria-label-off={ariaLabelOff}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup

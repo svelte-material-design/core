@@ -21,9 +21,9 @@
 
 <div
 	bind:this={dom}
-	{...$$restProps}
 	{id}
 	class={parseClassList([className, 'mdc-card__media-content'])}
-	{style}>
+	{style}
+	{...$$restProps}>
 	<slot />
 </div>

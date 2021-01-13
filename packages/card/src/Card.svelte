@@ -28,13 +28,13 @@
 
 <div
 	bind:this={dom}
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
 		'mdc-card',
 		[variant === 'outlined', 'mdc-card--outlined'],
 	])}
-	{style}>
+	{style}
+	{...$$restProps}>
 	<slot />
 </div>

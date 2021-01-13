@@ -24,8 +24,8 @@
 	{id}
 	class={className}
 	{style}
-	{...$$restProps}
 	align="end"
-	role="toolbar">
+	role="toolbar"
+	{...$$restProps}>
 	<slot />
 </Section>

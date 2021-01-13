@@ -104,6 +104,7 @@
 	{variant}
 	{disabled}
 	{href}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup

@@ -23,13 +23,13 @@
 
 <div
 	bind:this={dom}
-	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
 		'mdc-card__actions',
 		[fullBleed, 'mdc-card__actions--full-bleed'],
 	])}
-	{style}>
+	{style}
+	{...$$restProps}>
 	<slot />
 </div>

@@ -28,10 +28,10 @@
 <svelte:component
 	this={parent === 'icon' ? Icon : ButtonIcon}
 	bind:dom
-	{...$$restProps}
 	{id}
 	class={className}
 	{style}
-	{type}>
+	{type}
+	{...$$restProps}>
 	<slot />
 </svelte:component>
