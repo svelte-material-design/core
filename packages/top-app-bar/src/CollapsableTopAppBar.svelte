@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -89,8 +91,6 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={alwaysCollapsed} onUpdate={initialize} />
 
 <TopAppBar
@@ -99,8 +99,8 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-top-app-bar--short',
-		[alwaysCollapsed, 'mdc-top-app-bar--short-collapsed'],
+		"mdc-top-app-bar--short",
+		[alwaysCollapsed, "mdc-top-app-bar--short-collapsed"],
 	])}
 	{style}
 	variant="standard"
@@ -114,7 +114,8 @@
 	on:beforeInitialization={beforeInitialization}
 	on:afterInitialization={afterInitialization}
 	on:nav
-	let:class={contentClass}>
+	let:contentClass
+>
 	<slot />
-	<slot name="content" slot="content" class={contentClass} />
+	<slot name="content" slot="content" className={contentClass} />
 </TopAppBar>

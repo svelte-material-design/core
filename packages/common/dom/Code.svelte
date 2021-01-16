@@ -9,7 +9,7 @@
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "./Props";
+	import type { BaseProps } from "./Props";
 	export let props: BaseProps = {};
 	//#endregion
 

@@ -73,7 +73,8 @@
 		"@material/typography": "^9.0.0",
 		"@raythurnevoid/svelte-hooks": "^0.0.2",
 		"@raythurnevoid/svelte-group-components": "^0.0.5",
-		"@raythurnevoid/svelte-context-enhanced": "^0.0.1"
+		"@raythurnevoid/svelte-context-enhanced": "^0.0.1",
+		"@raythurnevoid/strings-filter": "^0.0.2"
 	},
 	"devDependencies": {
 		"@tsconfig/svelte": "^1.0.10",

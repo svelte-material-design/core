@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region  imports
 	import { MDCTopAppBar } from "@material/top-app-bar";
@@ -80,8 +82,6 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={[dense, prominent, variant]} onUpdate={initializeNotified} />
 <UseState value={scrollTarget} onUpdate={updateScrollTarget} />
 
@@ -90,20 +90,17 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-top-app-bar',
-		[variant === 'fixed', 'mdc-top-app-bar--fixed'],
-		[color === 'secondary', 'svmd-top-app-bar--color--secondary'],
-		[prominent, 'mdc-top-app-bar--prominent'],
-		[dense, 'mdc-top-app-bar--dense'],
+		"mdc-top-app-bar",
+		[variant === "fixed", "mdc-top-app-bar--fixed"],
+		[color === "secondary", "svmd-top-app-bar--color--secondary"],
+		[prominent, "mdc-top-app-bar--prominent"],
+		[dense, "mdc-top-app-bar--dense"],
 	])}
 	{style}
-	{...$$restProps}>
+	{...$$restProps}
+>
 	<div class="mdc-top-app-bar__row">
-		<slot class={contentClass} />
+		<slot {contentClass} />
 	</div>
 </header>
-{#if $$slots.content && slots && slots.content}
-	<div class={parseClassList([contentClassName, contentClass])}>
-		<slot name="content" />
-	</div>
-{/if}
+<slot name="content" className={contentClass} />

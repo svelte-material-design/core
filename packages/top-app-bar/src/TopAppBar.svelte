@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -28,8 +30,6 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <TopAppBar
 	bind:dom
 	{$$restProps}
@@ -44,7 +44,8 @@
 	{...$$restProps}
 	slots={$$slots}
 	on:nav
-	let:class={contentClass}>
+	let:contentClass
+>
 	<slot />
-	<slot name="content" slot="content" class={contentClass} />
+	<slot name="content" slot="content" className={contentClass} />
 </TopAppBar>
