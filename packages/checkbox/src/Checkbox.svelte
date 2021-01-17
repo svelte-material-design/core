@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { Selectable } from "../../common/hoc";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { Checkbox } from "./internal";
 	//#endregion
 
@@ -16,19 +16,17 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/checkbox/Checkbox:${count++}`;
-	export let dom: HTMLInputElement = undefined;
+	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
 	export let checked: boolean = false;
 	export let value: string = undefined;
 	export let allowIndeterminated: boolean = false;
 	export let ripple: boolean = true;
-	export let expandedTouchTarget: boolean = true;
+	export let accessibleTouch: boolean = true;
 	export let density: number = undefined;
 
-	export let name: string = undefined;
 	export let disabled: boolean = false;
-	export let required: boolean = false;
 	export let readonly: boolean = undefined;
 	//#endregion
 
@@ -39,20 +37,25 @@
 <Selectable bind:value bind:selected={checked}>
 	<Checkbox
 		bind:dom
+		bind:checked
 		class={className}
 		{style}
 		{id}
-		{checked}
 		{value}
 		{allowIndeterminated}
 		{ripple}
-		{expandedTouchTarget}
+		{accessibleTouch}
 		{density}
-		{name}
 		{disabled}
-		{required}
 		{readonly}
 		{...$$restProps}
 		on:change
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
 	/>
 </Selectable>

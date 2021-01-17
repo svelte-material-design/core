@@ -7,7 +7,7 @@
 	import type { CheckboxContext } from "../";
 	import { getFormFieldContext } from "../../../form-field";
 	import { createEventDispatcher } from "svelte";
-	import type { CheckboxChangeEvent } from "../types";
+	import type { OnCheckboxChangeEvent } from "../types";
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	import { Checkbox } from "../dom";
 	//#endregion
@@ -18,19 +18,17 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLInputElement = undefined;
+	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
 	export let checked: boolean = false;
 	export let value: string = undefined;
 	export let allowIndeterminated: boolean = false;
 	export let ripple: boolean = true;
-	export let expandedTouchTarget: boolean = true;
+	export let accessibleTouch: boolean = true;
 	export let density: number = undefined;
 
-	export let name: string = undefined;
 	export let disabled: boolean = false;
-	export let required: boolean = false;
 	export let readonly: boolean = undefined;
 
 	export let disableMDCInstance: boolean = false;
@@ -46,11 +44,11 @@
 
 	//#region implementation
 	const dispatch = createEventDispatcher<{
-		change: CheckboxChangeEvent;
+		change: OnCheckboxChangeEvent;
 	}>();
 
-	let inputId: string;
 	let inputElement: HTMLInputElement;
+	let inputId: string;
 
 	$: $formFieldContext$?.setInputId(inputId);
 	$: if (!allowIndeterminated && checked == null)
@@ -85,7 +83,7 @@
 	});
 
 	function reistantiate() {
-		if (disableMDCInstance !== false) {
+		if (disableMDCInstance !== true) {
 			checkbox?.destroy();
 			checkbox = new MDCCheckbox(dom);
 
@@ -151,12 +149,12 @@
 			} else {
 				setChecked(checkbox.checked);
 			}
-
-			dispatch("change", {
-				checked,
-				dom,
-			});
 		}
+
+		dispatch("change", {
+			checked,
+			dom,
+		});
 	}
 	//#endregion
 </script>
@@ -174,13 +172,18 @@
 	{id}
 	{checked}
 	{value}
-	{expandedTouchTarget}
+	{accessibleTouch}
 	{density}
-	{name}
 	{disabled}
-	{required}
 	{readonly}
 	{...$$restProps}
 	on:change={handleChange}
 	on:keyup={handleKeyPress}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
 />

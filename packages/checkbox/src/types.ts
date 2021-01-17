@@ -1,8 +1,8 @@
-export interface CheckboxChangeEvent {
+export interface OnCheckboxChangeEvent {
 	checked: boolean;
-	dom: HTMLInputElement;
+	dom: HTMLDivElement;
 }
 
-export interface CheckboxGroupChangeEvent {
+export interface OnCheckboxGroupChangeEvent {
 	value: string[];
 }

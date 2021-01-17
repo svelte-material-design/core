@@ -11,17 +11,15 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLInputElement = undefined;
+	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
 	export let checked: boolean = false;
 	export let value: string = undefined;
-	export let expandedTouchTarget: boolean = true;
+	export let accessibleTouch: boolean = true;
 	export let density: number = undefined;
 
-	export let name: string = undefined;
 	export let disabled: boolean = false;
-	export let required: boolean = false;
 	export let readonly: boolean = undefined;
 
 	export let inputElement: HTMLInputElement = undefined;
@@ -53,19 +51,18 @@
 			],
 			[behaviour === "data-table-row", "mdc-data-table__row-checkbox"],
 -->
-<div class={expandedTouchTarget ? "mdc-touch-target-wrapper" : undefined}>
+<div class={accessibleTouch ? "mdc-touch-target-wrapper" : undefined}>
 	<div
 		bind:this={dom}
 		{id}
 		class={classList([
 			className,
 			"mdc-checkbox",
-			[expandedTouchTarget, "mdc-checkbox--touch"],
+			[accessibleTouch, "mdc-checkbox--touch"],
 			[disabled, "mdc-checkbox--disabled"],
 			[density, `smui-checkbox--dense--${Math.abs(density)}`],
 		])}
 		{style}
-		{...$$restProps}
 	>
 		<input
 			bind:this={inputElement}
@@ -73,14 +70,19 @@
 			class="mdc-checkbox__native-control"
 			type="checkbox"
 			disabled={isInputDisabled(readonly, disabled)}
-			{name}
 			{checked}
 			{readonly}
 			{value}
-			{required}
 			data-indeterminate={checked == null ? "true" : undefined}
+			{...$$restProps}
 			on:change
+			on:click
+			on:mousedown
+			on:mouseup
+			on:keydown
 			on:keyup
+			on:focus
+			on:blur
 		/>
 		<div class="mdc-checkbox__background">
 			<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
