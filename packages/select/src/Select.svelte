@@ -1,9 +1,11 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	import { SelectVariant } from "./";
 	import {
 		SelectionGroup,
 		SelectionGroupBinding,
-	} from "@raythurnevoid/svelte-group-components/esm/selectable";
+	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { SelectImpl } from "./internal";
 
 	//#region exports
@@ -47,15 +49,14 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <SelectionGroup
 	bind:value
 	on:optionsChange={handleOptionsUpdated}
 	{nullable}
 	selectionType="single"
 	{group}
-	let:group>
+	let:group
+>
 	<SelectImpl
 		bind:this={selectImpl}
 		bind:dom
@@ -80,7 +81,8 @@
 		{customValidation}
 		slots={$$slots}
 		{group}
-		on:change>
+		on:change
+	>
 		<slot name="leadingIcon" slot="leadingIcon" />
 		<slot name="label" slot="label" />
 		<slot name="options" slot="options" />

@@ -19,7 +19,7 @@
 
 	import { Item } from "../../list/src/internal";
 	import { Content } from "../../list";
-	import { Selectable } from "@raythurnevoid/svelte-group-components/esm/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { getSelectContext } from "./SelectContext";
 
 	export let value: string = "";
@@ -42,7 +42,8 @@
 		{selected}
 		{disabled}
 		role="option"
-		on:domEvent={forwardDOMEvents}>
+		on:domEvent={forwardDOMEvents}
+	>
 		<Content>
 			<slot />
 		</Content>

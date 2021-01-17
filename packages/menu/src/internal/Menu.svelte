@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
 	import { parseClassList } from "../../../common/functions";
@@ -25,7 +27,7 @@
 	import {
 		SelectionGroupBinding,
 		SelectionGroup,
-	} from "@raythurnevoid/svelte-group-components/esm/selectable";
+	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { createEventDispatcher, onMount, tick } from "svelte";
 
 	//#region exports
@@ -88,20 +90,19 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <SelectionGroup
 	{selectionType}
 	bind:this={selectionGroup}
 	bind:value
 	{group}
-	let:group>
+	let:group
+>
 	<MenuImpl
 		bind:dom
 		bind:open
 		{id}
 		props={{ ...props }}
-		class={parseClassList([className, 'mdc-menu'])}
+		class={parseClassList([className, "mdc-menu"])}
 		{style}
 		{quickOpen}
 		{anchor}
@@ -121,7 +122,8 @@
 		{group}
 		on:select={(event) => handleSelect(event.detail)}
 		on:open
-		on:close>
+		on:close
+	>
 		<slot />
 	</MenuImpl>
 </SelectionGroup>

@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region  imports
 	import { parseClassList } from "../../common/functions";
@@ -20,19 +22,18 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <Graphic
 	bind:dom
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-button__icon',
-		[type === 'icon' && className == undefined, 'material-icons'],
+		"mdc-button__icon",
+		[type === "icon" && className == undefined, "material-icons"],
 	])}
 	{style}
 	{type}
 	aria-hidden
-	{...$$restProps}>
+	{...$$restProps}
+>
 	<slot />
 </Graphic>

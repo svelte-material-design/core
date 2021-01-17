@@ -21,7 +21,7 @@
 		SelectionGroupBinding,
 		SingleSelectionGroup,
 		MultiSelectionGroup,
-	} from "@raythurnevoid/svelte-group-components/esm/selectable";
+	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { ListImpl, OnListActionEvent } from "./internal";
 	import { ListOrientation, OnListChangeEvent, ListType } from ".";
 	import { SelectionType } from "../../common/hoc";
@@ -93,7 +93,8 @@
 		bind:this={selectionGroup}
 		bind:value
 		{group}
-		let:group>
+		let:group
+	>
 		<ListImpl
 			bind:dom
 			{props}
@@ -110,7 +111,8 @@
 			{density}
 			{wrapFocus}
 			{group}
-			on:action={(event) => handleAction(event.detail)}>
+			on:action={(event) => handleAction(event.detail)}
+		>
 			<slot />
 		</ListImpl>
 	</svelte:component>
@@ -131,7 +133,8 @@
 		{density}
 		{wrapFocus}
 		{group}
-		on:action={(event) => handleAction(event.detail)}>
+		on:action={(event) => handleAction(event.detail)}
+	>
 		<slot />
 	</ListImpl>
 {/if}

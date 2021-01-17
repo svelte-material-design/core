@@ -1,33 +1,30 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	let className = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/list/Item:${count++}`;
-
-	import { ItemRole } from "../types";
-	export let dom: HTMLLIElement = undefined;
-
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// Item
-	//#region import
+	//#region  imports
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getListContext } from "../";
-	import { ItemContext, OnItemSelectedEvent } from ".";
-	import { Selectable } from "@raythurnevoid/svelte-group-components/esm/selectable";
+	import type { ItemContext, OnItemSelectedEvent } from ".";
+	import type { ItemRole } from "..";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { Item } from "../internal";
-
+	import { setItemContext } from "./ItemContext";
 	//#endregion
 
 	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/list/Item:${count++}`;
+	export let dom: HTMLLIElement = undefined;
+	//#endregion
+
 	export let ripple: boolean = true;
 	export let selected: boolean = false;
 	export let disabled: boolean = false;
@@ -39,6 +36,7 @@
 	export let role: ItemRole = undefined;
 	//#endregion
 
+	//#region implementation
 	const dispatch = createEventDispatcher<{
 		change: OnItemSelectedEvent;
 	}>();
@@ -73,7 +71,9 @@
 		},
 	} as any) as ItemContext;
 
-	$: Object.assign(context, {
+	const context$ = setItemContext(context);
+
+	$: $context$ = Object.assign(context, {
 		disabled,
 		selected,
 		tabindex,
@@ -102,9 +102,8 @@
 	function handleChange() {
 		dispatch("change", { dom, selected });
 	}
+	//#endregion
 </script>
-
-<svelte:options immutable={true} />
 
 <UseState value={ripple} onUpdate={() => $listContext$.reinitialize()} />
 
@@ -114,10 +113,10 @@
 	group={$listContext$.group}
 	{dom}
 	{value}
-	on:change={handleChange}>
+	on:change={handleChange}
+>
 	<Item
 		bind:dom
-		{props}
 		{id}
 		class={className}
 		{style}
@@ -128,12 +127,11 @@
 		role={_role}
 		{ariaLabel}
 		{ripple}
-		{listRole}>
-		<slot name="leading" slot="leading" />
-		{#if role === 'option' && listRole === 'listbox' && $listContext$.selectionType === 'multi'}
-			<input style="display: none;" type="checkbox" checked={selected} />
-		{/if}
-		<slot {selected} />
-		<slot name="trailing" slot="trailing" />
+		{listRole}
+		{...$$restProps}
+		let:leadingClassName
+		let:trailingClassName
+	>
+		<slot {selected} {leadingClassName} {trailingClassName} />
 	</Item>
 </Selectable>

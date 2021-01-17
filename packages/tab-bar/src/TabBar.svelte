@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -10,7 +12,7 @@
 	import { TabScroller, TabIndicatorTransition } from ".";
 	import type { OnTabBarChange, TabContext } from ".";
 	import { parseClassList } from "../../common/functions";
-	import { SingleSelectionGroup } from "@raythurnevoid/svelte-group-components/esm/selectable";
+	import { SingleSelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { setTabBarContext } from "./TabBarContext";
 	//#endregion
 
@@ -130,21 +132,21 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={active} onUpdate={handleActiveValueChange} />
 
 <SingleSelectionGroup
 	bind:this={selectionGroup}
 	bind:value={active}
-	on:optionsChange={initialize}>
+	on:optionsChange={initialize}
+>
 	<div
 		bind:this={dom}
 		{...$$restProps}
 		{id}
-		class={parseClassList([className, 'mdc-tab-bar'])}
+		class={parseClassList([className, "mdc-tab-bar"])}
 		{style}
-		role="tablist">
+		role="tablist"
+	>
 		<TabScroller>
 			<slot />
 		</TabScroller>

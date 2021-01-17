@@ -2,7 +2,7 @@ import {
 	createContextStore,
 	createContext,
 } from "@raythurnevoid/svelte-context-enhanced";
-import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
+import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 
 export const [
 	createSelectContext,

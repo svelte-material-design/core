@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 
@@ -8,25 +10,14 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../../common/functions";
-	let className = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/list/List:${count++}`;
-
-	export let dom: HTMLDivElement | HTMLUListElement = undefined;
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// List
-	//#region imports
+	//#region  imports
 	import { MDCList, MDCListActionEvent } from "@material/list";
 	import { onDestroy, createEventDispatcher, onMount, tick } from "svelte";
 	import { Nav, Ul } from "../../../common/dom";
-	import { SelectionType } from "../../../common/hoc";
-	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
+	import type {
+		SelectionGroupBinding,
+		SelectionType,
+	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import {
 		ListRole,
 		ListOrientation,
@@ -35,9 +26,18 @@
 		createListContext,
 	} from "..";
 	import { getMenuSurfaceContext } from "../../../menu-surface";
+	import { parseClassList } from "../../../common/functions";
 	//#endregion
 
 	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/list/List:${count++}`;
+	export let dom: HTMLDivElement | HTMLUListElement = undefined;
+	//#endregion
+
 	export let role: ListRole | "listbox" | "menu" = "list";
 	export let orientation: ListOrientation = "vertical";
 	export let ariaMultiselectable: boolean = undefined;
@@ -67,10 +67,7 @@
 	export let disableMDCInstance: boolean = false;
 	//#endregion
 
-	const dispatch = createEventDispatcher<{
-		action: OnListActionEvent;
-	}>();
-
+	//#region implementation
 	//#region local variables
 	let list: MDCList;
 
@@ -106,6 +103,9 @@
 		selectionType,
 	};
 	//#endregion
+	const dispatch = createEventDispatcher<{
+		action: OnListActionEvent;
+	}>();
 
 	onMount(async () => {
 		await tick();
@@ -116,7 +116,6 @@
 		list && list.destroy();
 	});
 
-	// Keep MDCList properties updated
 	$: if (list) {
 		if (list.singleSelection !== (selectionType === "single")) {
 			list.singleSelection = selectionType === "single";
@@ -177,9 +176,8 @@
 		"aria-multiselectable": ariaMultiselectable,
 		tabindex: role === "menu" ? "-1" : null,
 	};
+	//#endregion
 </script>
-
-<svelte:options immutable={true} />
 
 <svelte:component
 	this={component}
@@ -188,19 +186,20 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-list',
-		[dense, 'mdc-list--dense'],
+		"mdc-list",
+		[dense, "mdc-list--dense"],
 		[density, `smui-list--density--${Math.abs(density)}`],
-		[itemsRows === 2, 'mdc-list--two-line'],
-		[itemsRows === 3, 'smui-list--three-line'],
-		[orientation === 'horizontal', 'smui-list--horizontal'],
-		[type === 'textual', 'mdc-list--textual-list'],
-		[type === 'avatar', 'mdc-list--avatar-list'],
-		[type === 'icon', 'mdc-list--icon-list'],
-		[type === 'image', 'mdc-list--image-list'],
-		[type === 'thumbnail', 'mdc-list--thumbnail-list'],
-		[type === 'video', 'mdc-list--video-list'],
+		[itemsRows === 2, "mdc-list--two-line"],
+		[itemsRows === 3, "smui-list--three-line"],
+		[orientation === "horizontal", "smui-list--horizontal"],
+		[type === "textual", "mdc-list--textual-list"],
+		[type === "avatar", "mdc-list--avatar-list"],
+		[type === "icon", "mdc-list--icon-list"],
+		[type === "image", "mdc-list--image-list"],
+		[type === "thumbnail", "mdc-list--thumbnail-list"],
+		[type === "video", "mdc-list--video-list"],
 	])}
-	{style}>
+	{style}
+>
 	<slot />
 </svelte:component>

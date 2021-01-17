@@ -1,31 +1,30 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../common/functions";
-	let className = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/radio/Radio:${count++}`;
-
-	export let dom: HTMLInputElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// Radio
+	//#region  imports
 	import { MDCRadio } from "@material/radio";
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
 	import { getCreateRadioMDCIstance, RadioContext } from "./RadioContext";
 	import { getFormFieldContext } from "../../form-field";
 	import { Selectable } from "../../common/hoc";
-	import { RadioChangeEvent } from "./";
+	import type { RadioChangeEvent } from "./";
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
+	import { Radio } from "./dom";
+	//#endregion
 
 	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/radio/Radio:${count++}`;
+	export let dom: HTMLInputElement = undefined;
+	//#endregion
+
 	export let value: string = undefined;
 	export let checked: boolean = false;
 	export let ripple: boolean = true;
@@ -46,12 +45,13 @@
 	}
 	//#endregion
 
+	//#region implementation
 	const dispatch = createEventDispatcher<{
 		change: RadioChangeEvent;
 	}>();
 
 	let inputElement: HTMLInputElement;
-	let inputId: string = `${id}--input`;
+	let inputId: string;
 
 	$: $formFieldContext$?.setInputId(inputId);
 
@@ -122,51 +122,28 @@
 			checked,
 		});
 	}
-
-	function isInputDisabled(
-		readonlyValue: typeof readonly = readonly,
-		disabledValue: typeof disabled = disabled
-	) {
-		return readonlyValue ? readonlyValue : disabledValue;
-	}
+	//#endregion
 </script>
-
-<svelte:options immutable={true} />
 
 <Use effect hook={() => setFormFieldInput(radio)} when={!!radio} />
 <UseState value={ripple} onUpdate={istantiate} />
 
 <Selectable bind:value bind:selected={checked}>
-	<div class={expandedTouchTarget ? 'mdc-touch-target-wrapper' : undefined}>
-		<div
-			bind:this={dom}
-			{...props}
-			{id}
-			class={parseClassList([
-				className,
-				'mdc-radio',
-				[expandedTouchTarget, 'mdc-radio--touch'],
-				[disabled, 'mdc-radio--disabled'],
-				[density, `smui-radio--dense--${Math.abs(density)}`],
-			])}
-			{style}>
-			<input
-				bind:this={inputElement}
-				class="mdc-radio__native-control"
-				id={inputId}
-				type="radio"
-				disabled={isInputDisabled(readonly, disabled)}
-				{name}
-				{checked}
-				{readonly}
-				{value}
-				{required}
-				on:change={handleChange} />
-			<div class="mdc-radio__background">
-				<div class="mdc-radio__outer-circle" />
-				<div class="mdc-radio__inner-circle" />
-			</div>
-			<div class="mdc-radio__ripple" />
-		</div>
-	</div>
+	<Radio
+		bind:dom
+		bind:inputElement
+		bind:inputId
+		{className}
+		{style}
+		{id}
+		{value}
+		{checked}
+		{expandedTouchTarget}
+		{density}
+		{name}
+		{disabled}
+		{required}
+		{readonly}
+		on:change={handleChange}
+	/>
 </Selectable>

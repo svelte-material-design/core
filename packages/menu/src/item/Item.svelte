@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -20,7 +22,7 @@
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { Item } from "../../../list/src/internal";
 	import { getMenuContext } from "..";
-	import { Selectable } from "@raythurnevoid/svelte-group-components/esm/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { ItemContext } from ".";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import { OnItemSelectedEvent, OnItemChangeEvent } from ".";
@@ -83,8 +85,6 @@
 	});
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={ripple} onUpdate={() => $menuContext$.reinitialize()} />
 
 {#if $menuContext$.selectionType}
@@ -102,7 +102,8 @@
 			role="menuitem"
 			{ariaLabel}
 			{disabled}
-			{ripple}>
+			{ripple}
+		>
 			<slot name="leading" slot="leading" />
 			<slot />
 			<slot name="trailing" slot="trailing" />
@@ -122,7 +123,8 @@
 		role="menuitem"
 		{ariaLabel}
 		{disabled}
-		{ripple}>
+		{ripple}
+	>
 		<slot name="leading" slot="leading" />
 		<slot />
 		<slot name="trailing" slot="trailing" />

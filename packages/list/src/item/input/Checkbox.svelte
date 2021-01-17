@@ -1,13 +1,10 @@
 <svelte:options immutable={true} />
 
-<script lang="ts" context="module">
-	let count = 0;
-</script>
-
 <script lang="ts">
 	//#region  imports
-	import { Selectable } from "../../common/hoc";
-	import { Checkbox } from "./internal";
+	import "../../../../checkbox/src/index.scss";
+	import { Checkbox } from "../../../../checkbox/src/dom";
+	import { getItemContext } from "../ItemContext";
 	//#endregion
 
 	//#region exports
@@ -15,14 +12,11 @@
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/checkbox/Checkbox:${count++}`;
+	export let id: string = undefined;
 	export let dom: HTMLInputElement = undefined;
 	//#endregion
 
-	export let checked: boolean = false;
 	export let value: string = undefined;
-	export let allowIndeterminated: boolean = false;
-	export let ripple: boolean = true;
 	export let expandedTouchTarget: boolean = true;
 	export let density: number = undefined;
 
@@ -33,26 +27,22 @@
 	//#endregion
 
 	//#region implementation
+	const itemContext$ = getItemContext();
 	//#endregion
 </script>
 
-<Selectable bind:value bind:selected={checked}>
-	<Checkbox
-		bind:dom
-		class={className}
-		{style}
-		{id}
-		{checked}
-		{value}
-		{allowIndeterminated}
-		{ripple}
-		{expandedTouchTarget}
-		{density}
-		{name}
-		{disabled}
-		{required}
-		{readonly}
-		{...$$restProps}
-		on:change
-	/>
-</Selectable>
+<Checkbox
+	bind:dom
+	class={className}
+	{style}
+	{id}
+	checked={$itemContext$.selected}
+	{value}
+	{expandedTouchTarget}
+	{density}
+	{name}
+	{disabled}
+	{required}
+	{readonly}
+	{...$$restProps}
+/>

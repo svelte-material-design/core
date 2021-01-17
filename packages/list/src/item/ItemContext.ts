@@ -1,7 +1,9 @@
 import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
-const [createItemContext, getItemContext] = createContextStore<ItemContext>();
-export { createItemContext, getItemContext };
+export const [
+	setItemContext,
+	getItemContext,
+] = createContextStore<ItemContext>();
 
 export interface ItemContext {
 	dom: HTMLLIElement | HTMLAnchorElement;

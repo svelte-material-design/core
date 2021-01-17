@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	import { parseClassList } from "../../../common/functions";
 	import { MDCSelect, MDCSelectEvent } from "@material/select";
@@ -13,7 +15,7 @@
 		OnSelectChangeEventDetail,
 		SelectVariant,
 	} from "..";
-	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
+	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 
 	//#region exports
 	//#region base
@@ -168,53 +170,43 @@
 	}
 </script>
 
-<style lang="scss">
-	.smui-select {
-		:global([slot="leadingIcon"], [slot="options"]) {
-			display: contents;
-		}
-	}
-</style>
-
-<svelte:options immutable={true} />
-
 <UseState {value} onUpdate={onValueChange} />
 
 <UseState value={variant} onUpdate={reistantiate} />
 <UseState value={ripple} onUpdate={reistantiate} />
 <UseState value={lineRipple} onUpdate={reistantiate} />
 
-<div class={'smui-select'}>
+<div class={"smui-select"}>
 	<div
 		bind:this={dom}
 		{...$$restProps}
 		{id}
 		class={parseClassList([
 			className,
-			'mdc-select',
-			[variant === 'filled', 'mdc-select--filled'],
-			[variant === 'outlined', 'mdc-select--outlined'],
-			[disabled, 'mdc-select--disabled'],
-			[required, 'mdc-select--required'],
-			[parentSlots.leadingIcon, 'mdc-select--with-leading-icon'],
-			[invalid, 'mdc-select--invalid'],
-			[!parentSlots.label, 'mdc-select--no-label'],
+			"mdc-select",
+			[variant === "filled", "mdc-select--filled"],
+			[variant === "outlined", "mdc-select--outlined"],
+			[disabled, "mdc-select--disabled"],
+			[required, "mdc-select--required"],
+			[parentSlots.leadingIcon, "mdc-select--with-leading-icon"],
+			[invalid, "mdc-select--invalid"],
+			[!parentSlots.label, "mdc-select--no-label"],
 			[
-				variant == 'filled' && !parentSlots.leadingIcon && density,
+				variant == "filled" && !parentSlots.leadingIcon && density,
 				`smui-input-field--filled--dense--${Math.abs(density)}`,
 			],
 			[
-				variant == 'filled' && parentSlots.leadingIcon && density,
+				variant == "filled" && parentSlots.leadingIcon && density,
 				`smui-input-field--filled--with-leading-icon--dense--${Math.abs(
 					density
 				)}`,
 			],
 			[
-				variant == 'outlined' && !parentSlots.leadingIcon && density,
+				variant == "outlined" && !parentSlots.leadingIcon && density,
 				`smui-input-field--outlined--dense--${Math.abs(density)}`,
 			],
 			[
-				variant == 'outlined' && parentSlots.leadingIcon && density,
+				variant == "outlined" && parentSlots.leadingIcon && density,
 				`smui-input-field--outlined--with-leading-icon--dense--${Math.abs(
 					density
 				)}`,
@@ -225,7 +217,8 @@
 			[shapeRadius, `--smui-select--shape-radius: ${shapeRadius};`],
 			[density, `--smui-select--density: ${density};`],
 		])}
-		{title}>
+		{title}
+	>
 		<input type="hidden" {name} {readonly} {disabled} bind:value />
 		<div
 			class="mdc-select__anchor"
@@ -239,11 +232,12 @@
 			aria-readonly={readonly}
 			aria-label={!labelId && !value ? ariaLabel : undefined}
 			on:click={stopPropagationOnReadOnly}
-			on:focus={stopPropagationOnReadOnly}>
-			{#if ripple && variant === 'filled'}
+			on:focus={stopPropagationOnReadOnly}
+		>
+			{#if ripple && variant === "filled"}
 				<span class="mdc-select__ripple" />
 			{/if}
-			{#if variant === 'filled'}
+			{#if variant === "filled"}
 				{#if parentSlots.label}
 					<FloatingLabel component={Span}>
 						<slot name="label" />
@@ -255,7 +249,7 @@
 				{#if lineRipple}
 					<LineRipple />
 				{/if}
-			{:else if variant === 'outlined'}
+			{:else if variant === "outlined"}
 				<NotchedOutline noLabel={!parentSlots.label}>
 					{#if parentSlots.label}
 						<FloatingLabel component={Span}>
@@ -268,9 +262,9 @@
 				{/if}
 			{/if}
 			<span class="mdc-select__selected-text-container">
-				<span
-					id={selectedTextId}
-					class="mdc-select__selected-text">{value}</span>
+				<span id={selectedTextId} class="mdc-select__selected-text"
+					>{value}</span
+				>
 			</span>
 			<span class="mdc-select__dropdown-icon">
 				<svg
@@ -281,12 +275,14 @@
 						class="mdc-select__dropdown-icon-inactive"
 						stroke="none"
 						fill-rule="evenodd"
-						points="7 10 12 15 17 10" />
+						points="7 10 12 15 17 10"
+					/>
 					<polygon
 						class="mdc-select__dropdown-icon-active"
 						stroke="none"
 						fill-rule="evenodd"
-						points="7 15 12 10 17 15" />
+						points="7 15 12 10 17 15"
+					/>
 				</svg>
 			</span>
 		</div>
@@ -295,9 +291,18 @@
 			class="mdc-select__menu"
 			variant="fullwidth"
 			{group}
-			disableMDCInstance>
+			disableMDCInstance
+		>
 			<slot name="options" />
 		</Menu>
 	</div>
 	<slot />
 </div>
+
+<style lang="scss">
+	.smui-select {
+		:global([slot="leadingIcon"], [slot="options"]) {
+			display: contents;
+		}
+	}
+</style>

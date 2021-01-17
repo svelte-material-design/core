@@ -1,35 +1,37 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	let className = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/list/List:${count++}`;
-
-	export let dom: HTMLDivElement | HTMLUListElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// List
-	//#region imports
+	//#region  imports
 	import { createEventDispatcher, tick } from "svelte";
 	import {
 		SelectionGroupBinding,
-		SingleSelectionGroup,
-		MultiSelectionGroup,
-	} from "@raythurnevoid/svelte-group-components/esm/selectable";
+		SelectionGroup,
+	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { ListImpl, OnListActionEvent } from "./internal";
-	import { ListOrientation, ListRole, OnListChangeEvent, ListType } from ".";
+	import type {
+		ListOrientation,
+		ListRole,
+		OnListChangeEvent,
+		ListType,
+	} from ".";
 	import { roleToSelectionType } from "./roleToSelectionType";
 	import { setCreateCheckboxMDCIstance } from "../../checkbox";
 	import { setCreateRadioMDCIstance } from "../../radio";
 	//#endregion
 
 	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/list/List:${count++}`;
+	export let dom: HTMLDivElement | HTMLUListElement = undefined;
+	//#endregion
+
 	export let role: ListRole = "list";
 	export let orientation: ListOrientation = "vertical";
 	export let type: ListType = "textual";
@@ -51,7 +53,7 @@
 	$: if (role === "group") {
 		setCreateCheckboxMDCIstance(false);
 	} else {
-		setCreateCheckboxMDCIstance(true);
+		setCreateCheckboxMDCIstance(false);
 	}
 
 	$: if (role === "radiogroup") {
@@ -61,6 +63,7 @@
 	}
 	//#endregion
 
+	//#region implementation
 	const dispatch = createEventDispatcher<{
 		change: OnListChangeEvent;
 	}>();
@@ -68,10 +71,8 @@
 	//#region local variables
 	$: selectionType = roleToSelectionType(role);
 
-	let selectionGroup: SingleSelectionGroup | MultiSelectionGroup;
+	let selectionGroup: SelectionGroup;
 	//#endregion
-
-	// Keep MDCList properties updated
 
 	async function handleAction({
 		targetIndex,
@@ -99,43 +100,18 @@
 			});
 		}
 	}
-
-	$: component = selectionType
-		? selectionType === "single"
-			? SingleSelectionGroup
-			: MultiSelectionGroup
-		: undefined;
+	//#endregion
 </script>
 
-{#if selectionType && !group}
-	<svelte:component
-		this={component}
-		bind:this={selectionGroup}
-		bind:value
-		let:group>
-		<ListImpl
-			bind:dom
-			{props}
-			{id}
-			class={className}
-			{style}
-			{role}
-			{selectionType}
-			{orientation}
-			{itemsRows}
-			{type}
-			{dense}
-			{density}
-			{wrapFocus}
-			{group}
-			on:action={(event) => handleAction(event.detail)}>
-			<slot />
-		</ListImpl>
-	</svelte:component>
-{:else}
+<SelectionGroup
+	bind:this={selectionGroup}
+	bind:value
+	{selectionType}
+	{group}
+	let:group
+>
 	<ListImpl
 		bind:dom
-		{props}
 		{id}
 		class={className}
 		{style}
@@ -148,7 +124,9 @@
 		{density}
 		{wrapFocus}
 		{group}
-		on:action={(event) => handleAction(event.detail)}>
+		{...$$restProps}
+		on:action={(event) => handleAction(event.detail)}
+	>
 		<slot />
 	</ListImpl>
-{/if}
+</SelectionGroup>

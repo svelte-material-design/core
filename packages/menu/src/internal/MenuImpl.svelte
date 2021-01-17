@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
 	import { parseClassList } from "../../../common/functions";
@@ -24,7 +26,7 @@
 	import { createComponentsGroupStore } from "../../../common/components-group";
 	import { SelectionType } from "../../../common/hoc";
 	import { ItemContext } from "../item";
-	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/esm/selectable";
+	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 
 	//#region exports
 	//#region list
@@ -195,21 +197,20 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={open} onUpdate={handleOpenValueUpdate} />
 
 <MenuSurface
 	bind:dom
 	{id}
 	props={{ ...props }}
-	class={parseClassList([className, 'mdc-menu'])}
+	class={parseClassList([className, "mdc-menu"])}
 	{style}
 	{open}
 	{quickOpen}
 	{anchorCorner}
 	{variant}
-	disableMDCInstance>
+	disableMDCInstance
+>
 	<List bind:value {orientation} {type} {itemsRows} {dense} {density} {group}>
 		<slot />
 	</List>

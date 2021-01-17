@@ -1,32 +1,26 @@
-<script context="module" lang="ts">
-	let count = 0;
-</script>
+<svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../../../common/functions";
-	let className = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/list/Item:${count++}`;
-
-	import { ItemRole } from ".";
-	export let dom: HTMLLIElement = undefined;
-
-	import { BaseProps } from "../../../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// Item
-	//#region import
+	//#region  imports
 	import { getListContext } from "../..";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import ItemContent from "./ItemContent.svelte";
-	import { ListImplRole } from "../types";
+	import type { ListImplRole } from "../types";
 	import { Ripple } from "../../../../ripple";
+	import type { ItemRole } from "./types";
+	import { classList } from "@raythurnevoid/strings-filter";
+	import { HiddenInput, ItemContent } from ".";
+	import { onMount } from "svelte";
 	//#endregion
 
 	//#region exports
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLLIElement = undefined;
+	//#endregion
+
 	export let ripple: boolean = true;
 	export let selected: boolean = false;
 	export let disabled: boolean = false;
@@ -39,44 +33,59 @@
 	export let listRole: ListImplRole = undefined;
 	//#endregion
 
-	//#region locals
-	let rippleClasses: string;
+	//#region implementation
 	const listContext$ = getListContext();
+	let useHiddenInputs: boolean = false;
+
+	onMount(() => {
+		if (
+			(role === "checkbox" && !dom.querySelector("input[type=checkbox]")) ||
+			(role === "radio" && !dom.querySelector("input[type=radio]"))
+		) {
+			useHiddenInputs = true;
+		}
+	});
 	//#endregion
 </script>
-
-<svelte:options immutable={true} />
 
 <UseState value={ripple} onUpdate={() => $listContext$.reinitialize()} />
 
 <Ripple let:rippleClasses target={ripple ? dom : undefined}>
 	<li
 		bind:this={dom}
-		{...props}
 		{id}
-		class={parseClassList([
+		class={classList([
 			className,
-			'mdc-list-item',
-			[disabled, 'mdc-list-item--disabled'],
+			"mdc-list-item",
+			[disabled, "mdc-list-item--disabled"],
 			[
-				(role === 'option' || role === 'menuitem') && selected,
-				'mdc-list-item--selected',
+				(role === "option" || role === "menuitem") && selected,
+				"mdc-list-item--selected",
 			],
-			[role === 'menuitem' && selected, 'mdc-menu-item--selected'],
+			[role === "menuitem" && selected, "mdc-menu-item--selected"],
 			rippleClasses,
 		])}
 		{style}
 		{title}
 		{tabindex}
-		aria-selected={listRole === 'listbox' ? selected : undefined}
+		aria-selected={listRole === "listbox" ? selected : undefined}
 		data-value={value}
 		{role}
 		aria-label={ariaLabel}
-		aria-checked={listRole === 'group' || listRole === 'radiogroup' ? `${selected}` : undefined}>
-		<ItemContent {selected} itemDom={dom}>
-			<slot name="leading" slot="leading" />
-			<slot />
-			<slot name="trailing" slot="trailing" />
+		aria-checked={listRole === "group" || listRole === "radiogroup"
+			? `${selected}`
+			: undefined}
+		{...$$restProps}
+	>
+		{#if useHiddenInputs}
+			<HiddenInput
+				{selected}
+				{role}
+				selectionType={$listContext$.selectionType}
+			/>
+		{/if}
+		<ItemContent {selected} let:leadingClassName let:trailingClassName>
+			<slot {selected} {leadingClassName} {trailingClassName} />
 		</ItemContent>
 	</li>
 </Ripple>

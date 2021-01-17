@@ -1,10 +1,12 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	import { parseClassList } from "../../common/functions";
 	import { MDCSlider } from "@material/slider";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getFormFieldContext } from "../../form-field";
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
-	import {
+	import type {
 		SliderChangeEvent,
 		SliderValueText,
 		RangeSliderChangeEvent,
@@ -200,19 +202,12 @@
 	$: props.tabindex = props.tabindex || 0;
 </script>
 
-<style>
-	:global(.mdc-slider) {
-		width: 180px;
-	}
-</style>
-
-<svelte:options immutable={true} />
-
 <Use effect hook={() => setFormFieldInput(slider)} when={!!slider} />
 <UseState value={[value, step, min, max, range, gap]} onUpdate={updateValue} />
 <UseState
 	value={[step, tickMarks, step, min, max, dom]}
-	onUpdate={instantiate} />
+	onUpdate={instantiate}
+/>
 <UseState {value} onUpdate={handleValueUpdate} />
 
 {#key range}
@@ -222,14 +217,25 @@
 		{id}
 		class={parseClassList([
 			className,
-			'mdc-slider',
-			[step, 'mdc-slider--discrete'],
-			[tickMarks, 'mdc-slider--tick-marks'],
-			[range, 'mdc-slider mdc-slider--range'],
+			"mdc-slider",
+			[step, "mdc-slider--discrete"],
+			[tickMarks, "mdc-slider--tick-marks"],
+			[range, "mdc-slider mdc-slider--range"],
 		])}
 		data-step={step}
 		{style}
-		{title}>
+		{title}
+	>
+		{#each value as _val, index}
+			<input
+				class="mdc-slider__input"
+				type="range"
+				{min}
+				{max}
+				value={value[index]}
+				{name}
+			/>
+		{/each}
 		<div class="mdc-slider__track">
 			<div class="mdc-slider__track--inactive" />
 			<div class="mdc-slider__track--active">
@@ -243,16 +249,19 @@
 			<SliderThumb
 				bind:this={thumbsInstances[index]}
 				value={value[index]}
-				{min}
-				{max}
 				{disabled}
-				{ariaLabel}
 				{valueText}
 				{discrete}
 				{hideValueIndicator}
-				{name}
 				on:mounted={(e) => handleThumbMounted(e.detail, index)}
-				on:destroyed={updateThumbsInstances} />
+				on:destroyed={updateThumbsInstances}
+			/>
 		{/each}
 	</div>
 {/key}
+
+<style>
+	:global(.mdc-slider) {
+		width: 180px;
+	}
+</style>

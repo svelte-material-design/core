@@ -1,6 +1,8 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region imports
-	import { Selectable } from "@raythurnevoid/svelte-group-components/esm/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createEventDispatcher, tick } from "svelte";
 	import type { OnTabChange, TabContext } from ".";
@@ -55,19 +57,19 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState
 	bind:this={activeState}
 	value={active}
-	onUpdate={handleActiveChange} />
+	onUpdate={handleActiveChange}
+/>
 
 <Selectable
 	{dom}
 	bind:value={key}
 	bind:selected={active}
 	group={$tabBarContext$.group}
-	{context}>
+	{context}
+>
 	<Tab
 		{...$$restProps}
 		bind:dom
@@ -78,7 +80,8 @@
 		{ripple}
 		{key}
 		{stacked}
-		{useMinWidth}>
+		{useMinWidth}
+	>
 		<slot />
 	</Tab>
 </Selectable>

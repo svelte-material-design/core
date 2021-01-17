@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	export interface OnMountedEvent {
 		value: number;
@@ -6,21 +8,17 @@
 
 <script lang="ts">
 	import { parseClassList } from "../../common/functions";
-	import { SliderValueText } from ".";
+	import type { SliderValueText } from ".";
 	import { getFormFieldContext } from "../../form-field";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 
-	export let min: number = 0;
-	export let max: number = 100;
-	export let value: number = min;
+	export let value: number = undefined;
 
 	export let disabled: boolean;
 	export let valueText: string | SliderValueText;
 	export let discrete: boolean;
 	export let hideValueIndicator: boolean;
-	export let name: string;
-	export let ariaLabel: string;
 
 	const dispatch = createEventDispatcher<{
 		mounted: OnMountedEvent;
@@ -80,6 +78,35 @@
 	}
 </script>
 
+<UseState value={[_valueText, value]} onUpdate={updateValueText} />
+
+<div
+	class="mdc-slider__thumb"
+	role="slider"
+	tabindex={disabled ? -1 : 0}
+	aria-disabled={disabled}
+	aria-valuetext={_valueText}
+	aria-labelledby={$formFieldContext$ && $formFieldContext$.labelId}
+>
+	{#if discrete}
+		<div class="mdc-slider__value-indicator-container">
+			<div
+				class={parseClassList([
+					"mdc-slider__value-indicator",
+					[hideValueIndicator, "smui-slider__value-indicator--hidden"],
+				])}
+			>
+				<span
+					bind:this={indicatorTextElement}
+					class="mdc-slider__value-indicator-text"
+					>{_valueText != undefined ? _valueText : value}</span
+				>
+			</div>
+		</div>
+	{/if}
+	<div class="mdc-slider__thumb-knob" />
+</div>
+
 <style>
 	:global(.mdc-slider__value-indicator-text) {
 		white-space: nowrap;
@@ -89,36 +116,3 @@
 		display: none;
 	}
 </style>
-
-<svelte:options immutable={true} />
-
-<UseState value={[_valueText, value]} onUpdate={updateValueText} />
-
-<input type="number" style="display: none;" bind:value {name} />
-
-<div
-	class="mdc-slider__thumb"
-	role="slider"
-	tabindex={disabled ? -1 : 0}
-	aria-disabled={disabled}
-	aria-valuemin={min}
-	aria-valuemax={max}
-	aria-valuenow={value}
-	aria-valuetext={_valueText}
-	aria-labelledby={$formFieldContext$ && $formFieldContext$.labelId}
-	aria-label={(!$formFieldContext$ || !$formFieldContext$.labelId) && ariaLabel ? ariaLabel : undefined}>
-	{#if discrete}
-		<div class="mdc-slider__value-indicator-container">
-			<div
-				class={parseClassList([
-					'mdc-slider__value-indicator',
-					[hideValueIndicator, 'smui-slider__value-indicator--hidden'],
-				])}>
-				<span
-					bind:this={indicatorTextElement}
-					class="mdc-slider__value-indicator-text">{_valueText != undefined ? _valueText : value}</span>
-			</div>
-		</div>
-	{/if}
-	<div class="mdc-slider__thumb-knob" />
-</div>

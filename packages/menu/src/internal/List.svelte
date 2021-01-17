@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
 	let className = undefined;
@@ -16,7 +18,7 @@
 	import {
 		SelectionGroupBinding,
 		SingleSelectionGroup,
-	} from "@raythurnevoid/svelte-group-components/esm/selectable";
+	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { ListImpl, OnListActionEvent } from "../../../list/src/internal";
 	import { ListOrientation, OnListChangeEvent, ListType } from "../../../list";
 	//#endregion
@@ -66,8 +68,6 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <ListImpl
 	bind:dom
 	{props}
@@ -84,6 +84,7 @@
 	{wrapFocus}
 	{group}
 	on:action={(event) => handleAction(event.detail)}
-	disableMDCInstance>
+	disableMDCInstance
+>
 	<slot />
 </ListImpl>
