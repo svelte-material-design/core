@@ -7,6 +7,7 @@
 <script lang="ts">
 	//#region  imports
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { getCheckboxGroupContext } from "./CheckboxContext";
 	import { Checkbox } from "./internal";
 	//#endregion
 
@@ -31,10 +32,16 @@
 	//#endregion
 
 	//#region implementation
+	const checkboxGroupContext$ = getCheckboxGroupContext();
 	//#endregion
 </script>
 
-<Selectable bind:value bind:selected={checked}>
+<Selectable
+	bind:selected={checked}
+	{value}
+	group={checkboxGroupContext$ && $checkboxGroupContext$.group}
+	{dom}
+>
 	<Checkbox
 		bind:dom
 		bind:checked

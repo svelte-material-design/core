@@ -97,7 +97,7 @@
 
 		const tabContext = selectionGroup
 			.getItems()
-			[index].getComponentContext() as TabContext;
+			[index].getContext() as TabContext;
 
 		tabContext.setActive(true);
 	}
@@ -124,7 +124,7 @@
 
 	function getTabs(): TabContext[] {
 		const tabs = selectionGroup.getItems();
-		return tabs ? tabs.map((item) => item.getComponentContext()) : [];
+		return tabs ? tabs.map((item) => item.getContext()) : [];
 	}
 
 	export function scrollIntoView(index: number) {

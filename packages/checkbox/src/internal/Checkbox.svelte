@@ -69,8 +69,8 @@
 	});
 
 	$: if (checkbox) {
-		if (checkbox.checked !== checked) {
-			checkbox.checked = checked;
+		if (checkbox.value !== value) {
+			checkbox.value = value;
 		}
 
 		if (checkbox.disabled !== disabled) {
@@ -104,28 +104,34 @@
 		$formFieldContext$?.setInput(checkbox);
 	}
 
-	function setChecked(newValue: boolean) {
-		if (checked !== newValue) {
-			checked = newValue;
-		}
-	}
-
-	function handleKeyPress(event: KeyboardEvent) {
+	async function handleKeyPress(event: KeyboardEvent) {
 		if (event.key === " " || event.key === "Enter") {
-			setChecked(!checked);
+			cycleChecked();
 		}
+
+		await tick();
+
+		dispatch("change", {
+			checked,
+			dom,
+		});
 	}
 
 	function updateMDCValue() {
 		if (checkbox) {
-			if (!checkbox.indeterminate && checked === null) {
-				checkbox.indeterminate = true;
-			} else if (checkbox.indeterminate && checked !== null) {
+			if (allowIndeterminated) {
+				if (!checkbox.indeterminate && checked === null) {
+					checkbox.indeterminate = true;
+					if (checkbox.checked) {
+						checkbox.checked = false;
+					}
+				}
+			} else if (checkbox.indeterminate) {
 				checkbox.indeterminate = false;
 			}
 
-			if (checkbox.value !== value) {
-				checkbox.value = value;
+			if (checkbox.checked !== checked && checked != null) {
+				checkbox.checked = checked;
 			}
 		}
 	}
@@ -142,14 +148,18 @@
 		}
 	}
 
-	function handleChange() {
-		if (checkbox) {
-			if (allowIndeterminated && checked === false && checkbox.checked) {
-				setChecked(null);
-			} else {
-				setChecked(checkbox.checked);
-			}
+	function cycleChecked() {
+		if (allowIndeterminated && checked === false && inputElement.checked) {
+			checked = null;
+		} else {
+			checked = checkbox.checked;
 		}
+	}
+
+	async function handleChange() {
+		cycleChecked();
+
+		await tick();
 
 		dispatch("change", {
 			checked,

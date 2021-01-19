@@ -1,19 +1,11 @@
-import { createContext } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 
-export interface CheckboxContext {
-	value: any;
+export const [
+	setCheckboxGroupContext,
+	getCheckboxGroupContext,
+] = createContextStore<CheckboxGroupContext>();
+
+export interface CheckboxGroupContext {
+	group: SelectionGroupBinding;
 }
-
-const [
-	setCheckboxBehaviour,
-	getCheckboxBehaviour,
-] = createContext<CheckboxBehaviour>();
-export { setCheckboxBehaviour, getCheckboxBehaviour };
-
-export type CheckboxBehaviour = "data-table-header" | "data-table-row";
-
-const [
-	setCreateCheckboxMDCIstance,
-	getCreateCheckboxMDCIstance,
-] = createContext<boolean>();
-export { setCreateCheckboxMDCIstance, getCreateCheckboxMDCIstance };

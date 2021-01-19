@@ -19,7 +19,6 @@
 		ListType,
 	} from ".";
 	import { roleToSelectionType } from "./roleToSelectionType";
-	import { setCreateCheckboxMDCIstance } from "../../checkbox";
 	import { setCreateRadioMDCIstance } from "../../radio";
 	//#endregion
 
@@ -48,12 +47,6 @@
 	$: if (role == undefined) role = "list";
 	$: if (role === "list") {
 		value = undefined;
-	}
-
-	$: if (role === "group") {
-		setCreateCheckboxMDCIstance(false);
-	} else {
-		setCreateCheckboxMDCIstance(false);
 	}
 
 	$: if (role === "radiogroup") {

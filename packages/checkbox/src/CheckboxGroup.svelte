@@ -1,23 +1,35 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
-	import { SelectableGroup } from "../../common/hoc";
-	import type { OnCheckboxGroupChangeEvent } from "./types";
+	import {
+		SelectionGroup,
+		SelectionGroupBinding,
+	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { onMount } from "svelte";
+	import { setCheckboxGroupContext } from "./CheckboxContext";
 
 	export let value: string[] = undefined;
+	export let group: SelectionGroupBinding = undefined;
 
-	const dispatch = createEventDispatcher<{
-		change: OnCheckboxGroupChangeEvent;
-	}>();
+	let selectionGroup: SelectionGroup;
 
-	function handleChange() {
-		dispatch("change", {
-			value,
-		});
-	}
+	const context$ = setCheckboxGroupContext();
+	$: $context$ = { ...$context$, group };
+
+	onMount(() => {
+		$context$.group = selectionGroup.getBindings();
+	});
 </script>
 
-<SelectableGroup on:change={handleChange} bind:value nullable>
-	<slot />
-</SelectableGroup>
+<SelectionGroup
+	selectionType="multi"
+	bind:this={selectionGroup}
+	{group}
+	bind:value
+	nullable
+	on:change
+	on:optionsChange
+	let:group
+>
+	<slot {group} />
+</SelectionGroup>
