@@ -1,12 +1,13 @@
-export interface SliderChangeEvent {
-	dom: HTMLDivElement;
+export interface OnRangeChangeEvent {
+	dom: HTMLInputElement;
 	value: number;
 }
 
-export interface RangeSliderChangeEvent {
+export interface SliderChangeEvent {
 	dom: HTMLDivElement;
-	value: [number, number];
 }
+
+export interface SliderInputEvent extends SliderChangeEvent {}
 
 export type SliderValueText = string | ((v: number) => string);
 

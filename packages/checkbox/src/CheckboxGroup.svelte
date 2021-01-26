@@ -17,7 +17,7 @@
 	$: $context$ = { ...$context$, group };
 
 	onMount(() => {
-		$context$.group = selectionGroup.getBindings();
+		$context$.group = group ?? selectionGroup.getBindings();
 	});
 </script>
 

@@ -124,7 +124,7 @@
 
 	function getTabs(): TabContext[] {
 		const tabs = selectionGroup.getItems();
-		return tabs ? tabs.map((item) => item.getContext()) : [];
+		return tabs ? tabs.map((item) => item.externalContext) : [];
 	}
 
 	export function scrollIntoView(index: number) {

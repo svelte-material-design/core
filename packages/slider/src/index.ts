@@ -1,12 +1,5 @@
-import ContinuousSlider from "./ContinuousSlider.svelte";
-import DiscreteSlider from "./DiscreteSlider.svelte";
-import DiscreteRangeSlider from "./DiscreteRangeSlider.svelte";
-import ContinuousRangeSlider from "./ContinuousRangeSlider.svelte";
-
-export {
-	ContinuousSlider,
-	DiscreteSlider,
-	DiscreteRangeSlider,
-	ContinuousRangeSlider,
-};
+export { default as ContinuousSlider } from "./ContinuousSlider.svelte";
+export { default as DiscreteSlider } from "./DiscreteSlider.svelte";
+export { default as Range } from "./Range.svelte";
+export { default as Thumb } from "./Thumb.svelte";
 export * from "./types";
