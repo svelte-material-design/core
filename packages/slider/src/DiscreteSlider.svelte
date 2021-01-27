@@ -21,6 +21,7 @@
 	export let step: number = 1;
 	export let disabled: boolean = false;
 	export let tickMarks: boolean = undefined;
+	if (step < 1) step = 1;
 	//#endregion
 
 	//#region implementation
@@ -38,5 +39,5 @@
 	{...$$restProps}
 	on:input
 	on:change
-><slot />
+	><slot />
 </Slider>

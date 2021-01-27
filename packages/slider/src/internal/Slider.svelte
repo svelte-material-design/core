@@ -13,7 +13,7 @@
 		Group,
 		GroupItemContext,
 	} from "@raythurnevoid/svelte-group-components/ts/components-group";
-	import type { SliderChangeEvent, SliderInputEvent } from "../types";
+	import type { OnSliderChangeEvent, OnSliderInputEvent } from "../types";
 	//#endregion
 
 	//#region exports
@@ -25,9 +25,8 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
-	export let tickMarks: boolean;
-	export let disabled: boolean;
-
+	export let tickMarks: boolean = false;
+	export let disabled: boolean = false;
 	export let step: number = undefined;
 	//#endregion
 
@@ -36,6 +35,8 @@
 
 	let width: number = undefined;
 	let resizeObserver: any;
+	let mounted: boolean = false;
+	let reistantiating: boolean = false;
 
 	let discrete: boolean;
 	let range: boolean = false;
@@ -43,8 +44,8 @@
 	$: discrete = !!step;
 
 	const dispatch = createEventDispatcher<{
-		change: SliderChangeEvent;
-		input: SliderInputEvent;
+		change: OnSliderChangeEvent;
+		input: OnSliderInputEvent;
 	}>();
 
 	const formFieldContext$ = getFormFieldContext();
@@ -71,16 +72,13 @@
 
 		initResizeObserver();
 		istantiate();
+
+		mounted = true;
 	});
 
 	onDestroy(() => {
 		destroy();
 	});
-
-	function getValues() {
-		const items = getItems();
-		return items.map((item) => item.value);
-	}
 
 	function initResizeObserver() {
 		// @ts-ignore
@@ -96,6 +94,9 @@
 	}
 
 	export async function reistantiate() {
+		if (!mounted || reistantiating) return;
+
+		reistantiating = true;
 		resetDOMKey = !resetDOMKey;
 
 		await tick();
@@ -121,6 +122,7 @@
 		slider.listen("MDCSlider:input", handleInput);
 
 		resizeObserver.observe(dom);
+		reistantiating = false;
 	}
 
 	function destroy() {
@@ -130,19 +132,27 @@
 	}
 
 	async function handleInput() {
-		updateRanges();
+		updateRanges("input");
 
 		await tick();
 
 		dispatch("input", {
 			dom,
+			value: getValues(),
 		});
 	}
 
 	async function handleChange() {
+		updateRanges("change");
+
 		dispatch("change", {
 			dom,
+			value: getValues(),
 		});
+	}
+
+	function getValues() {
+		return getItems().map((item) => item.value) as [number] | [number, number];
 	}
 
 	function setFormFieldInput(slider: MDCSlider) {
@@ -158,7 +168,7 @@
 			}
 
 			if (items[0].value > items[1].value) {
-				items[0].setValue(items[1].value, false);
+				items[0].setValue(items[1].value);
 				return false;
 			}
 		}
@@ -183,7 +193,7 @@
 			}
 		}
 
-		updateRanges(false);
+		updateRanges();
 	}
 
 	function isRange() {
@@ -200,11 +210,14 @@
 		return items.map((item) => item.externalContext);
 	}
 
-	function updateRanges(notify = true) {
+	function updateRanges(event?: "input" | "change") {
 		const items = getItems();
-		items[0].setValue(isRange() ? slider.getValueStart() : slider.getValue());
+		items[0].setValue(
+			isRange() ? slider.getValueStart() : slider.getValue(),
+			event
+		);
 		if (isRange()) {
-			items[1].setValue(slider.getValue(), notify);
+			items[1].setValue(slider.getValue(), event);
 		}
 	}
 	//#endregion

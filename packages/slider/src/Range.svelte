@@ -47,6 +47,7 @@
 	const sliderContext$ = getSliderContext();
 
 	const dispatch = createEventDispatcher<{
+		input: OnRangeChangeEvent;
 		change: OnRangeChangeEvent;
 	}>();
 
@@ -56,12 +57,12 @@
 		}
 	});
 
-	async function setValue(newValue: number, notify: boolean = true) {
+	async function setValue(newValue: number, event?: "input" | "change") {
 		value = newValue;
 		valueState.setValue(newValue);
-		if (notify) {
+		if (event) {
 			await tick();
-			dispatch("change", {
+			dispatch(event, {
 				dom,
 				value,
 			});

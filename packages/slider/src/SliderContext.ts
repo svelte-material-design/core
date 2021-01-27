@@ -23,7 +23,7 @@ export interface RangeContext {
 	value: number;
 	min: number;
 	max: number;
-	setValue(value: number, notify?: boolean);
+	setValue(value: number, event?: "input" | "change");
 	setMin(value: number);
 	setMax(value: number);
 }

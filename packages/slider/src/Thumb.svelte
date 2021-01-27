@@ -36,11 +36,10 @@
 	let valueTextElement: HTMLSpanElement;
 	let indicatorTextElementObserver: MutationObserver;
 
-	let ariaValuetext: string;
-
 	const formFieldContext$ = getFormFieldContext();
 
 	onMount(() => {
+		$sliderContext$.reistantiate();
 		if ($sliderContext$.discrete) {
 			let doNotObserve: boolean = false;
 			indicatorTextElementObserver = new MutationObserver(async () => {
@@ -66,7 +65,6 @@
 	function updateValueText() {
 		if (indicatorTextElement && $$slots.default) {
 			indicatorTextElement.innerHTML = valueTextElement.innerHTML;
-			ariaValuetext = indicatorTextElement.innerText;
 		}
 	}
 
@@ -88,7 +86,6 @@
 	{id}
 	class={parseClassList([className, "mdc-slider__thumb"])}
 	{style}
-	aria-valuetext={ariaValuetext}
 	{...$$restProps}
 	role="slider"
 	aria-labelledby={$formFieldContext$ && $formFieldContext$.labelId}
