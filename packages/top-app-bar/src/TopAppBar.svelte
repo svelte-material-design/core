@@ -42,7 +42,6 @@
 	{prominent}
 	{scrollTarget}
 	{...$$restProps}
-	slots={$$slots}
 	on:nav
 	let:contentClass
 >

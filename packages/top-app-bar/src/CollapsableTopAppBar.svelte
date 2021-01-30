@@ -39,11 +39,11 @@
 	let topAppBar: TopAppBar;
 	let observer: MutationObserver;
 
-	let contentClass: string;
+	let innerContentClass: string;
 	$: if (!dense && !prominent) {
-		contentClass = "mdc-top-app-bar--short-fixed-adjust";
+		innerContentClass = "mdc-top-app-bar--short-fixed-adjust";
 	} else {
-		contentClass = undefined;
+		innerContentClass = undefined;
 	}
 
 	onMount(() => {
@@ -108,14 +108,16 @@
 	{dense}
 	{prominent}
 	{scrollTarget}
-	{contentClass}
 	{...$$restProps}
-	slots={$$slots}
 	on:beforeInitialization={beforeInitialization}
 	on:afterInitialization={afterInitialization}
 	on:nav
 	let:contentClass
 >
 	<slot />
-	<slot name="content" slot="content" className={contentClass} />
+	<slot
+		name="content"
+		slot="content"
+		className={innerContentClass || contentClass}
+	/>
 </TopAppBar>

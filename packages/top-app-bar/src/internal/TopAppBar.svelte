@@ -27,9 +27,6 @@
 	export let dense: boolean = false;
 	export let prominent: boolean = false;
 	export let scrollTarget: HTMLElement = undefined;
-
-	let contentClassName: string = undefined;
-	export { contentClassName as contentClass };
 	//#endregion
 
 	//#region implementation
@@ -99,7 +96,7 @@
 	{...$$restProps}
 >
 	<div class="mdc-top-app-bar__row">
-		<slot contentClass={contentClassName} />
+		<slot {contentClass} />
 	</div>
 </header>
 <slot name="content" className={contentClass} />

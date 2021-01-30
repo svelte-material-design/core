@@ -1,27 +1,33 @@
-<script lang="ts">
-	import { createEventDispatcher } from "svelte";
-	import { SelectableGroup } from "../../common/hoc";
-	import { RadioGroupChangeEvent } from "./";
-
-	export let value: string = undefined;
-
-	const dispatch = createEventDispatcher<{
-		change: RadioGroupChangeEvent;
-	}>();
-
-	function handleChange() {
-		dispatch("change", {
-			value,
-		});
-	}
-</script>
-
 <svelte:options immutable={true} />
 
-<SelectableGroup
+<script lang="ts">
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { onMount } from "svelte";
+	import { setRadioGroupContext } from "./RadioContext";
+
+	export let value: string[] = undefined;
+	export let group: SelectionGroupBinding = undefined;
+
+	let selectionGroup: SelectionGroup;
+
+	const context$ = setRadioGroupContext();
+	$: $context$ = { ...$context$, group };
+
+	onMount(() => {
+		$context$.group = group ?? selectionGroup.getBindings();
+	});
+</script>
+
+<SelectionGroup
 	selectionType="single"
+	bind:this={selectionGroup}
+	{group}
 	bind:value
-	on:change={handleChange}
-	nullable>
-	<slot />
-</SelectableGroup>
+	nullable
+	on:change
+	on:optionsChange
+	let:group
+>
+	<slot {group} />
+</SelectionGroup>

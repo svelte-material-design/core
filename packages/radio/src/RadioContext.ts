@@ -1,11 +1,11 @@
-import { createContext } from "@raythurnevoid/svelte-context-enhanced";
-
-export interface RadioContext {
-	value: any;
-	setSelected(selected: boolean);
-}
+import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 
 export const [
-	setCreateRadioMDCIstance,
-	getCreateRadioMDCIstance,
-] = createContext<boolean>();
+	setRadioGroupContext,
+	getRadioGroupContext,
+] = createContextStore<RadioGroupContext>();
+
+export interface RadioGroupContext {
+	group: SelectionGroupBinding;
+}

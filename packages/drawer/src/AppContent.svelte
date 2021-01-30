@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -33,6 +35,33 @@
 	});
 </script>
 
+<div
+	bind:this={dom}
+	{...props}
+	{id}
+	class={parseClassList([
+		className,
+		"mdc-drawer-app-content",
+		"smui-app-content",
+	])}
+	{style}
+>
+	<slot name="topAppBar" />
+	<main
+		class={parseClassList([
+			"smui-app-content__main",
+			[
+				topAppBar === undefined ? topAppBarFound : topAppBar,
+				"mdc-top-app-bar--fixed-adjust",
+			],
+		])}
+	>
+		<div class="smui-app-content__main-content">
+			<slot />
+		</div>
+	</main>
+</div>
+
 <style>
 	:global(.smui-app-content) {
 		height: 100%;
@@ -45,34 +74,7 @@
 	}
 
 	:global(.smui-app-content__main-content) {
-		height: 100%;
+		height: 90%;
 		overflow: auto;
 	}
 </style>
-
-<svelte:options immutable={true} />
-
-<div
-	bind:this={dom}
-	{...props}
-	{id}
-	class={parseClassList([
-		className,
-		'mdc-drawer-app-content',
-		'smui-app-content',
-	])}
-	{style}>
-	<slot name="topAppBar" />
-	<main
-		class={parseClassList([
-			'smui-app-content__main',
-			[
-				topAppBar === undefined ? topAppBarFound : topAppBar,
-				'mdc-top-app-bar--fixed-adjust',
-			],
-		])}>
-		<div class="smui-app-content__main-content">
-			<slot />
-		</div>
-	</main>
-</div>
