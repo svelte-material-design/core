@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -5,9 +7,9 @@
 <script lang="ts">
 	//#region  imports
 	import { parseClassList } from "../../../common/functions";
-	import { GraphicType } from "../../../common/components";
+	import type { GraphicType } from "../../../common/components";
 	import { Icon } from "../../../icon-button/src/internal";
-	import { IconDOM } from "..";
+	import type { IconDOM } from "..";
 	//#endregion
 
 	//#region exports
@@ -23,18 +25,17 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <Icon
 	bind:dom
 	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-icon-button__icon',
-		[type === 'icon' && className == undefined, 'material-icons'],
+		"mdc-icon-button__icon",
+		[type === "icon" && className == undefined, "material-icons"],
 	])}
 	{style}
-	{type}>
+	{type}
+>
 	<slot />
 </Icon>

@@ -28,7 +28,6 @@
 	export let prominent: boolean = false;
 	export let scrollTarget: HTMLElement = undefined;
 
-	export let slots: typeof $$slots;
 	let contentClassName: string = undefined;
 	export { contentClassName as contentClass };
 	//#endregion
@@ -100,7 +99,7 @@
 	{...$$restProps}
 >
 	<div class="mdc-top-app-bar__row">
-		<slot {contentClass} />
+		<slot contentClass={contentClassName} />
 	</div>
 </header>
 <slot name="content" className={contentClass} />

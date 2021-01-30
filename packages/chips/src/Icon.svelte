@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	// Base
 	import { DOMEventsForwarder } from "../../common/events";
@@ -7,16 +9,13 @@
 	export let style: string = undefined;
 	export let id: string = undefined;
 
-	export let dom: GraphicElement = undefined;
+	export let dom: GraphicDOM = undefined;
 	import { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 
 	// Icon
-	import {
-		Graphic,
-		GraphicElement,
-		GraphicType,
-	} from "../../common/components";
+	import type { GraphicDOM, GraphicType } from "../../common/components";
+	import { Graphic } from "../../common/components";
 	import { parseClassList } from "../../common/functions";
 	import { onMount, tick } from "svelte";
 	import { getChipContext } from "./ChipContext";
@@ -55,22 +54,21 @@
 		$chipContext$.selected && $chipSetContext$.variant === "filter";
 </script>
 
-<svelte:options immutable={true} />
-
 <Graphic
 	bind:dom
 	{props}
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-chip__icon',
-		[type === 'icon' && className == undefined, 'material-icons'],
-		[leading, 'mdc-chip__icon--leading'],
-		[leadingHidden, 'mdc-chip__icon--leading-hidden'],
-		[trailing, 'mdc-chip__icon--trailing mdc-chip-trailing-action'],
+		"mdc-chip__icon",
+		[type === "icon" && className == undefined, "material-icons"],
+		[leading, "mdc-chip__icon--leading"],
+		[leadingHidden, "mdc-chip__icon--leading-hidden"],
+		[trailing, "mdc-chip__icon--trailing mdc-chip-trailing-action"],
 	])}
 	{style}
 	{type}
-	on:domEvent={forwardDOMEvents}>
+	on:domEvent={forwardDOMEvents}
+>
 	<slot />
 </Graphic>

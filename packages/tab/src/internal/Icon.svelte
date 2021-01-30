@@ -1,8 +1,11 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region  imports
-	import { Graphic, GraphicType } from "../../../common/components";
+	import { Graphic } from "../../../common/components";
+	import type { GraphicType } from "../../../common/components";
 	import { parseClassList } from "../../../common/functions";
-	import { IconDOM } from "..";
+	import type { IconDOM } from "..";
 	//#endregion
 
 	//#region exports
@@ -21,18 +24,17 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <Graphic
 	bind:dom
 	{...$$restProps}
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-tab__icon',
-		[type === 'icon' && className == undefined, 'material-icons'],
+		"mdc-tab__icon",
+		[type === "icon" && className == undefined, "material-icons"],
 	])}
 	{style}
-	{type}>
+	{type}
+>
 	<slot />
 </Graphic>

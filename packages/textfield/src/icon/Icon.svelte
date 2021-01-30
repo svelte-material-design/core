@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count = 0;
 </script>
@@ -12,18 +14,15 @@
 	export let style: string = undefined;
 	export let id: string = `@smui/input-field/icon/Icon:${count++}`;
 
-	export let dom: GraphicElement = undefined;
+	export let dom: GraphicDOM = undefined;
 
 	import { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Icon
-	import {
-		Graphic,
-		GraphicElement,
-		GraphicType,
-	} from "../../../common/components";
+	import type { GraphicDOM, GraphicType } from "../../../common/components";
+	import { Graphic } from "../../../common/components";
 	import { MDCTextFieldIcon } from "@material/textfield/icon";
 	import { onDestroy, onMount } from "svelte";
 	import { getInputFieldContext } from "../";
@@ -65,22 +64,21 @@
 	};
 </script>
 
-<svelte:options immutable={true} />
-
 <Graphic
 	bind:dom
 	{props}
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-text-field__icon',
-		'smui-input-field-icon',
-		[position === 'leading', 'mdc-text-field__icon--leading'],
-		[position === 'trailing', 'mdc-text-field__icon--trailing'],
-		[type === 'icon' && className == undefined, 'material-icons'],
+		"mdc-text-field__icon",
+		"smui-input-field-icon",
+		[position === "leading", "mdc-text-field__icon--leading"],
+		[position === "trailing", "mdc-text-field__icon--trailing"],
+		[type === "icon" && className == undefined, "material-icons"],
 	])}
 	{style}
 	{type}
-	on:domEvent={forwardDOMEvents}>
+	on:domEvent={forwardDOMEvents}
+>
 	<slot />
 </Graphic>
