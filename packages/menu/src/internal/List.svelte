@@ -15,12 +15,17 @@
 	// List
 	//#region imports
 	import { createEventDispatcher, tick } from "svelte";
-	import {
+	import type {
 		SelectionGroupBinding,
 		SingleSelectionGroup,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { ListImpl, OnListActionEvent } from "../../../list/src/internal";
-	import { ListOrientation, OnListChangeEvent, ListType } from "../../../list";
+	import { List } from "../../../list/src/dom";
+	import type { OnListActionEvent } from "../../../list/src/internal";
+	import type {
+		ListOrientation,
+		OnListChangeEvent,
+		ListType,
+	} from "../../../list";
 	//#endregion
 
 	//#region exports
@@ -68,7 +73,7 @@
 	}
 </script>
 
-<ListImpl
+<List
 	bind:dom
 	{props}
 	{id}
@@ -82,9 +87,11 @@
 	{dense}
 	{density}
 	{wrapFocus}
-	{group}
+	selectionGroup={group}
 	on:action={(event) => handleAction(event.detail)}
 	disableMDCInstance
+	tabindex="-1"
+	{...$$restProps}
 >
 	<slot />
-</ListImpl>
+</List>

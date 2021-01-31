@@ -15,7 +15,7 @@
 		OnSelectChangeEventDetail,
 		SelectVariant,
 	} from "..";
-	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 
 	//#region exports
 	//#region base
@@ -270,7 +270,8 @@
 				<svg
 					class="mdc-select__dropdown-icon-graphic"
 					viewBox="7 10 10 5"
-					focusable="false">
+					focusable="false"
+				>
 					<polygon
 						class="mdc-select__dropdown-icon-inactive"
 						stroke="none"

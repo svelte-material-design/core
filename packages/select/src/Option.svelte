@@ -17,7 +17,7 @@
 	export let props: BaseProps = {};
 	//#endregion
 
-	import { Item } from "../../list/src/internal";
+	import { Item } from "../../list/src/dom/item";
 	import { Content } from "../../list";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { getSelectContext } from "./SelectContext";

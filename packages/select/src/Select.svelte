@@ -1,11 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	import { SelectVariant } from "./";
-	import {
-		SelectionGroup,
-		SelectionGroupBinding,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectVariant } from "./";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { SelectImpl } from "./internal";
 
 	//#region exports

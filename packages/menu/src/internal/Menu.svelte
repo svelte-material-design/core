@@ -14,20 +14,18 @@
 	//#endregion
 
 	// Menu
-	import { MDCMenuDistance } from "@material/menu-surface";
-	import {
+	import type { MDCMenuDistance } from "@material/menu-surface";
+	import type {
 		MenuAnchorCorner,
 		MenuVariant,
 		OnMenuChange,
 		OnMenuItemSelectedEvent,
 	} from "..";
 	import { MenuImpl, OnMenuImplSelect } from ".";
-	import { ListOrientation, ListType } from "../../../list";
-	import { SelectionType } from "../../../common/hoc";
-	import {
-		SelectionGroupBinding,
-		SelectionGroup,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { ListOrientation, ListType } from "../../../list";
+	import type { SelectionType } from "../../../common/hoc";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { createEventDispatcher, onMount, tick } from "svelte";
 
 	//#region exports

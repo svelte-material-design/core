@@ -7,10 +7,8 @@
 <script lang="ts">
 	//#region  imports
 	import { createEventDispatcher, tick } from "svelte";
-	import {
-		SelectionGroupBinding,
-		SelectionGroup,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { ListImpl, OnListActionEvent } from "./internal";
 	import type {
 		ListOrientation,
@@ -19,7 +17,6 @@
 		ListType,
 	} from ".";
 	import { roleToSelectionType } from "./roleToSelectionType";
-	import { setCreateRadioMDCIstance } from "../../radio";
 	//#endregion
 
 	//#region exports
@@ -32,28 +29,19 @@
 	//#endregion
 
 	export let role: ListRole = "list";
-	export let orientation: ListOrientation = "vertical";
-	export let type: ListType = "textual";
-	export let itemsRows: number = 1;
-
-	export let dense: boolean = false;
-	export let density: number = 0;
-
-	export let wrapFocus: boolean = true;
-	export let value: string | string[] = undefined;
-
-	export let group: SelectionGroupBinding = undefined;
-
 	$: if (role == undefined) role = "list";
 	$: if (role === "list") {
 		value = undefined;
 	}
 
-	$: if (role === "radiogroup") {
-		setCreateRadioMDCIstance(false);
-	} else {
-		setCreateRadioMDCIstance(true);
-	}
+	export let orientation: ListOrientation = "vertical";
+	export let type: ListType = "textual";
+	export let itemsRows: number = 1;
+	export let dense: boolean = false;
+	export let wrapFocus: boolean = true;
+	export let value: string | string[] = undefined;
+
+	export let group: SelectionGroupBinding = undefined;
 	//#endregion
 
 	//#region implementation
@@ -64,7 +52,7 @@
 	//#region local variables
 	$: selectionType = roleToSelectionType(role);
 
-	let selectionGroup: SelectionGroup;
+	let selectionGroupComponent: SelectionGroup;
 	//#endregion
 
 	async function handleAction({
@@ -72,7 +60,7 @@
 		listSelectedIndex,
 	}: OnListActionEvent) {
 		if (selectionType) {
-			const item = selectionGroup.getItems()[targetIndex];
+			const item = selectionGroupComponent.getItems()[targetIndex];
 
 			if (!item) return;
 
@@ -81,9 +69,9 @@
 				(selectionType === "multi" &&
 					(listSelectedIndex as number[]).includes(targetIndex))
 			) {
-				selectionGroup.setSelected(item, true);
+				selectionGroupComponent.setSelected(item, true);
 			} else {
-				selectionGroup.setSelected(item, false);
+				selectionGroupComponent.setSelected(item, false);
 			}
 
 			await tick();
@@ -97,11 +85,11 @@
 </script>
 
 <SelectionGroup
-	bind:this={selectionGroup}
+	bind:this={selectionGroupComponent}
 	bind:value
 	{selectionType}
 	{group}
-	let:group
+	let:group={selectionGroup}
 >
 	<ListImpl
 		bind:dom
@@ -114,9 +102,8 @@
 		{itemsRows}
 		{type}
 		{dense}
-		{density}
 		{wrapFocus}
-		{group}
+		{selectionGroup}
 		{...$$restProps}
 		on:action={(event) => handleAction(event.detail)}
 	>

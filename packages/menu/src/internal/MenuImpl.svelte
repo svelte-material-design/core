@@ -17,16 +17,16 @@
 	import { MDCMenu } from "@material/menu";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { MenuSurface } from "../../../menu-surface/src/internal";
-	import { MDCMenuDistance } from "@material/menu-surface";
+	import type { MDCMenuDistance } from "@material/menu-surface";
 	import { MenuAnchorCorner, MenuVariant, createMenuContext } from "..";
 	import { List, OnMenuImplSelect } from ".";
-	import { ListOrientation, ListType } from "../../../list";
+	import type { ListOrientation, ListType } from "../../../list";
 	import { smuiToMDCCorner } from "../../../menu-surface/functions";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createComponentsGroupStore } from "../../../common/components-group";
-	import { SelectionType } from "../../../common/hoc";
-	import { ItemContext } from "../item";
-	import { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionType } from "../../../common/hoc";
+	import type { ItemContext } from "../item";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 
 	//#region exports
 	//#region list
@@ -211,7 +211,17 @@
 	{variant}
 	disableMDCInstance
 >
-	<List bind:value {orientation} {type} {itemsRows} {dense} {density} {group}>
+	<List
+		bind:value
+		{orientation}
+		{type}
+		{itemsRows}
+		{dense}
+		{density}
+		{group}
+		role="listbox"
+		aria-hidden={!open}
+	>
 		<slot />
 	</List>
 </MenuSurface>

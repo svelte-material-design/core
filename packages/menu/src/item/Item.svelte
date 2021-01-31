@@ -20,12 +20,12 @@
 	// Item
 	//#region import
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { Item } from "../../../list/src/internal";
+	import { Item } from "../../../list/src/dom";
 	import { getMenuContext } from "..";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { ItemContext } from ".";
+	import type { ItemContext } from ".";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
-	import { OnItemSelectedEvent, OnItemChangeEvent } from ".";
+	import type { OnItemSelectedEvent, OnItemChangeEvent } from ".";
 
 	//#endregion
 
@@ -104,9 +104,7 @@
 			{disabled}
 			{ripple}
 		>
-			<slot name="leading" slot="leading" />
 			<slot />
-			<slot name="trailing" slot="trailing" />
 		</Item>
 	</Selectable>
 {:else}
@@ -125,8 +123,6 @@
 		{disabled}
 		{ripple}
 	>
-		<slot name="leading" slot="leading" />
 		<slot />
-		<slot name="trailing" slot="trailing" />
 	</Item>
 {/if}

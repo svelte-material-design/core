@@ -9,7 +9,7 @@
 	import { MDCRadio } from "@material/radio";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getFormFieldContext } from "../../../form-field";
-	import type { RadioChangeEvent } from "../";
+	import type { OnRadioChangeEvent } from "../types";
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	import { Radio } from "../dom";
 	//#endregion
@@ -36,7 +36,7 @@
 
 	//#region implementation
 	const dispatch = createEventDispatcher<{
-		change: RadioChangeEvent;
+		change: OnRadioChangeEvent;
 	}>();
 
 	let inputElement: HTMLInputElement;

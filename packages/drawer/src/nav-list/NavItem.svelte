@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -31,8 +33,6 @@
 	const drawerContext$ = getDrawerContext();
 </script>
 
-<svelte:options immutable={true} />
-
 <!-- <UseState value={ripple} onUpdate={() => $drawerContext$.reinitialize()} /> -->
 <!-- TODO: for drawer -->
 
@@ -47,8 +47,7 @@
 	{title}
 	{disabled}
 	{activated}
-	{ariaLabel}>
-	<slot name="leading" slot="leading" />
+	{ariaLabel}
+>
 	<slot />
-	<slot name="trailing" slot="trailing" />
 </NavItem>

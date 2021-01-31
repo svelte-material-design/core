@@ -1,27 +1,22 @@
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../src/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region  imports
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLUListElement = null;
-
-	import { BaseProps } from "./Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// Ul
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
-<ul
-	bind:this={dom}
-	{...props}
-	{id}
-	class={className}
-	{style}
-	use:forwardDOMEvents>
+<ul bind:this={dom} {id} class={className} {style} {...$$restProps}>
 	<slot />
 </ul>

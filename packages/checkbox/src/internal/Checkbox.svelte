@@ -4,7 +4,6 @@
 	//#region  imports
 	import { MDCCheckbox } from "@material/checkbox";
 	import { onMount, onDestroy, tick } from "svelte";
-	import type { CheckboxContext } from "../";
 	import { getFormFieldContext } from "../../../form-field";
 	import { createEventDispatcher } from "svelte";
 	import type { OnCheckboxChangeEvent } from "../types";
@@ -54,14 +53,7 @@
 	$: if (!allowIndeterminated && checked == null)
 		tick().then(() => (checked ??= false)); // is tick needed?
 
-	//#region Init contexts
 	const formFieldContext$ = getFormFieldContext();
-
-	const context = {} as CheckboxContext;
-	$: Object.assign(context, {
-		value,
-	});
-	//#endregion
 
 	let checkbox: MDCCheckbox;
 	onMount(async () => {
@@ -119,8 +111,8 @@
 
 	function updateMDCValue() {
 		if (checkbox) {
-			if (allowIndeterminated) {
-				if (!checkbox.indeterminate && checked === null) {
+			if (allowIndeterminated && checked === null) {
+				if (!checkbox.indeterminate) {
 					checkbox.indeterminate = true;
 					if (checkbox.checked) {
 						checkbox.checked = false;
@@ -136,7 +128,7 @@
 		}
 	}
 
-	function handleValueChange() {
+	function handleCheckedChange() {
 		if (!allowIndeterminated && checked == null) {
 			tick().then(() => (checked = false));
 		} else {
@@ -170,7 +162,7 @@
 </script>
 
 <Use effect hook={() => setFormFieldInput(checkbox)} when={!!checkbox} />
-<UseState value={checked} onUpdate={handleValueChange} />
+<UseState value={checked} onUpdate={handleCheckedChange} />
 <UseState value={ripple} onUpdate={reistantiate} />
 
 <Checkbox

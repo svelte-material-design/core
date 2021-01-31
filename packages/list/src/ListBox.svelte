@@ -17,14 +17,14 @@
 	// List
 	//#region imports
 	import { createEventDispatcher, tick } from "svelte";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import {
-		SelectionGroupBinding,
 		SingleSelectionGroup,
 		MultiSelectionGroup,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { ListImpl, OnListActionEvent } from "./internal";
-	import { ListOrientation, OnListChangeEvent, ListType } from ".";
-	import { SelectionType } from "../../common/hoc";
+	import type { ListOrientation, OnListChangeEvent, ListType } from ".";
+	import type { SelectionType } from "../../common/hoc";
 	//#endregion
 
 	//#region exports
@@ -110,7 +110,7 @@
 			{dense}
 			{density}
 			{wrapFocus}
-			{group}
+			selectionGroup{group}
 			on:action={(event) => handleAction(event.detail)}
 		>
 			<slot />
@@ -124,7 +124,7 @@
 		class={className}
 		{style}
 		role="listbox"
-		ariaMultiselectable={multiSelection}
+		aria-multiselectable={multiSelection}
 		{selectionType}
 		{orientation}
 		{itemsRows}
@@ -132,7 +132,7 @@
 		{dense}
 		{density}
 		{wrapFocus}
-		{group}
+		selectionGroup{group}
 		on:action={(event) => handleAction(event.detail)}
 	>
 		<slot />

@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count = 0;
 </script>
@@ -22,7 +24,7 @@
 	import { createInputFieldContext } from "./TextFieldContext";
 	import { LineRipple } from "../../line-ripple";
 	import UseTextField from "./UseTextField.svelte";
-	import { InputFieldCustomValidation, FullWidthTextFieldType } from "./";
+	import type { InputFieldCustomValidation, FullWidthTextFieldType } from "./";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 
 	//#region exports
@@ -96,15 +98,6 @@
 	}
 </script>
 
-<style>
-	:global([slot="leadingIcon"]),
-	:global([slot="trailingIcon"]) {
-		display: contents;
-	}
-</style>
-
-<svelte:options immutable={true} />
-
 <UseState value={type} onUpdate={handleTypeUpdate} />
 <UseState value={lineRipple} onUpdate={reistantiate} />
 
@@ -115,17 +108,19 @@
 		class={parseClassList([
 			className,
 			...textFieldClassList,
-			[$$slots.leadingIcon, 'mdc-text-field--with-leading-icon'],
-			[$$slots.trailingIcon, 'mdc-text-field--with-trailing-icon'],
+			[$$slots.leadingIcon, "mdc-text-field--with-leading-icon"],
+			[$$slots.trailingIcon, "mdc-text-field--with-trailing-icon"],
 		])}
-		{style}>
+		{style}
+	>
 		<span class="mdc-text-field__ripple" />
 		{#if $$slots.leadingIcon}
 			<slot name="leadingIcon" class="mdc-text-field__icon--leading" />
 		{/if}
 		{#if prefix}
-			<span
-				class="mdc-text-field__affix mdc-text-field__affix--prefix">{prefix}</span>
+			<span class="mdc-text-field__affix mdc-text-field__affix--prefix"
+				>{prefix}</span
+			>
 		{/if}
 		<input
 			bind:this={inputElement}
@@ -149,10 +144,12 @@
 			aria-label={placeholder}
 			on:input={valueUpdater}
 			on:change={changeHandler}
-			use:forwardDOMEvents />
+			use:forwardDOMEvents
+		/>
 		{#if suffix}
-			<span
-				class="mdc-text-field__affix mdc-text-field__affix--suffix">{suffix}</span>
+			<span class="mdc-text-field__affix mdc-text-field__affix--suffix"
+				>{suffix}</span
+			>
 		{/if}
 		{#if $$slots.trailingIcon}
 			<slot name="trailingIcon" class="mdc-text-field__icon--trailing" />
@@ -184,4 +181,12 @@
 	ripple={false}
 	label={false}
 	variant="outlined"
-	fullWidth={false} />
+	fullWidth={false}
+/>
+
+<style>
+	:global([slot="leadingIcon"]),
+	:global([slot="trailingIcon"]) {
+		display: contents;
+	}
+</style>

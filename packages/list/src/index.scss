@@ -10,3 +10,14 @@
 		@include list.single-line-density($density * -1);
 	}
 }
+
+.mdc-list-item__meta.smui-list__trailing-icon {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	fill: currentColor;
+	object-fit: cover;
+	padding-left: 32px;
+}

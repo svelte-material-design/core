@@ -3,6 +3,7 @@ import type { ItemContext } from "./item";
 import type { SelectionType } from "../../common/hoc";
 import type { ListImplRole } from "./internal";
 import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+import type { GroupBindings } from "@raythurnevoid/svelte-group-components/ts/components-group";
 
 const [createListContext, getListContext] = createContextStore<ListContext>();
 export { createListContext, getListContext };
@@ -11,6 +12,7 @@ export interface ListContext {
 	dom: HTMLDivElement | HTMLUListElement;
 	role: ListImplRole;
 	group: SelectionGroupBinding;
+	listGroup: GroupBindings;
 	isNav: boolean;
 	selectionType: SelectionType;
 	registerItem(item: ItemContext): void;

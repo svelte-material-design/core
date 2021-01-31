@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -20,7 +22,7 @@
 	//#region import
 	import { ItemContext, getListContext } from "../";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import ItemContent from "../internal/item/ItemContent.svelte";
+	import { ItemContent } from "../dom/item";
 	import { Ripple } from "../../../ripple";
 	//#endregion
 
@@ -50,8 +52,6 @@
 	});
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={ripple} onUpdate={() => $listContext$.reinitialize()} />
 
 <Ripple let:rippleClasses target={ripple ? dom : undefined}>
@@ -61,9 +61,9 @@
 		{id}
 		class={parseClassList([
 			className,
-			'mdc-list-item',
-			[disabled, 'mdc-list-item--disabled'],
-			[activated, 'mdc-list-item--activated'],
+			"mdc-list-item",
+			[disabled, "mdc-list-item--disabled"],
+			[activated, "mdc-list-item--activated"],
 			rippleClasses,
 		])}
 		{style}
@@ -71,11 +71,10 @@
 		{title}
 		{tabindex}
 		aria-label={ariaLabel}
-		aria-current={activated ? 'page' : undefined}>
-		<ItemContent itemDom={dom}>
-			<slot name="leading" slot="leading" />
+		aria-current={activated ? "page" : undefined}
+	>
+		<ItemContent>
 			<slot />
-			<slot name="trailing" slot="trailing" />
 		</ItemContent>
 	</a>
 </Ripple>

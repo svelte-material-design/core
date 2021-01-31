@@ -7,8 +7,10 @@ export interface OnRangeInputEvent extends OnRangeChangeEvent {}
 
 export interface OnSliderChangeEvent {
 	dom: HTMLDivElement;
-	value: [number] | [number, number];
+	value: SliderValue;
 }
+
+export type SliderValue = [number] | [number, number];
 
 export interface OnSliderInputEvent extends OnSliderChangeEvent {}
 

@@ -6,9 +6,9 @@
 
 <script lang="ts">
 	//#region  imports
-	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
+	import { createEventDispatcher } from "svelte";
 	import { getListContext } from "../";
-	import type { ItemContext, OnItemSelectedEvent } from ".";
+	import type { OnItemSelectedEvent } from ".";
 	import type { ItemRole } from "..";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
@@ -28,10 +28,7 @@
 	export let ripple: boolean = true;
 	export let selected: boolean = false;
 	export let disabled: boolean = false;
-	export let tabindex: number = -1;
 	export let value: any = undefined;
-	export let ariaLabel: string = undefined;
-	export let title: string = undefined;
 
 	export let role: ItemRole = undefined;
 	//#endregion
@@ -60,44 +57,22 @@
 	}
 	//#endregion
 
-	const context = ({
-		tabindex,
+	const context$ = setItemContext({
 		disabled,
 		selected,
-		value,
-		role: _role,
-		setTabIndex(newValue: number) {
-			tabindex = newValue;
-		},
-	} as any) as ItemContext;
-
-	const context$ = setItemContext(context);
-
-	$: $context$ = Object.assign(context, {
-		disabled,
-		selected,
-		tabindex,
-		dom,
-		value,
-		role: _role,
 	});
+	const context = $context$;
+	$: $context$ = {
+		...Object.assign(context, {
+			...$context$,
+			disabled,
+			selected,
+			dom,
+		}),
+	};
 
 	$: listRole =
 		$listContext$.dom === dom?.parentElement ? $listContext$.role : undefined;
-
-	onMount(async () => {
-		await tick();
-
-		if ($listContext$.dom === dom.parentElement) {
-			$listContext$.registerItem(context);
-		}
-	});
-
-	onDestroy(() => {
-		if (dom && $listContext$.dom === dom.parentElement) {
-			$listContext$.unregisterItem(context);
-		}
-	});
 
 	function handleChange() {
 		dispatch("change", { dom, selected });
@@ -120,14 +95,13 @@
 		{id}
 		class={className}
 		{style}
-		{title}
-		{tabindex}
 		{selected}
+		{disabled}
 		{value}
 		role={_role}
-		{ariaLabel}
 		{ripple}
 		{listRole}
+		{context}
 		{...$$restProps}
 		let:leadingClassName
 		let:trailingClassName

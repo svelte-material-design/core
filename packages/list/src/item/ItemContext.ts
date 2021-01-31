@@ -9,6 +9,4 @@ export interface ItemContext {
 	dom: HTMLLIElement | HTMLAnchorElement;
 	selected: boolean;
 	disabled: boolean;
-	tabindex: number;
-	setTabIndex(tabindex: number): void;
 }

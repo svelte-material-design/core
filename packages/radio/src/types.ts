@@ -1,8 +1,9 @@
-export interface RadioChangeEvent {
-	dom: HTMLInputElement;
-	checked: boolean;
-}
+export type {
+	OnSelectionGroupOptionsChangeEvent as OnRadioGroupChildrenChangeEvent,
+	OnMultiSelectionGroupChangeEvent as OnRadioGroupChangeEvent,
+} from "@raythurnevoid/svelte-group-components/ts/selectable";
 
-export interface RadioGroupChangeEvent {
-	value: string;
+export interface OnRadioChangeEvent {
+	checked: boolean;
+	dom: HTMLDivElement;
 }

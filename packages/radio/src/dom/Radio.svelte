@@ -7,6 +7,8 @@
 <script lang="ts">
 	//#region  imports
 	import { classList } from "@raythurnevoid/strings-filter";
+	import { createEventDispatcher } from "svelte";
+	import type { OnRadioChangeEvent } from "../types";
 	//#endregion
 
 	//#region exports
@@ -30,6 +32,10 @@
 	//#endregion
 
 	//#region implementation
+	const dispatch = createEventDispatcher<{
+		change: OnRadioChangeEvent;
+	}>();
+
 	function isInputDisabled(
 		readonlyValue: typeof readonly = readonly,
 		disabledValue: typeof disabled = disabled
