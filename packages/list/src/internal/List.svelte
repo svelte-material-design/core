@@ -9,12 +9,12 @@
 		SelectionGroupBinding,
 		SelectionType,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import type { ListRole, ListOrientation, ListType } from "..";
+	import type { ListOrientation, ListType } from "..";
 	import { createListContext } from "..";
 	import { List } from "../dom";
 	import { Group } from "@raythurnevoid/svelte-group-components";
 	import type { ItemContext } from "../item";
-	import type { OnListActionEvent } from "./types";
+	import type { OnListActionEvent, ListImplRole } from "./types";
 	//#endregion
 
 	//#region exports
@@ -26,17 +26,14 @@
 	export let dom: HTMLDivElement | HTMLUListElement = undefined;
 	//#endregion
 
-	export let role: ListRole | "listbox" | "menu" = "list";
+	export let role: ListImplRole = "list";
 	export let orientation: ListOrientation = "vertical";
 	export let type: ListType = "textual";
 	export let itemsRows: number = 1;
-
 	export let dense: boolean = false;
-
 	export let wrapFocus: boolean = false;
-	export let isNav: boolean = false;
 
-	export let selectionGroup: SelectionGroupBinding;
+	export let group: SelectionGroupBinding;
 	// export let group: GroupBindings;
 	export let selectionType: SelectionType = undefined;
 
@@ -48,9 +45,8 @@
 	let listGroup: Group;
 
 	const context$ = createListContext({
-		group: selectionGroup,
+		listSelectionGroup: group,
 		role,
-		isNav,
 		selectionType,
 		reinitialize() {
 			initialize();
@@ -60,7 +56,6 @@
 		...$context$,
 		dom,
 		role,
-		isNav,
 		list,
 		selectionType,
 	};
@@ -73,6 +68,7 @@
 		$context$ = { ...$context$, listGroup: listGroup.getBindings() };
 
 		await tick();
+
 		initialize();
 	});
 
@@ -128,9 +124,10 @@
 	}
 
 	async function handleAction(event: MDCListActionEvent) {
+		const listSelectedIndex = list.selectedIndex;
 		dispatch("action", {
 			targetIndex: event.detail.index,
-			listSelectedIndex: list.selectedIndex,
+			listSelectedIndex,
 		});
 	}
 	//#endregion
@@ -147,7 +144,6 @@
 		{type}
 		{itemsRows}
 		{dense}
-		{isNav}
 		aria-orientation={orientation}
 	>
 		<slot />

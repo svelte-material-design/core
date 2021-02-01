@@ -1,7 +1,4 @@
-import NavList from "./NavList.svelte";
-import ListImpl from "./ListImpl.svelte";
-
-export { NavList, ListImpl };
+export { default as List } from "./List.svelte";
 export * from "./types";
-export * from "./ListImpl.svelte";
+export * from "./List.svelte";
 export * from "./item";

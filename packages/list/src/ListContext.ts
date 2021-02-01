@@ -11,9 +11,8 @@ export { createListContext, getListContext };
 export interface ListContext {
 	dom: HTMLDivElement | HTMLUListElement;
 	role: ListImplRole;
-	group: SelectionGroupBinding;
+	listSelectionGroup: SelectionGroupBinding;
 	listGroup: GroupBindings;
-	isNav: boolean;
 	selectionType: SelectionType;
 	registerItem(item: ItemContext): void;
 	unregisterItem(item: ItemContext): void;

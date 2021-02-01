@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, tick } from "svelte";
 	import { getListContext } from "../";
 	import type { OnItemSelectedEvent } from ".";
 	import type { ItemRole } from "..";
@@ -22,11 +22,12 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/list/Item:${count++}`;
-	export let dom: HTMLLIElement = undefined;
+	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
 	export let selected: boolean = false;
+	export let activated: boolean = false;
 	export let disabled: boolean = false;
 	export let value: any = undefined;
 
@@ -54,6 +55,8 @@
 
 	$: if (!$listContext$.selectionType || disabled) {
 		selected = undefined;
+	} else if ($listContext$.selectionType && selected == null) {
+		selected = false;
 	}
 	//#endregion
 
@@ -71,10 +74,7 @@
 		}),
 	};
 
-	$: listRole =
-		$listContext$.dom === dom?.parentElement ? $listContext$.role : undefined;
-
-	function handleChange() {
+	async function handleChange() {
 		dispatch("change", { dom, selected });
 	}
 	//#endregion
@@ -85,7 +85,7 @@
 <Selectable
 	bind:this={selectable}
 	bind:selected
-	group={$listContext$.group}
+	group={$listContext$.listSelectionGroup}
 	{dom}
 	{value}
 	on:change={handleChange}
@@ -96,15 +96,23 @@
 		class={className}
 		{style}
 		{selected}
+		{activated}
 		{disabled}
 		{value}
 		role={_role}
 		{ripple}
-		{listRole}
 		{context}
+		tabindex="-1"
 		{...$$restProps}
 		let:leadingClassName
 		let:trailingClassName
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
 	>
 		<slot {selected} {leadingClassName} {trailingClassName} />
 	</Item>

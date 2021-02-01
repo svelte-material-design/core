@@ -1,8 +1,6 @@
-import List from "./List.svelte";
-import ListBox from "./ListBox.svelte";
-import Separator from "./Separator.svelte";
-
-export { ListBox, List, Separator };
+export { default as List } from "./List.svelte";
+export { default as ListBox } from "./ListBox.svelte";
+export { default as Separator } from "./Separator.svelte";
 export * from "./ListContext";
 export * from "./types";
 export * from "./item";

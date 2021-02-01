@@ -27,6 +27,8 @@
 	export let disabled: boolean = false;
 	export let readonly: boolean = false;
 
+	export let ripple: boolean = undefined;
+
 	export let inputElement: HTMLInputElement;
 	export let inputId: string = id ? `${id}--input` : undefined;
 	//#endregion
@@ -75,6 +77,8 @@
 			<div class="mdc-radio__outer-circle" />
 			<div class="mdc-radio__inner-circle" />
 		</div>
-		<div class="mdc-radio__ripple" />
+		{#if ripple}
+			<div class="mdc-radio__ripple" />
+		{/if}
 	</div>
 </div>

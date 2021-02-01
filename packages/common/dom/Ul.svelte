@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region  imports
 	//#endregion
@@ -17,6 +19,21 @@
 	//#endregion
 </script>
 
-<ul bind:this={dom} {id} class={className} {style} {...$$restProps}>
+<ul
+	bind:this={dom}
+	{id}
+	class={className}
+	{style}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focusin
+	on:focusout
+	on:focus
+	on:blur
+>
 	<slot />
 </ul>

@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -15,8 +17,8 @@
 	//#endregion
 
 	// NavList
-	import { NavList } from "../../../list/src/internal";
-	import { ListOrientation, ListType } from "../../../list";
+	import { List } from "../../../list/src/internal";
+	import type { ListOrientation, ListType } from "../../../list";
 	import { getDrawerContext } from "../DrawerContext";
 
 	//#region exports
@@ -30,9 +32,7 @@
 	const drawerContext$ = getDrawerContext();
 </script>
 
-<svelte:options immutable={true} />
-
-<NavList
+<List
 	bind:dom
 	{props}
 	{id}
@@ -42,6 +42,8 @@
 	{type}
 	{dense}
 	{itemsRows}
-	disableMDCInstance={$drawerContext$.variant === 'dismissible' || $drawerContext$.variant === 'modal'}>
+	disableMDCInstance={$drawerContext$.variant === "dismissible" ||
+		$drawerContext$.variant === "modal"}
+>
 	<slot />
-</NavList>
+</List>

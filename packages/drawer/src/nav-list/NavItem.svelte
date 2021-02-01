@@ -18,7 +18,7 @@
 	//#endregion
 
 	// NavItem
-	import { NavItem } from "../../../list/nav-list";
+	import { Item } from "../../../list";
 	import { getDrawerContext } from "../DrawerContext";
 
 	//#region exports
@@ -36,7 +36,7 @@
 <!-- <UseState value={ripple} onUpdate={() => $drawerContext$.reinitialize()} /> -->
 <!-- TODO: for drawer -->
 
-<NavItem
+<Item
 	bind:dom
 	{props}
 	{id}
@@ -50,4 +50,4 @@
 	{ariaLabel}
 >
 	<slot />
-</NavItem>
+</Item>

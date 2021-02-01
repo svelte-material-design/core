@@ -22,6 +22,8 @@
 	export let disabled: boolean = false;
 	export let readonly: boolean = undefined;
 
+	export let ripple: boolean = undefined;
+
 	export let inputElement: HTMLInputElement = undefined;
 	export let inputId: string = id ? `${id}-input` : undefined;
 
@@ -94,6 +96,8 @@
 			</svg>
 			<div class="mdc-checkbox__mixedmark" />
 		</div>
-		<div class="mdc-checkbox__ripple" />
+		{#if ripple}
+			<div class="mdc-checkbox__ripple" />
+		{/if}
 	</div>
 </div>

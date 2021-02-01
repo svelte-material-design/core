@@ -1,53 +1,27 @@
-import A from "./A.svelte";
-import Button from "./Button.svelte";
-export * from "./Button.svelte";
-import Hr from "./Hr.svelte";
-import Icon from "./icon/Icon.svelte";
+export { default as A } from "./A.svelte";
+export { default as Button } from "./Button.svelte";
+export { default as Hr } from "./Hr.svelte";
+export { default as Icon } from "./icon/Icon.svelte";
+export { default as Label } from "./Label.svelte";
+export { default as Li } from "./Li.svelte";
+export { default as Nav } from "./Nav.svelte";
+export { default as Span } from "./Span.svelte";
+export { default as Ul } from "./Ul.svelte";
+export { default as Ol } from "./Ol.svelte";
+export { default as H1 } from "./H1.svelte";
+export { default as H2 } from "./H2.svelte";
+export { default as H3 } from "./H3.svelte";
+export { default as H4 } from "./H4.svelte";
+export { default as H5 } from "./H5.svelte";
+export { default as H6 } from "./H6.svelte";
+export { default as P } from "./P.svelte";
+export { default as Div } from "./Div.svelte";
+export { default as Th } from "./Th.svelte";
+export { default as Td } from "./Td.svelte";
+export { default as Footer } from "./Footer.svelte";
+export { default as Option } from "./Option.svelte";
+export { default as Pre } from "./Pre.svelte";
+export { default as Code } from "./Code.svelte";
+
 export * from "./icon/IconContextProps";
-import Label from "./Label.svelte";
-import Li from "./Li.svelte";
-import Nav from "./Nav.svelte";
-import Span from "./Span.svelte";
-import Ul from "./Ul.svelte";
-import H1 from "./H1.svelte";
-import H2 from "./H2.svelte";
-import H3 from "./H3.svelte";
-import H4 from "./H4.svelte";
-import H5 from "./H5.svelte";
-import H6 from "./H6.svelte";
-import P from "./P.svelte";
-import Div from "./P.svelte";
-import Th from "./Th.svelte";
-import Td from "./Td.svelte";
-import Footer from "./Footer.svelte";
-import Option from "./Option.svelte";
-import Pre from "./Pre.svelte";
-import Code from "./Code.svelte";
-
 export * from "./LabelContext";
-
-export {
-  A,
-  Button,
-  Hr,
-  Icon,
-  Label,
-  Li,
-  Nav,
-  Span,
-  Ul,
-  H1,
-  H2,
-  H3,
-  H4,
-  H5,
-  H6,
-  P,
-  Div,
-  Th,
-  Td,
-  Footer,
-  Option,
-  Pre,
-  Code,
-};

@@ -10,13 +10,16 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLDivElement = undefined;
+	export let dom: HTMLUListElement = null;
 	//#endregion
 
+	//#endregion
+
+	//#region implementation
 	//#endregion
 </script>
 
-<div
+<ol
 	bind:this={dom}
 	{id}
 	class={className}
@@ -27,8 +30,10 @@
 	on:mouseup
 	on:keydown
 	on:keyup
+	on:focusin
+	on:focusout
 	on:focus
 	on:blur
 >
 	<slot />
-</div>
+</ol>

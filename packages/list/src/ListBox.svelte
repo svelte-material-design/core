@@ -1,56 +1,50 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	let className = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/list/List:${count++}`;
-
-	export let dom: HTMLDivElement | HTMLUListElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// List
-	//#region imports
+	//#region  imports
 	import { createEventDispatcher, tick } from "svelte";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import {
-		SingleSelectionGroup,
-		MultiSelectionGroup,
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type {
+		SelectionGroupBinding,
+		SelectionType,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { ListImpl, OnListActionEvent } from "./internal";
+	import { List, OnListActionEvent } from "./internal";
 	import type { ListOrientation, OnListChangeEvent, ListType } from ".";
-	import type { SelectionType } from "../../common/hoc";
 	//#endregion
 
 	//#region exports
-	export let multiSelection: boolean = false;
+	//#region base
+	let className = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/list/List:${count++}`;
+	export let dom: HTMLDivElement | HTMLUListElement = undefined;
+	//#endregion
+
 	export let orientation: ListOrientation = "vertical";
 	export let type: ListType = "textual";
 	export let itemsRows: number = 1;
-
 	export let dense: boolean = false;
-	export let density: number = 0;
-
 	export let wrapFocus: boolean = true;
 	export let value: string | string[] = undefined;
+	export let multiSelection: boolean = false;
 
 	export let group: SelectionGroupBinding = undefined;
 	//#endregion
 
+	//#region implementation
 	const dispatch = createEventDispatcher<{
 		change: OnListChangeEvent;
 	}>();
 
 	//#region local variables
-	let selectionType: SelectionType;
-	$: selectionType = multiSelection ? "multi" : "single";
+	$: selectionType = (multiSelection ? "multi" : "single") as SelectionType;
 
-	let selectionGroup: SingleSelectionGroup | MultiSelectionGroup;
+	let selectionGroupComponent: SelectionGroup;
 	//#endregion
 
 	async function handleAction({
@@ -58,7 +52,7 @@
 		listSelectedIndex,
 	}: OnListActionEvent) {
 		if (selectionType) {
-			const item = selectionGroup.getItems()[targetIndex];
+			const item = selectionGroupComponent.getItems()[targetIndex];
 
 			if (!item) return;
 
@@ -67,9 +61,9 @@
 				(selectionType === "multi" &&
 					(listSelectedIndex as number[]).includes(targetIndex))
 			) {
-				selectionGroup.setSelected(item, true);
+				selectionGroupComponent.setSelected(item, true);
 			} else {
-				selectionGroup.setSelected(item, false);
+				selectionGroupComponent.setSelected(item, false);
 			}
 
 			await tick();
@@ -79,62 +73,33 @@
 			});
 		}
 	}
-
-	$: component = selectionType
-		? selectionType === "single"
-			? SingleSelectionGroup
-			: MultiSelectionGroup
-		: undefined;
+	//#endregion
 </script>
 
-{#if selectionType}
-	<svelte:component
-		this={component}
-		bind:this={selectionGroup}
-		bind:value
-		{group}
-		let:group
-	>
-		<ListImpl
-			bind:dom
-			{props}
-			{id}
-			class={className}
-			{style}
-			role="listbox"
-			ariaMultiselectable={multiSelection}
-			{selectionType}
-			{orientation}
-			{itemsRows}
-			{type}
-			{dense}
-			{density}
-			{wrapFocus}
-			selectionGroup{group}
-			on:action={(event) => handleAction(event.detail)}
-		>
-			<slot />
-		</ListImpl>
-	</svelte:component>
-{:else}
-	<ListImpl
+<SelectionGroup
+	bind:this={selectionGroupComponent}
+	bind:value
+	{selectionType}
+	{group}
+	let:group
+>
+	<List
 		bind:dom
-		{props}
 		{id}
 		class={className}
 		{style}
 		role="listbox"
-		aria-multiselectable={multiSelection}
 		{selectionType}
 		{orientation}
 		{itemsRows}
 		{type}
 		{dense}
-		{density}
 		{wrapFocus}
-		selectionGroup{group}
+		{group}
+		aria-multiselectable={multiSelection ? true : undefined}
+		{...$$restProps}
 		on:action={(event) => handleAction(event.detail)}
 	>
 		<slot />
-	</ListImpl>
-{/if}
+	</List>
+</SelectionGroup>

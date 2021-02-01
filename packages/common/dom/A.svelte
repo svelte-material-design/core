@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region exports
 	//#region base
@@ -14,17 +16,18 @@
 
 <a
 	bind:this={dom}
-	{...$$restProps}
 	{id}
 	class={className}
 	{style}
 	{href}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup
 	on:keydown
 	on:keyup
 	on:focus
-	on:blur>
+	on:blur
+>
 	<slot />
 </a>

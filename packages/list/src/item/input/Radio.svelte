@@ -17,12 +17,8 @@
 	//#endregion
 
 	export let value: string = undefined;
-	export let expandedTouchTarget: boolean = true;
-	export let density: number = undefined;
 
-	export let name: string = undefined;
 	export let disabled: boolean = false;
-	export let required: boolean = false;
 	export let readonly: boolean = undefined;
 	//#endregion
 
@@ -38,11 +34,9 @@
 	{id}
 	checked={$itemContext$.selected}
 	{value}
-	{expandedTouchTarget}
-	{density}
-	{name}
+	accessibleTouch={false}
+	ripple={false}
 	{disabled}
-	{required}
 	{readonly}
 	{...$$restProps}
 />

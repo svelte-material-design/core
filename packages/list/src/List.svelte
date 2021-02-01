@@ -9,7 +9,7 @@
 	import { createEventDispatcher, tick } from "svelte";
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { ListImpl, OnListActionEvent } from "./internal";
+	import { List, OnListActionEvent } from "./internal";
 	import type {
 		ListOrientation,
 		ListRole,
@@ -89,9 +89,9 @@
 	bind:value
 	{selectionType}
 	{group}
-	let:group={selectionGroup}
+	let:group
 >
-	<ListImpl
+	<List
 		bind:dom
 		{id}
 		class={className}
@@ -103,10 +103,10 @@
 		{type}
 		{dense}
 		{wrapFocus}
-		{selectionGroup}
+		{group}
 		{...$$restProps}
 		on:action={(event) => handleAction(event.detail)}
 	>
 		<slot />
-	</ListImpl>
+	</List>
 </SelectionGroup>

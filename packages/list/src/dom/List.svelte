@@ -11,9 +11,10 @@
 
 <script lang="ts">
 	//#region  imports
-	import { Nav, Ul } from "../../../common/dom";
-	import type { ListRole, ListOrientation, ListType } from "..";
+	import { Ol, Ul } from "../../../common/dom";
+	import type { ListOrientation, ListType } from "..";
 	import { parseClassList } from "../../../common/functions";
+	import type { ListImplRole } from "../internal";
 	//#endregion
 
 	//#region exports
@@ -25,7 +26,7 @@
 	export let dom: HTMLDivElement | HTMLUListElement = undefined;
 	//#endregion
 
-	export let role: ListRole | "listbox" | "menu" = "list";
+	export let role: ListImplRole = "list";
 	export let orientation: ListOrientation = "vertical";
 	export let type: ListType = "textual";
 	export let itemsRows: number = 1;
@@ -44,11 +45,10 @@
 		density = 0;
 	}
 
-	export let isNav: boolean = false;
+	export let component: typeof Ul | typeof Ol = Ul;
 	//#endregion
 
 	//#region implementation
-	$: component = isNav ? Nav : Ul;
 	//#endregion
 </script>
 
@@ -73,6 +73,15 @@
 	{style}
 	{role}
 	aria-orientation={orientation}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focusin
+	on:focusout
+	on:focus
+	on:blur
 	{...$$restProps}
 >
 	<slot />
