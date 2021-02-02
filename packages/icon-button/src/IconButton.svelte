@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -28,8 +30,6 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <IconButton
 	bind:dom
 	{id}
@@ -46,6 +46,7 @@
 	on:keydown
 	on:keyup
 	on:focus
-	on:blur>
+	on:blur
+>
 	<slot />
 </IconButton>

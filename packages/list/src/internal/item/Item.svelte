@@ -7,9 +7,9 @@
 	import type { ItemRole } from "./types";
 	import { HiddenInput } from ".";
 	import { Item } from "../../dom";
-	import { onMount } from "svelte";
+	import { beforeUpdate, onMount } from "svelte";
 	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
-	import type { ItemContext } from "../../item";
+	import { ItemContext, setItemContext } from "../../item";
 	//#endregion
 
 	//#region exports
@@ -27,13 +27,25 @@
 	export let disabled: boolean = false;
 	export let value: any = undefined;
 	export let role: ItemRole = undefined;
-
-	export let context: ItemContext = undefined;
 	//#endregion
 
 	//#region implementation
 	const listContext$ = getListContext();
 	let useHiddenInputs: boolean = false;
+
+	const context$ = setItemContext({
+		disabled,
+		selected,
+	});
+	const context = $context$;
+	$: $context$ = {
+		...Object.assign(context, {
+			...$context$,
+			disabled,
+			selected,
+			dom,
+		}),
+	};
 
 	onMount(() => {
 		if (
@@ -79,6 +91,8 @@
 		on:keydown
 		on:keyup
 		on:focus
+		on:focusin
+		on:focusout
 		on:blur
 	>
 		{#if useHiddenInputs}
@@ -89,6 +103,6 @@
 			-->
 			<HiddenInput {selected} selectionType={$listContext$.selectionType} />
 		{/if}
-		<slot {selected} {leadingClassName} {trailingClassName} />
+		<slot {leadingClassName} {trailingClassName} />
 	</Item>
 </GroupItem>

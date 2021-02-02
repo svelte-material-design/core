@@ -7,6 +7,7 @@
 	import { classList } from "@raythurnevoid/strings-filter";
 	import { ItemContent } from ".";
 	import { A, Div } from "../../../../common/dom";
+	import { beforeUpdate } from "svelte";
 	//#endregion
 
 	//#region exports
@@ -57,6 +58,8 @@
 			on:keydown
 			on:keyup
 			on:focus
+			on:focusin
+			on:focusout
 			on:blur
 		>
 			<ItemContent {selected} let:leadingClassName let:trailingClassName>

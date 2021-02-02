@@ -1,18 +1,16 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count = 0;
-</script>
-
 <script lang="ts">
-	// Separator
-	import { Separator } from "./dom";
+	//#region  imports
+	import { classList } from "@raythurnevoid/strings-filter";
+	//#endregion
+
 	//#region exports
 	//#region base
 	let className = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/list/Separator:${count++}`;
+	export let id: string = undefined;
 	export let dom: HTMLLIElement = undefined;
 	//#endregion
 
@@ -25,13 +23,17 @@
 	//#endregion
 </script>
 
-<Separator
-	bind:dom
+<li
+	bind:this={dom}
 	{id}
-	class={className}
+	class={classList([
+		className,
+		"mdc-list-divider",
+		[insetPadding, "mdc-list-divider--inset-padding"],
+		[insetLeading, "mdc-list-divider--inset-leading"],
+		[insetTrailing, "mdc-list-divider--inset-trailing"],
+	])}
 	{style}
-	{insetPadding}
-	{insetLeading}
-	{insetTrailing}
+	role="separator"
 	{...$$restProps}
 />

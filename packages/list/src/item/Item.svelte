@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { createEventDispatcher, tick } from "svelte";
+	import { beforeUpdate, createEventDispatcher, tick } from "svelte";
 	import { getListContext } from "../";
 	import type { OnItemSelectedEvent } from ".";
 	import type { ItemRole } from "..";
@@ -60,20 +60,6 @@
 	}
 	//#endregion
 
-	const context$ = setItemContext({
-		disabled,
-		selected,
-	});
-	const context = $context$;
-	$: $context$ = {
-		...Object.assign(context, {
-			...$context$,
-			disabled,
-			selected,
-			dom,
-		}),
-	};
-
 	async function handleChange() {
 		dispatch("change", { dom, selected });
 	}
@@ -101,8 +87,6 @@
 		{value}
 		role={_role}
 		{ripple}
-		{context}
-		tabindex="-1"
 		{...$$restProps}
 		let:leadingClassName
 		let:trailingClassName
@@ -112,6 +96,8 @@
 		on:keydown
 		on:keyup
 		on:focus
+		on:focusin
+		on:focusout
 		on:blur
 	>
 		<slot {selected} {leadingClassName} {trailingClassName} />

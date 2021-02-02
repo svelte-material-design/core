@@ -4,7 +4,14 @@
 	//#region  imports
 	import { MDCList } from "@material/list";
 	import type { MDCListActionEvent } from "@material/list";
-	import { onDestroy, createEventDispatcher, onMount, tick } from "svelte";
+	import {
+		onDestroy,
+		createEventDispatcher,
+		onMount,
+		tick,
+		beforeUpdate,
+		afterUpdate,
+	} from "svelte";
 	import type {
 		SelectionGroupBinding,
 		SelectionType,
@@ -15,6 +22,7 @@
 	import { Group } from "@raythurnevoid/svelte-group-components";
 	import type { ItemContext } from "../item";
 	import type { OnListActionEvent, ListImplRole } from "./types";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	//#endregion
 
 	//#region exports
@@ -43,6 +51,7 @@
 	//#region implementation
 	let list: MDCList;
 	let listGroup: Group;
+	let treeObserver: MutationObserver;
 
 	const context$ = createListContext({
 		listSelectionGroup: group,
@@ -67,13 +76,28 @@
 	onMount(async () => {
 		$context$ = { ...$context$, listGroup: listGroup.getBindings() };
 
+		let treeObserverDebounce: number;
+		treeObserver = new MutationObserver(() => {
+			clearTimeout(treeObserverDebounce);
+			treeObserverDebounce = setTimeout(() => {
+				list?.layout();
+			});
+		});
+		initTreeObserver();
+
 		await tick();
 
 		initialize();
 	});
 
 	onDestroy(() => {
-		list && list.destroy();
+		treeObserver?.disconnect();
+		list?.destroy();
+	});
+
+	afterUpdate(() => {
+		console.log("update");
+		fixItemsTabIndex();
 	});
 
 	$: if (list) {
@@ -104,21 +128,26 @@
 
 			list = new MDCList(dom);
 			list.listen("MDCList:action", handleAction);
+			list.layout();
 		}
-
-		fixInitialTabIndex();
 	}
 
 	function getItems(): ItemContext[] {
 		return listGroup?.getItems().map((item) => item.externalContext);
 	}
 
-	function fixInitialTabIndex() {
+	function fixItemsTabIndex() {
+		// Fix tabindex using DOM API because i don't want Svelte to conflict with MDC.
 		const items = getItems();
-		if (items.length) {
-			if (!items.some((item) => item?.dom.getAttribute("tabindex") === "0")) {
+		if (items?.length) {
+			if (!items.some((item) => !item.disabled && item?.dom.tabIndex === 0)) {
 				const firstEnabledItem = items.find((item) => !item?.disabled);
-				firstEnabledItem?.dom.setAttribute("tabindex", "0");
+				if (firstEnabledItem) firstEnabledItem.dom.tabIndex = 0;
+				items.forEach((item) => {
+					if (item !== firstEnabledItem) {
+						item.dom.tabIndex = -1;
+					}
+				});
 			}
 		}
 	}
@@ -130,10 +159,20 @@
 			listSelectedIndex,
 		});
 	}
+
+	function initTreeObserver() {
+		treeObserver.disconnect();
+		treeObserver.observe(dom, {
+			childList: true,
+			subtree: true,
+		});
+	}
 	//#endregion
 </script>
 
-<Group bind:this={listGroup} on:optionsChange={fixInitialTabIndex}>
+<UseState value={dom} onUpdate={initTreeObserver} />
+
+<Group bind:this={listGroup}>
 	<List
 		bind:dom
 		{id}

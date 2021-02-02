@@ -12,12 +12,11 @@
 }
 
 .mdc-list-item__meta.smui-list__trailing-icon {
-	width: 24px;
-	height: 24px;
+	min-width: 24px;
+	min-height: 24px;
 	flex-shrink: 0;
 	align-items: center;
 	justify-content: center;
 	fill: currentColor;
 	object-fit: cover;
-	padding-left: 32px;
 }

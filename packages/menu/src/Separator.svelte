@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -15,14 +17,12 @@
 	//#endregion
 
 	// Separator
-	import { Separator } from "../../list/src/internal/separator";
+	import { Separator } from "../../list/src/dom";
 
 	export let insetPadding: boolean = false;
 	export let insetLeading: boolean = false;
 	export let insetTrailing: boolean = false;
 </script>
-
-<svelte:options immutable={true} />
 
 <Separator
 	bind:dom
@@ -32,4 +32,5 @@
 	{style}
 	{insetPadding}
 	{insetLeading}
-	{insetTrailing} />
+	{insetTrailing}
+/>

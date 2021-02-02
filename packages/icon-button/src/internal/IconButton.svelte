@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region imports
 	import { Button, A } from "../../../common/dom";
@@ -27,8 +29,6 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <Ripple target={ripple ? dom : undefined} unbounded={true} let:rippleClasses>
 	<svelte:component
 		this={href ? A : Button}
@@ -36,7 +36,7 @@
 		{id}
 		class={parseClassList([
 			className,
-			'mdc-icon-button',
+			"mdc-icon-button",
 			[color, `svmd-icon-button--color--${color}`],
 			[ripple, rippleClasses],
 		])}
@@ -50,7 +50,8 @@
 		on:keydown
 		on:keyup
 		on:focus
-		on:blur>
+		on:blur
+	>
 		<slot />
 	</svelte:component>
 </Ripple>

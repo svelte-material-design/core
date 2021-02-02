@@ -2,9 +2,10 @@
 
 <script lang="ts">
 	//#region  imports
-	import type { IconDOM, IconType } from "../types";
-	import { Graphic } from "../../../../common/components";
+	import type { IconDOM, IconType } from "./types";
+	import { Graphic } from "../../../common/components";
 	import { classList } from "@raythurnevoid/strings-filter";
+	import { getItemContext } from "./ItemContext";
 	//#endregion
 
 	//#region exports
@@ -17,22 +18,20 @@
 	//#endregion
 
 	export let type: IconType = "icon";
-	export let role: "button" = undefined;
+	export let button: boolean = false;
 	//#endregion
 
 	//#region implementation
+	let itemContext$ = getItemContext();
 	let position: "leading" | "trailing" = className.includes(
 		"mdc-list-item__meta"
 	)
 		? "trailing"
 		: "leading";
 
-	$: tabindex = role === "button" ? 0 : -1;
-
 	let materialIcon =
 		className === "mdc-list-item__meta" ||
 		className === "mdc-list-item__graphic";
-
 	//#endregion
 </script>
 
@@ -46,8 +45,12 @@
 	])}
 	{style}
 	{type}
-	aria-hidden={tabindex !== -1}
 	{...$$restProps}
+	data-resttabindex={$itemContext$.tabindex}
+	data-parenttabindex={$itemContext$.tabindex}
+	tabindex={~$$restProps.tabindex && ~$itemContext$.tabindex
+		? $$restProps.tabindex
+		: undefined}
 >
 	<slot />
 </Graphic>
