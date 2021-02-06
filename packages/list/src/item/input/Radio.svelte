@@ -36,7 +36,7 @@
 	{value}
 	accessibleTouch={false}
 	ripple={false}
-	{disabled}
+	disabled={$itemContext$.disabled || disabled}
 	{readonly}
 	{...$$restProps}
 />

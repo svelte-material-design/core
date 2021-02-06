@@ -7,9 +7,9 @@
 	import type { ItemRole } from "./types";
 	import { HiddenInput } from ".";
 	import { Item } from "../../dom";
-	import { beforeUpdate, onMount } from "svelte";
+	import { onMount } from "svelte";
 	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
-	import { ItemContext, setItemContext } from "../../item";
+	import { setItemContext } from "../../item";
 	//#endregion
 
 	//#region exports

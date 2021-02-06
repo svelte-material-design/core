@@ -6,14 +6,13 @@
 
 <script lang="ts">
 	//#region  imports
-	import { beforeUpdate, createEventDispatcher, tick } from "svelte";
+	import { createEventDispatcher, tick } from "svelte";
 	import { getListContext } from "../";
 	import type { OnItemSelectedEvent } from ".";
 	import type { ItemRole } from "..";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { Item } from "../internal";
-	import { setItemContext } from "./ItemContext";
 	//#endregion
 
 	//#region exports
@@ -53,8 +52,8 @@
 		_role = "checkbox";
 	}
 
-	$: if (!$listContext$.selectionType || disabled) {
-		selected = undefined;
+	$: if (!$listContext$.selectionType) {
+		selected = null;
 	} else if ($listContext$.selectionType && selected == null) {
 		selected = false;
 	}
