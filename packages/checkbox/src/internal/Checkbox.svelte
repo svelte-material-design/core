@@ -174,6 +174,7 @@
 	{id}
 	{checked}
 	{value}
+	{ripple}
 	{accessibleTouch}
 	{density}
 	{disabled}
