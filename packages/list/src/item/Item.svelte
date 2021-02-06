@@ -52,7 +52,7 @@
 		_role = "checkbox";
 	}
 
-	$: if (!$listContext$.selectionType) {
+	$: if (!$listContext$.selectionType || disabled) {
 		selected = null;
 	} else if ($listContext$.selectionType && selected == null) {
 		selected = false;
