@@ -20,7 +20,7 @@
 	import type { MDCMenuDistance } from "@material/menu-surface";
 	import { MenuAnchorCorner, MenuVariant, createMenuContext } from "..";
 	import { List, OnMenuImplSelect } from ".";
-	import type { ListOrientation, ListType } from "../../../list";
+	import type { ListOrientation, ListItemsStyle } from "../../../list";
 	import { smuiToMDCCorner } from "../../../menu-surface/functions";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createComponentsGroupStore } from "../../../common/components-group";
@@ -31,7 +31,7 @@
 	//#region exports
 	//#region list
 	export let orientation: ListOrientation = "vertical";
-	export let type: ListType = "textual";
+	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
 
 	export let dense: boolean = false;
@@ -214,7 +214,7 @@
 	<List
 		bind:value
 		{orientation}
-		{type}
+		{itemsStyle}
 		{itemsRows}
 		{dense}
 		{density}

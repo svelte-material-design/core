@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -15,16 +17,16 @@
 	//#endregion
 
 	// Menu
-	import { MDCMenuDistance } from "@material/menu-surface";
-	import { MenuAnchorCorner, MenuVariant } from ".";
-	import { ListOrientation, ListType } from "../../list";
+	import type { MDCMenuDistance } from "@material/menu-surface";
+	import type { MenuAnchorCorner, MenuVariant } from ".";
+	import type { ListOrientation, ListItemsStyle } from "../../list";
 	import { Menu } from "./internal";
-	import { SelectionType } from "../../common/hoc";
+	import type { SelectionType } from "../../common/hoc";
 
 	//#region exports
 	//#region list
 	export let orientation: ListOrientation = "vertical";
-	export let type: ListType = "textual";
+	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
 
 	export let dense: boolean = false;
@@ -52,8 +54,6 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <Menu
 	bind:dom
 	bind:open
@@ -70,7 +70,7 @@
 	{hoisted}
 	{wrapFocus}
 	{orientation}
-	{type}
+	{itemsStyle}
 	{itemsRows}
 	{dense}
 	{density}
@@ -78,6 +78,7 @@
 	on:open
 	on:close
 	on:select
-	on:change>
+	on:change
+>
 	<slot />
 </Menu>

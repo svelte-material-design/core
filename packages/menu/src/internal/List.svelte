@@ -24,13 +24,13 @@
 	import type {
 		ListOrientation,
 		OnListChangeEvent,
-		ListType,
+		ListItemsStyle,
 	} from "../../../list";
 	//#endregion
 
 	//#region exports
 	export let orientation: ListOrientation = "vertical";
-	export let type: ListType = "textual";
+	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
 
 	export let dense: boolean = false;
@@ -83,7 +83,7 @@
 	selectionType="single"
 	{orientation}
 	{itemsRows}
-	{type}
+	{itemsStyle}
 	{dense}
 	{density}
 	{wrapFocus}

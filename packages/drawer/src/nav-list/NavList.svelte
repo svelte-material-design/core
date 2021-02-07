@@ -18,12 +18,12 @@
 
 	// NavList
 	import { List } from "../../../list/src/internal";
-	import type { ListOrientation, ListType } from "../../../list";
+	import type { ListOrientation, ListItemsStyle } from "../../../list";
 	import { getDrawerContext } from "../DrawerContext";
 
 	//#region exports
 	export let orientation: ListOrientation = "vertical";
-	export let type: ListType = "textual";
+	export let itemsStyle: ListItemsStyle = "textual";
 
 	export let dense: boolean = false;
 	export let itemsRows: number = 1;
@@ -39,7 +39,7 @@
 	class={className}
 	{style}
 	{orientation}
-	{type}
+	{itemsStyle}
 	{dense}
 	{itemsRows}
 	disableMDCInstance={$drawerContext$.variant === "dismissible" ||

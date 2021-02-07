@@ -22,7 +22,7 @@
 		OnMenuItemSelectedEvent,
 	} from "..";
 	import { MenuImpl, OnMenuImplSelect } from ".";
-	import type { ListOrientation, ListType } from "../../../list";
+	import type { ListOrientation, ListItemsStyle } from "../../../list";
 	import type { SelectionType } from "../../../common/hoc";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
@@ -31,7 +31,7 @@
 	//#region exports
 	//#region list
 	export let orientation: ListOrientation = "vertical";
-	export let type: ListType = "textual";
+	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
 
 	export let dense: boolean = false;
@@ -115,7 +115,7 @@
 		{disableMDCInstance}
 		{itemsRows}
 		{orientation}
-		{type}
+		{itemsStyle}
 		{selectionType}
 		{group}
 		on:select={(event) => handleSelect(event.detail)}

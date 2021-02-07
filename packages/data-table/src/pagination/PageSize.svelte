@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 
@@ -53,18 +55,17 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{...props}
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-data-table__pagination-rows-per-page',
+		"mdc-data-table__pagination-rows-per-page",
 	])}
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<div class="mdc-data-table__pagination-rows-per-page-label">
 		<slot />
 	</div>
@@ -74,10 +75,11 @@
 		class="mdc-data-table__pagination-rows-per-page-select"
 		nullable={false}
 		value={pageSizeSelectValue}
-		on:change={(event) => handlePageSizeChange(event.detail)}>
+		on:change={(event) => handlePageSizeChange(event.detail)}
+	>
 		<div slot="options">
 			{#each pageSizeOptions as option (option)}
-				<Option value={'' + option}>{option}</Option>
+				<Option value={"" + option}>{option}</Option>
 			{/each}
 		</div>
 	</Select>

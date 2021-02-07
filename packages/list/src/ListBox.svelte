@@ -13,7 +13,7 @@
 		SelectionType,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { List, OnListActionEvent } from "./internal";
-	import type { ListOrientation, OnListChangeEvent, ListType } from ".";
+	import type { ListOrientation, OnListChangeEvent, ListItemsStyle } from ".";
 	//#endregion
 
 	//#region exports
@@ -22,11 +22,11 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/list/List:${count++}`;
-	export let dom: HTMLDivElement | HTMLUListElement = undefined;
+	export let dom: HTMLUListElement = undefined;
 	//#endregion
 
 	export let orientation: ListOrientation = "vertical";
-	export let type: ListType = "textual";
+	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
 	export let dense: boolean = false;
 	export let wrapFocus: boolean = true;
@@ -92,13 +92,20 @@
 		{selectionType}
 		{orientation}
 		{itemsRows}
-		{type}
+		{itemsStyle}
 		{dense}
 		{wrapFocus}
 		{group}
 		aria-multiselectable={multiSelection ? true : undefined}
 		{...$$restProps}
 		on:action={(event) => handleAction(event.detail)}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focusin
+		on:focusout
 	>
 		<slot />
 	</List>

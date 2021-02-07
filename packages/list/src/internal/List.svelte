@@ -9,14 +9,13 @@
 		createEventDispatcher,
 		onMount,
 		tick,
-		beforeUpdate,
 		afterUpdate,
 	} from "svelte";
 	import type {
 		SelectionGroupBinding,
 		SelectionType,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import type { ListOrientation, ListType } from "..";
+	import type { ListOrientation, ListItemsStyle } from "..";
 	import { createListContext } from "..";
 	import { List } from "../dom";
 	import { Group } from "@raythurnevoid/svelte-group-components";
@@ -31,12 +30,12 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLDivElement | HTMLUListElement = undefined;
+	export let dom: HTMLUListElement = undefined;
 	//#endregion
 
 	export let role: ListImplRole = "list";
 	export let orientation: ListOrientation = "vertical";
-	export let type: ListType = "textual";
+	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
 	export let dense: boolean = false;
 	export let wrapFocus: boolean = false;
@@ -180,10 +179,17 @@
 		{style}
 		{role}
 		{orientation}
-		{type}
+		{itemsStyle}
 		{itemsRows}
 		{dense}
 		aria-orientation={orientation}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focusin
+		on:focusout
 	>
 		<slot />
 	</List>

@@ -1,10 +1,10 @@
-export { MenuSurfaceAnchorCorner as MenuAnchorCorner } from "../../menu-surface";
-export { MenuSurfaceVariant as MenuVariant } from "../../menu-surface";
-export {
+export type { MenuSurfaceAnchorCorner as MenuAnchorCorner } from "../../menu-surface";
+export type { MenuSurfaceVariant as MenuVariant } from "../../menu-surface";
+export type {
 	ListOrientation as MenuOrientation,
-	ListType as MenuListType,
+	ListItemsStyle as MenuItemsStyle,
 } from "../../list";
-export { MDCMenuDistance } from "@material/menu-surface";
+export type { MDCMenuDistance } from "@material/menu-surface";
 
 export interface OnMenuChange {
 	value: string;

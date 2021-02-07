@@ -12,7 +12,7 @@
 <script lang="ts">
 	//#region  imports
 	import { Ol, Ul } from "../../../common/dom";
-	import type { ListOrientation, ListType } from "..";
+	import type { ListOrientation, ListItemsStyle } from "..";
 	import { parseClassList } from "../../../common/functions";
 	import type { ListImplRole } from "../internal";
 	//#endregion
@@ -28,7 +28,7 @@
 
 	export let role: ListImplRole = "list";
 	export let orientation: ListOrientation = "vertical";
-	export let type: ListType = "textual";
+	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
 	$: if (itemsRows > 3) {
 		itemsRows = 3;
@@ -63,12 +63,12 @@
 		[itemsRows === 2, "mdc-list--two-line"],
 		[itemsRows === 3, "smui-list--three-line"],
 		[orientation === "horizontal", "smui-list--horizontal"],
-		[type === "textual", "mdc-list--textual-list"],
-		[type === "avatar", "mdc-list--avatar-list"],
-		[type === "icon", "mdc-list--icon-list"],
-		[type === "image", "mdc-list--image-list"],
-		[type === "thumbnail", "mdc-list--thumbnail-list"],
-		[type === "video", "mdc-list--video-list"],
+		[itemsStyle === "textual", "mdc-list--textual-list"],
+		[itemsStyle === "avatar", "mdc-list--avatar-list"],
+		[itemsStyle === "icon", "mdc-list--icon-list"],
+		[itemsStyle === "image", "mdc-list--image-list"],
+		[itemsStyle === "thumbnail", "mdc-list--thumbnail-list"],
+		[itemsStyle === "video", "mdc-list--video-list"],
 	])}
 	{style}
 	{role}
@@ -80,8 +80,6 @@
 	on:keyup
 	on:focusin
 	on:focusout
-	on:focus
-	on:blur
 	{...$$restProps}
 >
 	<slot />
