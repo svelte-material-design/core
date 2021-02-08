@@ -8,5 +8,6 @@ export const [
 export interface ItemContext {
 	dom: HTMLLIElement | HTMLAnchorElement;
 	selected: boolean;
+	value: string;
 	disabled: boolean;
 }

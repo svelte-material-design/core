@@ -16,9 +16,9 @@
 	export let dom: HTMLLIElement = undefined;
 	//#endregion
 
-	export let insetPadding: boolean = false;
 	export let insetLeading: boolean = false;
 	export let insetTrailing: boolean = false;
+	export let insetPadding: boolean = false;
 	//#endregion
 
 	//#region implementation

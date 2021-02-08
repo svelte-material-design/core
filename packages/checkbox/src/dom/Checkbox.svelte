@@ -53,10 +53,12 @@
 			],
 			[behaviour === "data-table-row", "mdc-data-table__row-checkbox"],
 -->
-<div class={accessibleTouch ? "mdc-touch-target-wrapper" : undefined}>
+<div
+	bind:this={dom}
+	{id}
+	class={accessibleTouch ? "mdc-touch-target-wrapper" : undefined}
+>
 	<div
-		bind:this={dom}
-		{id}
 		class={classList([
 			className,
 			"mdc-checkbox",

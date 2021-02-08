@@ -18,7 +18,6 @@
 	//#endregion
 
 	export let type: IconType = "icon";
-	export let button: boolean = false;
 	//#endregion
 
 	//#region implementation
@@ -46,8 +45,6 @@
 	{style}
 	{type}
 	{...$$restProps}
-	data-resttabindex={$itemContext$.tabindex}
-	data-parenttabindex={$itemContext$.tabindex}
 	tabindex={~$$restProps.tabindex && ~$itemContext$.tabindex
 		? $$restProps.tabindex
 		: undefined}

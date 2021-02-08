@@ -16,8 +16,6 @@
 	export let dom: HTMLInputElement = undefined;
 	//#endregion
 
-	export let value: string = undefined;
-
 	export let disabled: boolean = false;
 	export let readonly: boolean = undefined;
 	//#endregion
@@ -32,11 +30,11 @@
 	class={className}
 	{style}
 	{id}
-	checked={$itemContext$.selected}
-	{value}
 	accessibleTouch={false}
 	ripple={false}
-	{disabled}
 	{readonly}
+	checked={$itemContext$.selected}
+	value={$itemContext$.value}
+	disabled={$itemContext$.disabled || disabled}
 	{...$$restProps}
 />

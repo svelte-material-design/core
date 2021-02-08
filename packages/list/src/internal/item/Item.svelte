@@ -36,6 +36,7 @@
 	const context$ = setItemContext({
 		disabled,
 		selected,
+		value,
 	});
 	const context = $context$;
 	$: $context$ = {
@@ -43,6 +44,7 @@
 			...$context$,
 			disabled,
 			selected,
+			value,
 			dom,
 		}),
 	};
