@@ -7,7 +7,6 @@
 	import { classList } from "@raythurnevoid/strings-filter";
 	import { ItemContent } from ".";
 	import { A, Div } from "../../../../common/dom";
-	import { beforeUpdate } from "svelte";
 	//#endregion
 
 	//#region exports
@@ -16,7 +15,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLAnchorElement | HTMLDivElement = undefined;
+	export let dom: HTMLLIElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
@@ -33,12 +32,10 @@
 	//#endregion
 </script>
 
-<li>
+<li bind:this={dom} {id}>
 	<Ripple let:rippleClasses target={ripple ? dom : undefined}>
 		<svelte:component
 			this={href === undefined ? Div : A}
-			bind:dom
-			{id}
 			class={classList([
 				className,
 				"mdc-list-item",

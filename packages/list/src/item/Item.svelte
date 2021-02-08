@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { createEventDispatcher, tick } from "svelte";
+	import { createEventDispatcher } from "svelte";
 	import { getListContext } from "../";
 	import type { OnItemSelectedEvent } from ".";
 	import type { ItemRole } from "..";
@@ -21,7 +21,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/list/Item:${count++}`;
-	export let dom: HTMLDivElement = undefined;
+	export let dom: HTMLLIElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
@@ -29,8 +29,6 @@
 	export let activated: boolean = false;
 	export let disabled: boolean = false;
 	export let value: any = undefined;
-
-	export let role: ItemRole = undefined;
 	//#endregion
 
 	//#region implementation
@@ -41,15 +39,14 @@
 	//#region locals
 	let selectable: Selectable;
 	const listContext$ = getListContext();
+	let role: ItemRole;
 
-	let _role = role;
-	$: _role = role;
-	$: if (!role && $listContext$.role === "radiogroup") {
-		_role = "radio";
+	$: if ($listContext$.role === "radiogroup") {
+		role = "radio";
 	} else if ($listContext$.role === "listbox") {
-		_role = "option";
+		role = "option";
 	} else if ($listContext$.role === "group") {
-		_role = "checkbox";
+		role = "checkbox";
 	}
 
 	$: if (!$listContext$.selectionType) {
@@ -84,7 +81,7 @@
 		{activated}
 		{disabled}
 		{value}
-		role={_role}
+		{role}
 		{ripple}
 		{...$$restProps}
 		let:leadingClassName
@@ -95,9 +92,9 @@
 		on:keydown
 		on:keyup
 		on:focus
+		on:blur
 		on:focusin
 		on:focusout
-		on:blur
 	>
 		<slot {selected} {leadingClassName} {trailingClassName} />
 	</Item>
