@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	import { SnackbarContext } from "./";
 
@@ -49,7 +51,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/snackbar/Snackbar:${count++}`;
@@ -116,8 +119,6 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={open} onUpdate={handleOpenUpdate} />
 
 <SnackbarBase
@@ -134,6 +135,7 @@
 	on:closed={(event) => handleClosed(event.detail)}
 	on:closing
 	on:opened
-	on:opening>
+	on:opening
+>
 	<slot />
 </SnackbarBase>

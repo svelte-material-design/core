@@ -11,7 +11,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/slider/ContinuousSlider:${count++}`;
@@ -34,5 +35,5 @@
 	{...$$restProps}
 	on:input
 	on:change
-><slot />
+	><slot />
 </Slider>

@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 
@@ -9,7 +11,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../chips/ChipSet:${count++}`;
@@ -87,15 +90,18 @@
 	});
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={variant} onUpdate={reinitialize} />
 
 <SelectableGroup
 	bind:this={selectableGroup}
 	nullable
-	selectionType={variant === 'choice' ? 'single' : variant === 'filter' || variant === 'input' ? 'multi' : null}
-	bind:value>
+	selectionType={variant === "choice"
+		? "single"
+		: variant === "filter" || variant === "input"
+		? "multi"
+		: null}
+	bind:value
+>
 	<div
 		bind:this={dom}
 		{...props}
@@ -103,13 +109,14 @@
 		{id}
 		class={parseClassList([
 			className,
-			'mdc-chip-set',
-			[entryAnimation, 'mdc-chip-set--input'],
-			[variant === 'choice', 'mdc-chip-set--choice'],
-			[variant === 'filter', 'mdc-chip-set--filter'],
+			"mdc-chip-set",
+			[entryAnimation, "mdc-chip-set--input"],
+			[variant === "choice", "mdc-chip-set--choice"],
+			[variant === "filter", "mdc-chip-set--filter"],
 		])}
 		{style}
-		use:forwardDOMEvents>
+		use:forwardDOMEvents
+	>
 		<slot />
 	</div>
 </SelectableGroup>

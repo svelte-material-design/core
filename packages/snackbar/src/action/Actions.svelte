@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -9,7 +11,8 @@
 
 	//#region exports
 	//#base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/snackbar/Actions:${count++}`;
@@ -22,14 +25,13 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{...$$restProps}
 	{id}
-	class={parseClassList([className, 'mdc-snackbar__actions'])}
+	class={parseClassList([className, "mdc-snackbar__actions"])}
 	{style}
-	aria-atomic="true">
+	aria-atomic="true"
+>
 	<slot />
 </div>

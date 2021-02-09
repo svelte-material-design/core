@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region  imports
 	import type { IconDOM, IconType } from ".";
@@ -8,7 +10,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -23,15 +26,14 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <svelte:component
-	this={parent === 'icon' ? Icon : ButtonIcon}
+	this={parent === "icon" ? Icon : ButtonIcon}
 	bind:dom
 	{id}
 	class={className}
 	{style}
 	{type}
-	{...$$restProps}>
+	{...$$restProps}
+>
 	<slot />
 </svelte:component>

@@ -7,7 +7,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -24,6 +25,7 @@
 	{id}
 	class={classList([className, "mdc-list-item__text"])}
 	{style}
-	{...$$restProps}>
+	{...$$restProps}
+>
 	<slot />
 </span>

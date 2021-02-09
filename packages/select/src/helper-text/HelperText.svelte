@@ -5,7 +5,8 @@
 <script lang="ts">
 	//#region Base
 	import { parseClassList } from "../../../common/functions";
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/select/helper-text/HelperText:${count++}`;
@@ -43,14 +44,15 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-select-helper-text',
+		"mdc-select-helper-text",
 		[
 			persistentValidationMsg,
-			'mdc-select-helper-text--validation-msg-persistent',
+			"mdc-select-helper-text--validation-msg-persistent",
 		],
-		[validationMsg, 'mdc-select-helper-text--validation-msg'],
+		[validationMsg, "mdc-select-helper-text--validation-msg"],
 	])}
 	{style}
-	aria-hidden="true">
+	aria-hidden="true"
+>
 	<slot />
 </p>

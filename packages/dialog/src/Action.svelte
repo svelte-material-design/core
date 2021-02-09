@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../dialog/Action:${count++}`;
@@ -52,13 +55,11 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <Button
 	bind:dom
 	props={{ ...props, ...actionProps }}
 	{id}
-	class={parseClassList([className, 'mdc-dialog__button'])}
+	class={parseClassList([className, "mdc-dialog__button"])}
 	{style}
 	{ripple}
 	{color}
@@ -67,6 +68,7 @@
 	{disabled}
 	{target}
 	{density}
-	on:domEvent={forwardDOMEvents}>
+	on:domEvent={forwardDOMEvents}
+>
 	<slot />
 </Button>

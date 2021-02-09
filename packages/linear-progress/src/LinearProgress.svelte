@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count = 0;
 </script>
@@ -6,7 +8,8 @@
 	//#region Base
 	import { BaseProps } from "../../common/dom/Props";
 
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/linear-progress/LinearProgress:${count++}`;
@@ -24,8 +27,6 @@
 	export let ariaLabel: string = undefined;
 </script>
 
-<svelte:options immutable={true} />
-
 <svelte:component
 	this={LinearProgressImpl}
 	bind:dom
@@ -38,4 +39,5 @@
 	{closed}
 	{progress}
 	{buffer}
-	{ariaLabel} />
+	{ariaLabel}
+/>

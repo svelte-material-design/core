@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/image-list/Item:${count++}`;
@@ -21,14 +24,13 @@
 	// Item
 </script>
 
-<svelte:options immutable={true} />
-
 <li
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-image-list__item'])}
+	class={parseClassList([className, "mdc-image-list__item"])}
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </li>

@@ -1,8 +1,11 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
 	import { BaseProps } from "../../common/dom/Props";
 
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -76,13 +79,12 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={closed} onUpdate={handleClosedValueChange} />
 <UseDebounce
 	value={progress}
 	bind:debounced={debouncedProgress}
-	interval={500} />
+	interval={500}
+/>
 
 <div
 	bind:this={dom}
@@ -90,23 +92,25 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-linear-progress',
-		[indeterminate, 'mdc-linear-progress--indeterminate'],
-		[reversed, 'mdc-linear-progress--reversed'],
+		"mdc-linear-progress",
+		[indeterminate, "mdc-linear-progress--indeterminate"],
+		[reversed, "mdc-linear-progress--reversed"],
 	])}
 	{style}
 	role="progressbar"
 	aria-label={ariaLabel}
 	aria-valuemin="0"
 	aria-valuemax="1"
-	aria-valuenow={indeterminate ? undefined : progress}>
+	aria-valuenow={indeterminate ? undefined : progress}
+>
 	<div class="mdc-linear-progress__buffer">
 		<div class="mdc-linear-progress__buffer-bar" />
 		<div class="mdc-linear-progress__buffer-dots" />
 	</div>
 	<div
 		class="mdc-linear-progress__bar mdc-linear-progress__primary-bar"
-		style="transform: scaleX({progress})">
+		style="transform: scaleX({progress})"
+	>
 		<span class="mdc-linear-progress__bar-inner" />
 	</div>
 	<div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">

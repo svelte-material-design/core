@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList } from "../../../common/functions";
 	import { DOMEventsForwarder } from "../../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../../data-table/pagination/Pagination:${count++}`;
@@ -46,15 +49,14 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-data-table__pagination'])}
+	class={parseClassList([className, "mdc-data-table__pagination"])}
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<div class="mdc-data-table__pagination-trailing">
 		<slot name="pageSize" {setPageSize} />
 
@@ -66,37 +68,42 @@
 					end={(pageIndex + 1) * pageSize}
 					{length}
 					pages={lastPageIndex + 1}
-					page={pageIndex + 1} />
+					page={pageIndex + 1}
+				/>
 			</div>
 			{#if firstPageBtn}
 				<IconButton
 					class="mdc-data-table__pagination-button"
-					props={{ 'data-first-page': 'true' }}
+					props={{ "data-first-page": "true" }}
 					disabled={pageIndex === 0}
-					on:click={() => (pageIndex = 0)}>
+					on:click={() => (pageIndex = 0)}
+				>
 					<Icon>first_page</Icon>
 				</IconButton>
 			{/if}
 			<IconButton
 				class="mdc-data-table__pagination-button"
-				props={{ 'data-prev-page': 'true' }}
+				props={{ "data-prev-page": "true" }}
 				disabled={pageIndex === 0}
-				on:click={() => pageIndex--}>
+				on:click={() => pageIndex--}
+			>
 				<Icon>chevron_left</Icon>
 			</IconButton>
 			<IconButton
 				class="mdc-data-table__pagination-button"
-				props={{ 'data-next-page': 'true' }}
+				props={{ "data-next-page": "true" }}
 				disabled={remainingItemsLength <= 0}
-				on:click={() => pageIndex++}>
+				on:click={() => pageIndex++}
+			>
 				<Icon>chevron_right</Icon>
 			</IconButton>
 			{#if lastPageBtn}
 				<IconButton
 					class="mdc-data-table__pagination-button"
-					props={{ 'data-last-page': 'true' }}
+					props={{ "data-last-page": "true" }}
 					disabled={remainingItemsLength <= 0}
-					on:click={() => (pageIndex = lastPageIndex)}>
+					on:click={() => (pageIndex = lastPageIndex)}
+				>
 					<Icon>last_page</Icon>
 				</IconButton>
 			{/if}

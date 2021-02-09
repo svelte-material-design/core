@@ -1,10 +1,13 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count = 0;
 </script>
 
 <script lang="ts">
 	//#region Base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/switch/Switch:${count++}`;
@@ -113,8 +116,6 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={checked} onUpdate={handleCheckedChange} />
 <UseState value={ripple} onUpdate={instantiate} />
 
@@ -125,11 +126,12 @@
 		{id}
 		class={parseClassList([
 			className,
-			'mdc-switch',
-			[disabled, 'mdc-switch--disabled'],
-			[checked, 'mdc-switch--checked'],
+			"mdc-switch",
+			[disabled, "mdc-switch--disabled"],
+			[checked, "mdc-switch--checked"],
 		])}
-		{style}>
+		{style}
+	>
 		<div class="mdc-switch__track" />
 		<div class="mdc-switch__thumb-underlay">
 			<div class="mdc-switch__thumb">
@@ -139,14 +141,15 @@
 					bind:checked
 					type="checkbox"
 					role="switch"
-					aria-checked={checked ? 'true' : 'false'}
+					aria-checked={checked ? "true" : "false"}
 					aria-label={ariaLabel}
 					disabled={isInputDisabled(readonly, disabled)}
 					{name}
 					{title}
 					{value}
 					{readonly}
-					{required} />
+					{required}
+				/>
 			</div>
 		</div>
 	</div>

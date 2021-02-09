@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region  imports
 	import { parseClassList } from "../../common/functions";
@@ -5,7 +7,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -19,18 +22,17 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <section
 	bind:this={dom}
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-top-app-bar__section',
-		[align === 'start', 'mdc-top-app-bar__section--align-start'],
-		[align === 'end', 'mdc-top-app-bar__section--align-end'],
+		"mdc-top-app-bar__section",
+		[align === "start", "mdc-top-app-bar__section--align-start"],
+		[align === "end", "mdc-top-app-bar__section--align-end"],
 	])}
 	{style}
-	{...$$restProps}>
+	{...$$restProps}
+>
 	<slot />
 </section>

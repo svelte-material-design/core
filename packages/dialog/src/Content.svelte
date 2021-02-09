@@ -7,7 +7,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../dialog/Content:${count++}`;
@@ -29,8 +30,9 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-dialog__content'])}
+	class={parseClassList([className, "mdc-dialog__content"])}
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </div>

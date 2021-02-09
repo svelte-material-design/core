@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -10,7 +12,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/snackbar/IconAction:${count++}`;
@@ -26,15 +29,14 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <IconButton
 	bind:dom
 	{...$$restProps}
 	{id}
-	class={parseClassList([className, 'mdc-snackbar__action'])}
+	class={parseClassList([className, "mdc-snackbar__action"])}
 	{style}
 	{ripple}
-	type="button">
+	type="button"
+>
 	<slot />
 </IconButton>

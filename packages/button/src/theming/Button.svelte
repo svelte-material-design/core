@@ -6,7 +6,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -54,7 +55,7 @@
 		className,
 		[density != null, `smui-button--dense--${density}`],
 		[
-			/* density == null &&  */ shapeRadius === 'rounded',
+			/* density == null &&  */ shapeRadius === "rounded",
 			`smui-button--shape-rounded`,
 		],
 		/* [
@@ -85,7 +86,7 @@
 		],
 		[height, `--smui-button--height: ${height}`],
 		[
-			shapeRadius && shapeRadius !== 'rounded',
+			shapeRadius && shapeRadius !== "rounded",
 			`--smui-button--shape-radius: ${shapeRadius}`,
 		],
 		[
@@ -111,6 +112,7 @@
 	on:keydown
 	on:keyup
 	on:focus
-	on:blur>
+	on:blur
+>
 	<slot />
 </Button>

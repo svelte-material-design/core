@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region  imports
 	import { parseClassList } from "../../common/functions";
@@ -5,7 +7,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -17,13 +20,12 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{id}
-	class={parseClassList([className, 'mdc-top-app-bar__row'])}
+	class={parseClassList([className, "mdc-top-app-bar__row"])}
 	{style}
-	{...$$restProps}>
+	{...$$restProps}
+>
 	<slot />
 </div>

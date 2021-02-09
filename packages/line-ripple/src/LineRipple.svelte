@@ -7,7 +7,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/line-ripple/LineRipple:${count++}`;
@@ -63,8 +64,8 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-line-ripple',
-		[active, 'mdc-line-ripple--active'],
+		"mdc-line-ripple",
+		[active, "mdc-line-ripple--active"],
 	])}
 	style={parseClassList([
 		[
@@ -73,4 +74,5 @@
 		],
 		style,
 	])}
-	use:forwardDOMEvents />
+	use:forwardDOMEvents
+/>

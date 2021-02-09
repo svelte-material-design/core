@@ -1,10 +1,13 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
 
 <script lang="ts">
 	//#region Base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/menu-surface/AbsoluteMenuSurface:${count++}`;
@@ -42,8 +45,6 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <MenuSurfaceImpl
 	bind:this={menuSurfaceImpl}
 	bind:dom
@@ -60,7 +61,8 @@
 	{variant}
 	hoisted={true}
 	on:open
-	on:close>
+	on:close
+>
 	<slot />
 </MenuSurfaceImpl>
 

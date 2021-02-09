@@ -1,7 +1,8 @@
 <script lang="ts">
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -22,6 +23,7 @@
 	on:keydown
 	on:keyup
 	on:focus
-	on:blur>
+	on:blur
+>
 	<slot />
 </button>

@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count: number = 0;
 </script>
@@ -10,7 +12,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/button/Button:${count++}`;
@@ -28,8 +31,6 @@
 	//#region implementation
 	//#endregion
 </script>
-
-<svelte:options immutable={true} />
 
 <InternalButton
 	bind:dom
@@ -49,6 +50,7 @@
 	on:keydown
 	on:keyup
 	on:focus
-	on:blur>
+	on:blur
+>
 	<slot />
 </InternalButton>

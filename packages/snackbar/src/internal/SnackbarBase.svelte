@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region imports
 	import { MDCSnackbar, MDCSnackbarCloseEvent } from "@material/snackbar";
@@ -9,7 +11,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -109,14 +112,6 @@
 	//#endregion
 </script>
 
-<style>
-	.smui-snackbar-origin {
-		display: none;
-	}
-</style>
-
-<svelte:options immutable={true} />
-
 <UseState value={[stacked, leading]} onUpdate={initialize} />
 <UseState bind:this={openState} value={open} onUpdate={handleOpenUpdate} />
 
@@ -128,12 +123,19 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-snackbar',
-		[leading, 'mdc-snackbar--leading'],
-		[stacked, 'mdc-snackbar--stacked'],
+		"mdc-snackbar",
+		[leading, "mdc-snackbar--leading"],
+		[stacked, "mdc-snackbar--stacked"],
 	])}
-	{style}>
+	{style}
+>
 	<div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
 		<slot />
 	</div>
 </div>
+
+<style>
+	.smui-snackbar-origin {
+		display: none;
+	}
+</style>

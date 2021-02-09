@@ -11,7 +11,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/fab/Fab:${count++}`;
@@ -37,12 +38,12 @@
 		{id}
 		class={parseClassList([
 			className,
-			'mdc-fab',
-			[variant === 'mini', 'mdc-fab--mini'],
-			[variant === 'extended', 'mdc-fab--extended'],
-			[!show, 'mdc-fab--exited'],
-			[color === 'primary', 'svmd-fab--color--primary'],
-			[accessibleTouch, 'mdc-fab--touch'],
+			"mdc-fab",
+			[variant === "mini", "mdc-fab--mini"],
+			[variant === "extended", "mdc-fab--extended"],
+			[!show, "mdc-fab--exited"],
+			[color === "primary", "svmd-fab--color--primary"],
+			[accessibleTouch, "mdc-fab--touch"],
 			rippleClasses,
 		])}
 		{style}
@@ -52,7 +53,8 @@
 		on:keydown
 		on:keyup
 		on:focus
-		on:blur>
+		on:blur
+	>
 		<span class="mdc-fab__ripple" />
 		<slot />
 		{#if accessibleTouch}

@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../dialog/Title:${count++}`;
@@ -25,14 +28,13 @@
 	$: $dialogContext$.setTitleId(id);
 </script>
 
-<svelte:options immutable={true} />
-
 <h2
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-dialog__title'])}
+	class={parseClassList([className, "mdc-dialog__title"])}
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </h2>

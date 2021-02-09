@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList, StringListToFilter } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/input-field/TextArea:${count++}`;
@@ -90,19 +93,21 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <div
-	class="smui-text-field__wrapper {fullWidth ? 'smui-text-field__wrapper--fullwidth' : ''}">
+	class="smui-text-field__wrapper {fullWidth
+		? 'smui-text-field__wrapper--fullwidth'
+		: ''}"
+>
 	<label
 		bind:this={dom}
 		for={id}
 		class={parseClassList([
 			className,
 			...textFieldClassList,
-			'mdc-text-field--textarea',
+			"mdc-text-field--textarea",
 		])}
-		{style}>
+		{style}
+	>
 		{#if ripple}<span class="mdc-text-field__ripple" />{/if}
 		{#if resizable}
 			<span class="mdc-text-field__resizer">
@@ -128,7 +133,8 @@
 					aria-label={placeholder && !labelId ? placeholder : undefined}
 					on:input={valueUpdater}
 					on:change={changeHandler}
-					use:forwardDOMEvents />
+					use:forwardDOMEvents
+				/>
 			</span>
 		{:else}
 			<textarea
@@ -152,7 +158,8 @@
 				aria-labelledby={labelId}
 				on:input={valueUpdater}
 				on:change={changeHandler}
-				use:forwardDOMEvents />
+				use:forwardDOMEvents
+			/>
 		{/if}
 		<NotchedOutline noLabel={!$$slots.label}>
 			{#if $$slots.label}
@@ -178,4 +185,5 @@
 	inputElement={textareaElement}
 	label={$$slots.label}
 	variant="outlined"
-	fullWidth={false} />
+	fullWidth={false}
+/>

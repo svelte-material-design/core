@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -10,7 +12,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/card/Card:${count++}`;
@@ -24,17 +27,16 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-card',
-		[variant === 'outlined', 'mdc-card--outlined'],
+		"mdc-card",
+		[variant === "outlined", "mdc-card--outlined"],
 	])}
 	{style}
-	{...$$restProps}>
+	{...$$restProps}
+>
 	<slot />
 </div>

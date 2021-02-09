@@ -7,7 +7,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../data-table/LinearProgress:${count++}`;
@@ -33,8 +34,9 @@
 	bind:dom
 	{props}
 	{id}
-	class={parseClassList([className, 'mdc-data-table__linear-progress'])}
+	class={parseClassList([className, "mdc-data-table__linear-progress"])}
 	{style}
 	indeterminate
 	{ariaLabel}
-	on:domEvent={forwardDOMEvents} />
+	on:domEvent={forwardDOMEvents}
+/>

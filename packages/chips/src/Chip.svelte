@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 
@@ -18,7 +20,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../chips/Chip:${count++}`;
@@ -144,17 +147,16 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <Selectable bind:this={selectable} bind:selected bind:value>
 	<div
 		bind:this={dom}
 		{...props}
 		{id}
 		role="row"
-		class={parseClassList([className, 'mdc-chip'])}
+		class={parseClassList([className, "mdc-chip"])}
 		{style}
-		use:forwardDOMEvents>
+		use:forwardDOMEvents
+	>
 		{#if ripple}
 			<div class="mdc-chip__ripple" />
 		{/if}

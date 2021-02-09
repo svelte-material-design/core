@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -5,7 +7,8 @@
 <script lang="ts">
 	//#region Base
 	import { parseClassList } from "../../../common/functions";
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/menu-surface/MenuSurface:${count++}`;
@@ -150,8 +153,6 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={anchor} onUpdate={handleAnchorChange} />
 <UseState value={open} onUpdate={handleOpenValueUpdate} />
 
@@ -161,11 +162,12 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-menu-surface',
-		[variant === 'fixed', 'mdc-menu-surface--fixed'],
-		[_open, 'mdc-menu-surface--open'],
-		[variant === 'fullwidth', 'mdc-menu-surface--fullwidth'],
+		"mdc-menu-surface",
+		[variant === "fixed", "mdc-menu-surface--fixed"],
+		[_open, "mdc-menu-surface--open"],
+		[variant === "fullwidth", "mdc-menu-surface--fullwidth"],
 	])}
-	{style}>
+	{style}
+>
 	<slot />
 </div>

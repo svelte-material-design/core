@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../data-table/DataTable:${count++}`;
@@ -93,22 +96,14 @@
 	}
 </script>
 
-<style>
-	.smui-data-table__pagination {
-		/* Why in hell would MDC put 4px randomly... */
-		padding-left: calc(1em - 4px);
-	}
-</style>
-
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{...props}
-	class={parseClassList([className, 'mdc-data-table'])}
+	class={parseClassList([className, "mdc-data-table"])}
 	{style}
 	{id}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<SelectableGroup bind:this={selectableGroup} bind:value>
 		<table class="mdc-data-table__table" aria-label={ariaLabel}>
 			<slot />
@@ -121,3 +116,10 @@
 		<slot name="pagination" />
 	</div>
 </div>
+
+<style>
+	.smui-data-table__pagination {
+		/* Why in hell would MDC put 4px randomly... */
+		padding-left: calc(1em - 4px);
+	}
+</style>

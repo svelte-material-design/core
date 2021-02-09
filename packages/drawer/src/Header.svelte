@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -5,7 +7,8 @@
 <script lang="ts">
 	//#region Base
 	import { parseClassList } from "../../common/functions";
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/drawer/Header:${count++}`;
@@ -16,13 +19,12 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-drawer__header'])}
-	{style}>
+	class={parseClassList([className, "mdc-drawer__header"])}
+	{style}
+>
 	<slot />
 </div>

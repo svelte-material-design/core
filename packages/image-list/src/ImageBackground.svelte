@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/image-list/ImageBackground:${count++}`;
@@ -22,14 +25,13 @@
 	export let src: string;
 </script>
 
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-image-list__image'])}
+	class={parseClassList([className, "mdc-image-list__image"])}
 	style={parseClassList([style, `background-image: url(${src})`])}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </div>

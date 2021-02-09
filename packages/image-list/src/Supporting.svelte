@@ -7,7 +7,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/image-list/Supporting:${count++}`;
@@ -25,8 +26,9 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-image-list__supporting'])}
+	class={parseClassList([className, "mdc-image-list__supporting"])}
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </div>

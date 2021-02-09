@@ -7,7 +7,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../data-table/HeaderCell:${count++}`;
@@ -60,21 +61,22 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-data-table__header-cell',
-		[sort, 'mdc-data-table__header-cell--with-sort'],
+		"mdc-data-table__header-cell",
+		[sort, "mdc-data-table__header-cell--with-sort"],
 		[
-			sort && (sortDirection === 'ascending' || sortDirection == 'descending'),
-			'mdc-data-table__header-cell--sorted',
+			sort && (sortDirection === "ascending" || sortDirection == "descending"),
+			"mdc-data-table__header-cell--sorted",
 		],
-		[checkbox, 'mdc-data-table__header-cell--checkbox'],
-		[numeric, 'mdc-data-table__header-cell--numeric'],
+		[checkbox, "mdc-data-table__header-cell--checkbox"],
+		[numeric, "mdc-data-table__header-cell--numeric"],
 	])}
 	{style}
 	role="columnheader"
 	scope="col"
 	aria-sort={sort}
 	data-column-id={columnId || id}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<div class="mdc-data-table__header-cell-wrapper">
 		<slot />
 	</div>

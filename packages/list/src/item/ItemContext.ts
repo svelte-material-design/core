@@ -6,7 +6,7 @@ export const [
 ] = createContextStore<ItemContext>();
 
 export interface ItemContext {
-	dom: HTMLLIElement | HTMLAnchorElement;
+	dom: HTMLLIElement;
 	selected: boolean;
 	value: string;
 	disabled: boolean;

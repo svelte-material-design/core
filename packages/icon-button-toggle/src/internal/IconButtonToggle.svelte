@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region imports
 	import {
@@ -12,7 +14,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -71,8 +74,6 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={ripple} onUpdate={initialize} />
 
 <IconButton
@@ -92,6 +93,7 @@
 	on:keydown
 	on:keyup
 	on:focus
-	on:blur>
+	on:blur
+>
 	<slot />
 </IconButton>

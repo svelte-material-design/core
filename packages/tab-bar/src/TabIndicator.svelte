@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	import { onMount } from "svelte";
 
@@ -8,7 +10,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -24,8 +27,6 @@
 	});
 </script>
 
-<svelte:options immutable={true} />
-
 <TabIndicator
 	{...$$restProps}
 	bind:dom
@@ -33,4 +34,5 @@
 	class={className}
 	{style}
 	active={$tabContext$.active}
-	transition={$tabBarContext$.transition} />
+	transition={$tabBarContext$.transition}
+/>

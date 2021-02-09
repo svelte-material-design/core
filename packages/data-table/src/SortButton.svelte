@@ -7,7 +7,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `../../data-table/SortButton:${count++}`;
@@ -41,11 +42,12 @@
 	bind:dom
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-data-table__sort-icon-button'])}
+	class={parseClassList([className, "mdc-data-table__sort-icon-button"])}
 	{style}
 	{ariaLabel}
 	aria-describedby="{id}__status"
-	on:domEvent={forwardDOMEvents}>
+	on:domEvent={forwardDOMEvents}
+>
 	<slot>
 		<Icon>arrow_upward</Icon>
 	</slot>
@@ -53,4 +55,5 @@
 <div
 	class="mdc-data-table__sort-status-label"
 	aria-hidden="true"
-	id="{id}__status" />
+	id="{id}__status"
+/>

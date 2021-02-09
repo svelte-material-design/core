@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region  imports
 	import "../../../../icon-button";
@@ -8,7 +10,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -24,12 +27,10 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <IconButton
 	bind:dom
 	{id}
-	class={parseClassList([className, 'mdc-top-app-bar__navigation-icon'])}
+	class={parseClassList([className, "mdc-top-app-bar__navigation-icon"])}
 	{style}
 	{disabled}
 	{color}
@@ -41,6 +42,7 @@
 	on:keydown
 	on:keyup
 	on:focus
-	on:blur>
+	on:blur
+>
 	<slot />
 </IconButton>

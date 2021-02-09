@@ -1,9 +1,12 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = "";
@@ -142,19 +145,18 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-dialog'])}
+	class={parseClassList([className, "mdc-dialog"])}
 	{style}
 	role="alertdialog"
 	aria-modal="true"
 	aria-labelledby={ariaLabelledBy}
 	aria-describedby={ariaDescribedby}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<div class="mdc-dialog__container">
 		<div class="mdc-dialog__surface">
 			<slot />

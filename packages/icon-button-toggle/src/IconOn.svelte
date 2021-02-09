@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region  imports
 	import type { IconType, IconDOM } from ".";
@@ -7,7 +9,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -21,18 +24,17 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <Icon
 	bind:dom
 	{id}
 	class={parseClassList([
 		className,
-		[type === 'icon' && className == undefined, 'material-icons'],
-		'mdc-icon-button__icon--on',
+		[type === "icon" && className == undefined, "material-icons"],
+		"mdc-icon-button__icon--on",
 	])}
 	{style}
 	{type}
-	{...$$restProps}>
+	{...$$restProps}
+>
 	<slot />
 </Icon>

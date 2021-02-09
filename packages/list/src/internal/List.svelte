@@ -26,7 +26,7 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -139,15 +139,25 @@
 		// Fix tabindex using DOM API because i don't want Svelte to conflict with MDC.
 		const items = getItems();
 		if (items?.length) {
-			if (!items.some((item) => !item.disabled && item?.dom.tabIndex === 0)) {
+			if (
+				!items.some(
+					(item) => !item.disabled && getListItemStyledEl(item).tabIndex === 0
+				)
+			) {
 				const firstEnabledItem = items.find((item) => !item?.disabled);
-				if (firstEnabledItem) firstEnabledItem.dom.tabIndex = 0;
+				if (firstEnabledItem) {
+					getListItemStyledEl(firstEnabledItem).tabIndex = 0;
+				}
 				items.forEach((item) => {
 					if (item !== firstEnabledItem) {
-						item.dom.tabIndex = -1;
+						getListItemStyledEl(item).tabIndex = -1;
 					}
 				});
 			}
+		}
+
+		function getListItemStyledEl(item: ItemContext) {
+			return item.dom.firstElementChild as HTMLDivElement | HTMLAnchorElement;
 		}
 	}
 

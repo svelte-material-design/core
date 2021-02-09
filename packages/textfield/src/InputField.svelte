@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList, StringListToFilter } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/input-field/InputField:${count++}`;
@@ -144,15 +147,6 @@
 	}
 </script>
 
-<style>
-	:global([slot="leadingIcon"]),
-	:global([slot="trailingIcon"]) {
-		display: contents;
-	}
-</style>
-
-<svelte:options immutable={true} />
-
 <UseState value={type} onUpdate={handleTypeUpdate} />
 <UseState value={lineRipple} onUpdate={reistantiate} />
 
@@ -163,32 +157,34 @@
 		class={parseClassList([
 			className,
 			...textFieldClassList,
-			[$$slots.leadingIcon, 'mdc-text-field--with-leading-icon'],
-			[$$slots.trailingIcon, 'mdc-text-field--with-trailing-icon'],
+			[$$slots.leadingIcon, "mdc-text-field--with-leading-icon"],
+			[$$slots.trailingIcon, "mdc-text-field--with-trailing-icon"],
 			[
-				variant == 'filled' && density,
+				variant == "filled" && density,
 				`smui-input-field--filled--dense--${Math.abs(density)}`,
 			],
 			[
-				variant == 'outlined' && !$$slots.trailingIcon && density,
+				variant == "outlined" && !$$slots.trailingIcon && density,
 				`smui-input-field--outlined--dense--${Math.abs(density)}`,
 			],
 			[
-				variant == 'outlined' && $$slots.leadingIcon && density,
+				variant == "outlined" && $$slots.leadingIcon && density,
 				`smui-input-field--outlined--with-leading-icon--dense--${Math.abs(
 					density
 				)}`,
 			],
 		])}
 		{style}
-		for={id}>
+		for={id}
+	>
 		{#if ripple}<span class="mdc-text-field__ripple" />{/if}
 		{#if $$slots.leadingIcon}
 			<slot name="leadingIcon" />
 		{/if}
 		{#if prefix}
-			<span
-				class="mdc-text-field__affix mdc-text-field__affix--prefix">{prefix}</span>
+			<span class="mdc-text-field__affix mdc-text-field__affix--prefix"
+				>{prefix}</span
+			>
 		{/if}
 		<input
 			bind:this={inputElement}
@@ -217,15 +213,17 @@
 			aria-label={placeholder && !labelId ? placeholder : ariaLabel}
 			on:input={valueUpdater}
 			on:change={changeHandler}
-			use:forwardDOMEvents />
+			use:forwardDOMEvents
+		/>
 		{#if suffix}
-			<span
-				class="mdc-text-field__affix mdc-text-field__affix--suffix">{suffix}</span>
+			<span class="mdc-text-field__affix mdc-text-field__affix--suffix"
+				>{suffix}</span
+			>
 		{/if}
 		{#if $$slots.trailingIcon}
 			<slot name="trailingIcon" class="mdc-text-field__icon--trailing" />
 		{/if}
-		{#if variant === 'filled'}
+		{#if variant === "filled"}
 			{#if $$slots.label}
 				<FloatingLabel component={Span}>
 					<slot name="label" />
@@ -234,7 +232,7 @@
 			{#if lineRipple}
 				<LineRipple />
 			{/if}
-		{:else if variant === 'outlined'}
+		{:else if variant === "outlined"}
 			<NotchedOutline noLabel={!$$slots.label}>
 				{#if $$slots.label}
 					<FloatingLabel component={Span}>
@@ -265,4 +263,12 @@
 	{dom}
 	{inputElement}
 	label={$$slots.label}
-	fullWidth={false} />
+	fullWidth={false}
+/>
+
+<style>
+	:global([slot="leadingIcon"]),
+	:global([slot="trailingIcon"]) {
+		display: contents;
+	}
+</style>

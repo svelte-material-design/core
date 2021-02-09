@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 
@@ -12,7 +14,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/image-list/ImageList:${count++}`;
@@ -74,20 +77,18 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <ul
 	bind:this={dom}
 	{...props}
 	{id}
 	class={parseClassList([
 		className,
-		'smui-image-list',
-		'mdc-image-list',
-		[variant === 'standard', 'smui-image-list--standard-columns'],
-		[variant === 'masonry', 'smui-image-list--masonry-columns'],
-		[variant === 'masonry', 'mdc-image-list--masonry'],
-		[textProtection, 'mdc-image-list--with-text-protection'],
+		"smui-image-list",
+		"mdc-image-list",
+		[variant === "standard", "smui-image-list--standard-columns"],
+		[variant === "masonry", "smui-image-list--masonry-columns"],
+		[variant === "masonry", "mdc-image-list--masonry"],
+		[textProtection, "mdc-image-list--with-text-protection"],
 	])}
 	style={parseClassList([
 		style,
@@ -95,6 +96,7 @@
 		[gap, `--smui-image-list--gap: ${gap};`],
 		[aspectRatio !== 1, `--smui-image-list--aspect-ratio: ${aspectRatio};`],
 	])}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </ul>

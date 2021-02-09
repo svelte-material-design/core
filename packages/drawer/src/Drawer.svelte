@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/drawer/Drawer:${count++}`;
@@ -90,14 +93,6 @@
 	}
 </script>
 
-<style>
-	:global(.smui-drawer) {
-		position: absolute;
-	}
-</style>
-
-<svelte:options immutable={true} />
-
 <UseState value={variant} onUpdate={init} />
 
 <aside
@@ -107,20 +102,27 @@
 	{id}
 	class={parseClassList([
 		className,
-		'smui-drawer',
-		'mdc-drawer',
-		[variant === 'dismissible', 'mdc-drawer--dismissible'],
-		[variant === 'modal', 'mdc-drawer--modal'],
+		"smui-drawer",
+		"mdc-drawer",
+		[variant === "dismissible", "mdc-drawer--dismissible"],
+		[variant === "modal", "mdc-drawer--modal"],
 		[
 			belowTopAppBar === undefined ? siblingTopAppBarFound : belowTopAppBar,
-			'mdc-top-app-bar--fixed-adjust',
+			"mdc-top-app-bar--fixed-adjust",
 		],
-		[opened || variant === 'permanent', 'mdc-drawer--open'],
+		[opened || variant === "permanent", "mdc-drawer--open"],
 	])}
-	{style}>
+	{style}
+>
 	<slot />
 </aside>
 
-{#if variant === 'modal'}
+{#if variant === "modal"}
 	<Scrim />
 {/if}
+
+<style>
+	:global(.smui-drawer) {
+		position: absolute;
+	}
+</style>

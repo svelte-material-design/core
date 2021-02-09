@@ -11,7 +11,7 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -29,13 +29,15 @@
 	//#endregion
 
 	//#region implementation
+	let styledElement: HTMLElement;
 	//#endregion
 </script>
 
 <li bind:this={dom} {id}>
-	<Ripple let:rippleClasses target={ripple ? dom : undefined}>
+	<Ripple let:rippleClasses target={ripple ? styledElement : undefined}>
 		<svelte:component
 			this={href === undefined ? Div : A}
+			bind:dom={styledElement}
 			class={classList([
 				className,
 				"mdc-list-item",

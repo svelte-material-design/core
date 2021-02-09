@@ -1,8 +1,11 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	// Base
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -17,8 +20,6 @@
 	const selectableContext$ = getSelectableContext();
 </script>
 
-<svelte:options immutable={true} />
-
 <span
 	bind:this={dom}
 	{...props}
@@ -26,12 +27,14 @@
 	class={className}
 	{style}
 	role="gridcell"
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<span
 		role="button"
 		tabindex={$selectableContext$.tabindex}
 		class="mdc-chip__primary-action"
-		aria-checked={$selectableContext$.selected}>
+		aria-checked={$selectableContext$.selected}
+	>
 		<span class="mdc-chip__text"><slot /></span>
 	</span>
 </span>

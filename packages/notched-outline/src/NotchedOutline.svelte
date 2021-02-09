@@ -7,7 +7,8 @@
 	import { parseClassList } from "../../common/functions";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/notched-outlined/NotchedOutlined:${count++}`;
@@ -49,12 +50,13 @@
 	{id}
 	class={parseClassList([
 		className,
-		'mdc-notched-outline',
-		[notched, 'mdc-notched-outline--notched'],
-		[noLabel, 'mdc-notched-outline--no-label'],
+		"mdc-notched-outline",
+		[notched, "mdc-notched-outline--notched"],
+		[noLabel, "mdc-notched-outline--no-label"],
 	])}
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<div class="mdc-notched-outline__leading" />
 	{#if !noLabel}
 		<div class="mdc-notched-outline__notch">

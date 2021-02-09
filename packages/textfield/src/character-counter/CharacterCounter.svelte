@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count = 0;
 </script>
@@ -7,7 +9,8 @@
 	import { parseClassList } from "../../../common/functions";
 	import { DOMEventsForwarder } from "../../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/input-field/character-counter/CharacterCounter:${count++}`;
@@ -39,14 +42,13 @@
 	});
 </script>
 
-<svelte:options immutable={true} />
-
 <div
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, 'mdc-text-field-character-counter'])}
+	class={parseClassList([className, "mdc-text-field-character-counter"])}
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </div>

@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region imports
 	import { Ripple } from "../../../ripple";
@@ -8,7 +10,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -29,8 +32,6 @@
 	//#endregion
 </script>
 
-<svelte:options immutable={true} />
-
 <Ripple let:rippleClasses target={ripple ? dom : undefined}>
 	<svelte:component
 		this={component}
@@ -38,10 +39,10 @@
 		{id}
 		class={parseClassList([
 			className,
-			'mdc-button',
+			"mdc-button",
 			[variant, `mdc-button--${variant}`],
-			[color === 'secondary', 'svmd-button--color--secondary'],
-			[accessibleTouch, 'mdc-button--touch'],
+			[color === "secondary", "svmd-button--color--secondary"],
+			[accessibleTouch, "mdc-button--touch"],
 			[ripple, rippleClasses],
 		])}
 		{style}
@@ -54,7 +55,8 @@
 		on:keydown
 		on:keyup
 		on:focus
-		on:blur>
+		on:blur
+	>
 		{#if ripple}
 			<div class="mdc-button__ripple" />
 		{/if}

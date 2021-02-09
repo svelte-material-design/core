@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -14,7 +16,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/tab/Tab:${count++}`;
@@ -95,8 +98,6 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={active} onUpdate={onActiveChange} />
 
 <Tab
@@ -110,6 +111,7 @@
 	{focusOnActivate}
 	{useMinWidth}
 	{ripple}
-	{stacked}>
+	{stacked}
+>
 	<slot />
 </Tab>

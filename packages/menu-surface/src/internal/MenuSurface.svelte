@@ -1,6 +1,9 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
@@ -34,8 +37,6 @@
 	});
 </script>
 
-<svelte:options immutable={true} />
-
 <MenuSurfaceImpl
 	bind:dom
 	bind:open
@@ -50,6 +51,7 @@
 	{anchorMargin}
 	{variant}
 	hoisted={false}
-	{disableMDCInstance}>
+	{disableMDCInstance}
+>
 	<slot />
 </MenuSurfaceImpl>

@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
@@ -10,7 +12,8 @@
 
 	//#region exports
 	//#region base
-	let className = undefined;
+	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/icon-button-toggle/IconButtonToggle:${count++}`;
@@ -25,8 +28,6 @@
 	export let ariaLabelOff: string = undefined;
 	//#endregion
 </script>
-
-<svelte:options immutable={true} />
 
 <IconButtonToggle
 	bind:dom
@@ -47,6 +48,7 @@
 	on:keydown
 	on:keyup
 	on:focus
-	on:blur>
+	on:blur
+>
 	<slot />
 </IconButtonToggle>
