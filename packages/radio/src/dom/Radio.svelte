@@ -35,10 +35,6 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		change: OnRadioChangeEvent;
-	}>();
-
 	function isInputDisabled(
 		readonlyValue: typeof readonly = readonly,
 		disabledValue: typeof disabled = disabled
@@ -75,6 +71,13 @@
 			{value}
 			{...$$restProps}
 			on:change
+			on:click
+			on:mousedown
+			on:mouseup
+			on:keydown
+			on:keyup
+			on:focus
+			on:blur
 		/>
 		<div class="mdc-radio__background">
 			<div class="mdc-radio__outer-circle" />

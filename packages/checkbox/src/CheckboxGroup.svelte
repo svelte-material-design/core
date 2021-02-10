@@ -25,10 +25,9 @@
 	let selectionGroup: SelectionGroup;
 
 	const context$ = setCheckboxGroupContext();
-	$: $context$ = { ...$context$, group };
 
 	onMount(() => {
-		$context$.group = group ?? selectionGroup.getBindings();
+		$context$ = { ...$context$, group: group ?? selectionGroup.getBindings() };
 	});
 
 	function handleChange(event: OnMultiSelectionGroupChangeEvent) {
@@ -39,7 +38,7 @@
 
 	function handleOptionsChange(event: OnSelectionGroupOptionsChangeEvent) {
 		dispatch("optionsChange", {
-			...event,
+			items: event.items.map((i) => i.dom as HTMLDivElement),
 		});
 	}
 </script>
@@ -50,8 +49,8 @@
 	{group}
 	bind:value
 	nullable
-	on:change={handleChange}
-	on:optionsChange={handleOptionsChange}
+	on:change={(e) => handleChange(e.detail)}
+	on:optionsChange={(e) => handleOptionsChange(e.detail)}
 	let:group
 >
 	<slot {group} />

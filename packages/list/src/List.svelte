@@ -15,7 +15,7 @@
 		ListRole,
 		OnListChangeEvent,
 		ListItemsStyle,
-	} from ".";
+	} from "./types";
 	import { roleToSelectionType } from "./roleToSelectionType";
 	//#endregion
 
@@ -90,7 +90,6 @@
 	{selectionType}
 	{group}
 	let:group
-	on:optionsChange
 >
 	<List
 		bind:dom
@@ -114,6 +113,7 @@
 		on:keyup
 		on:focusin
 		on:focusout
+		on:optionsChange
 	>
 		<slot />
 	</List>

@@ -10,10 +10,15 @@
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type {
 		SelectionGroupBinding,
+		OnSelectionGroupOptionsChangeEvent,
 		SelectionType,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { List, OnListActionEvent } from "./internal";
-	import type { ListOrientation, OnListChangeEvent, ListItemsStyle } from ".";
+	import type {
+		ListOrientation,
+		OnListChangeEvent,
+		ListItemsStyle,
+	} from "./types";
 	//#endregion
 
 	//#region exports
@@ -106,6 +111,7 @@
 		on:keyup
 		on:focusin
 		on:focusout
+		on:optionsChange
 	>
 		<slot />
 	</List>

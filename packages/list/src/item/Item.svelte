@@ -8,7 +8,7 @@
 	//#region  imports
 	import { createEventDispatcher } from "svelte";
 	import { getListContext } from "../";
-	import type { OnItemSelectedEvent } from ".";
+	import type { OnItemChangeEvent } from ".";
 	import type { ItemRole } from "..";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
@@ -33,7 +33,7 @@
 
 	//#region implementation
 	const dispatch = createEventDispatcher<{
-		change: OnItemSelectedEvent;
+		change: OnItemChangeEvent;
 	}>();
 
 	//#region locals

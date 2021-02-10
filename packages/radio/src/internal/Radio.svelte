@@ -90,6 +90,19 @@
 		$formFieldContext$?.setInput(radio);
 	}
 
+	async function handleKeyPress(event: KeyboardEvent) {
+		if (event.key === " " || event.key === "Enter") {
+			checked = true;
+		}
+
+		await tick();
+
+		dispatch("change", {
+			checked,
+			dom,
+		});
+	}
+
 	async function handleChange() {
 		checked = inputElement.checked;
 
@@ -121,4 +134,12 @@
 	{readonly}
 	{...$$restProps}
 	on:change={handleChange}
+	on:keyup={handleKeyPress}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
 />

@@ -97,19 +97,6 @@
 		$formFieldContext$?.setInput(checkbox);
 	}
 
-	async function handleKeyPress(event: KeyboardEvent) {
-		if (event.key === " " || event.key === "Enter") {
-			cycleChecked();
-		}
-
-		await tick();
-
-		dispatch("change", {
-			checked,
-			dom,
-		});
-	}
-
 	function updateMDCValue() {
 		if (checkbox) {
 			if (allowIndeterminated && checked === null) {
@@ -144,9 +131,24 @@
 	function cycleChecked() {
 		if (allowIndeterminated && checked === false && inputElement.checked) {
 			checked = null;
+		} else if (checked) {
+			checked = false;
 		} else {
-			checked = checkbox.checked;
+			checked = true;
 		}
+	}
+
+	async function handleKeyPress(event: KeyboardEvent) {
+		if (event.key === " " || event.key === "Enter") {
+			cycleChecked();
+		}
+
+		await tick();
+
+		dispatch("change", {
+			checked,
+			dom,
+		});
 	}
 
 	async function handleChange() {

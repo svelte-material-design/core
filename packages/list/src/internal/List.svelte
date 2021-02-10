@@ -22,6 +22,8 @@
 	import type { ItemContext } from "../item";
 	import type { OnListActionEvent, ListImplRole } from "./types";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
+	import type { OnListChildrenChangeEvent } from "../types";
+	import type { OnGroupItemsUpdateEvent } from "@raythurnevoid/svelte-group-components/ts";
 	//#endregion
 
 	//#region exports
@@ -70,6 +72,7 @@
 
 	const dispatch = createEventDispatcher<{
 		action: OnListActionEvent;
+		optionsChange: OnListChildrenChangeEvent;
 	}>();
 
 	onMount(async () => {
@@ -176,12 +179,21 @@
 			subtree: true,
 		});
 	}
+
+	function handleOptionsChange(event: OnGroupItemsUpdateEvent) {
+		dispatch("optionsChange", {
+			items: event.items.map((i) => i.dom as HTMLLIElement),
+		});
+	}
 	//#endregion
 </script>
 
 <UseState value={dom} onUpdate={initTreeObserver} />
 
-<Group bind:this={listGroup}>
+<Group
+	bind:this={listGroup}
+	on:optionsChange={(e) => handleOptionsChange(e.detail)}
+>
 	<List
 		bind:dom
 		{id}

@@ -7,14 +7,14 @@
 		OnSelectionGroupOptionsChangeEvent,
 		OnSingleSelectionGroupChangeEvent,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { onMount } from "svelte";
+	import { createEventDispatcher, onMount } from "svelte";
 	import { setRadioGroupContext } from "./RadioContext";
 	import type {
 		OnRadioGroupChangeEvent,
 		OnRadioGroupChildrenChangeEvent,
 	} from "./types";
 
-	export let value: string[] = undefined;
+	export let value: string = undefined;
 	export let group: SelectionGroupBinding = undefined;
 
 	const dispatch = createEventDispatcher<{
@@ -25,10 +25,9 @@
 	let selectionGroup: SelectionGroup;
 
 	const context$ = setRadioGroupContext();
-	$: $context$ = { ...$context$, group };
 
 	onMount(() => {
-		$context$.group = group ?? selectionGroup.getBindings();
+		$context$ = { ...$context$, group: group ?? selectionGroup.getBindings() };
 	});
 
 	function handleChange(event: OnSingleSelectionGroupChangeEvent) {
@@ -39,7 +38,7 @@
 
 	function handleOptionsChange(event: OnSelectionGroupOptionsChangeEvent) {
 		dispatch("optionsChange", {
-			...event,
+			items: event.items.map((i) => i.dom as HTMLDivElement),
 		});
 	}
 </script>
@@ -50,8 +49,8 @@
 	{group}
 	bind:value
 	nullable
-	on:change={handleChange}
-	on:optionsChange={handleOptionsChange}
+	on:change={(e) => handleChange(e.detail)}
+	on:optionsChange={(e) => handleOptionsChange(e.detail)}
 	let:group
 >
 	<slot {group} />

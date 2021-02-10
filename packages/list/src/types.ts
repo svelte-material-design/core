@@ -2,6 +2,9 @@ export type ItemRole = "radio" | "checkbox" | "option";
 export type ListRole = "radiogroup" | "group" | "list";
 export type ListOrientation = "vertical" | "horizontal";
 
+export interface OnListChildrenChangeEvent {
+	items: HTMLLIElement[];
+}
 export interface OnListChangeEvent {
 	value: ListValue;
 }
