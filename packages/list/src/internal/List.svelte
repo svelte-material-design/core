@@ -98,7 +98,6 @@
 	});
 
 	afterUpdate(() => {
-		console.log("update");
 		fixItemsTabIndex();
 	});
 

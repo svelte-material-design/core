@@ -10,10 +10,10 @@
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type {
 		SelectionGroupBinding,
-		OnSelectionGroupOptionsChangeEvent,
 		SelectionType,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { List, OnListActionEvent } from "./internal";
+	import { List } from "./internal";
+	import type { OnListActionEvent } from "./internal";
 	import type {
 		ListOrientation,
 		OnListChangeEvent,
