@@ -1,5 +1,5 @@
 import { CornerBit } from "@material/menu-surface";
-import { MenuSurfaceAnchorCorner } from "..";
+import type { MenuSurfaceAnchorCorner } from "..";
 
 export function smuiToMDCCorner(
 	anchorCorner: MenuSurfaceAnchorCorner,
