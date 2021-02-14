@@ -1,26 +1,25 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count = 0;
-</script>
-
 <script lang="ts">
-	//#region Base
+	//#region  imports
+	import { PrimaryText } from "../../../list/src/item";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/menu/PrimaryText:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLSpanElement = undefined;
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#endregion
 	//#endregion
 
-	// PrimaryText
-	import { PrimaryText } from "../../../list";
+	//#region implementation
+	//#endregion
 </script>
 
-<PrimaryText bind:dom {props} {id} class={className} {style}>
+<PrimaryText bind:dom {id} class={className} {style} {...$$restProps}>
 	<slot />
 </PrimaryText>

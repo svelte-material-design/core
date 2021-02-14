@@ -5,33 +5,35 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/menu/Separator:${count++}`;
-
-	export let dom: HTMLLIElement | HTMLHRElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#region import
+	import { Separator } from "../../list/src/dom";
 	//#endregion
 
-	// Separator
-	import { Separator } from "../../list/src/dom";
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/menu/Separator:${count++}`;
+	export let dom: HTMLLIElement = undefined;
+	//#endregion
 
 	export let insetPadding: boolean = false;
 	export let insetLeading: boolean = false;
 	export let insetTrailing: boolean = false;
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <Separator
 	bind:dom
-	{props}
 	{id}
 	class={className}
 	{style}
 	{insetPadding}
 	{insetLeading}
 	{insetTrailing}
+	{...$$restProps}
 />

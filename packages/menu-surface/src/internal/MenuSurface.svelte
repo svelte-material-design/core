@@ -13,6 +13,7 @@
 	} from "..";
 	import { smuiToMDCCorner } from "../functions";
 	import { MenuSurface } from "../dom";
+	import { UseAnchor } from ".";
 	//#endregion
 
 	//#region exports
@@ -83,15 +84,19 @@
 		await tick();
 
 		initialize();
-		if (anchor) {
-			handleAnchorChange(null);
-		}
 	});
 
 	onDestroy(() => {
-		anchor?.classList.remove("mdc-menu-surface--anchor");
 		menuSurface?.destroy();
 	});
+
+	function handleAnchorChange() {
+		if (!disableMDCInstance) {
+			if (menuSurface.anchorElement !== anchor) {
+				menuSurface.anchorElement = anchor;
+			}
+		}
+	}
 
 	function initialize() {
 		if (!disableMDCInstance) {
@@ -100,19 +105,6 @@
 			menuSurface.listen("MDCMenuSurface:opened", handleOpen);
 			menuSurface.listen("MDCMenuSurface:closed", handleClose);
 			menuSurface.listen("MDCMenuSurface:closing", handleClosing);
-		}
-	}
-
-	function handleAnchorChange(oldAnchor: typeof anchor) {
-		oldAnchor?.classList.remove("mdc-menu-surface--anchor");
-		if (!anchor?.classList.contains("mdc-menu-surface--anchor")) {
-			anchor.classList.add("mdc-menu-surface--anchor");
-		}
-
-		if (!disableMDCInstance) {
-			if (menuSurface.anchorElement !== anchor) {
-				menuSurface.anchorElement = anchor;
-			}
 		}
 	}
 
@@ -148,7 +140,7 @@
 	//#endregion
 </script>
 
-<UseState value={anchor} onUpdate={handleAnchorChange} />
+<UseAnchor {anchor} on:change={handleAnchorChange} />
 <UseState value={open} onUpdate={handleOpenValueUpdate} />
 
 <MenuSurface

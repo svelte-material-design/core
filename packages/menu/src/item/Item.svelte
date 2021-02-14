@@ -5,20 +5,6 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/list/Item:${count++}`;
-
-	export let dom: HTMLLIElement = undefined;
-
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// Item
 	//#region import
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { Item } from "../../../list/src/dom";
@@ -27,10 +13,17 @@
 	import type { ItemContext } from ".";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import type { OnItemSelectedEvent, OnItemChangeEvent } from ".";
-
 	//#endregion
 
 	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@smui/list/Item:${count++}`;
+	export let dom: HTMLLIElement = undefined;
+	//#endregion
+
 	export let ripple: boolean = true;
 	export let selected: boolean = false;
 	export let disabled: boolean = false;
@@ -40,6 +33,7 @@
 	export let title: string = undefined;
 	//#endregion
 
+	//#region implementation
 	const dispatch = createEventDispatcher<{
 		select: OnItemSelectedEvent;
 		change: OnItemChangeEvent;
@@ -48,23 +42,6 @@
 	const menuContext$ = getMenuContext();
 
 	const context = {
-		async setSelected(newValue: boolean) {
-			selected = newValue;
-
-			await tick();
-
-			if ($menuContext$.group) {
-				dispatch("change", {
-					dom,
-					selected,
-				});
-			}
-		},
-		notifySelection() {
-			dispatch("select", {
-				dom,
-			});
-		},
 		value,
 		selected,
 		dom,
@@ -84,34 +61,14 @@
 	onDestroy(() => {
 		$menuContext$.unregisterItem(context);
 	});
+	//#endregion
 </script>
 
 <UseState value={ripple} onUpdate={() => $menuContext$.reinitialize()} />
 
-{#if $menuContext$.selectionType}
-	<Selectable bind:selected group={$menuContext$.group} {dom} {value} {context}>
-		<Item
-			bind:dom
-			{props}
-			{id}
-			class={className}
-			{style}
-			{title}
-			{tabindex}
-			{selected}
-			{value}
-			role="menuitem"
-			{ariaLabel}
-			{disabled}
-			{ripple}
-		>
-			<slot />
-		</Item>
-	</Selectable>
-{:else}
+<Selectable bind:selected group={$menuContext$.group} {dom} {value} {context}>
 	<Item
 		bind:dom
-		{props}
 		{id}
 		class={className}
 		{style}
@@ -123,7 +80,10 @@
 		{ariaLabel}
 		{disabled}
 		{ripple}
+		{...$$restProps}
+		let:leadingClassName
+		let:trailingClassName
 	>
-		<slot />
+		<slot {selected} {leadingClassName} {trailingClassName} />
 	</Item>
-{/if}
+</Selectable>

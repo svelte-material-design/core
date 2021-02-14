@@ -17,7 +17,7 @@
 		OnListChangeEvent,
 		ListItemsStyle,
 	} from "./types";
-	import { roleToSelectionType } from "./roleToSelectionType";
+	import { handleSelect, roleToSelectionType } from "./functions";
 	//#endregion
 
 	//#region exports
@@ -50,34 +50,28 @@
 		change: OnListChangeEvent;
 	}>();
 
-	//#region local variables
 	$: selectionType = roleToSelectionType(role);
-
-	let selectionGroupComponent: SelectionGroup;
-	//#endregion
+	let selectionGroup: SelectionGroup;
 
 	async function handleAction({
 		targetIndex,
 		listSelectedIndex,
 	}: OnListActionEvent) {
 		if (selectionType) {
-			const item = selectionGroupComponent.getItems()[targetIndex];
-
-			if (!item) return;
-
-			if (
-				(selectionType === "single" && listSelectedIndex === targetIndex) ||
-				(selectionType === "multi" &&
-					(listSelectedIndex as number[]).includes(targetIndex))
-			) {
-				selectionGroupComponent.setSelected(item, true);
-			} else {
-				selectionGroupComponent.setSelected(item, false);
-			}
+			const selectedIndexes = Array.isArray(listSelectedIndex)
+				? listSelectedIndex
+				: [listSelectedIndex];
+			handleSelect({
+				selectionType,
+				selectionGroup,
+				targetIndex,
+				selectedIndexes,
+			});
 
 			await tick();
 
 			dispatch("change", {
+				dom,
 				value,
 			});
 		}
@@ -86,7 +80,7 @@
 </script>
 
 <SelectionGroup
-	bind:this={selectionGroupComponent}
+	bind:this={selectionGroup}
 	bind:value
 	{selectionType}
 	{group}

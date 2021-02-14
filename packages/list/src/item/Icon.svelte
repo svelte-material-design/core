@@ -5,7 +5,6 @@
 	import type { IconDOM, IconType } from "./types";
 	import { Graphic } from "../../../common/components";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { getItemContext } from "./ItemContext";
 	//#endregion
 
 	//#region exports
@@ -21,7 +20,6 @@
 	//#endregion
 
 	//#region implementation
-	let itemContext$ = getItemContext();
 	let position: "leading" | "trailing" = className.includes(
 		"mdc-list-item__meta"
 	)
@@ -45,9 +43,6 @@
 	{style}
 	{type}
 	{...$$restProps}
-	tabindex={~$$restProps.tabindex && ~$itemContext$.tabindex
-		? $$restProps.tabindex
-		: undefined}
 >
 	<slot />
 </Graphic>

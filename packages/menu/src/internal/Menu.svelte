@@ -1,42 +1,39 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../../common/functions";
-	let className: string = undefined;
+	//#region  imports
+	import { MDCMenu } from "@material/menu";
+	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
+	import { MenuSurface } from "../../../menu-surface/src/dom";
+	import { UseAnchor } from "../../../menu-surface/src/internal";
+	import type { MDCMenuDistance } from "@material/menu-surface";
+	import { MenuAnchorCorner, MenuVariant, createMenuContext } from "..";
+	import { List } from ".";
+	import type { OnMenuSelect } from "./types";
+	import type { ListOrientation, ListItemsStyle } from "../../../list";
+	import { smuiToMDCCorner } from "../../../menu-surface/functions";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
+	import { createComponentsGroupStore } from "../../../common/components-group";
+	import type { SelectionType } from "../../../common/hoc";
+	import type { ItemContext } from "../item";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { classList } from "@raythurnevoid/strings-filter";
+	//#endregion
 
+	//#region exports
+	//#region base
+	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = undefined;
 	//#endregion
 
-	// Menu
-	import type { MDCMenuDistance } from "@material/menu-surface";
-	import type {
-		MenuAnchorCorner,
-		MenuVariant,
-		OnMenuChange,
-		OnMenuItemSelectedEvent,
-	} from "..";
-	import { MenuImpl, OnMenuImplSelect } from ".";
-	import type { ListOrientation, ListItemsStyle } from "../../../list";
-	import type { SelectionType } from "../../../common/hoc";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { createEventDispatcher, onMount, tick } from "svelte";
-
-	//#region exports
 	//#region list
 	export let orientation: ListOrientation = "vertical";
 	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
-
 	export let dense: boolean = false;
-	export let density: number = 0;
 	//#endregion
 
 	//#region menu surface
@@ -47,82 +44,173 @@
 	$: anchorCorner = anchorCorner ? anchorCorner : "bottom-start";
 	export let anchorMargin: MDCMenuDistance = undefined;
 	export let variant: MenuVariant = undefined;
-
 	export let hoisted: boolean;
+	export let anchor: HTMLElement;
 	//#endregion
 
-	//#region common
 	export let wrapFocus: boolean = false;
-	//#endregion
-
 	export let disableMDCInstance: boolean = false;
+	export let group: SelectionGroupBinding;
 	export let selectionType: SelectionType = undefined;
-	export let value: any = undefined;
-	export let group: SelectionGroupBinding = undefined;
 	//#endregion
 
+	//#region implementation
 	const dispatch = createEventDispatcher<{
-		change: OnMenuChange;
-		select: OnMenuItemSelectedEvent;
+		open: void;
+		close: void;
+		closing: void;
+		select: OnMenuSelect;
 	}>();
 
-	let selectionGroup: SelectionGroup;
+	let _open: boolean = open;
 
-	let anchor: HTMLElement;
-	onMount(() => {
-		anchor = dom.parentElement;
+	let items$ = createComponentsGroupStore<ItemContext>();
+
+	const context$ = createMenuContext({
+		open,
+		group,
+		selectionType,
+		registerItem: (item: ItemContext) => {
+			items$.registerItem(item);
+		},
+		unregisterItem: (item: ItemContext) => {
+			items$.unregisterItem(item);
+		},
+		reinitialize() {
+			initialize();
+		},
 	});
+	$: $context$ = {
+		...$context$,
+		open: _open,
+		group,
+		selectionType,
+	};
 
-	async function handleSelect(event: OnMenuImplSelect) {
-		dispatch("select", event);
+	let menu: MDCMenu;
 
-		if (selectionType) {
-			event.item.setSelected(!event.item.selected);
-
-			await tick();
-
-			dispatch("change", {
-				dom,
-				value,
-			});
+	//#region keep MDCMenu synchronized
+	$: if (menu) {
+		if (variant === "fixed") {
+			menu.setFixedPosition(true);
+		} else {
+			menu.setFixedPosition(false);
 		}
 	}
+
+	$: if (menu && anchorMargin) {
+		menu.setAnchorMargin(anchorMargin);
+	}
+
+	$: if (menu) {
+		menu.setIsHoisted(!!hoisted);
+	}
+
+	$: if (menu) {
+		if (menu.wrapFocus !== wrapFocus) {
+			menu.wrapFocus = wrapFocus;
+		}
+
+		if (menu.quickOpen !== quickOpen) {
+			menu.quickOpen = quickOpen;
+		}
+	}
+
+	$: if (menu && anchorCorner) {
+		const corner = smuiToMDCCorner(anchorCorner, anchorFlipRtl);
+		menu.setAnchorCorner(corner);
+	}
+	//#endregion
+
+	onMount(async () => {
+		initialize();
+	});
+
+	onDestroy(() => {
+		menu?.destroy();
+	});
+
+	function initialize() {
+		if (!disableMDCInstance) {
+			menu?.destroy();
+			menu = new MDCMenu(dom);
+			menu.listen("MDCMenu:selected", handleSelected);
+			menu.listen("MDCMenuSurface:opened", handleOpen);
+			menu.listen("MDCMenuSurface:closed", handleClose);
+			menu.listen("MDCMenuSurface:closing", handleClosing);
+		}
+	}
+
+	function handleAnchorChange() {
+		if (!disableMDCInstance) {
+			menu.setAnchorElement(anchor);
+		}
+	}
+
+	async function handleOpen() {
+		_open = open = true;
+		await tick();
+		dispatch("open");
+	}
+
+	async function handleClose() {
+		_open = open = false;
+		await tick();
+		dispatch("close");
+	}
+
+	async function handleClosing() {
+		dispatch("closing");
+	}
+
+	function handleOpenValueUpdate() {
+		if (menu) {
+			if (open) {
+				menu.open = true;
+			} else {
+				menu.open = false;
+			}
+		}
+	}
+
+	async function handleSelected(
+		event: CustomEvent<{ item: HTMLLIElement; index: number }>
+	) {
+		dispatch("select", {
+			targetIndex: event.detail.index,
+			target: event.detail.item,
+		});
+	}
+
+	export function getMDCInstance() {
+		return menu;
+	}
+	//#endregion
 </script>
 
-<SelectionGroup
-	{selectionType}
-	bind:this={selectionGroup}
-	bind:value
-	{group}
-	let:group
+<UseAnchor {anchor} on:change={handleAnchorChange} />
+<UseState value={open} onUpdate={handleOpenValueUpdate} />
+
+<MenuSurface
+	bind:dom
+	{id}
+	class={classList([className, "mdc-menu"])}
+	{style}
+	{open}
+	{quickOpen}
+	{anchorCorner}
+	{variant}
+	disableMDCInstance
+	{...$$restProps}
 >
-	<MenuImpl
-		bind:dom
-		bind:open
-		{id}
-		props={{ ...props }}
-		class={parseClassList([className, "mdc-menu"])}
-		{style}
-		{quickOpen}
-		{anchor}
-		{anchorCorner}
-		{anchorMargin}
-		{anchorFlipRtl}
-		{variant}
-		{wrapFocus}
-		{hoisted}
-		{dense}
-		{density}
-		{disableMDCInstance}
-		{itemsRows}
+	<List
 		{orientation}
 		{itemsStyle}
-		{selectionType}
+		{itemsRows}
+		{dense}
 		{group}
-		on:select={(event) => handleSelect(event.detail)}
-		on:open
-		on:close
+		aria-hidden={!open}
 	>
 		<slot />
-	</MenuImpl>
-</SelectionGroup>
+	</List>
+</MenuSurface>

@@ -9,7 +9,7 @@
 	import type {
 		MenuSurfaceAnchorCorner,
 		MenuSurfaceVariant,
-		MDCMenuDistance,
+		MenuSurfaceAnchorMargin,
 	} from ".";
 	import { MenuSurface } from "./internal";
 	import { onMount } from "svelte";
@@ -28,7 +28,7 @@
 	export let quickOpen: boolean = false;
 	export let anchorCorner: MenuSurfaceAnchorCorner = undefined;
 	export let anchorFlipRtl: boolean = true;
-	export let anchorMargin: MDCMenuDistance = undefined;
+	export let anchorMargin: MenuSurfaceAnchorMargin = undefined;
 	export let variant: MenuSurfaceVariant = undefined;
 	//#endregion
 

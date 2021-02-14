@@ -6,6 +6,7 @@ export interface OnListChildrenChangeEvent {
 	items: HTMLLIElement[];
 }
 export interface OnListChangeEvent {
+	dom: HTMLUListElement;
 	value: ListValue;
 }
 

@@ -6,8 +6,6 @@ export const [
 ] = createContextStore<ItemContext>();
 
 export interface ItemContext {
-	setSelected(selected: boolean): void;
-	notifySelection(): void;
 	selected: boolean;
 	value: string;
 	dom: HTMLLIElement;

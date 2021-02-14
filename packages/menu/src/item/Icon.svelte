@@ -5,38 +5,24 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../../common/functions";
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/menu/Icon:${count++}`;
-
-	export let dom: GraphicDOM = undefined;
-
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = undefined;
+	//#region  imports
+	import type { IconDOM, IconType } from "./types";
+	import { Icon } from "../../../list/src/item";
 	//#endregion
 
-	// Icon
-	import { Icon } from "../../../list";
-	import type { GraphicDOM, GraphicType } from "../../../common/components";
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: IconDOM = undefined;
+	//#endregion
 
-	export let type: GraphicType = "icon";
-	export let role: "button" = undefined;
-	export let ariaLabel: string = undefined;
+	export let type: IconType = "icon";
+	//#endregion
 </script>
 
-<Icon
-	bind:dom
-	{props}
-	{id}
-	class={parseClassList([className])}
-	{style}
-	{type}
-	{role}
-	{ariaLabel}
->
+<Icon bind:dom {id} class={className} {style} {type}>
 	<slot />
 </Icon>
