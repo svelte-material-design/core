@@ -8,7 +8,10 @@ export type {
 export type { MDCMenuDistance } from "@material/menu-surface";
 export type { SelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
 
-export interface OnMenuChange {
+export interface OnMenuChildrenChangeEvent {
+	items: HTMLLIElement[];
+}
+export interface OnMenuChangeEvent {
 	value: string | string[];
 	dom: HTMLDivElement;
 }
@@ -19,3 +22,5 @@ export interface OnMenuItemSelectedEvent {
 	itemIndex: number;
 	dom: HTMLDivElement;
 }
+
+export type MenuValue = string | string[];

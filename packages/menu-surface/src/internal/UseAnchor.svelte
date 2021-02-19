@@ -6,8 +6,11 @@
 
 	const dispatch = createEventDispatcher<{ change: void }>();
 
-	onMount(() => {
-		if (anchor) handleAnchorChange(null);
+	onMount(async () => {
+		if (anchor) {
+			await tick();
+			handleAnchorChange(null);
+		}
 	});
 
 	onDestroy(() => {

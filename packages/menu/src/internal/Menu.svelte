@@ -18,6 +18,11 @@
 	import type { ItemContext } from "../item";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { classList } from "@raythurnevoid/strings-filter";
+	import {
+		Group,
+		OnGroupItemsUpdateEvent,
+	} from "@raythurnevoid/svelte-group-components/ts";
+	import type { OnMenuChildrenChangeEvent } from "../types";
 	//#endregion
 
 	//#region exports
@@ -60,15 +65,16 @@
 		close: void;
 		closing: void;
 		select: OnMenuSelect;
+		optionsChange: OnMenuChildrenChangeEvent;
 	}>();
 
 	let _open: boolean = open;
-
+	let menuGroup: Group;
 	let items$ = createComponentsGroupStore<ItemContext>();
 
 	const context$ = createMenuContext({
 		open,
-		group,
+		selectionGroup: group,
 		selectionType,
 		registerItem: (item: ItemContext) => {
 			items$.registerItem(item);
@@ -83,7 +89,7 @@
 	$: $context$ = {
 		...$context$,
 		open: _open,
-		group,
+		selectionGroup: group,
 		selectionType,
 	};
 
@@ -123,6 +129,7 @@
 	//#endregion
 
 	onMount(async () => {
+		$context$ = { ...$context$, group: menuGroup.getBindings() };
 		initialize();
 	});
 
@@ -182,35 +189,55 @@
 		});
 	}
 
-	export function getMDCInstance() {
-		return menu;
+	function handleOptionsChange(event: OnGroupItemsUpdateEvent) {
+		dispatch("optionsChange", {
+			items: event.items.map((i) => i.dom as HTMLLIElement),
+		});
+	}
+
+	export function getItems() {
+		return menuGroup.getItems();
 	}
 	//#endregion
 </script>
 
-<UseAnchor {anchor} on:change={handleAnchorChange} />
+<UseAnchor {anchor} on:change={() => handleAnchorChange()} />
 <UseState value={open} onUpdate={handleOpenValueUpdate} />
 
-<MenuSurface
-	bind:dom
-	{id}
-	class={classList([className, "mdc-menu"])}
-	{style}
-	{open}
-	{quickOpen}
-	{anchorCorner}
-	{variant}
-	disableMDCInstance
-	{...$$restProps}
+<Group
+	bind:this={menuGroup}
+	on:optionsChange={(e) => handleOptionsChange(e.detail)}
 >
-	<List
-		{orientation}
-		{itemsStyle}
-		{itemsRows}
-		{dense}
-		{group}
-		aria-hidden={!open}
+	<MenuSurface
+		bind:dom
+		{id}
+		class={classList([className, "mdc-menu"])}
+		{style}
+		{open}
+		{quickOpen}
+		{anchorCorner}
+		{variant}
+		disableMDCInstance
+		{...$$restProps}
 	>
-		<slot />
-	</List>
-</MenuSurface>
+		<List
+			{orientation}
+			{itemsStyle}
+			{itemsRows}
+			{dense}
+			{group}
+			aria-hidden={!open}
+			on:click
+			on:mousedown
+			on:mouseup
+			on:keydown
+			on:keyup
+			on:focus
+			on:blur
+			on:focusin
+			on:focusout
+		>
+			<slot />
+		</List>
+	</MenuSurface>
+</Group>

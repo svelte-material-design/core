@@ -13,8 +13,9 @@
 	import { Menu, OnMenuSelect } from "./internal";
 	import type {
 		SelectionType,
-		OnMenuChange,
+		OnMenuChangeEvent,
 		OnMenuItemSelectedEvent,
+		MenuValue,
 	} from "./types";
 	import { onMount, createEventDispatcher, tick } from "svelte";
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
@@ -48,17 +49,17 @@
 	export let hoisted: boolean;
 	//#endregion
 
-	export let value: string = undefined;
+	export let value: MenuValue = undefined;
 	export let group: SelectionGroupBinding = undefined;
+	export let selectionType: SelectionType = undefined;
 	//#endregion
 
 	//#region implementation
-	let selectionType: SelectionType = "single";
 	let selectionGroup: SelectionGroup;
 	let anchor: HTMLElement;
 
 	const dispatch = createEventDispatcher<{
-		change: OnMenuChange;
+		change: OnMenuChangeEvent;
 		select: OnMenuItemSelectedEvent;
 	}>();
 
@@ -67,11 +68,12 @@
 	});
 
 	async function handleSelect({ targetIndex }: OnMenuSelect) {
-		const selectedIndexes = selectionGroup
-			.getItems()
-			.map((item, index) => [index, item.selected] as const)
-			.filter((item) => item[1])
-			.map((item) => item[0]);
+		const selectedIndexes =
+			selectionGroup
+				?.getItems()
+				?.map((item, index) => [index, item.externalContext.selected] as const)
+				?.filter((item) => item[1])
+				?.map((item) => item[0]) ?? [];
 		handleListSelect({
 			selectionType,
 			selectionGroup,
@@ -122,6 +124,16 @@
 		on:open
 		on:close
 		on:closing
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
+		on:focusin
+		on:focusout
+		on:optionsChange
 	>
 		<slot />
 	</Menu>

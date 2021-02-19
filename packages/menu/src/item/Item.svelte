@@ -66,7 +66,13 @@
 
 <UseState value={ripple} onUpdate={() => $menuContext$.reinitialize()} />
 
-<Selectable bind:selected group={$menuContext$.group} {dom} {value} {context}>
+<Selectable
+	bind:selected
+	group={$menuContext$.selectionGroup}
+	{dom}
+	{value}
+	{context}
+>
 	<Item
 		bind:dom
 		{id}
@@ -76,7 +82,6 @@
 		{tabindex}
 		{selected}
 		{value}
-		role="menuitem"
 		{ariaLabel}
 		{disabled}
 		{ripple}

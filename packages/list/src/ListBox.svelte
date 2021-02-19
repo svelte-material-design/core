@@ -74,6 +74,7 @@
 			await tick();
 
 			dispatch("change", {
+				dom,
 				value,
 			});
 		}
