@@ -196,6 +196,7 @@
 		{itemsRows}
 		{dense}
 		aria-orientation={orientation}
+		{...$$restProps}
 		on:click
 		on:mousedown
 		on:mouseup

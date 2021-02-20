@@ -94,14 +94,12 @@
 		on:focusout
 		on:blur
 	>
-		{#if useHiddenInputs}
-			<!--
-				This is needed because MDCList selection works only when a checkbox or a radio is present or 
-				when singleSelection (in case of listbox) is true.
-				So there's now way to achieve a multi-selection listbox for example.
-			-->
-			<HiddenInput {selected} />
-		{/if}
+		<!--
+			This is needed because MDCList selection works only when a checkbox or a radio is present or 
+			when singleSelection (in case of listbox) is true.
+			So there's now way to achieve a multi-selection listbox for example.
+		-->
+		<HiddenInput {selected} />
 		<slot {leadingClassName} {trailingClassName} />
 	</Item>
 </GroupItem>

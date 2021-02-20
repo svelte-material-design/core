@@ -9,7 +9,6 @@
 	import { createEventDispatcher } from "svelte";
 	import { getListContext } from "../";
 	import type { OnItemChangeEvent } from ".";
-	import type { ItemRole } from "..";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { Item } from "../internal";
@@ -40,9 +39,7 @@
 	let selectable: Selectable;
 	const listContext$ = getListContext();
 
-	$: if (!$listContext$.selectionType) {
-		selected = null;
-	} else if ($listContext$.selectionType && selected == null) {
+	$: if ($listContext$.selectionType && selected == null) {
 		selected = false;
 	}
 	//#endregion
