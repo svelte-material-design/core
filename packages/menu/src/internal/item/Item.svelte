@@ -5,6 +5,7 @@
 	import { Item } from "../../../../list/src/dom";
 	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
 	import { getMenuContext } from "../../MenuContext";
+	import { setItemContext } from "../../item";
 	//#endregion
 
 	//#region exports
@@ -27,10 +28,26 @@
 
 	//#region implementation
 	const menuContext$ = getMenuContext();
+
+	const context$ = setItemContext({
+		disabled,
+		selected,
+		value,
+	});
+	const context = $context$;
+	$: $context$ = {
+		...Object.assign(context, {
+			...$context$,
+			disabled,
+			selected,
+			value,
+			dom,
+		}),
+	};
 	//#endregion
 </script>
 
-<GroupItem {dom} group={$menuContext$.menuGroup}>
+<GroupItem {dom} group={$menuContext$.menuGroup} {context}>
 	<Item
 		bind:dom
 		{id}
@@ -44,6 +61,9 @@
 		{disabled}
 		{ripple}
 		role="menuitem"
+		data-value={value}
+		aria-selected={selected}
+		aria-disabled={disabled}
 		{...$$restProps}
 		let:leadingClassName
 		let:trailingClassName

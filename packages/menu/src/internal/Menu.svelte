@@ -9,7 +9,6 @@
 	import type { MDCMenuDistance } from "@material/menu-surface";
 	import { MenuAnchorCorner, MenuVariant, createMenuContext } from "..";
 	import { List } from ".";
-	import type { OnMenuSelect } from "./types";
 	import type { ListOrientation, ListItemsStyle } from "../../../list";
 	import { smuiToMDCCorner } from "../../../menu-surface/functions";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
@@ -20,7 +19,7 @@
 		Group,
 		OnGroupItemsUpdateEvent,
 	} from "@raythurnevoid/svelte-group-components/ts";
-	import type { OnMenuChildrenChangeEvent } from "../types";
+	import type { OnMenuChildrenChangeEvent, OnMenuSelect } from "../types";
 	//#endregion
 
 	//#region exports
@@ -37,6 +36,8 @@
 	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
 	export let dense: boolean = false;
+	export let wrapFocus: boolean = false;
+	export let typeahead: boolean = false;
 	//#endregion
 
 	//#region menu surface
@@ -47,11 +48,10 @@
 	$: anchorCorner = anchorCorner ? anchorCorner : "bottom-start";
 	export let anchorMargin: MDCMenuDistance = undefined;
 	export let variant: MenuVariant = undefined;
-	export let hoisted: boolean;
+	export let hoisted: boolean = false;
 	export let anchor: HTMLElement;
 	//#endregion
 
-	export let wrapFocus: boolean = false;
 	export let disableMDCInstance: boolean = false;
 	export let group: SelectionGroupBinding;
 	export let selectionType: SelectionType = undefined;
@@ -111,6 +111,10 @@
 		if (menu.quickOpen !== quickOpen) {
 			menu.quickOpen = quickOpen;
 		}
+
+		if (menu.hasTypeahead !== typeahead) {
+			menu.hasTypeahead = typeahead;
+		}
 	}
 
 	$: if (menu && anchorCorner) {
@@ -136,6 +140,10 @@
 			menu.listen("MDCMenuSurface:opened", handleOpen);
 			menu.listen("MDCMenuSurface:closed", handleClose);
 			menu.listen("MDCMenuSurface:closing", handleClosing);
+
+			setTimeout(() => {
+				console.log(menu.typeaheadMatchItem("Item 0"));
+			}, 5000);
 		}
 	}
 
@@ -175,13 +183,16 @@
 		event: CustomEvent<{ item: HTMLLIElement; index: number }>
 	) {
 		dispatch("select", {
-			targetIndex: event.detail.index,
-			target: event.detail.item,
+			dom,
+			itemIndex: event.detail.index,
+			itemDom: event.detail.item,
+			value: menuGroup.getItems()[event.detail.index].externalContext.value,
 		});
 	}
 
 	function handleOptionsChange(event: OnGroupItemsUpdateEvent) {
 		dispatch("optionsChange", {
+			dom,
 			items: event.items.map((i) => i.dom as HTMLLIElement),
 		});
 	}

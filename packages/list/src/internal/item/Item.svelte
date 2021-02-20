@@ -81,6 +81,7 @@
 		data-value={value}
 		aria-selected={selected}
 		aria-checked={checked}
+		aria-disabled={disabled}
 		{...$$restProps}
 		let:leadingClassName
 		let:trailingClassName

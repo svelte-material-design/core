@@ -44,7 +44,6 @@
 				rippleClasses,
 			])}
 			{style}
-			data-value={value}
 			{href}
 			{...$$restProps}
 			on:click

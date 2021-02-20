@@ -20,9 +20,8 @@
 	import { List } from "../dom";
 	import { Group } from "@raythurnevoid/svelte-group-components";
 	import type { ItemContext } from "../item";
-	import type { OnListActionEvent, ListImplRole } from "./types";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import type { OnListChildrenChangeEvent } from "../types";
+	import type { OnListChildrenChangeEvent, OnListActionEvent } from "../types";
 	import type { OnGroupItemsUpdateEvent } from "@raythurnevoid/svelte-group-components/ts";
 	//#endregion
 
@@ -40,6 +39,7 @@
 	export let itemsRows: number = 1;
 	export let dense: boolean = false;
 	export let wrapFocus: boolean = false;
+	export let typeahead: boolean = false;
 
 	export let group: SelectionGroupBinding;
 	// export let group: GroupBindings;
@@ -114,6 +114,10 @@
 		if (list.wrapFocus !== wrapFocus) {
 			list.wrapFocus = wrapFocus;
 		}
+
+		if (list.hasTypeahead !== typeahead) {
+			list.hasTypeahead = typeahead;
+		}
 	}
 
 	async function initialize() {
@@ -122,7 +126,6 @@
 
 			list = new MDCList(dom);
 			list.listen("MDCList:action", handleAction);
-			list.layout();
 		}
 	}
 
@@ -157,10 +160,12 @@
 	}
 
 	async function handleAction(event: MDCListActionEvent) {
-		const listSelectedIndex = list.selectedIndex;
+		const selectedItem = listGroup.getItems()[event.detail.index];
 		dispatch("action", {
-			targetIndex: event.detail.index,
-			listSelectedIndex,
+			dom,
+			itemIndex: event.detail.index,
+			itemDom: selectedItem.dom as HTMLLIElement,
+			value: selectedItem.externalContext.value,
 		});
 	}
 
@@ -173,7 +178,9 @@
 	}
 
 	function handleOptionsChange(event: OnGroupItemsUpdateEvent) {
+		list.hasTypeahead = true;
 		dispatch("optionsChange", {
+			dom,
 			items: event.items.map((i) => i.dom as HTMLLIElement),
 		});
 	}

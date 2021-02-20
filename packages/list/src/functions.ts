@@ -4,7 +4,7 @@ import type { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/s
 export function handleSelect({
 	selectionType,
 	selectionGroup,
-	targetIndex,
+	itemIndex,
 }: HandleSelectInput) {
 	if (selectionType) {
 		const selectedIndexes =
@@ -14,13 +14,13 @@ export function handleSelect({
 				.filter((item) => item[1])
 				.map((item) => item[0]) ?? [];
 
-		const item = selectionGroup.getItems()[targetIndex];
+		const item = selectionGroup.getItems()[itemIndex];
 
 		if (!item) return;
 
 		if (
-			(selectionType === "single" && selectedIndexes[0] !== targetIndex) ||
-			(selectionType === "multi" && !selectedIndexes.includes(targetIndex))
+			(selectionType === "single" && selectedIndexes[0] !== itemIndex) ||
+			(selectionType === "multi" && !selectedIndexes.includes(itemIndex))
 		) {
 			selectionGroup.setSelected(item, true);
 		} else {
@@ -32,5 +32,5 @@ export function handleSelect({
 interface HandleSelectInput {
 	selectionType: SelectionType;
 	selectionGroup: SelectionGroup;
-	targetIndex: number;
+	itemIndex: number;
 }

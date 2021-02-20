@@ -10,14 +10,14 @@
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { List } from "./internal";
-	import type { OnListActionEvent } from "./internal";
 	import type {
 		ListOrientation,
 		OnListChangeEvent,
 		ListItemsStyle,
 		ListSelectionType,
+		OnListActionEvent,
 	} from "./types";
-	import { handleSelect, roleToSelectionType } from "./functions";
+	import { handleSelect } from "./functions";
 	//#endregion
 
 	//#region exports
@@ -36,6 +36,7 @@
 	export let itemsRows: number = 1;
 	export let dense: boolean = false;
 	export let wrapFocus: boolean = true;
+	export let typeahead: boolean = false;
 	export let value: string | string[] = undefined;
 
 	export let group: SelectionGroupBinding = undefined;
@@ -49,15 +50,12 @@
 
 	let selectionGroup: SelectionGroup;
 
-	async function handleAction({
-		targetIndex,
-		listSelectedIndex,
-	}: OnListActionEvent) {
+	async function handleAction({ itemIndex }: OnListActionEvent) {
 		if (selectionType) {
 			handleSelect({
 				selectionType,
 				selectionGroup,
-				targetIndex,
+				itemIndex,
 			});
 
 			await tick();
@@ -90,9 +88,11 @@
 		{itemsStyle}
 		{dense}
 		{wrapFocus}
+		{typeahead}
 		{group}
 		{...$$restProps}
 		on:action={(event) => handleAction(event.detail)}
+		on:action
 		on:click
 		on:mousedown
 		on:mouseup

@@ -32,8 +32,7 @@
 	$: anchorCorner = anchorCorner ? anchorCorner : "bottom-start";
 	export let anchorMargin: MenuSurfaceAnchorMargin = undefined;
 	export let variant: MenuSurfaceVariant = undefined;
-
-	export let hoisted: boolean;
+	export let hoisted: boolean = false;
 	export let anchor: HTMLElement;
 
 	export let disableMDCInstance: boolean = false;

@@ -12,7 +12,7 @@
 		MenuSurfaceAnchorMargin,
 	} from ".";
 	import { MenuSurface } from "./internal";
-	import { onMount } from "svelte";
+	import { onMount, tick } from "svelte";
 	//#endregion
 
 	//#region exports
@@ -30,12 +30,15 @@
 	export let anchorFlipRtl: boolean = true;
 	export let anchorMargin: MenuSurfaceAnchorMargin = undefined;
 	export let variant: MenuSurfaceVariant = undefined;
+	export let hoisted: boolean = false;
+	export let anchor: HTMLElement;
 	//#endregion
 
 	//#region implementation
-	let anchor: HTMLElement;
-	onMount(() => {
-		anchor = dom.parentElement;
+	onMount(async () => {
+		await tick();
+
+		anchor = anchor ?? dom.parentElement;
 	});
 	//#endregion
 </script>
@@ -51,6 +54,7 @@
 	{anchorFlipRtl}
 	{anchorMargin}
 	{variant}
+	{hoisted}
 	{anchor}
 	{...$$restProps}
 	on:open

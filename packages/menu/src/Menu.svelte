@@ -7,15 +7,16 @@
 <script lang="ts">
 	//#region  imports
 	import type { MDCMenuDistance } from "@material/menu-surface";
-	import type { MenuAnchorCorner, MenuVariant } from ".";
 	import type { ListOrientation, ListItemsStyle } from "../../list";
 	import { handleSelect as handleListSelect } from "../../list/src/functions";
-	import { Menu, OnMenuSelect } from "./internal";
+	import { Menu } from "./internal";
 	import type {
 		MenuSelectionType,
 		OnMenuChangeEvent,
-		OnMenuItemSelectedEvent,
+		OnMenuSelect,
 		MenuValue,
+		MenuAnchorCorner,
+		MenuVariant,
 	} from "./types";
 	import { onMount, createEventDispatcher, tick } from "svelte";
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
@@ -37,6 +38,7 @@
 	export let itemsRows: number = 1;
 	export let dense: boolean = false;
 	export let wrapFocus: boolean = false;
+	export let typeahead: boolean = false;
 	//#endregion
 
 	//#region menu surface
@@ -46,34 +48,36 @@
 	export let anchorCorner: MenuAnchorCorner = "bottom-start";
 	export let anchorMargin: MDCMenuDistance = undefined;
 	export let variant: MenuVariant = undefined;
-	export let hoisted: boolean;
+	export let hoisted: boolean = false;
+	export let nullable: boolean = true;
 	//#endregion
 
 	export let value: MenuValue = undefined;
 	export let group: SelectionGroupBinding = undefined;
 	export let selectionType: MenuSelectionType = undefined;
-	export let nullable: boolean = true;
+	export let anchor: HTMLElement;
 	//#endregion
 
 	//#region implementation
 	let selectionGroup: SelectionGroup;
-	let anchor: HTMLElement;
 
 	const dispatch = createEventDispatcher<{
 		change: OnMenuChangeEvent;
-		select: OnMenuItemSelectedEvent;
+		select: OnMenuSelect;
 	}>();
 
-	onMount(() => {
-		anchor = dom.parentElement;
+	onMount(async () => {
+		await tick();
+
+		anchor = anchor ?? dom.parentElement;
 	});
 
-	async function handleSelect({ targetIndex }: OnMenuSelect) {
+	async function handleSelect({ itemIndex }: OnMenuSelect) {
 		if (selectionType) {
 			handleListSelect({
 				selectionType,
 				selectionGroup,
-				targetIndex,
+				itemIndex,
 			});
 
 			await tick();
@@ -110,6 +114,7 @@
 		{variant}
 		{hoisted}
 		{wrapFocus}
+		{typeahead}
 		{orientation}
 		{itemsStyle}
 		{itemsRows}
@@ -118,6 +123,7 @@
 		{group}
 		{...$$restProps}
 		on:select={(e) => handleSelect(e.detail)}
+		on:select
 		on:open
 		on:close
 		on:closing
