@@ -35,14 +35,11 @@
 		change: OnItemChangeEvent;
 	}>();
 
-	//#region locals
-	let selectable: Selectable;
 	const listContext$ = getListContext();
 
 	$: if ($listContext$.selectionType && selected == null) {
 		selected = false;
 	}
-	//#endregion
 
 	async function handleChange() {
 		dispatch("change", { dom, selected });
@@ -53,7 +50,6 @@
 <UseState value={ripple} onUpdate={() => $listContext$.reinitialize()} />
 
 <Selectable
-	bind:this={selectable}
 	bind:selected
 	group={$listContext$.listSelectionGroup}
 	{dom}

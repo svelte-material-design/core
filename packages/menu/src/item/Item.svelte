@@ -7,12 +7,11 @@
 <script lang="ts">
 	//#region import
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { Item } from "../../../list/src/dom";
+	import { Item } from "../internal/item";
 	import { getMenuContext } from "..";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import type { ItemContext } from ".";
-	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
-	import type { OnItemSelectedEvent, OnItemChangeEvent } from ".";
+	import { createEventDispatcher } from "svelte";
+	import type { OnItemChangeEvent } from "./types";
 	//#endregion
 
 	//#region exports
@@ -35,32 +34,18 @@
 
 	//#region implementation
 	const dispatch = createEventDispatcher<{
-		select: OnItemSelectedEvent;
 		change: OnItemChangeEvent;
 	}>();
 
 	const menuContext$ = getMenuContext();
 
-	const context = {
-		value,
-		selected,
-		dom,
-	} as ItemContext;
+	$: if ($menuContext$.selectionType && selected == null) {
+		selected = false;
+	}
 
-	$: Object.assign(context, {
-		value,
-		selected,
-		dom,
-	});
-
-	onMount(() => {
-		context.dom = dom;
-		$menuContext$.registerItem(context);
-	});
-
-	onDestroy(() => {
-		$menuContext$.unregisterItem(context);
-	});
+	async function handleChange() {
+		dispatch("change", { dom, selected });
+	}
 	//#endregion
 </script>
 
@@ -71,7 +56,7 @@
 	group={$menuContext$.selectionGroup}
 	{dom}
 	{value}
-	{context}
+	on:change={handleChange}
 >
 	<Item
 		bind:dom
@@ -88,6 +73,15 @@
 		{...$$restProps}
 		let:leadingClassName
 		let:trailingClassName
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
+		on:focusin
+		on:focusout
 	>
 		<slot {selected} {leadingClassName} {trailingClassName} />
 	</Item>

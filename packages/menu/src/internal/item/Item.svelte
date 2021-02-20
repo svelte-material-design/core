@@ -30,7 +30,7 @@
 	//#endregion
 </script>
 
-<GroupItem group={$menuContext$.group} {dom}>
+<GroupItem {dom} group={$menuContext$.menuGroup}>
 	<Item
 		bind:dom
 		{id}

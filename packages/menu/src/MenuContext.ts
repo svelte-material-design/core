@@ -2,7 +2,6 @@ import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 import type { GroupBindings } from "@raythurnevoid/svelte-group-components/ts";
 import type { SelectionType } from "../../common/hoc";
-import type { ItemContext } from ".";
 
 export const [
 	createMenuContext,
@@ -11,10 +10,8 @@ export const [
 
 export interface MenuContext {
 	open: boolean;
-	group: GroupBindings;
+	menuGroup: GroupBindings;
 	selectionGroup: SelectionGroupBinding;
 	selectionType: SelectionType;
-	registerItem(item: ItemContext): void;
-	unregisterItem(item: ItemContext): void;
 	reinitialize(): void;
 }

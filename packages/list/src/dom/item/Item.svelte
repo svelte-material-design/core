@@ -3,7 +3,6 @@
 <script lang="ts">
 	//#region  imports
 	import { Ripple } from "../../../../ripple";
-	import type { ItemRole } from "../../internal";
 	import { classList } from "@raythurnevoid/strings-filter";
 	import { ItemContent } from ".";
 	import { A, Div } from "../../../../common/dom";

@@ -13,9 +13,7 @@
 	import type { ListOrientation, ListItemsStyle } from "../../../list";
 	import { smuiToMDCCorner } from "../../../menu-surface/functions";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { createComponentsGroupStore } from "../../../common/components-group";
 	import type { SelectionType } from "../../../common/hoc";
-	import type { ItemContext } from "../item";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { classList } from "@raythurnevoid/strings-filter";
 	import {
@@ -70,18 +68,11 @@
 
 	let _open: boolean = open;
 	let menuGroup: Group;
-	let items$ = createComponentsGroupStore<ItemContext>();
 
 	const context$ = createMenuContext({
 		open,
 		selectionGroup: group,
 		selectionType,
-		registerItem: (item: ItemContext) => {
-			items$.registerItem(item);
-		},
-		unregisterItem: (item: ItemContext) => {
-			items$.unregisterItem(item);
-		},
 		reinitialize() {
 			initialize();
 		},
@@ -129,7 +120,7 @@
 	//#endregion
 
 	onMount(async () => {
-		$context$ = { ...$context$, group: menuGroup.getBindings() };
+		$context$ = { ...$context$, menuGroup: menuGroup.getBindings() };
 		initialize();
 	});
 
