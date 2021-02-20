@@ -94,7 +94,6 @@
 		{id}
 		class={className}
 		{style}
-		role="listbox"
 		{selectionType}
 		{orientation}
 		{itemsRows}

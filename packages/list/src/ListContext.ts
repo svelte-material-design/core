@@ -10,7 +10,6 @@ export { createListContext, getListContext };
 
 export interface ListContext {
 	dom: HTMLDivElement | HTMLUListElement;
-	role: ListImplRole;
 	listSelectionGroup: SelectionGroupBinding;
 	listGroup: GroupBindings;
 	selectionType: SelectionType;

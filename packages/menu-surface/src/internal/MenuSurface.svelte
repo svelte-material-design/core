@@ -81,8 +81,6 @@
 	//#endregion
 
 	onMount(async () => {
-		await tick();
-
 		initialize();
 	});
 

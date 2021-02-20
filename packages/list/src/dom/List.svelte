@@ -14,7 +14,6 @@
 	import { Ol, Ul } from "../../../common/dom";
 	import type { ListOrientation, ListItemsStyle } from "..";
 	import { parseClassList } from "../../../common/functions";
-	import type { ListImplRole } from "../internal";
 	//#endregion
 
 	//#region exports
@@ -27,7 +26,6 @@
 	export let dom: HTMLDivElement | HTMLUListElement = undefined;
 	//#endregion
 
-	export let role: ListImplRole = "list";
 	export let orientation: ListOrientation = "vertical";
 	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
@@ -72,8 +70,8 @@
 		[itemsStyle === "video", "mdc-list--video-list"],
 	])}
 	{style}
-	{role}
 	aria-orientation={orientation}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup
@@ -81,7 +79,6 @@
 	on:keyup
 	on:focusin
 	on:focusout
-	{...$$restProps}
 >
 	<slot />
 </svelte:component>

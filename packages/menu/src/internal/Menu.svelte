@@ -213,11 +213,8 @@
 		{id}
 		class={classList([className, "mdc-menu"])}
 		{style}
-		{open}
-		{quickOpen}
-		{anchorCorner}
+		open={_open}
 		{variant}
-		disableMDCInstance
 		{...$$restProps}
 	>
 		<List

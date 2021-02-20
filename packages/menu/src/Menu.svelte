@@ -12,7 +12,7 @@
 	import { handleSelect as handleListSelect } from "../../list/src/functions";
 	import { Menu, OnMenuSelect } from "./internal";
 	import type {
-		SelectionType,
+		MenuSelectionType,
 		OnMenuChangeEvent,
 		OnMenuItemSelectedEvent,
 		MenuValue,
@@ -27,7 +27,7 @@
 	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/menu-surface/Menu:${count++}`;
+	export let id: string = `@svmd/menu/Menu:${count++}`;
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
@@ -51,7 +51,8 @@
 
 	export let value: MenuValue = undefined;
 	export let group: SelectionGroupBinding = undefined;
-	export let selectionType: SelectionType = undefined;
+	export let selectionType: MenuSelectionType = undefined;
+	export let nullable: boolean = true;
 	//#endregion
 
 	//#region implementation
@@ -68,33 +69,29 @@
 	});
 
 	async function handleSelect({ targetIndex }: OnMenuSelect) {
-		const selectedIndexes =
-			selectionGroup
-				?.getItems()
-				?.map((item, index) => [index, item.externalContext.selected] as const)
-				?.filter((item) => item[1])
-				?.map((item) => item[0]) ?? [];
-		handleListSelect({
-			selectionType,
-			selectionGroup,
-			targetIndex,
-			selectedIndexes,
-		});
+		if (selectionType) {
+			handleListSelect({
+				selectionType,
+				selectionGroup,
+				targetIndex,
+			});
 
-		await tick();
+			await tick();
 
-		dispatch("change", {
-			dom,
-			value,
-		});
+			dispatch("change", {
+				dom,
+				value,
+			});
+		}
 	}
 	//#endregion
 </script>
 
 <SelectionGroup
-	{selectionType}
 	bind:this={selectionGroup}
 	bind:value
+	{selectionType}
+	{nullable}
 	{group}
 	let:group
 >

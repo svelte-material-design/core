@@ -24,8 +24,6 @@
 	export let disabled: boolean = false;
 	export let value: any = undefined;
 	export let href: string = undefined;
-
-	export let role: ItemRole = undefined;
 	//#endregion
 
 	//#region implementation
@@ -48,7 +46,6 @@
 			])}
 			{style}
 			data-value={value}
-			{role}
 			{href}
 			{...$$restProps}
 			on:click

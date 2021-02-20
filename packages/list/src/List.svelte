@@ -13,9 +13,9 @@
 	import type { OnListActionEvent } from "./internal";
 	import type {
 		ListOrientation,
-		ListRole,
 		OnListChangeEvent,
 		ListItemsStyle,
+		ListSelectionType,
 	} from "./types";
 	import { handleSelect, roleToSelectionType } from "./functions";
 	//#endregion
@@ -29,11 +29,7 @@
 	export let dom: HTMLUListElement = undefined;
 	//#endregion
 
-	export let role: ListRole = "list";
-	$: if (role == undefined) role = "list";
-	$: if (role === "list") {
-		value = undefined;
-	}
+	export let selectionType: ListSelectionType = undefined;
 
 	export let orientation: ListOrientation = "vertical";
 	export let itemsStyle: ListItemsStyle = "textual";
@@ -43,6 +39,7 @@
 	export let value: string | string[] = undefined;
 
 	export let group: SelectionGroupBinding = undefined;
+	export let nullable: boolean = true;
 	//#endregion
 
 	//#region implementation
@@ -50,7 +47,6 @@
 		change: OnListChangeEvent;
 	}>();
 
-	$: selectionType = roleToSelectionType(role);
 	let selectionGroup: SelectionGroup;
 
 	async function handleAction({
@@ -58,14 +54,10 @@
 		listSelectedIndex,
 	}: OnListActionEvent) {
 		if (selectionType) {
-			const selectedIndexes = Array.isArray(listSelectedIndex)
-				? listSelectedIndex
-				: [listSelectedIndex];
 			handleSelect({
 				selectionType,
 				selectionGroup,
 				targetIndex,
-				selectedIndexes,
 			});
 
 			await tick();
@@ -84,6 +76,7 @@
 	bind:value
 	{selectionType}
 	{group}
+	{nullable}
 	let:group
 >
 	<List
@@ -91,7 +84,6 @@
 		{id}
 		class={className}
 		{style}
-		{role}
 		{selectionType}
 		{orientation}
 		{itemsRows}

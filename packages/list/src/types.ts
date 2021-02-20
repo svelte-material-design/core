@@ -10,6 +10,8 @@ export interface OnListChangeEvent {
 	value: ListValue;
 }
 
+export type { SelectionType as ListSelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
+
 export type ListItemsStyle =
 	| "textual"
 	| "avatar"

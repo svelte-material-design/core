@@ -14,9 +14,15 @@ export function handleSelect({
 	selectionType,
 	selectionGroup,
 	targetIndex,
-	selectedIndexes,
 }: HandleSelectInput) {
 	if (selectionType) {
+		const selectedIndexes =
+			selectionGroup
+				.getItems()
+				.map((item, index) => [index, item.selected] as const)
+				.filter((item) => item[1])
+				.map((item) => item[0]) ?? [];
+
 		const item = selectionGroup.getItems()[targetIndex];
 
 		if (!item) return;
@@ -36,5 +42,4 @@ interface HandleSelectInput {
 	selectionType: SelectionType;
 	selectionGroup: SelectionGroup;
 	targetIndex: number;
-	selectedIndexes: number[];
 }

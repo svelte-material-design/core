@@ -35,7 +35,6 @@
 	export let dom: HTMLUListElement = undefined;
 	//#endregion
 
-	export let role: ListImplRole = "list";
 	export let orientation: ListOrientation = "vertical";
 	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
@@ -56,7 +55,6 @@
 
 	const context$ = createListContext({
 		listSelectionGroup: group,
-		role,
 		selectionType,
 		reinitialize() {
 			initialize();
@@ -65,7 +63,6 @@
 	$: $context$ = {
 		...$context$,
 		dom,
-		role,
 		list,
 		selectionType,
 	};
@@ -102,10 +99,6 @@
 	});
 
 	$: if (list) {
-		if (list.singleSelection !== (selectionType === "single")) {
-			list.singleSelection = selectionType === "single";
-		}
-
 		if (
 			orientation === "vertical" &&
 			(!list.vertical == null || list.vertical === false)
@@ -198,7 +191,6 @@
 		{id}
 		class={className}
 		{style}
-		{role}
 		{orientation}
 		{itemsStyle}
 		{itemsRows}

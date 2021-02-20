@@ -6,7 +6,7 @@ export type {
 	ListItemsStyle as MenuItemsStyle,
 } from "../../list";
 export type { MDCMenuDistance } from "@material/menu-surface";
-export type { SelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
+export type { SelectionType as MenuSelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
 
 export interface OnMenuChildrenChangeEvent {
 	items: HTMLLIElement[];

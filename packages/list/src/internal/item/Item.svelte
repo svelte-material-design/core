@@ -4,7 +4,6 @@
 	//#region  imports
 	import { getListContext } from "../..";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import type { ItemRole } from "./types";
 	import { HiddenInput } from ".";
 	import { Item } from "../../dom";
 	import { onMount } from "svelte";
@@ -27,12 +26,13 @@
 	export let activated: boolean = false;
 	export let disabled: boolean = false;
 	export let value: any = undefined;
-	export let role: ItemRole = undefined;
 	//#endregion
 
 	//#region implementation
 	const listContext$ = getListContext();
 	let useHiddenInputs: boolean = false;
+
+	$: checked = dom && selected && (hasCheckbox() || hasRadio());
 
 	const context$ = setItemContext({
 		disabled,
@@ -51,21 +51,21 @@
 	};
 
 	onMount(() => {
-		if (
-			(role === "checkbox" && !dom.querySelector("input[type=checkbox]")) ||
-			(role === "radio" && !dom.querySelector("input[type=radio]")) ||
-			($listContext$.role === "listbox" && role === "option")
-		) {
+		if ($listContext$.selectionType) {
 			useHiddenInputs = true;
 		}
 	});
+
+	function hasCheckbox() {
+		return !!dom.querySelector("input[type=checkbox]");
+	}
+
+	function hasRadio() {
+		return !!dom.querySelector("input[type=radio]");
+	}
 	//#endregion
 </script>
 
-<UseState
-	value={$listContext$.role}
-	onUpdate={() => $listContext$.reinitialize()}
-/>
 <UseState value={ripple} onUpdate={() => $listContext$.reinitialize()} />
 
 <GroupItem {dom} group={$listContext$.listGroup} {context}>
@@ -78,13 +78,9 @@
 		{activated}
 		{ripple}
 		{disabled}
-		aria-selected={$listContext$.role === "listbox" ? selected : undefined}
 		data-value={value}
-		{role}
-		aria-checked={$listContext$.role === "group" ||
-		$listContext$.role === "radiogroup"
-			? `${selected}`
-			: undefined}
+		aria-selected={selected}
+		aria-checked={checked}
 		{...$$restProps}
 		let:leadingClassName
 		let:trailingClassName
@@ -104,7 +100,7 @@
 				when singleSelection (in case of listbox) is true.
 				So there's now way to achieve a multi-selection listbox for example.
 			-->
-			<HiddenInput {selected} selectionType={$listContext$.selectionType} />
+			<HiddenInput {selected} />
 		{/if}
 		<slot {leadingClassName} {trailingClassName} />
 	</Item>

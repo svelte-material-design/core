@@ -39,15 +39,6 @@
 	//#region locals
 	let selectable: Selectable;
 	const listContext$ = getListContext();
-	let role: ItemRole;
-
-	$: if ($listContext$.role === "radiogroup") {
-		role = "radio";
-	} else if ($listContext$.role === "listbox") {
-		role = "option";
-	} else if ($listContext$.role === "group") {
-		role = "checkbox";
-	}
 
 	$: if (!$listContext$.selectionType) {
 		selected = null;
@@ -81,7 +72,6 @@
 		{activated}
 		{disabled}
 		{value}
-		{role}
 		{ripple}
 		{...$$restProps}
 		let:leadingClassName
