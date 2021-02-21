@@ -21,7 +21,6 @@
 	export let selected: boolean = false;
 	export let activated: boolean = false;
 	export let disabled: boolean = false;
-	export let value: any = undefined;
 	export let href: string = undefined;
 	//#endregion
 

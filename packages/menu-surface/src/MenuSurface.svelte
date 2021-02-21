@@ -13,6 +13,7 @@
 	} from ".";
 	import { MenuSurface } from "./internal";
 	import { onMount, tick } from "svelte";
+	import type { MenuSurfaceAnchor } from "./types";
 	//#endregion
 
 	//#region exports
@@ -31,7 +32,7 @@
 	export let anchorMargin: MenuSurfaceAnchorMargin = undefined;
 	export let variant: MenuSurfaceVariant = undefined;
 	export let hoisted: boolean = false;
-	export let anchor: HTMLElement;
+	export let anchor: MenuSurfaceAnchor;
 	//#endregion
 
 	//#region implementation

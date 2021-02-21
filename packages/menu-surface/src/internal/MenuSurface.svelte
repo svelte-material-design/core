@@ -11,9 +11,14 @@
 		MenuSurfaceAnchorMargin,
 		MenuSurfaceAnchorCorner,
 	} from "..";
-	import { smuiToMDCCorner } from "../functions";
+	import {
+		smuiToMDCCorner,
+		isAnchorElement,
+		svmdToMDCAnchorMargin,
+	} from "../functions";
 	import { MenuSurface } from "../dom";
 	import { UseAnchor } from ".";
+	import type { MenuSurfaceAnchor } from "../types";
 	//#endregion
 
 	//#region exports
@@ -33,7 +38,7 @@
 	export let anchorMargin: MenuSurfaceAnchorMargin = undefined;
 	export let variant: MenuSurfaceVariant = undefined;
 	export let hoisted: boolean = false;
-	export let anchor: HTMLElement;
+	export let anchor: MenuSurfaceAnchor;
 
 	export let disableMDCInstance: boolean = false;
 	//#endregion
@@ -71,7 +76,8 @@
 	}
 
 	$: if (menuSurface && anchorMargin) {
-		menuSurface.setAnchorMargin(anchorMargin);
+		const mdcAnchorMargin = svmdToMDCAnchorMargin(anchorMargin, anchorCorner);
+		menuSurface.setAnchorMargin(mdcAnchorMargin);
 	}
 
 	$: if (menuSurface) {
@@ -87,10 +93,15 @@
 		menuSurface?.destroy();
 	});
 
-	function handleAnchorChange() {
+	function handleAnchorUpdate() {
 		if (!disableMDCInstance) {
-			if (menuSurface.anchorElement !== anchor) {
-				menuSurface.anchorElement = anchor;
+			if (isAnchorElement(anchor)) {
+				if (menuSurface.anchorElement !== anchor) {
+					menuSurface.anchorElement = anchor;
+				}
+			} else {
+				menuSurface.anchorElement = null;
+				menuSurface.setAbsolutePosition(anchor.x, anchor.y);
 			}
 		}
 	}
@@ -137,7 +148,7 @@
 	//#endregion
 </script>
 
-<UseAnchor {anchor} on:change={handleAnchorChange} />
+<UseAnchor {anchor} on:update={handleAnchorUpdate} />
 <UseState value={open} onUpdate={handleOpenValueUpdate} />
 
 <MenuSurface
@@ -146,9 +157,8 @@
 	class={className}
 	{style}
 	{quickOpen}
-	{anchorCorner}
-	{anchorFlipRtl}
-	{anchorMargin}
 	{variant}
-	{anchor}><slot /></MenuSurface
+	{...$$restProps}
 >
+	<slot />
+</MenuSurface>

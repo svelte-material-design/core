@@ -39,10 +39,10 @@
 		{id}
 		class={className}
 		{style}
-		{value}
 		{selected}
 		{disabled}
 		role="option"
+		data-value={value}
 		on:domEvent={forwardDOMEvents}
 	>
 		<Content>
