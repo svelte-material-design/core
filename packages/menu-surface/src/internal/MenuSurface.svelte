@@ -102,6 +102,7 @@
 				menuSurface.anchorElement = null;
 				menuSurface.setAbsolutePosition(anchor.x, anchor.y);
 			} else {
+				menuSurface.setIsHoisted(!!hoisted);
 				if (menuSurface.anchorElement !== anchorElement) {
 					menuSurface.anchorElement = anchorElement;
 				}

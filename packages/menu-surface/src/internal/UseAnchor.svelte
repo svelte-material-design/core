@@ -27,11 +27,18 @@
 	});
 
 	function handleAnchorChange(oldAnchor: typeof anchor) {
+		let newAnchorElement: HTMLElement;
+		let oldAnchorElement: HTMLElement;
+
 		if (isAnchorElement(oldAnchor)) {
-			oldAnchor?.classList.remove("mdc-menu-surface--anchor");
+			oldAnchorElement = oldAnchor;
+		} else if (!oldAnchor) {
+			oldAnchorElement = dom.parentElement;
 		}
 
-		let newAnchorElement: HTMLElement;
+		if (oldAnchorElement) {
+			oldAnchorElement.classList.remove("mdc-menu-surface--anchor");
+		}
 
 		if (anchor) {
 			if (isAnchorElement(anchor)) {
@@ -55,4 +62,7 @@
 	}
 </script>
 
-<UseState value={[dom, anchor]} onUpdate={handleAnchorChange} />
+<UseState
+	value={[dom, anchor]}
+	onUpdate={(oldVal) => handleAnchorChange(oldVal[1])}
+/>

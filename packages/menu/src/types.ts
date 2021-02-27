@@ -1,14 +1,16 @@
-export type { MenuSurfaceAnchorCorner as MenuAnchorCorner } from "../../menu-surface";
-export type { MenuSurfaceVariant as MenuVariant } from "../../menu-surface";
-export type { MenuSurfaceAnchorMargin as MenuAnchorMargin } from "../../menu-surface";
-export type { MenuSurfaceAbsolutePosition as MenuAbsolutePosition } from "../../menu-surface";
-export type { MenuSurfaceAnchor as MenuAnchor } from "../../menu-surface";
+export type {
+	MenuSurfaceAnchorMargin as MenuAnchorMargin,
+	MenuSurfaceAbsolutePosition as MenuAbsolutePosition,
+	MenuSurfaceVariant as MenuVariant,
+	MenuSurfaceAnchorCorner as MenuAnchorCorner,
+	MenuSurfaceAnchor as MenuAnchor,
+} from "../../menu-surface/src/types";
+export type { MDCMenuDistance } from "@material/menu-surface";
+export type { SelectionType as MenuSelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
 export type {
 	ListOrientation as MenuOrientation,
 	ListItemsStyle as MenuItemsStyle,
-} from "../../list";
-export type { MDCMenuDistance } from "@material/menu-surface";
-export type { SelectionType as MenuSelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
+} from "../../list/src/types";
 
 export interface OnMenuChildrenChangeEvent {
 	dom: HTMLDivElement;

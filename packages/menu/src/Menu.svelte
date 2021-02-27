@@ -6,8 +6,6 @@
 
 <script lang="ts">
 	//#region  imports
-	import type { MDCMenuDistance } from "@material/menu-surface";
-	import type { ListOrientation, ListItemsStyle } from "../../list";
 	import { handleSelect as handleListSelect } from "../../list/src/functions";
 	import { Menu } from "./internal";
 	import type {
@@ -19,6 +17,8 @@
 		MenuVariant,
 		MenuAnchorMargin,
 		MenuAnchor,
+		MenuOrientation,
+		MenuItemsStyle,
 	} from "./types";
 	import { createEventDispatcher, tick } from "svelte";
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
@@ -35,8 +35,8 @@
 	//#endregion
 
 	//#region list
-	export let orientation: ListOrientation = "vertical";
-	export let itemsStyle: ListItemsStyle = "textual";
+	export let orientation: MenuOrientation = "vertical";
+	export let itemsStyle: MenuItemsStyle = "textual";
 	export let itemsRows: number = 1;
 	export let dense: boolean = false;
 	export let wrapFocus: boolean = false;
