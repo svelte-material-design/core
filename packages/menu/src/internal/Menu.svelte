@@ -6,11 +6,15 @@
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { MenuSurface } from "../../../menu-surface/src/dom";
 	import { UseAnchor } from "../../../menu-surface/src/internal";
-	import type { MDCMenuDistance } from "@material/menu-surface";
 	import { MenuAnchorCorner, MenuVariant, createMenuContext } from "..";
 	import { List } from ".";
 	import type { ListOrientation, ListItemsStyle } from "../../../list";
-	import { smuiToMDCCorner } from "../../../menu-surface/functions";
+	import {
+		isAnchorElement,
+		isPositionAbsoluteAnchor,
+		smuiToMDCCorner,
+		svmdToMDCAnchorMargin,
+	} from "../../../menu-surface/functions";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import type { SelectionType } from "../../../common/hoc";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
@@ -19,7 +23,12 @@
 		Group,
 		OnGroupItemsUpdateEvent,
 	} from "@raythurnevoid/svelte-group-components/ts";
-	import type { OnMenuChildrenChangeEvent, OnMenuSelect } from "../types";
+	import type {
+		MenuAnchorMargin,
+		OnMenuChildrenChangeEvent,
+		OnMenuSelect,
+		MenuAnchor,
+	} from "../types";
 	//#endregion
 
 	//#region exports
@@ -46,10 +55,10 @@
 	export let anchorFlipRtl: boolean = true;
 	export let anchorCorner: MenuAnchorCorner = "bottom-start";
 	$: anchorCorner = anchorCorner ? anchorCorner : "bottom-start";
-	export let anchorMargin: MDCMenuDistance = undefined;
+	export let anchorMargin: MenuAnchorMargin = undefined;
 	export let variant: MenuVariant = undefined;
 	export let hoisted: boolean = false;
-	export let anchor: HTMLElement;
+	export let anchor: MenuAnchor;
 	//#endregion
 
 	export let disableMDCInstance: boolean = false;
@@ -95,14 +104,6 @@
 		}
 	}
 
-	$: if (menu && anchorMargin) {
-		menu.setAnchorMargin(anchorMargin);
-	}
-
-	$: if (menu) {
-		menu.setIsHoisted(!!hoisted);
-	}
-
 	$: if (menu) {
 		if (menu.wrapFocus !== wrapFocus) {
 			menu.wrapFocus = wrapFocus;
@@ -120,6 +121,11 @@
 	$: if (menu && anchorCorner) {
 		const corner = smuiToMDCCorner(anchorCorner, anchorFlipRtl);
 		menu.setAnchorCorner(corner);
+	}
+
+	$: if (menu && anchorMargin) {
+		const mdcAnchorMargin = svmdToMDCAnchorMargin(anchorMargin, anchorCorner);
+		menu.setAnchorMargin(mdcAnchorMargin);
 	}
 	//#endregion
 
@@ -147,9 +153,21 @@
 		}
 	}
 
-	function handleAnchorChange() {
+	function handleHoistedUpdate() {
+		if (menu && !isPositionAbsoluteAnchor(anchor)) {
+			menu.setIsHoisted(!!hoisted);
+		}
+	}
+
+	function handleAnchorUpdate(anchorElement: HTMLElement) {
 		if (!disableMDCInstance) {
-			menu.setAnchorElement(anchor);
+			if (isPositionAbsoluteAnchor(anchor)) {
+				menu.setAnchorElement(null);
+				menu.setAbsolutePosition(anchor.x, anchor.y);
+			} else {
+				menu.setIsHoisted(!!hoisted);
+				menu.setAnchorElement(anchorElement);
+			}
 		}
 	}
 
@@ -203,8 +221,13 @@
 	//#endregion
 </script>
 
-<UseAnchor {anchor} on:change={() => handleAnchorChange()} />
+<UseAnchor
+	{dom}
+	{anchor}
+	on:update={(e) => handleAnchorUpdate(e.detail.anchorElement)}
+/>
 <UseState value={open} onUpdate={handleOpenValueUpdate} />
+<UseState value={hoisted} onUpdate={handleHoistedUpdate} />
 
 <Group
 	bind:this={menuGroup}

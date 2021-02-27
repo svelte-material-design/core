@@ -4,9 +4,14 @@
 	import type { MenuSurfaceAnchor } from "../types";
 	import { isAnchorElement } from "../functions";
 
+	export let dom: HTMLElement;
 	export let anchor: MenuSurfaceAnchor;
 
-	const dispatch = createEventDispatcher<{ update: void }>();
+	const dispatch = createEventDispatcher<{
+		update: {
+			anchorElement?: HTMLElement;
+		};
+	}>();
 
 	onMount(async () => {
 		if (anchor) {
@@ -25,14 +30,29 @@
 		if (isAnchorElement(oldAnchor)) {
 			oldAnchor?.classList.remove("mdc-menu-surface--anchor");
 		}
-		if (isAnchorElement(anchor)) {
-			if (!anchor?.classList.contains("mdc-menu-surface--anchor")) {
-				anchor.classList.add("mdc-menu-surface--anchor");
+
+		let newAnchorElement: HTMLElement;
+
+		if (anchor) {
+			if (isAnchorElement(anchor)) {
+				newAnchorElement = anchor;
+			} else {
+				dispatch("update", {});
 			}
+		} else {
+			newAnchorElement = dom.parentElement;
 		}
 
-		dispatch("update");
+		if (newAnchorElement) {
+			if (!newAnchorElement.classList.contains("mdc-menu-surface--anchor")) {
+				newAnchorElement.classList.add("mdc-menu-surface--anchor");
+			}
+
+			dispatch("update", {
+				anchorElement: newAnchorElement,
+			});
+		}
 	}
 </script>
 
-<UseState value={anchor} onUpdate={handleAnchorChange} />
+<UseState value={[dom, anchor]} onUpdate={handleAnchorChange} />

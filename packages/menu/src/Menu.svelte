@@ -17,8 +17,10 @@
 		MenuValue,
 		MenuAnchorCorner,
 		MenuVariant,
+		MenuAnchorMargin,
+		MenuAnchor,
 	} from "./types";
-	import { onMount, createEventDispatcher, tick } from "svelte";
+	import { createEventDispatcher, tick } from "svelte";
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	//#endregion
@@ -46,7 +48,7 @@
 	export let quickOpen: boolean = false;
 	export let anchorFlipRtl: boolean = true;
 	export let anchorCorner: MenuAnchorCorner = "bottom-start";
-	export let anchorMargin: MDCMenuDistance = undefined;
+	export let anchorMargin: MenuAnchorMargin = undefined;
 	export let variant: MenuVariant = undefined;
 	export let hoisted: boolean = false;
 	export let nullable: boolean = true;
@@ -55,7 +57,7 @@
 	export let value: MenuValue = undefined;
 	export let group: SelectionGroupBinding = undefined;
 	export let selectionType: MenuSelectionType = undefined;
-	export let anchor: HTMLElement;
+	export let anchor: MenuAnchor;
 	//#endregion
 
 	//#region implementation
@@ -65,12 +67,6 @@
 		change: OnMenuChangeEvent;
 		select: OnMenuSelect;
 	}>();
-
-	onMount(async () => {
-		await tick();
-
-		anchor = anchor ?? dom.parentElement;
-	});
 
 	async function handleSelect({ itemIndex }: OnMenuSelect) {
 		if (selectionType) {

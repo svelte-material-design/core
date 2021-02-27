@@ -3,6 +3,7 @@ import type {
 	MenuSurfaceAnchorCorner,
 	MenuSurfaceAnchor,
 	MenuSurfaceAnchorMargin,
+	MenuSurfaceAbsolutePosition,
 } from "../types";
 
 export function smuiToMDCCorner(
@@ -44,7 +45,14 @@ export function svmdToMDCAnchorMargin(
 }
 
 export function isAnchorElement(
-	anchor_: MenuSurfaceAnchor
-): anchor_ is HTMLElement {
-	return anchor_ && !!(anchor_ as HTMLElement).outerHTML;
+	anchor: MenuSurfaceAnchor
+): anchor is HTMLElement {
+	return anchor && !!(anchor as HTMLElement).outerHTML;
+}
+
+export function isPositionAbsoluteAnchor(
+	anchor: MenuSurfaceAnchor
+): anchor is MenuSurfaceAbsolutePosition {
+	const absoluteAnchor = anchor as MenuSurfaceAbsolutePosition;
+	return anchor && (absoluteAnchor.x != null || absoluteAnchor.y != null);
 }

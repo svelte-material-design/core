@@ -12,7 +12,6 @@
 		MenuSurfaceAnchorMargin,
 	} from ".";
 	import { MenuSurface } from "./internal";
-	import { onMount, tick } from "svelte";
 	import type { MenuSurfaceAnchor } from "./types";
 	//#endregion
 
@@ -36,11 +35,6 @@
 	//#endregion
 
 	//#region implementation
-	onMount(async () => {
-		await tick();
-
-		anchor = anchor ?? dom.parentElement;
-	});
 	//#endregion
 </script>
 

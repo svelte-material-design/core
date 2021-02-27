@@ -15,6 +15,7 @@
 		smuiToMDCCorner,
 		isAnchorElement,
 		svmdToMDCAnchorMargin,
+		isPositionAbsoluteAnchor,
 	} from "../functions";
 	import { MenuSurface } from "../dom";
 	import { UseAnchor } from ".";
@@ -79,10 +80,6 @@
 		const mdcAnchorMargin = svmdToMDCAnchorMargin(anchorMargin, anchorCorner);
 		menuSurface.setAnchorMargin(mdcAnchorMargin);
 	}
-
-	$: if (menuSurface) {
-		menuSurface.setIsHoisted(!!hoisted);
-	}
 	//#endregion
 
 	onMount(async () => {
@@ -93,15 +90,21 @@
 		menuSurface?.destroy();
 	});
 
-	function handleAnchorUpdate() {
+	function handleHoistedUpdate() {
+		if (menuSurface && !isPositionAbsoluteAnchor(anchor)) {
+			menuSurface.setIsHoisted(!!hoisted);
+		}
+	}
+
+	function handleAnchorUpdate(anchorElement: HTMLElement) {
 		if (!disableMDCInstance) {
-			if (isAnchorElement(anchor)) {
-				if (menuSurface.anchorElement !== anchor) {
-					menuSurface.anchorElement = anchor;
-				}
-			} else {
+			if (isPositionAbsoluteAnchor(anchor)) {
 				menuSurface.anchorElement = null;
 				menuSurface.setAbsolutePosition(anchor.x, anchor.y);
+			} else {
+				if (menuSurface.anchorElement !== anchorElement) {
+					menuSurface.anchorElement = anchorElement;
+				}
 			}
 		}
 	}
@@ -148,8 +151,13 @@
 	//#endregion
 </script>
 
-<UseAnchor {anchor} on:update={handleAnchorUpdate} />
+<UseAnchor
+	{dom}
+	{anchor}
+	on:update={(e) => handleAnchorUpdate(e.detail.anchorElement)}
+/>
 <UseState value={open} onUpdate={handleOpenValueUpdate} />
+<UseState value={hoisted} onUpdate={handleHoistedUpdate} />
 
 <MenuSurface
 	bind:dom
