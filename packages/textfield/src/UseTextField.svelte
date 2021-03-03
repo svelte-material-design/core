@@ -1,9 +1,11 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	import { MDCTextField } from "@material/textfield";
-	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
+	import { Use } from "@raythurnevoid/svelte-hooks";
 	import { onDestroy } from "svelte";
-	import { InputFieldVariant } from "./";
-	import { StringListToFilter } from "../../common/functions";
+	import type { InputFieldVariant } from "./";
+	import type { StringListToFilter } from "../../common/functions";
 
 	export let dom: HTMLLabelElement = null;
 	export let ripple: boolean = true;
@@ -20,16 +22,6 @@
 	export let classList: StringListToFilter = [];
 	export let dirty: boolean = false;
 	export let inputElement: HTMLInputElement | HTMLTextAreaElement = undefined;
-
-	//#region HTML Native Input validity attrs
-	// export let required: boolean = undefined;
-	// export let minlength: number = undefined;
-	// export let maxlength: number = undefined;
-	// export let type: string = undefined;
-	// export let pattern: string = undefined;
-	// export let min: number = undefined;
-	// export let max: number = undefined;
-	//#endregion
 
 	let nativeInputInvalid: boolean = false;
 	let textField: MDCTextField;
@@ -102,18 +94,8 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
-<!-- If validation state change is needed on attrs modification
-<UseState value={required} onUpdate={updateNativeInputInvalid} />
-<UseState value={minlength} onUpdate={updateNativeInputInvalid} />
-<UseState value={maxlength} onUpdate={updateNativeInputInvalid} />
-<UseState value={type} onUpdate={updateNativeInputInvalid} />
-<UseState value={pattern} onUpdate={updateNativeInputInvalid} />
-<UseState value={min} onUpdate={updateNativeInputInvalid} />
-<UseState value={max} onUpdate={updateNativeInputInvalid} /> -->
-
 <Use
 	effect
 	hook={() => istantiate(dom, ripple, variant)}
-	when={!!(dom && inputElement)} />
+	when={!!(dom && inputElement)}
+/>

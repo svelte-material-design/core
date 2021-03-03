@@ -1,4 +1,4 @@
 import "./index.scss";
-import Icon from "./Icon.svelte";
-
-export { Icon };
+export { default as LeadingIcon } from "./LeadingIcon.svelte";
+export { default as TrailingIcon } from "./TrailingIcon.svelte";
+export { default as UseTextFieldIcon } from "./UseTextFieldIcon.svelte";

@@ -1,8 +1,11 @@
-import InputField from "./InputField.svelte";
-import Input from "./InputField.svelte";
-import TextArea from "./TextArea.svelte";
-import FullWidthTextField from "./FullWidthTextField.svelte";
-
-export { InputField, Input, TextArea, FullWidthTextField };
+export { default as InputField } from "./InputField.svelte";
+export { default as Input } from "./Input.svelte";
+export { default as TextArea } from "./TextArea.svelte";
+export { default as FullWidthTextField } from "./FullWidthTextField.svelte";
+export { default as Content } from "./Content.svelte";
+export { default as Prefix } from "./Prefix.svelte";
+export { default as Suffix } from "./Suffix.svelte";
+export * from "./helper-text";
+export * from "./icon";
 export * from "./TextFieldContext";
 export * from "./types";

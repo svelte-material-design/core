@@ -1,10 +1,13 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region  imports
-	import type { GraphicDOM, GraphicType } from "./types";
-	import { Svg, I, Img } from "../../dom";
+	//#region imports
+	import type { GraphicDOM, GraphicType } from "../../../common/components";
+	import { Graphic } from "../../../common/components";
 	import { classList } from "@raythurnevoid/strings-filter";
+	import { UseTextFieldIcon } from ".";
+	import { getContentContext } from "../TextFieldContext";
+	import { onDestroy } from "svelte";
 	//#endregion
 
 	//#region exports
@@ -20,40 +23,38 @@
 	//#endregion
 
 	//#region implementation
-	let component: typeof Svg | typeof I | typeof Img;
-	$: switch (type) {
-		case "svg":
-			component = Svg;
-			break;
-		case "icon":
-			component = I;
-			break;
-		case "img":
-			component = Img;
-			break;
-	}
+	const contentContext$ = getContentContext();
+
+	$contentContext$.setHasTrailingIcon(true);
+
+	onDestroy(() => {
+		$contentContext$.setHasTrailingIcon(false);
+	});
 	//#endregion
 </script>
 
-<svelte:component
-	this={component}
+<UseTextFieldIcon {dom} />
+
+<Graphic
 	bind:dom
 	{id}
 	class={classList([
 		className,
+		"mdc-text-field__icon",
+		"smui-input-field-icon",
+		"mdc-text-field__icon--trailing",
 		[type === "icon" && className == undefined, "material-icons"],
 	])}
 	{style}
+	{type}
 	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup
 	on:keydown
 	on:keyup
-	on:focusin
-	on:focusout
 	on:focus
 	on:blur
 >
 	<slot />
-</svelte:component>
+</Graphic>

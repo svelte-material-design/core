@@ -5,27 +5,25 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../../common/functions";
-	import { DOMEventsForwarder } from "../../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className: string = undefined;
+	//#region imports
+	import { MDCTextFieldCharacterCounter } from "@material/textfield/character-counter";
+	import { classList } from "@raythurnevoid/strings-filter";
+	import { onMount, onDestroy } from "svelte";
+	import { getInputFieldContext } from "../TextFieldContext";
+	//#endregion
 
+	//#region exports
+	//#region base
+	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/input-field/character-counter/CharacterCounter:${count++}`;
-
 	export let dom: HTMLInputElement = undefined;
-
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// CharacterCounter
-	import { MDCTextFieldCharacterCounter } from "@material/textfield/character-counter";
-	import { onMount, onDestroy } from "svelte";
-	import { getInputFieldContext } from "../TextFieldContext";
+	//#endregion
 
+	//#region implementation
 	const inputFieldContext$ = getInputFieldContext();
 
 	let characterCounter: MDCTextFieldCharacterCounter;
@@ -40,15 +38,15 @@
 	onDestroy(() => {
 		characterCounter?.destroy();
 	});
+	//#endregion
 </script>
 
 <div
 	bind:this={dom}
-	{...props}
 	{id}
-	class={parseClassList([className, "mdc-text-field-character-counter"])}
+	class={classList([className, "mdc-text-field-character-counter"])}
 	{style}
-	use:forwardDOMEvents
+	{...$$restProps}
 >
 	<slot />
 </div>

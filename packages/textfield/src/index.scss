@@ -32,17 +32,3 @@
 		}
 	}
 }
-
-@for $density from 1 to 5 {
-	.smui-input-field--filled--dense--#{$density} {
-		@include textfield.density($density * -1);
-	}
-
-	.smui-input-field--outlined--dense--#{$density} {
-		@include textfield.outlined-density($density * -1);
-	}
-
-	.smui-input-field--outlined--with-leading-icon--dense--#{$density} {
-		@include textfield.outlined-with-leading-icon-density($density * -1);
-	}
-}

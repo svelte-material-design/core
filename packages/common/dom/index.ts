@@ -22,6 +22,9 @@ export { default as Footer } from "./Footer.svelte";
 export { default as Option } from "./Option.svelte";
 export { default as Pre } from "./Pre.svelte";
 export { default as Code } from "./Code.svelte";
+export { default as Img } from "./Img.svelte";
+export { default as I } from "./I.svelte";
+export { default as Svg } from "./Svg.svelte";
 
 export * from "./icon/IconContextProps";
 export * from "./LabelContext";

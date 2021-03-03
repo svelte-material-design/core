@@ -5,30 +5,27 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../../common/functions";
-	import { DOMEventsForwarder } from "../../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/input-field/helper-text/HelperText:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// HelperText
+	//#region imports
 	import { MDCTextFieldHelperText } from "@material/textfield/helper-text";
 	import { onMount, onDestroy } from "svelte";
 	import { getInputFieldContext } from "../TextFieldContext";
+	import { classList } from "@raythurnevoid/strings-filter";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@smui/input-field/helper-text/HelperText:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
 	export let persistent: boolean = false;
 	export let validationMsg: boolean = false;
+	//#endregion
 
+	//#region implementation
 	const inputFieldContext$ = getInputFieldContext();
 	$: $inputFieldContext$?.setHelperTextId(id);
 
@@ -41,18 +38,13 @@
 		$inputFieldContext$?.setHelperTextId(undefined);
 		helperText?.destroy();
 	});
+	//#endregion
 </script>
 
-<div
-	{...props}
-	{id}
-	class="mdc-text-field-helper-line"
-	{style}
-	use:forwardDOMEvents
->
+<div {id} class="mdc-text-field-helper-line" {style} {...$$restProps}>
 	<div
 		bind:this={dom}
-		class={parseClassList([
+		class={classList([
 			className,
 			"mdc-text-field-helper-text",
 			[persistent, "mdc-text-field-helper-text--persistent"],
