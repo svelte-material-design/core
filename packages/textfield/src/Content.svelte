@@ -57,7 +57,9 @@
 	for={id}
 	{...$$restProps}
 >
-	{#if $inputFieldContext$.ripple}<span class="mdc-text-field__ripple" />{/if}
+	{#if $inputFieldContext$.ripple}
+		<span class="mdc-text-field__ripple" />
+	{/if}
 	<slot />
 	{#if $inputFieldContext$.variant === "filled"}
 		{#if $$slots.label}

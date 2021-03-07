@@ -1,5 +1,5 @@
 import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
-import type { StringListToFilter } from "packages/common/functions";
+import type { StringListToFilter } from "../../common/functions";
 import type { InputFieldVariant } from "./types";
 
 const [
@@ -17,15 +17,13 @@ export interface InputFieldContext {
 	lineRipple: boolean;
 	variant: InputFieldVariant;
 	inputFieldClassList: StringListToFilter;
-	setInputElement(inputElement: HTMLInputElement);
-	setHelperTextId(id: string);
-	setLabelId?(id: string);
-	setInputId?(id: string);
-	reistantiate();
-	valueUpdater();
-	changeHandler();
-	setHasLabel(hasLabel: boolean);
-	setContentElement(element: HTMLLabelElement);
+	setInputElement(inputElement: HTMLInputElement): void;
+	setHelperTextId(id: string): void;
+	setLabelId?(id: string): void;
+	setInputId?(id: string): void;
+	reistantiate(): void;
+	setHasLabel(hasLabel: boolean): void;
+	setContentElement(element: HTMLLabelElement): void;
 }
 
 export const [
@@ -34,6 +32,6 @@ export const [
 ] = createContextStore<ContentContext>();
 
 export interface ContentContext {
-	setHasLeadingIcon(value: boolean);
-	setHasTrailingIcon(value: boolean);
+	setHasLeadingIcon(value: boolean): void;
+	setHasTrailingIcon(value: boolean): void;
 }

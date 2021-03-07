@@ -20,3 +20,12 @@ export type InputFieldCustomValidation = (
 	value: any,
 	nativeInputInvalid: boolean
 ) => boolean;
+
+export interface OnInputFieldInput {
+	dom: HTMLDivElement;
+	value: string | number | Date;
+}
+
+export interface OnInputFieldChange extends OnInputFieldInput {}
+
+export type Value = string | number | Date;

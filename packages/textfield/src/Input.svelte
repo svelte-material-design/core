@@ -39,8 +39,15 @@
 	aria-labelledby={$inputFieldContext$.labelId}
 	list={listId}
 	{...$$restProps}
-	on:input={$inputFieldContext$.valueUpdater}
-	on:change={$inputFieldContext$.changeHandler}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 />
 {#if $$slots.options}
 	<datalist id={listId}>

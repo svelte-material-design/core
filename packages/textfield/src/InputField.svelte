@@ -12,6 +12,9 @@
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { getFormFieldContext } from "../../form-field";
 	import { classList, StringList } from "@raythurnevoid/strings-filter";
+	import type { OnInputFieldChange, OnInputFieldInput, Value } from "./types";
+	import { createEventDispatcher } from "svelte";
+	import type { GetHTMLValidationMsg } from "./functions";
 	//#endregion
 
 	//#region exports
@@ -24,16 +27,11 @@
 	//#endregion
 
 	export let ripple: boolean = true;
-	export let value: any = undefined;
+	export let value: Value = undefined;
 	export let invalid: boolean = false;
 	export let variant: InputFieldVariant = "filled";
-	export let customValidation: (
-		value: any,
-		nativeInputInvalid: boolean
-	) => boolean = undefined;
+	export let customValidation: GetHTMLValidationMsg = undefined;
 	export let lineRipple: boolean = true;
-	export let density: number = undefined;
-	export let dirty: boolean = false;
 	export let disabled: boolean = false;
 	export let type: InputFieldType = "text";
 	//#endregion
@@ -50,16 +48,14 @@
 	let contentElement: HTMLLabelElement;
 	//#endregion
 
+	const dispatch = createEventDispatcher<{
+		input: OnInputFieldInput;
+		change: OnInputFieldChange;
+	}>();
+
 	const formFieldContext$ = getFormFieldContext();
 
 	$: $formFieldContext$?.setInputId(inputId);
-	$: if (density != undefined) {
-		if (density < -4) {
-			density = -4;
-		} else if (density > 0) {
-			density = 0;
-		}
-	}
 
 	const context$ = createInputFieldContext({
 		id,
@@ -88,8 +84,6 @@
 		setContentElement(element: HTMLLabelElement) {
 			contentElement = element;
 		},
-		valueUpdater,
-		changeHandler,
 	});
 	$: $context$ = {
 		...$context$,
@@ -102,42 +96,13 @@
 		inputFieldClassList,
 	};
 
-	function handleTypeUpdate() {
-		valueUpdater();
-		reistantiate();
-	}
-
 	function reistantiate() {
-		$context$?.reistantiate();
-	}
-
-	function toNumber(value) {
-		if (value === "") {
-			return Number.NaN;
-		}
-
-		return +value;
-	}
-
-	function valueUpdater() {
-		switch (type) {
-			case "number":
-				value = toNumber(inputElement.value);
-				break;
-			default:
-				value = inputElement.value;
-				break;
-		}
-	}
-
-	function changeHandler() {
-		useInputField.handleInputChange();
+		useInputField.reistantiate();
 	}
 	//#endregion
 </script>
 
-<UseState value={type} onUpdate={handleTypeUpdate} />
-<UseState value={lineRipple} onUpdate={reistantiate} />
+<UseState value={[type, lineRipple]} onUpdate={reistantiate} />
 
 <div
 	bind:this={dom}
@@ -145,6 +110,15 @@
 	class={classList([className, "smui-text-field__wrapper"])}
 	{style}
 	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
 </div>
@@ -154,7 +128,6 @@
 	bind:classList={inputFieldClassList}
 	bind:value
 	bind:invalid
-	bind:dirty
 	{ripple}
 	{disabled}
 	{variant}
@@ -163,4 +136,16 @@
 	{inputElement}
 	label={hasLabel}
 	fullWidth={false}
+	on:input={() => {
+		dispatch("input", {
+			value,
+			dom,
+		});
+	}}
+	on:change={() => {
+		dispatch("change", {
+			value,
+			dom,
+		});
+	}}
 />
