@@ -6,6 +6,7 @@
 	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
 	import { getMenuContext } from "../../MenuContext";
 	import { setItemContext } from "../../item";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -51,11 +52,14 @@
 	<Item
 		bind:dom
 		{id}
-		class={className}
+		class={classList([
+			className,
+			"mdc-menu-item",
+			[selected, "mdc-menu-item--selected"],
+		])}
 		{style}
 		{title}
 		{tabindex}
-		{selected}
 		{value}
 		{ariaLabel}
 		{disabled}

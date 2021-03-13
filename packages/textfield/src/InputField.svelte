@@ -120,7 +120,10 @@
 	on:focusin
 	on:focusout
 >
-	<slot />
+	<slot
+		leadingClassName="mdc-text-field__icon--leading"
+		trailingClassName="mdc-text-field__icon--trailing"
+	/>
 </div>
 
 <UseTextField

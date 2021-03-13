@@ -1,9 +1,5 @@
 <svelte:options immutable={true} />
 
-<script lang="ts" context="module">
-	let count = 0;
-</script>
-
 <script lang="ts">
 	//#region  imports
 	import type { IconDOM, IconType } from "./types";

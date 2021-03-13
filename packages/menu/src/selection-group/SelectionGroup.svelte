@@ -1,24 +1,22 @@
-<script context="module" lang="ts">
-	let count = 0;
-</script>
+<svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/menu/Group:${count++}`;
-
-	export let dom: HTMLLIElement = undefined;
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#region  imports
 	//#endregion
 
-	// SelectionGroup
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLLIElement = undefined;
+	//#endregion
+
+	//#endregion
 </script>
 
-<li bind:this={dom} {...props} {id} class={className} {style}>
+<li bind:this={dom} {id} class={className} {style} {...$$restProps}>
 	<ul class="mdc-menu__selection-group">
 		<slot />
 	</ul>

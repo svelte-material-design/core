@@ -1,9 +1,5 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count = 0;
-</script>
-
 <script lang="ts">
 	//#region import
 	import { Separator } from "../../list/src/dom";
@@ -14,7 +10,7 @@
 	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/menu/Separator:${count++}`;
+	export let id: string = undefined;
 	export let dom: HTMLLIElement = undefined;
 	//#endregion
 
