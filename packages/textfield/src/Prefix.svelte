@@ -11,7 +11,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLInputElement = undefined;
+	export let dom: HTMLSpanElement = undefined;
 	//#endregion
 
 	//#endregion

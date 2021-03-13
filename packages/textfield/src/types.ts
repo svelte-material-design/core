@@ -14,8 +14,6 @@ export type InputFieldType =
 	| "datetime-local"
 	| "time";
 
-export type FullWidthTextFieldType = "text" | "search";
-
 export type InputFieldCustomValidation = (
 	value: any,
 	nativeInputInvalid: boolean

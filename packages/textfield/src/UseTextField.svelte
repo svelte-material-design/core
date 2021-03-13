@@ -75,7 +75,7 @@
 
 			value = inputElement.value;
 
-			updateNativeInputInvalid();
+			validate();
 		}
 	}
 
@@ -117,7 +117,6 @@
 	async function handleInputChange() {
 		value = inputElement.value;
 		valueState.setValue(value);
-		updateNativeInputInvalid();
 		await tick();
 		validate();
 	}
@@ -125,10 +124,6 @@
 	function handleValueUpdate() {
 		inputElement.value = "" + value;
 		validate();
-	}
-
-	function updateNativeInputInvalid() {
-		nativeInputInvalid = inputElement.validity.valid;
 	}
 
 	export function reistantiate() {

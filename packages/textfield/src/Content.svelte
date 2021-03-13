@@ -1,9 +1,5 @@
 <svelte:options immutable={true} />
 
-<script lang="ts" context="module">
-	let count = 0;
-</script>
-
 <script lang="ts">
 	//#region  imports
 	import { FloatingLabel } from "../../floating-label";
@@ -19,7 +15,7 @@
 	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/input-field/InputField:${count++}`;
+	export let id: string = undefined;
 	export let dom: HTMLLabelElement = undefined;
 	//#endregion
 

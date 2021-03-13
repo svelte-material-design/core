@@ -17,7 +17,7 @@
 	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/input-field/helper-text/HelperText:${count++}`;
+	export let id: string = `@svmd/input-field/HelperText:${count++}`;
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
