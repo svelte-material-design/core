@@ -8,8 +8,8 @@
 	//#region imports
 	import { MDCTextFieldCharacterCounter } from "@material/textfield/character-counter";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { onMount, onDestroy } from "svelte";
-	import { getInputFieldContext } from "../TextFieldContext";
+	import { onMount, onDestroy, getContext, tick } from "svelte";
+	import { getContentContext, getInputFieldContext } from "../TextFieldContext";
 	//#endregion
 
 	//#region exports
@@ -25,9 +25,21 @@
 
 	//#region implementation
 	const inputFieldContext$ = getInputFieldContext();
+	const contentContext$ = getContentContext();
+	let isInternalCounter: boolean = false;
 
 	let characterCounter: MDCTextFieldCharacterCounter;
-	onMount(() => {
+	onMount(async () => {
+		await tick();
+
+		if (
+			dom.compareDocumentPosition($contentContext$.dom) &
+			document.DOCUMENT_POSITION_CONTAINS
+		) {
+			isInternalCounter = true;
+			$contentContext$.setHasInternalCounter(true);
+		}
+
 		if (!inputFieldContext$) {
 			characterCounter = new MDCTextFieldCharacterCounter(dom);
 		} else {
@@ -37,6 +49,10 @@
 
 	onDestroy(() => {
 		characterCounter?.destroy();
+
+		if (isInternalCounter) {
+			$contentContext$.setHasInternalCounter(false);
+		}
 	});
 	//#endregion
 </script>

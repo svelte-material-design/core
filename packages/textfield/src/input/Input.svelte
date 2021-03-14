@@ -2,8 +2,8 @@
 
 <script lang="ts">
 	//#region  imports
+	import { Input } from "../internal";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { getInputFieldContext } from "./TextFieldContext";
 	//#endregion
 
 	//#region exports
@@ -12,24 +12,21 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLSpanElement = undefined;
+	export let dom: HTMLInputElement = undefined;
 	//#endregion
 
 	//#endregion
 
 	//#region implementation
-	const inputFieldContext$ = getInputFieldContext();
 	//#endregion
 </script>
 
-<span
-	bind:this={dom}
+<Input
+	bind:dom
 	{id}
-	class={classList([
-		className,
-		[!$inputFieldContext$.textArea, "mdc-text-field__affix"],
-		"mdc-text-field__affix--suffix",
-	])}
+	class={classList([className, "mdc-text-field--input"])}
 	{style}
-	{...$$restProps}><slot /></span
+	{...$$restProps}
 >
+	<slot slot="options" name="options" />
+</Input>

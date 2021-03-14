@@ -14,10 +14,11 @@ export interface InputFieldContext {
 	labelId: string;
 	inputId: string;
 	ripple: boolean;
-	lineRipple: boolean;
-	variant: InputFieldVariant;
+	lineRipple?: boolean;
+	variant?: InputFieldVariant;
 	inputFieldClassList: StringListToFilter;
-	setInputElement(inputElement: HTMLInputElement): void;
+	textArea: boolean;
+	setInputElement(inputElement: HTMLInputElement | HTMLTextAreaElement): void;
 	setHelperTextId(id: string): void;
 	setLabelId?(id: string): void;
 	setInputId?(id: string): void;
@@ -32,6 +33,8 @@ export const [
 ] = createContextStore<ContentContext>();
 
 export interface ContentContext {
+	dom: HTMLLabelElement;
 	setHasLeadingIcon(value: boolean): void;
 	setHasTrailingIcon(value: boolean): void;
+	setHasInternalCounter(value: boolean): void;
 }

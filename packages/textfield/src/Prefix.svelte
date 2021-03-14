@@ -3,6 +3,7 @@
 <script lang="ts">
 	//#region  imports
 	import { classList } from "@raythurnevoid/strings-filter";
+	import { getInputFieldContext } from "./TextFieldContext";
 	//#endregion
 
 	//#region exports
@@ -17,6 +18,7 @@
 	//#endregion
 
 	//#region implementation
+	const inputFieldContext$ = getInputFieldContext();
 	//#endregion
 </script>
 
@@ -25,7 +27,7 @@
 	{id}
 	class={classList([
 		className,
-		"mdc-text-field__affix",
+		[!$inputFieldContext$.textArea, "mdc-text-field__affix"],
 		"mdc-text-field__affix--prefix",
 	])}
 	{style}

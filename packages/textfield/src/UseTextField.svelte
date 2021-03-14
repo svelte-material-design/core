@@ -16,13 +16,11 @@
 	export let invalid: boolean = false;
 	export let disabled: boolean = false;
 	export let label: boolean = false;
-	export let fullWidth: boolean = false;
 	export let variant: InputFieldVariant = "filled";
 	export let customValidation: GetHTMLValidationMsg = undefined;
 	export let classList: StringListToFilter = [];
 	export let inputElement: HTMLInputElement | HTMLTextAreaElement = undefined;
 
-	let nativeInputInvalid: boolean = false;
 	let textField: MDCTextField;
 	let valueState: UseState;
 
@@ -42,7 +40,6 @@
 		[disabled, "mdc-text-field--disabled"],
 		[!label, "mdc-text-field--no-label"],
 		[invalid, "mdc-text-field--invalid"],
-		[fullWidth, "mdc-text-field--fullwidth"],
 		[variant === "filled", "mdc-text-field--filled"],
 		[variant === "outlined", "mdc-text-field--outlined"],
 	];

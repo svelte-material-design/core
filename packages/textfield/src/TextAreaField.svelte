@@ -6,10 +6,8 @@
 
 <script lang="ts">
 	//#region  imports
-	import type { InputFieldType, InputFieldVariant } from "./types";
 	import { createInputFieldContext } from "./TextFieldContext";
 	import UseTextField from "./UseTextField.svelte";
-	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { getFormFieldContext } from "../../form-field";
 	import { classList } from "@raythurnevoid/strings-filter";
 	import type { StringList } from "@raythurnevoid/strings-filter";
@@ -23,18 +21,15 @@
 	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/input-field/InputField:${count++}`;
+	export let id: string = `@svmd/input-field/TextAreaField:${count++}`;
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
 	export let value: Value = undefined;
 	export let invalid: boolean = false;
-	export let variant: InputFieldVariant = "filled";
 	export let customValidation: GetHTMLValidationMsg = undefined;
-	export let lineRipple: boolean = true;
 	export let disabled: boolean = false;
-	export let type: InputFieldType = "text";
 	//#endregion
 
 	//#region implementation
@@ -61,9 +56,8 @@
 	const context$ = createInputFieldContext({
 		id,
 		ripple,
-		lineRipple,
-		variant,
 		inputFieldClassList,
+		textArea: true,
 		setHelperTextId(id: string) {
 			helperTextId = id;
 		},
@@ -92,18 +86,11 @@
 		helperTextId,
 		inputId,
 		ripple,
-		lineRipple,
-		variant,
 		inputFieldClassList,
 	};
 
-	function reistantiate() {
-		useInputField.reistantiate();
-	}
 	//#endregion
 </script>
-
-<UseState value={[type, lineRipple]} onUpdate={reistantiate} />
 
 <div
 	bind:this={dom}
@@ -134,11 +121,11 @@
 	bind:invalid
 	{ripple}
 	{disabled}
-	{variant}
 	{customValidation}
 	dom={contentElement}
 	{inputElement}
 	label={hasLabel}
+	variant="outlined"
 	on:input={() => {
 		dispatch("input", {
 			value,
