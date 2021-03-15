@@ -33,8 +33,9 @@
 		await tick();
 
 		if (
+			contentContext$ &&
 			dom.compareDocumentPosition($contentContext$.dom) &
-			document.DOCUMENT_POSITION_CONTAINS
+				document.DOCUMENT_POSITION_CONTAINS
 		) {
 			isInternalCounter = true;
 			$contentContext$.setHasInternalCounter(true);
