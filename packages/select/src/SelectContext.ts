@@ -3,6 +3,7 @@ import {
 	createContext,
 } from "@raythurnevoid/svelte-context-enhanced";
 import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+import type { SelectVariant } from "./types";
 
 export const [
 	createSelectContext,
@@ -11,6 +12,15 @@ export const [
 
 interface SelectContext {
 	group: SelectionGroupBinding;
+	helperTextId: string;
+	readonly: boolean;
+	required: boolean;
+	disabled: boolean;
+	ripple: boolean;
+	lineRipple: boolean;
+	variant: SelectVariant;
+	value: string;
+	invalid: boolean;
 	setHelperTextId(helperTextId: string): void;
 }
 

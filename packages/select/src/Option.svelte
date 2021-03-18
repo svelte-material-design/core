@@ -1,41 +1,40 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count: number = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/select/Option:${count++}`;
-
-	export let dom: HTMLLIElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
+	//#region  imports
 	import { Item } from "../../list/src/dom/item";
 	import { Content } from "../../list";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { getSelectContext } from "./SelectContext";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
+
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/select/Option:${count++}`;
+	export let dom: HTMLLIElement = undefined;
+	//#endregion
 
 	export let value: string = "";
 	export let selected: boolean = undefined;
 	export let disabled: boolean = false;
+	//#endregion
 
-	$: if (value == null) value = "";
-
+	//#region implementation
 	let selectedContext$ = getSelectContext();
+	//#endregion
 </script>
 
 <Selectable bind:selected {value} {dom} group={$selectedContext$.group}>
 	<Item
 		bind:dom
-		{...props}
 		{id}
 		class={className}
 		{style}
@@ -43,7 +42,16 @@
 		{disabled}
 		role="option"
 		data-value={value}
-		on:domEvent={forwardDOMEvents}
+		{...$$restProps}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
+		on:focusin
+		on:focusout
 	>
 		<Content>
 			<slot />

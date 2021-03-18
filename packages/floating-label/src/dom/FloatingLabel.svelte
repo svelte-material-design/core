@@ -1,28 +1,35 @@
 <svelte:options immutable={true} />
 
+<script context="module" lang="ts">
+	let count = 0;
+</script>
+
 <script lang="ts">
 	//#region  imports
+	import { Span, Label } from "../../../common/dom";
 	//#endregion
 
 	//#region exports
 	//#region base
-	let className: string = undefined;
+	let className = "";
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
-	export let dom: HTMLSpanElement = null;
+	export let id: string = `smui-FloatingLabel-${count++}`;
+	export let dom: HTMLLabelElement | HTMLSpanElement = undefined;
 	//#endregion
 
+	export let component: typeof Span | typeof Label = Label;
 	//#endregion
 
 	//#region implementation
 	//#endregion
 </script>
 
-<span
-	bind:this={dom}
+<svelte:component
+	this={component}
+	bind:dom
 	{id}
-	class={className}
+	class="mdc-floating-label {className}"
 	{style}
 	{...$$restProps}
 	on:click
@@ -36,4 +43,4 @@
 	on:focusout
 >
 	<slot />
-</span>
+</svelte:component>

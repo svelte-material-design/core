@@ -7,7 +7,7 @@
 <script lang="ts">
 	//#region import
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { Item } from "../internal/item";
+	import { Item } from "../internal";
 	import { getMenuContext } from "..";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { createEventDispatcher } from "svelte";

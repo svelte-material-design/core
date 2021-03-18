@@ -2,6 +2,7 @@
 
 <script lang="ts">
 	//#region  imports
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -10,7 +11,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLSpanElement = null;
+	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
 	//#endregion
@@ -19,21 +20,16 @@
 	//#endregion
 </script>
 
-<span
-	bind:this={dom}
-	{id}
-	class={className}
-	{style}
-	{...$$restProps}
-	on:click
-	on:mousedown
-	on:mouseup
-	on:keydown
-	on:keyup
-	on:focus
-	on:blur
-	on:focusin
-	on:focusout
->
+<div bind:this={dom} {id} class={classList([className, "smui-select"])} {style}>
 	<slot />
-</span>
+</div>
+
+<style lang="scss">
+	.smui-select {
+		display: contents;
+
+		:global([slot="leadingIcon"], [slot="options"]) {
+			display: contents;
+		}
+	}
+</style>

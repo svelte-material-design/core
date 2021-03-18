@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { FloatingLabel } from "../../floating-label";
+	import { FloatingLabel } from "../../floating-label/src/dom";
 	import { LineRipple } from "../../line-ripple";
 	import { NotchedOutline } from "../../notched-outline";
 	import { Span } from "../../common/dom";

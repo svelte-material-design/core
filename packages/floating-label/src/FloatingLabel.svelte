@@ -1,72 +1,57 @@
+<svelte:options immutable={true} />
+
 <script context="module" lang="ts">
 	let count = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region  imports
+	import { MDCFloatingLabel } from "@material/floating-label";
+	import { onMount, onDestroy } from "svelte";
+	import { Span, Label } from "../../common/dom";
+	import { FloatingLabel } from "./dom";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className = "";
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `smui-FloatingLabel-${count++}`;
-
 	export let dom: HTMLLabelElement | HTMLSpanElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// FloatingLabel
-	import { MDCFloatingLabel } from "@material/floating-label";
-	import { onMount, onDestroy, getContext } from "svelte";
-	import { getFormFieldContext } from "../../form-field";
-	import { Span, Label } from "../../common/dom";
-	import { getInputFieldContext } from "../../textfield"; // TODO: fix circular dep
-
 	export let component: typeof Span | typeof Label = Label;
+	//#endregion
 
-	const formFieldContext$ = getFormFieldContext(); //TODO: serve???
-	const inputFieldContext$ = getInputFieldContext();
-
-	$: inputId = $inputFieldContext$?.id ?? $formFieldContext$?.inputId;
-
-	$: $inputFieldContext$?.setLabelId(id);
-
+	//#region implementation
 	let floatingLabel: MDCFloatingLabel;
 	onMount(() => {
-		if (!inputFieldContext$) floatingLabel = new MDCFloatingLabel(dom);
+		floatingLabel = new MDCFloatingLabel(dom);
 	});
 
 	onDestroy(() => {
 		floatingLabel && floatingLabel.destroy();
 	});
-
-	// export function shake(shouldShake, ...args) {
-	//   return floatingLabel.shake(shouldShake, ...args);
-	// }
-
-	// export function float(shouldFloat, ...args) {
-	//   return floatingLabel.float(shouldFloat, ...args);
-	// }
-
-	// export function getWidth(...args) {
-	//   return floatingLabel.getWidth(...args);
-	// }
-
-	$: props = {
-		...props,
-		for: props.for ? props.for : component === Label ? inputId : undefined,
-	};
+	//#endregion
 </script>
 
-<svelte:component
-	this={component}
+<FloatingLabel
 	bind:dom
-	{props}
 	{id}
-	class="mdc-floating-label {className}"
+	class={className}
 	{style}
-	on:domEvent={forwardDOMEvents}>
+	{component}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
+>
 	<slot />
-</svelte:component>
+</FloatingLabel>

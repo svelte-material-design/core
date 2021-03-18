@@ -1,32 +1,42 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	//#region  imports
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLLabelElement = null;
-
-	import { BaseProps } from "./Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// Label
-	import { getLabelBehaviour } from "./LabelContext";
+	let forValue: string = undefined;
+	export { forValue as for };
+	//#endregion
 
-	const behaviour = getLabelBehaviour();
+	//#region implementation
+	//#endregion
 </script>
 
 <label
 	bind:this={dom}
-	{...props}
 	{id}
-	class="{className}
-    {behaviour === 'tab' ? 'mdc-tab__text-label' : ''}"
+	class={className}
 	{style}
-	for={props.for}
-	use:forwardDOMEvents>
+	for={forValue}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
+>
 	<slot />
 </label>

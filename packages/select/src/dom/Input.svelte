@@ -10,7 +10,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLSpanElement = null;
+	export let dom: HTMLInputElement = undefined;
 	//#endregion
 
 	//#endregion
@@ -19,21 +19,11 @@
 	//#endregion
 </script>
 
-<span
+<input
 	bind:this={dom}
 	{id}
 	class={className}
 	{style}
 	{...$$restProps}
-	on:click
-	on:mousedown
-	on:mouseup
-	on:keydown
-	on:keyup
-	on:focus
-	on:blur
-	on:focusin
-	on:focusout
->
-	<slot />
-</span>
+	type="hidden"
+/>

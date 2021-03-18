@@ -2,10 +2,10 @@
 
 <script lang="ts">
 	//#region import
-	import { Item } from "../../../../list/src/dom";
+	import { Item } from "../dom";
 	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
-	import { getMenuContext } from "../../MenuContext";
-	import { setItemContext } from "../../item";
+	import { getMenuContext } from "../MenuContext";
+	import { setItemContext } from "../item";
 	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 

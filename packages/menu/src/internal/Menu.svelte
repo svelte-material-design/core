@@ -4,13 +4,11 @@
 	//#region  imports
 	import { MDCMenu } from "@material/menu";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
-	import { MenuSurface } from "../../../menu-surface/src/dom";
 	import { UseAnchor } from "../../../menu-surface/src/internal";
 	import { MenuAnchorCorner, MenuVariant, createMenuContext } from "..";
-	import { List } from ".";
+	import { Menu, List } from "../dom";
 	import type { ListOrientation, ListItemsStyle } from "../../../list";
 	import {
-		isAnchorElement,
 		isPositionAbsoluteAnchor,
 		smuiToMDCCorner,
 		svmdToMDCAnchorMargin,
@@ -233,7 +231,7 @@
 	bind:this={menuGroup}
 	on:optionsChange={(e) => handleOptionsChange(e.detail)}
 >
-	<MenuSurface
+	<Menu
 		bind:dom
 		{id}
 		class={classList([className, "mdc-menu"])}
@@ -261,5 +259,5 @@
 		>
 			<slot />
 		</List>
-	</MenuSurface>
+	</Menu>
 </Group>

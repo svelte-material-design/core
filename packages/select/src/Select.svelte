@@ -1,10 +1,16 @@
 <svelte:options immutable={true} />
 
+<script context="module" lang="ts">
+	let count: number = 0;
+</script>
+
 <script lang="ts">
+	//#region  imports
 	import type { SelectVariant } from "./";
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { SelectImpl } from "./internal";
+	//#endregion
 
 	//#region exports
 	//#region base
@@ -12,7 +18,7 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
+	export let id: string = `@svmd/select/Select:${count++}`;
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
@@ -25,27 +31,21 @@
 
 	export let customValidation: (value: string) => boolean = undefined;
 
-	export let title: string = undefined;
-	export let name: string = undefined;
-	export let ariaLabel: string = undefined;
 	export let disabled: boolean = false;
 	export let readonly: boolean = false;
 	export let invalid: boolean = false;
 	export let required: boolean = false;
 
-	//#region theming
-	export let shapeRadius: string = undefined;
-	export let density: number = undefined;
-	//#endregion
-
 	export let group: SelectionGroupBinding;
 	//#endregion
 
+	//#region implementation
 	let selectImpl: SelectImpl;
 
 	async function handleOptionsUpdated() {
 		selectImpl?.updateOptions();
 	}
+	//#endregion
 </script>
 
 <SelectionGroup
@@ -66,20 +66,16 @@
 		bind:value
 		bind:invalid
 		{variant}
-		{shapeRadius}
-		{density}
 		{lineRipple}
 		{ripple}
 		{disabled}
 		{dirty}
-		{name}
 		{readonly}
 		{required}
-		{ariaLabel}
-		{title}
 		{customValidation}
-		slots={$$slots}
 		{group}
+		slots={$$slots}
+		{...$$restProps}
 		on:change
 	>
 		<slot name="leadingIcon" slot="leadingIcon" />

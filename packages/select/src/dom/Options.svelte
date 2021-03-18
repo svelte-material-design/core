@@ -2,6 +2,8 @@
 
 <script lang="ts">
 	//#region  imports
+	import { Menu, List } from "../../../menu/src/dom";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -10,7 +12,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLSpanElement = null;
+	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
 	//#endregion
@@ -19,21 +21,15 @@
 	//#endregion
 </script>
 
-<span
-	bind:this={dom}
+<Menu
+	bind:dom
 	{id}
-	class={className}
+	class={classList([className, "mdc-select__menu"])}
 	{style}
+	variant="fullwidth"
 	{...$$restProps}
-	on:click
-	on:mousedown
-	on:mouseup
-	on:keydown
-	on:keyup
-	on:focus
-	on:blur
-	on:focusin
-	on:focusout
 >
-	<slot />
-</span>
+	<List>
+		<slot />
+	</List>
+</Menu>
