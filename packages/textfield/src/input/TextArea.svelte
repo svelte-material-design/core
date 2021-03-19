@@ -3,7 +3,6 @@
 <script lang="ts">
 	//#region  imports
 	import { Input } from "../internal";
-	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -27,7 +26,7 @@
 		<Input
 			bind:dom
 			{id}
-			class={classList([className, "mdc-text-field__input"])}
+			class={className}
 			{style}
 			textArea
 			{resizable}
@@ -38,7 +37,7 @@
 	<Input
 		bind:dom
 		{id}
-		class={classList([className, "mdc-text-field__input"])}
+		class={className}
 		{style}
 		textArea
 		{resizable}

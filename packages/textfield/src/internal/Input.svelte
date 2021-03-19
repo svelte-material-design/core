@@ -2,8 +2,12 @@
 
 <script lang="ts">
 	//#region  imports
+	import { Input } from "../dom";
 	import { getInputFieldContext } from "../TextFieldContext";
-	import { classList } from "@raythurnevoid/strings-filter";
+	import {
+		Input as InputDOM,
+		TextArea as TextAreaDOM,
+	} from "../../../common/dom";
 	//#endregion
 
 	//#region exports
@@ -21,59 +25,38 @@
 	//#region implementation
 	const inputFieldContext$ = getInputFieldContext();
 
-	$: inputId = id ?? `${$inputFieldContext$.id}--input`;
+	$: id = id ?? `${$inputFieldContext$.id}--input`;
 	$: listId = $$slots.options
 		? `${$inputFieldContext$.id}--datalist`
 		: undefined;
-	$: $inputFieldContext$.setInputId(inputId);
+	$: $inputFieldContext$.setInputId(id);
 	$: $inputFieldContext$.setInputElement(dom);
 	//#endregion
 </script>
 
-{#if textArea}
-	<textarea
-		bind:this={dom}
-		{id}
-		class={classList([className, "mdc-text-field__input"])}
-		{style}
-		aria-controls={$inputFieldContext$.helperTextId}
-		aria-describedby={$inputFieldContext$.helperTextId}
-		aria-labelledby={$inputFieldContext$.labelId}
-		{...$$restProps}
-		on:click
-		on:mousedown
-		on:mouseup
-		on:keydown
-		on:keyup
-		on:focus
-		on:blur
-		on:focusin
-		on:focusout
-	/>
-{:else}
-	<input
-		bind:this={dom}
-		id={inputId}
-		class={classList([className, "mdc-text-field__input"])}
-		{style}
-		aria-controls={$inputFieldContext$.helperTextId}
-		aria-describedby={$inputFieldContext$.helperTextId}
-		aria-labelledby={$inputFieldContext$.labelId}
-		list={listId}
-		{...$$restProps}
-		on:click
-		on:mousedown
-		on:mouseup
-		on:keydown
-		on:keyup
-		on:focus
-		on:blur
-		on:focusin
-		on:focusout
-	/>
-	{#if $$slots.options}
-		<datalist id={listId}>
-			<slot name="options" />
-		</datalist>
-	{/if}
+<Input
+	bind:dom
+	{id}
+	class={className}
+	{style}
+	component={textArea ? TextAreaDOM : InputDOM}
+	aria-controls={$inputFieldContext$.helperTextId}
+	aria-describedby={$inputFieldContext$.helperTextId}
+	aria-labelledby={$inputFieldContext$.labelId}
+	list={listId}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
+/>
+{#if $$slots.options}
+	<datalist id={listId}>
+		<slot name="options" />
+	</datalist>
 {/if}

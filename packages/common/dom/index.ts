@@ -25,6 +25,8 @@ export { default as Code } from "./Code.svelte";
 export { default as Img } from "./Img.svelte";
 export { default as I } from "./I.svelte";
 export { default as Svg } from "./Svg.svelte";
+export { default as TextArea } from "./TextArea.svelte";
+export { default as Input } from "./Input.svelte";
 
 export * from "./icon/IconContextProps";
 export * from "./LabelContext";

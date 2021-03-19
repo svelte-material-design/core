@@ -40,6 +40,7 @@
 
 	//#region implementation
 	let helperTextId: string;
+	let inputElement: HTMLInputElement;
 
 	const context$ = createSelectContext({
 		group,
@@ -51,6 +52,9 @@
 		variant,
 		value,
 		invalid,
+		setInputElement(element: HTMLInputElement) {
+			inputElement = element;
+		},
 		setHelperTextId(value: string) {
 			helperTextId = value;
 		},
@@ -97,17 +101,17 @@
 		select?.destroy();
 	});
 
-	function reistantiate(
-		_dom?: typeof dom,
-		_ripple?: typeof ripple,
-		_variant?: typeof variant
-	) {
-		select?.destroy();
-		select = new MDCSelect(dom);
+	function reistantiate(...args: any) {
+		if (dom && inputElement) {
+			select?.destroy();
+			select = new MDCSelect(dom);
 
-		select.listen("MDCSelect:change", handleChange);
+			select.listen("MDCSelect:change", handleChange);
 
-		setSelectValue(value);
+			value = inputElement.value;
+
+			setSelectValue(value);
+		}
 	}
 
 	function handleChange(event: MDCSelectEvent) {
@@ -158,9 +162,10 @@
 </script>
 
 <UseState {value} onUpdate={onValueChange} />
-<UseState value={variant} onUpdate={reistantiate} />
-<UseState value={ripple} onUpdate={reistantiate} />
-<UseState value={lineRipple} onUpdate={reistantiate} />
+<UseState
+	value={[variant, ripple, lineRipple, dom, inputElement]}
+	onUpdate={reistantiate}
+/>
 
 <Select
 	bind:dom

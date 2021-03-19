@@ -9,7 +9,7 @@
 	import type { SelectVariant } from "./";
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { SelectImpl } from "./internal";
+	import { Select } from "./internal";
 	//#endregion
 
 	//#region exports
@@ -24,7 +24,6 @@
 
 	export let ripple: boolean = true;
 	export let lineRipple: boolean = true;
-	export let dirty = false;
 	export let variant: SelectVariant = "filled";
 	export let value: string = null;
 	export let nullable: boolean = true;
@@ -40,7 +39,7 @@
 	//#endregion
 
 	//#region implementation
-	let selectImpl: SelectImpl;
+	let selectImpl: Select;
 
 	async function handleOptionsUpdated() {
 		selectImpl?.updateOptions();
@@ -56,7 +55,7 @@
 	{group}
 	let:group
 >
-	<SelectImpl
+	<Select
 		bind:this={selectImpl}
 		bind:dom
 		{...$$restProps}
@@ -69,7 +68,6 @@
 		{lineRipple}
 		{ripple}
 		{disabled}
-		{dirty}
 		{readonly}
 		{required}
 		{customValidation}
@@ -78,9 +76,6 @@
 		{...$$restProps}
 		on:change
 	>
-		<slot name="leadingIcon" slot="leadingIcon" />
-		<slot name="label" slot="label" />
-		<slot name="options" slot="options" />
 		<slot />
-	</SelectImpl>
+	</Select>
 </SelectionGroup>

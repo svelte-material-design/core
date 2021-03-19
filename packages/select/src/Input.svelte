@@ -2,30 +2,27 @@
 
 <script lang="ts">
 	//#region  imports
-	import { classList } from "@raythurnevoid/strings-filter";
+	import { Input } from "./dom";
+	import { getSelectContext } from "./SelectContext";
 	//#endregion
 
 	//#region exports
 	//#region base
 	let className: string = undefined;
+
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLDivElement = undefined;
+	export let dom: HTMLInputElement = undefined;
 	//#endregion
 
 	//#endregion
 
 	//#region implementation
+	const selectContext$ = getSelectContext();
+
+	$: $selectContext$.setInputElement(dom);
 	//#endregion
 </script>
 
-<div bind:this={dom} {id} class={classList([className, "smui-select"])} {style}>
-	<slot />
-</div>
-
-<style lang="scss">
-	.smui-select {
-		display: contents;
-	}
-</style>
+<Input bind:dom {id} class={className} {style} {...$$restProps} />

@@ -2,8 +2,8 @@
 
 <script lang="ts">
 	//#region  imports
-	import { Content } from "../dom";
-	import { getSelectContext } from "../SelectContext";
+	import { Content } from "./dom";
+	import { getSelectContext } from "./SelectContext";
 	//#endregion
 
 	//#region exports
@@ -40,7 +40,7 @@
 	slots={$$slots}
 	{...$$restProps}
 >
-	<slot name="leadingIcon" slot="leadingIcon" />
 	<slot name="label" slot="label" />
+	<slot name="leadingIcon" slot="leadingIcon" />
 	<slot />
 </Content>

@@ -5,7 +5,6 @@
 	import type { GraphicDOM, GraphicType } from "../../../common/components";
 	import { Graphic } from "../../../common/components";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { UseTextFieldIcon } from ".";
 	import { getContentContext } from "../TextFieldContext";
 	import { onDestroy } from "svelte";
 	//#endregion
@@ -44,8 +43,6 @@
 		className === "mdc-text-field__icon--leading";
 	//#endregion
 </script>
-
-<UseTextFieldIcon {dom} />
 
 <Graphic
 	bind:dom

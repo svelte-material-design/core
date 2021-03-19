@@ -5,66 +5,60 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../../common/functions";
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/select/icon/Icon:${count++}`;
-
-	export let dom: GraphicDOM = undefined;
-
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#region imports
+	import type { GraphicDOM, GraphicType } from "../../../common/components";
+	import { Graphic } from "../../../common/components";
+	import { classList } from "@raythurnevoid/strings-filter";
+	// import { getContentContext } from "../TextFieldContext";
 	//#endregion
 
-	// Icon
-	import { Graphic } from "../../../common/components";
-	import type { GraphicType, GraphicDOM } from "../../../common/components";
-	import { onDestroy, onMount } from "svelte";
-	import { getSelectContext } from "../";
-	import { MDCSelectIcon } from "@material/select/icon";
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: GraphicDOM = undefined;
+	//#endregion
 
 	export let type: GraphicType = "icon";
-	export let role: "button" = undefined;
-	export let ariaLabel: string = undefined;
+	//#endregion
 
-	$: tabindex = role === "button" ? 0 : -1;
+	// const contentContext$ = getContentContext();
 
-	const selectContext$ = getSelectContext();
+	// if (className.includes("mdc-text-field__icon--trailing")) {
+	// 	$contentContext$.setHasTrailingIcon(true);
+	// } else if (className.includes("mdc-text-field__icon--leading")) {
+	// 	$contentContext$.setHasLeadingIcon(true);
+	// }
 
-	let icon: MDCSelectIcon;
-	onMount(() => {
-		if (!selectContext$) {
-			icon = new MDCSelectIcon(dom);
-		}
-	});
-
-	onDestroy(() => {
-		icon?.destroy();
-	});
-
-	$: props = {
-		...props,
-		"aria-hidden": tabindex === -1 ? true : false,
-		"aria-label": ariaLabel,
-		role,
-		tabindex,
-	};
+	// onDestroy(() => {
+	// 	if (className.includes("mdc-text-field__icon--trailing")) {
+	// 		$contentContext$.setHasTrailingIcon(false);
+	// 	} else if (className.includes("mdc-text-field__icon--leading")) {
+	// 		$contentContext$.setHasLeadingIcon(false);
+	// 	}
+	// });
 </script>
 
 <Graphic
 	bind:dom
-	{props}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-select__icon",
-		[type === "icon" && className == undefined, "material-icons"],
+		[type === "icon", "material-icons"],
 	])}
 	{style}
 	{type}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
 >
 	<slot />
 </Graphic>

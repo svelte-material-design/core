@@ -21,6 +21,7 @@ interface SelectContext {
 	variant: SelectVariant;
 	value: string;
 	invalid: boolean;
+	setInputElement(inputElement: HTMLInputElement): void;
 	setHelperTextId(helperTextId: string): void;
 }
 

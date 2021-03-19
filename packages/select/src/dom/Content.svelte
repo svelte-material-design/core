@@ -33,14 +33,13 @@
 	export let helperTextId: string;
 
 	//#region slots
-	let parentSlots: typeof $$slots;
-	export { parentSlots as slots };
+	export let slots: typeof $$slots;
 	//#endregion
 	//#endregion
 
 	//#region implementation
 	let labelId: string;
-	$: labelId = parentSlots.label ? `${id}--selected-text` : undefined;
+	$: labelId = slots.label ? `${id}--selected-text` : undefined;
 	let selectedTextId: string;
 	$: selectedTextId = value ? `${id}--selected-text` : undefined;
 
@@ -61,9 +60,9 @@
 		[variant === "outlined", "mdc-select--outlined"],
 		[disabled, "mdc-select--disabled"],
 		[required, "mdc-select--required"],
-		[parentSlots.leadingIcon, "mdc-select--with-leading-icon"],
+		[slots.leadingIcon, "mdc-select--with-leading-icon"],
 		[invalid, "mdc-select--invalid"],
-		[!parentSlots.label, "mdc-select--no-label"],
+		[!slots.label, "mdc-select--no-label"],
 	])}
 	style={parseClassList([style])}
 	{...$$restProps}
@@ -85,31 +84,29 @@
 		{#if ripple && variant === "filled"}
 			<span class="mdc-select__ripple" />
 		{/if}
+		<slot name="leadingIcon" />
 		{#if variant === "filled"}
-			{#if parentSlots.label}
+			{#if slots.label}
 				<FloatingLabel component={Span}>
 					<slot name="label" />
 				</FloatingLabel>
 			{/if}
-			<slot name="leadingIcon" />
 			{#if lineRipple}
 				<LineRipple />
 			{/if}
 		{:else if variant === "outlined"}
-			<NotchedOutline noLabel={!parentSlots.label}>
-				{#if parentSlots.label}
+			<NotchedOutline noLabel={!slots.label}>
+				{#if slots.label}
 					<FloatingLabel component={Span}>
 						<slot name="label" />
 					</FloatingLabel>
 				{/if}
 			</NotchedOutline>
-			<slot name="leadingIcon" />
 		{/if}
 		<span class="mdc-select__selected-text-container">
 			<span id={selectedTextId} class="mdc-select__selected-text">{value}</span>
 		</span>
 		<OpenCloseIcon />
 	</div>
-
 	<slot />
 </div>

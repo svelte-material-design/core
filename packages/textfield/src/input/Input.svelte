@@ -3,7 +3,6 @@
 <script lang="ts">
 	//#region  imports
 	import { Input } from "../internal";
-	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -21,12 +20,6 @@
 	//#endregion
 </script>
 
-<Input
-	bind:dom
-	{id}
-	class={classList([className, "mdc-text-field--input"])}
-	{style}
-	{...$$restProps}
->
+<Input bind:dom {id} class={className} {style} {...$$restProps}>
 	<slot slot="options" name="options" />
 </Input>
