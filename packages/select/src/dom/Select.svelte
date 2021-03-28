@@ -20,7 +20,13 @@
 	//#endregion
 </script>
 
-<div bind:this={dom} {id} class={classList([className, "smui-select"])} {style}>
+<div
+	bind:this={dom}
+	{id}
+	class={classList([className, "smui-select"])}
+	{style}
+	{...$$restProps}
+>
 	<slot />
 </div>
 

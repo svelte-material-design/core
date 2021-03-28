@@ -6,10 +6,10 @@
 
 <script lang="ts">
 	//#region  imports
-	import { Item } from "../../list/src/dom/item";
-	import { Content } from "../../list";
+	import { Item } from "../../../list/src/dom/item";
+	import { Content } from "../../../list";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { getSelectContext } from "./SelectContext";
+	import { getSelectContext } from "../SelectContext";
 	//#endregion
 
 	//#region exports
@@ -23,7 +23,8 @@
 	//#endregion
 
 	export let value: string = "";
-	export let selected: boolean = undefined;
+	export let ripple: boolean = true;
+	export let selected: boolean = false;
 	export let disabled: boolean = false;
 	//#endregion
 
@@ -40,6 +41,7 @@
 		{style}
 		{selected}
 		{disabled}
+		{ripple}
 		role="option"
 		data-value={value}
 		{...$$restProps}

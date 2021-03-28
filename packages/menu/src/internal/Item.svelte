@@ -21,10 +21,7 @@
 	export let ripple: boolean = true;
 	export let selected: boolean = false;
 	export let disabled: boolean = false;
-	export let tabindex: number = -1;
 	export let value: any = undefined;
-	export let ariaLabel: string = undefined;
-	export let title: string = undefined;
 	//#endregion
 
 	//#region implementation
@@ -58,10 +55,7 @@
 			[selected, "mdc-menu-item--selected"],
 		])}
 		{style}
-		{title}
-		{tabindex}
 		{value}
-		{ariaLabel}
 		{disabled}
 		{ripple}
 		role="menuitem"

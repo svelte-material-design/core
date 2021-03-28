@@ -20,7 +20,7 @@
 	//#endregion
 
 	//#region implementation
-	let position: "leading" | "trailing" = className.includes(
+	let position: "leading" | "trailing" = className?.includes(
 		"mdc-list-item__meta"
 	)
 		? "trailing"
