@@ -7,7 +7,6 @@
 <script lang="ts">
 	//#region  imports
 	import { Item } from "../../../list/src/dom/item";
-	import { Content } from "../../../list";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { getSelectContext } from "../SelectContext";
 	//#endregion
@@ -55,8 +54,6 @@
 		on:focusin
 		on:focusout
 	>
-		<Content>
-			<slot />
-		</Content>
+		<slot />
 	</Item>
 </Selectable>

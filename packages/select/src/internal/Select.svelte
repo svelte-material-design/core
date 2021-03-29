@@ -146,8 +146,7 @@
 	export async function updateOptions() {
 		const oldValue = value;
 
-		select.layoutOptions();
-		select.layout();
+		reistantiate();
 
 		await tick();
 

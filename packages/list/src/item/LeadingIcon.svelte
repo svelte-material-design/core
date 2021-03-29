@@ -3,7 +3,8 @@
 <script lang="ts">
 	//#region  imports
 	import type { IconDOM, IconType } from "./types";
-	import { Icon } from "../../../list/src/item";
+	import { Graphic } from "../../../common/components";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -17,8 +18,22 @@
 
 	export let type: IconType = "icon";
 	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
-<Icon bind:dom {id} class={className} {style} {type}>
+<Graphic
+	bind:dom
+	{id}
+	class={classList([
+		className,
+		"mdc-list-item__graphic",
+		[type === "icon" && !className, "material-icons"],
+	])}
+	{style}
+	{type}
+	{...$$restProps}
+>
 	<slot />
-</Icon>
+</Graphic>

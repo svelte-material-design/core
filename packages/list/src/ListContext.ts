@@ -1,7 +1,6 @@
 import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 import type { ItemContext } from "./item";
 import type { SelectionType } from "../../common/hoc";
-import type { ListImplRole } from "./internal";
 import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 import type { GroupBindings } from "@raythurnevoid/svelte-group-components/ts/components-group";
 

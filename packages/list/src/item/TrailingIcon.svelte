@@ -20,15 +20,6 @@
 	//#endregion
 
 	//#region implementation
-	let position: "leading" | "trailing" = className?.includes(
-		"mdc-list-item__meta"
-	)
-		? "trailing"
-		: "leading";
-
-	let materialIcon =
-		className === "mdc-list-item__meta" ||
-		className === "mdc-list-item__graphic";
 	//#endregion
 </script>
 
@@ -37,8 +28,9 @@
 	{id}
 	class={classList([
 		className,
-		[type === "icon" && materialIcon, "material-icons"],
-		[position === "trailing", "smui-list__trailing-icon"],
+		"mdc-list-item__meta",
+		"smui-list__trailing-icon",
+		[type === "icon" && !className, "material-icons"],
 	])}
 	{style}
 	{type}

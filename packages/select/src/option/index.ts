@@ -3,5 +3,7 @@ export {
 	Content as OptionContent,
 	PrimaryText,
 	SecondaryText,
-	Icon as OptionIcon,
+	LeadingIcon as OptionLeadingIcon,
+	TrailingIcon as OptionTrailingIcon,
+	Separator,
 } from "../../../list/src";

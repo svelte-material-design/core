@@ -15,6 +15,8 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
+	export let itemsRows: number = 1;
+	export let dense: boolean = false;
 	//#endregion
 
 	//#region implementation
@@ -26,10 +28,10 @@
 	{id}
 	class={classList([className, "mdc-select__menu"])}
 	{style}
-	variant="fullwidth"
 	{...$$restProps}
+	variant="fullwidth"
 >
-	<List>
+	<List {itemsRows} {dense}>
 		<slot />
 	</List>
 </Menu>

@@ -37,6 +37,8 @@
 	value={$selectContext$.value}
 	variant={$selectContext$.variant}
 	invalid={$selectContext$.invalid}
+	itemsRows={$selectContext$.itemsRows}
+	dense={$selectContext$.dense}
 	slots={$$slots}
 	{...$$restProps}
 >

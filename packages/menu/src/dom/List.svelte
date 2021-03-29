@@ -20,7 +20,6 @@
 	export let itemsStyle: ListItemsStyle = "textual";
 	export let itemsRows: number = 1;
 	export let dense: boolean = false;
-	export let wrapFocus: boolean = true;
 	//#endregion
 
 	//#region implementation
@@ -36,7 +35,6 @@
 	{itemsRows}
 	{itemsStyle}
 	{dense}
-	{wrapFocus}
 	role="menu"
 	tabindex="-1"
 	{...$$restProps}

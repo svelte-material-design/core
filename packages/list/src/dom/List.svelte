@@ -1,14 +1,5 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count = 0;
-
-	export interface OnListActionEvent {
-		targetIndex: number;
-		listSelectedIndex: number | number[];
-	}
-</script>
-
 <script lang="ts">
 	//#region  imports
 	import { Ol, Ul } from "../../../common/dom";
@@ -22,7 +13,7 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/list/List:${count++}`;
+	export let id: string = undefined;
 	export let dom: HTMLDivElement | HTMLUListElement = undefined;
 	//#endregion
 

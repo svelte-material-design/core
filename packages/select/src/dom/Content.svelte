@@ -30,6 +30,9 @@
 	export let invalid: boolean = false;
 	export let required: boolean = false;
 
+	export let itemsRows: number = 1;
+	export let dense: boolean = false;
+
 	export let helperTextId: string;
 
 	//#region slots
