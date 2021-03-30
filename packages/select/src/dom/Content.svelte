@@ -30,10 +30,9 @@
 	export let invalid: boolean = false;
 	export let required: boolean = false;
 
-	export let itemsRows: number = 1;
-	export let dense: boolean = false;
-
 	export let helperTextId: string;
+	export let labelId: string;
+	export let selectedTextId: string;
 
 	//#region slots
 	export let slots: typeof $$slots;
@@ -41,11 +40,6 @@
 	//#endregion
 
 	//#region implementation
-	let labelId: string;
-	$: labelId = slots.label ? `${id}--selected-text` : undefined;
-	let selectedTextId: string;
-	$: selectedTextId = value ? `${id}--selected-text` : undefined;
-
 	function stopPropagationOnReadOnly(event: Event) {
 		if (readonly) event.stopImmediatePropagation();
 	}
@@ -90,7 +84,7 @@
 		<slot name="leadingIcon" />
 		{#if variant === "filled"}
 			{#if slots.label}
-				<FloatingLabel component={Span}>
+				<FloatingLabel id={labelId} component={Span}>
 					<slot name="label" />
 				</FloatingLabel>
 			{/if}
@@ -100,7 +94,7 @@
 		{:else if variant === "outlined"}
 			<NotchedOutline noLabel={!slots.label}>
 				{#if slots.label}
-					<FloatingLabel component={Span}>
+					<FloatingLabel id={labelId} component={Span}>
 						<slot name="label" />
 					</FloatingLabel>
 				{/if}

@@ -9,7 +9,7 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/select/helper-text/HelperText:${count++}`;
+	export let id: string = `@svmd/select/HelperText:${count++}`;
 
 	export let dom: HTMLParagraphElement = undefined;
 

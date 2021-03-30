@@ -25,4 +25,11 @@
 	//#endregion
 </script>
 
-<Input bind:dom {id} class={className} {style} {...$$restProps} />
+<Input
+	bind:dom
+	{id}
+	class={className}
+	{style}
+	value={$selectContext$.value}
+	{...$$restProps}
+/>

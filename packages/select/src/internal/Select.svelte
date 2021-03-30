@@ -43,6 +43,7 @@
 	let inputElement: HTMLInputElement;
 
 	const context$ = createSelectContext({
+		id,
 		group,
 		readonly,
 		disabled,
@@ -80,7 +81,7 @@
 
 	let select: MDCSelect;
 	onMount(async () => {
-		reistantiate();
+		istantiate();
 	});
 
 	$: if (select) {
@@ -101,8 +102,10 @@
 		select?.destroy();
 	});
 
-	function reistantiate(...args: any) {
+	function istantiate(...args: any) {
 		if (dom && inputElement) {
+			console.log(inputElement, value);
+
 			select?.destroy();
 			select = new MDCSelect(dom);
 
@@ -146,7 +149,7 @@
 	export async function updateOptions() {
 		const oldValue = value;
 
-		reistantiate();
+		istantiate();
 
 		await tick();
 
@@ -163,7 +166,7 @@
 <UseState {value} onUpdate={onValueChange} />
 <UseState
 	value={[variant, ripple, lineRipple, dom, inputElement]}
-	onUpdate={reistantiate}
+	onUpdate={istantiate}
 />
 
 <Select

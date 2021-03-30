@@ -11,6 +11,7 @@ export const [
 ] = createContextStore<SelectContext>();
 
 interface SelectContext {
+	id: string;
 	group: SelectionGroupBinding;
 	helperTextId: string;
 	readonly: boolean;

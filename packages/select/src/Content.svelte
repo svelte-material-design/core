@@ -20,6 +20,13 @@
 
 	//#region implementation
 	const selectContext$ = getSelectContext();
+
+	let labelId: string;
+	$: labelId = $$slots.label ? `${$selectContext$.id}--label` : undefined;
+	let selectedTextId: string;
+	$: selectedTextId = $selectContext$.value
+		? `${$selectContext$.id}--selected-text`
+		: undefined;
 	//#endregion
 </script>
 
@@ -37,9 +44,9 @@
 	value={$selectContext$.value}
 	variant={$selectContext$.variant}
 	invalid={$selectContext$.invalid}
-	itemsRows={$selectContext$.itemsRows}
-	dense={$selectContext$.dense}
 	slots={$$slots}
+	{labelId}
+	{selectedTextId}
 	{...$$restProps}
 >
 	<slot name="label" slot="label" />
