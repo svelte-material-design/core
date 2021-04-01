@@ -1,5 +1,5 @@
 export type { InputFieldVariant as SelectVariant } from "../../textfield/src/types";
-export interface OnSelectChangeEventDetail {
+export interface OnSelectChange {
 	value: string;
 	dom: HTMLDivElement;
 }

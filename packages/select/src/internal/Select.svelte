@@ -6,7 +6,7 @@
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { Select } from "../dom";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { createSelectContext, OnSelectChangeEventDetail } from "..";
+	import { createSelectContext, OnSelectChange } from "..";
 	import type { SelectVariant } from "..";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { classList } from "@raythurnevoid/strings-filter";
@@ -76,7 +76,7 @@
 	};
 
 	const dispatch = createEventDispatcher<{
-		change: OnSelectChangeEventDetail;
+		change: OnSelectChange;
 	}>();
 
 	let select: MDCSelect;
@@ -93,7 +93,7 @@
 			select.required = required;
 		}
 
-		if (select.required === invalid) {
+		if (select.valid === invalid) {
 			select.valid = !invalid;
 		}
 	}
@@ -175,6 +175,15 @@
 	class={classList([className, "smui-select"])}
 	{style}
 	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
 </Select>
