@@ -50,6 +50,6 @@
 	{...$$restProps}
 >
 	<slot name="label" slot="label" />
-	<slot name="leadingIcon" slot="leadingIcon" />
+	<slot name="leading" slot="leading" />
 	<slot />
 </Content>

@@ -16,6 +16,7 @@
 	//#endregion
 
 	export let itemsRows: number = 1;
+	$: if (itemsRows > 2) itemsRows = 2;
 	export let dense: boolean = false;
 	//#endregion
 

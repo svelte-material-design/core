@@ -53,7 +53,9 @@
 		on:blur
 		on:focusin
 		on:focusout
+		let:leadingClassName
+		let:trailingClassName
 	>
-		<slot />
+		<slot {selected} {leadingClassName} {trailingClassName} />
 	</Item>
 </Selectable>

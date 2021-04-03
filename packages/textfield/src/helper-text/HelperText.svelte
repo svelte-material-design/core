@@ -42,7 +42,7 @@
 </script>
 
 <div {id} class="mdc-text-field-helper-line" {style} {...$$restProps}>
-	<div
+	<p
 		bind:this={dom}
 		class={classList([
 			className,
@@ -53,6 +53,6 @@
 		aria-hidden="true"
 	>
 		<slot name="label" />
-	</div>
+	</p>
 	<slot />
 </div>

@@ -81,7 +81,7 @@
 		{#if ripple && variant === "filled"}
 			<span class="mdc-select__ripple" />
 		{/if}
-		<slot name="leadingIcon" />
+		<slot name="leading" />
 		{#if variant === "filled"}
 			{#if slots.label}
 				<FloatingLabel id={labelId} component={Span}>

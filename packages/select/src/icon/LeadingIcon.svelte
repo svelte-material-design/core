@@ -1,15 +1,10 @@
 <svelte:options immutable={true} />
 
-<script lang="ts" context="module">
-	let count = 0;
-</script>
-
 <script lang="ts">
 	//#region imports
 	import type { GraphicDOM, GraphicType } from "../../../common/components";
 	import { Graphic } from "../../../common/components";
 	import { classList } from "@raythurnevoid/strings-filter";
-	// import { getContentContext } from "../TextFieldContext";
 	//#endregion
 
 	//#region exports
@@ -23,22 +18,6 @@
 
 	export let type: GraphicType = "icon";
 	//#endregion
-
-	// const contentContext$ = getContentContext();
-
-	// if (className.includes("mdc-text-field__icon--trailing")) {
-	// 	$contentContext$.setHasTrailingIcon(true);
-	// } else if (className.includes("mdc-text-field__icon--leading")) {
-	// 	$contentContext$.setHasLeadingIcon(true);
-	// }
-
-	// onDestroy(() => {
-	// 	if (className.includes("mdc-text-field__icon--trailing")) {
-	// 		$contentContext$.setHasTrailingIcon(false);
-	// 	} else if (className.includes("mdc-text-field__icon--leading")) {
-	// 		$contentContext$.setHasLeadingIcon(false);
-	// 	}
-	// });
 </script>
 
 <Graphic
