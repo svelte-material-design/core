@@ -5,33 +5,31 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../common/functions";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/drawer/Drawer:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// Drawer
+	//#region  imports
 	import { MDCDrawer } from "@material/drawer";
 	import { onDestroy, tick } from "svelte";
 	import { createDrawerContext } from "./DrawerContext";
-	import { DrawerVariant } from "./types";
+	import type { DrawerVariant } from "./types";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import Scrim from "./Scrim.svelte";
+	import { classList } from "@raythurnevoid/strings-filter";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@smui/drawer/Drawer:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
 	export let variant: DrawerVariant = "permanent";
 	export let open: boolean = false;
 	export let belowTopAppBar: boolean = undefined;
+	//#endregion
 
+	//#region implementation
 	let opened = false;
 	let siblingTopAppBarFound = false;
 
@@ -87,20 +85,15 @@
 	function handleUpdateOpen() {
 		open = drawer.open;
 	}
-
-	export function setOpen(value) {
-		open = value;
-	}
+	//#endregion
 </script>
 
 <UseState value={variant} onUpdate={init} />
 
 <aside
-	{...props}
 	bind:this={dom}
-	use:forwardDOMEvents
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"smui-drawer",
 		"mdc-drawer",
@@ -113,6 +106,7 @@
 		[opened || variant === "permanent", "mdc-drawer--open"],
 	])}
 	{style}
+	{...$$restProps}
 >
 	<slot />
 </aside>

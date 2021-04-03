@@ -5,7 +5,8 @@
 	import { Ripple } from "../../../../ripple";
 	import { classList } from "@raythurnevoid/strings-filter";
 	import { ItemContent } from ".";
-	import { A, Div } from "../../../../common/dom";
+	import { A, Li } from "../../../../common/dom";
+	import type { ItemElement } from "./types";
 	//#endregion
 
 	//#region exports
@@ -14,7 +15,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLLIElement = undefined;
+	export let dom: ItemElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
@@ -25,39 +26,37 @@
 	//#endregion
 
 	//#region implementation
-	let styledElement: HTMLElement;
 	//#endregion
 </script>
 
-<li bind:this={dom} {id}>
-	<Ripple let:rippleClasses target={ripple ? styledElement : undefined}>
-		<svelte:component
-			this={href === undefined ? Div : A}
-			bind:dom={styledElement}
-			class={classList([
-				className,
-				"mdc-list-item",
-				[disabled, "mdc-list-item--disabled"],
-				[selected, "mdc-list-item--selected"],
-				[activated, "mdc-list-item--activated"],
-				rippleClasses,
-			])}
-			{style}
-			{href}
-			{...$$restProps}
-			on:click
-			on:mousedown
-			on:mouseup
-			on:keydown
-			on:keyup
-			on:focus
-			on:focusin
-			on:focusout
-			on:blur
-		>
-			<ItemContent {selected} let:leadingClassName let:trailingClassName>
-				<slot {selected} {leadingClassName} {trailingClassName} />
-			</ItemContent>
-		</svelte:component>
-	</Ripple>
-</li>
+<Ripple let:rippleClasses target={ripple ? dom : undefined}>
+	<svelte:component
+		this={href === undefined ? Li : A}
+		bind:dom
+		{id}
+		class={classList([
+			className,
+			"mdc-list-item",
+			[disabled, "mdc-list-item--disabled"],
+			[selected, "mdc-list-item--selected"],
+			[activated, "mdc-list-item--activated"],
+			rippleClasses,
+		])}
+		{style}
+		{href}
+		{...$$restProps}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:focusin
+		on:focusout
+		on:blur
+	>
+		<ItemContent {selected} let:leadingClassName let:trailingClassName>
+			<slot {selected} {leadingClassName} {trailingClassName} />
+		</ItemContent>
+	</svelte:component>
+</Ripple>
