@@ -15,8 +15,8 @@
 		OnListChangeEvent,
 		ListItemsStyle,
 		ListSelectionType,
-		OnListActionEvent,
 	} from "./types";
+	import type { OnListActionEvent, OnListChildrenChangeEvent } from "./types";
 	import { handleSelect } from "./functions";
 	//#endregion
 
@@ -45,17 +45,19 @@
 
 	//#region implementation
 	const dispatch = createEventDispatcher<{
+		action: OnListActionEvent;
+		optionsChange: OnListChildrenChangeEvent;
 		change: OnListChangeEvent;
 	}>();
 
 	let selectionGroup: SelectionGroup;
 
-	async function handleAction({ itemIndex }: OnListActionEvent) {
+	async function handleAction(event: CustomEvent<OnListActionEvent>) {
 		if (selectionType) {
 			handleSelect({
 				selectionType,
 				selectionGroup,
-				itemIndex,
+				itemIndex: event.detail.itemIndex,
 			});
 
 			await tick();
@@ -91,7 +93,7 @@
 		{typeahead}
 		{group}
 		{...$$restProps}
-		on:action={(event) => handleAction(event.detail)}
+		on:action={handleAction}
 		on:action
 		on:click
 		on:mousedown

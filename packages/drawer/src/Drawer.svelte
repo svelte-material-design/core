@@ -7,9 +7,9 @@
 <script lang="ts">
 	//#region  imports
 	import { MDCDrawer } from "@material/drawer";
-	import { onDestroy, tick } from "svelte";
+	import { createEventDispatcher, onDestroy, tick } from "svelte";
 	import { createDrawerContext } from "./DrawerContext";
-	import type { DrawerVariant } from "./types";
+	import type { DrawerVariant, OnOpenEvent, OnCloseEvent } from "./types";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import Scrim from "./Scrim.svelte";
 	import { classList } from "@raythurnevoid/strings-filter";
@@ -30,6 +30,11 @@
 	//#endregion
 
 	//#region implementation
+	const dispatch = createEventDispatcher<{
+		open: OnOpenEvent;
+		close: OnCloseEvent;
+	}>();
+
 	let opened = false;
 	let siblingTopAppBarFound = false;
 
@@ -72,14 +77,18 @@
 		);
 	}
 
-	function handleOpen() {
+	async function handleOpen() {
 		opened = true;
 		handleUpdateOpen();
+		await tick();
+		dispatch("open");
 	}
 
-	function handleClose() {
+	async function handleClose() {
 		opened = false;
 		handleUpdateOpen();
+		await tick();
+		dispatch("close");
 	}
 
 	function handleUpdateOpen() {

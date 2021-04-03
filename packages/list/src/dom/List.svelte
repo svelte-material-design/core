@@ -4,6 +4,7 @@
 	//#region  imports
 	import { Ol, Ul } from "../../../common/dom";
 	import type { ListOrientation, ListItemsStyle } from "..";
+	import type { ListElement, ListComponent } from "./types";
 	import { parseClassList } from "../../../common/functions";
 	//#endregion
 
@@ -14,7 +15,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLDivElement | HTMLUListElement = undefined;
+	export let dom: ListElement = undefined;
 	//#endregion
 
 	export let orientation: ListOrientation = "vertical";
@@ -35,7 +36,7 @@
 		density = 0;
 	}
 
-	export let component: typeof Ul | typeof Ol = Ul;
+	export let component: ListComponent = Ul;
 	//#endregion
 
 	//#region implementation

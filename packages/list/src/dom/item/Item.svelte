@@ -5,8 +5,8 @@
 	import { Ripple } from "../../../../ripple";
 	import { classList } from "@raythurnevoid/strings-filter";
 	import { ItemContent } from ".";
-	import { A, Li } from "../../../../common/dom";
-	import type { ItemElement } from "./types";
+	import { Li } from "../../../../common/dom";
+	import type { ListItemComponent, ListItemElement } from "./types";
 	//#endregion
 
 	//#region exports
@@ -15,14 +15,15 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: ItemElement = undefined;
+	export let dom: ListItemElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
 	export let selected: boolean = false;
 	export let activated: boolean = false;
 	export let disabled: boolean = false;
-	export let href: string = undefined;
+
+	export let component: ListItemComponent = Li;
 	//#endregion
 
 	//#region implementation
@@ -31,7 +32,7 @@
 
 <Ripple let:rippleClasses target={ripple ? dom : undefined}>
 	<svelte:component
-		this={href === undefined ? Li : A}
+		this={component}
 		bind:dom
 		{id}
 		class={classList([
@@ -43,7 +44,6 @@
 			rippleClasses,
 		])}
 		{style}
-		{href}
 		{...$$restProps}
 		on:click
 		on:mousedown
@@ -55,8 +55,8 @@
 		on:focusout
 		on:blur
 	>
-		<ItemContent {selected} let:leadingClassName let:trailingClassName>
-			<slot {selected} {leadingClassName} {trailingClassName} />
+		<ItemContent let:leadingClassName let:trailingClassName>
+			<slot {activated} {selected} {leadingClassName} {trailingClassName} />
 		</ItemContent>
 	</svelte:component>
 </Ripple>

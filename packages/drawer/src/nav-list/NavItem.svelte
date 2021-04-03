@@ -5,33 +5,27 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	let className: string = undefined;
+	//#region  imports
+	import { Item } from "../../../list/src/internal";
+	//#endregion
 
+	//#region exports
+	//#region base
+	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/list/Item:${count++}`;
-
-	export let dom: HTMLAnchorElement = undefined;
-
-	import { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
+	export let dom: HTMLLIElement = undefined;
 	//#endregion
 
-	// NavItem
-	import { Item } from "../../../list";
-	import { getDrawerContext } from "../DrawerContext";
-
-	//#region exports
 	export let ripple: boolean = true;
 	export let activated: boolean = false;
 	export let disabled: boolean = false;
 	export let href: string = undefined;
-	export let ariaLabel: string = undefined;
-	export let title: string = undefined;
 	//#endregion
 
-	const drawerContext$ = getDrawerContext();
+	//#region implementation
+	//#endregion
 </script>
 
 <!-- <UseState value={ripple} onUpdate={() => $drawerContext$.reinitialize()} /> -->
@@ -39,16 +33,25 @@
 
 <Item
 	bind:dom
-	{props}
 	{id}
 	class={className}
 	{style}
 	{ripple}
 	{href}
-	{title}
 	{disabled}
 	{activated}
-	{ariaLabel}
+	{...$$restProps}
+	let:leadingClassName
+	let:trailingClassName
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:focusin
+	on:focusout
+	on:blur
 >
-	<slot />
+	<slot {activated} {leadingClassName} {trailingClassName} />
 </Item>

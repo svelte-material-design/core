@@ -23,7 +23,8 @@
 			"titleBar.inactiveForeground": "#e7e7e799"
 		},
 		"editor.formatOnSave": true,
-		"prettier.useTabs": true
+		"prettier.useTabs": true,
+		"typescript.preferences.importModuleSpecifier": "relative"
 	},
 	"extensions": {
 		"recommendations": [

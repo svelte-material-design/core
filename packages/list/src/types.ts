@@ -1,19 +1,25 @@
+import type { Ol, Ul, A, Div, Li } from "../../common/dom";
+
+export type ListComponent = typeof Ul | typeof Ol;
+export type ListElement = HTMLUListElement | HTMLOListElement;
+
 export type ListOrientation = "vertical" | "horizontal";
 
-export interface OnListChildrenChangeEvent {
-	dom: HTMLUListElement;
-	items: HTMLLIElement[];
-}
-export interface OnListChangeEvent {
-	dom: HTMLUListElement;
-	value: ListValue;
-}
-
 export interface OnListActionEvent {
-	dom: HTMLUListElement;
+	dom: ListElement;
 	itemIndex: number;
 	itemDom: HTMLLIElement;
 	value: string;
+}
+
+export interface OnListChildrenChangeEvent {
+	dom: ListElement;
+	items: HTMLLIElement[];
+}
+
+export interface OnListChangeEvent {
+	dom: HTMLUListElement;
+	value: ListValue;
 }
 
 export type { SelectionType as ListSelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";

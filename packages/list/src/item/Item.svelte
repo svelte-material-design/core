@@ -79,6 +79,6 @@
 		on:focusin
 		on:focusout
 	>
-		<slot {selected} {leadingClassName} {trailingClassName} />
+		<slot {activated} {selected} {leadingClassName} {trailingClassName} />
 	</Item>
 </Selectable>

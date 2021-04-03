@@ -21,7 +21,12 @@
 	import { Group } from "@raythurnevoid/svelte-group-components";
 	import type { ItemContext } from "../item";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import type { OnListChildrenChangeEvent, OnListActionEvent } from "../types";
+	import type {
+		OnListChildrenChangeEvent,
+		OnListActionEvent,
+		ListElement,
+		ListComponent,
+	} from "../types";
 	import type { OnGroupItemsUpdateEvent } from "@raythurnevoid/svelte-group-components/ts";
 	//#endregion
 
@@ -31,7 +36,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLUListElement = undefined;
+	export let dom: ListElement = undefined;
 	//#endregion
 
 	export let orientation: ListOrientation = "vertical";
@@ -42,13 +47,19 @@
 	export let typeahead: boolean = false;
 
 	export let group: SelectionGroupBinding;
-	// export let group: GroupBindings;
 	export let selectionType: SelectionType = undefined;
 
 	export let disableMDCInstance: boolean = false;
+
+	export let component: ListComponent = undefined;
 	//#endregion
 
 	//#region implementation
+	const dispatch = createEventDispatcher<{
+		action: OnListActionEvent;
+		optionsChange: OnListChildrenChangeEvent;
+	}>();
+
 	let list: MDCList;
 	let listGroup: Group;
 	let treeObserver: MutationObserver;
@@ -66,11 +77,6 @@
 		list,
 		selectionType,
 	};
-
-	const dispatch = createEventDispatcher<{
-		action: OnListActionEvent;
-		optionsChange: OnListChildrenChangeEvent;
-	}>();
 
 	onMount(async () => {
 		$context$ = { ...$context$, listGroup: listGroup.getBindings() };
@@ -203,6 +209,7 @@
 		{itemsRows}
 		{dense}
 		aria-orientation={orientation}
+		{component}
 		{...$$restProps}
 		on:click
 		on:mousedown
