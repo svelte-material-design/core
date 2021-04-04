@@ -7,7 +7,7 @@
 <script lang="ts">
 	//#region  imports
 	import { MDCDrawer } from "@material/drawer";
-	import { createEventDispatcher, onDestroy, tick } from "svelte";
+	import { afterUpdate, createEventDispatcher, onDestroy, tick } from "svelte";
 	import { createDrawerContext } from "./DrawerContext";
 	import type { DrawerVariant, OnOpenEvent, OnCloseEvent } from "./types";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
@@ -26,7 +26,8 @@
 
 	export let variant: DrawerVariant = "permanent";
 	export let open: boolean = false;
-	export let belowTopAppBar: boolean = undefined;
+	let belowTopAppBarProp: boolean = undefined;
+	export { belowTopAppBarProp as belowTopAppBar };
 	//#endregion
 
 	//#region implementation
@@ -36,7 +37,16 @@
 	}>();
 
 	let opened = false;
-	let siblingTopAppBarFound = false;
+	let belowTopAppBar = false;
+	let drawer: MDCDrawer;
+
+	afterUpdate(() => {
+		if (dom) {
+			belowTopAppBar =
+				belowTopAppBarProp ||
+				!!dom.parentElement.querySelector(":scope > .mdc-top-app-bar");
+		}
+	});
 
 	$: if (!variant) variant = "permanent";
 
@@ -56,8 +66,6 @@
 		});
 	}
 
-	let drawer: MDCDrawer;
-
 	onDestroy(() => {
 		drawer && drawer.destroy();
 	});
@@ -71,10 +79,6 @@
 			drawer.listen("MDCDrawer:opened", handleOpen);
 			drawer.listen("MDCDrawer:closed", handleClose);
 		}
-
-		siblingTopAppBarFound = !!dom.parentElement.querySelector(
-			":scope > .mdc-top-app-bar"
-		);
 	}
 
 	async function handleOpen() {
@@ -108,10 +112,7 @@
 		"mdc-drawer",
 		[variant === "dismissible", "mdc-drawer--dismissible"],
 		[variant === "modal", "mdc-drawer--modal"],
-		[
-			belowTopAppBar === undefined ? siblingTopAppBarFound : belowTopAppBar,
-			"mdc-top-app-bar--fixed-adjust",
-		],
+		[belowTopAppBar, "mdc-top-app-bar--fixed-adjust"],
 		[opened || variant === "permanent", "mdc-drawer--open"],
 	])}
 	{style}

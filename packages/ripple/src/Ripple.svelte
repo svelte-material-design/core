@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	import { onDestroy, onMount, tick } from "svelte";
 	import { SMUIRipple } from "./SMUIRipple";
@@ -53,8 +55,6 @@
 		initialize();
 	}
 </script>
-
-<svelte:options immutable={true} />
 
 <slot {rippleClasses} />
 <UseState value={target} onUpdate={initialize} />

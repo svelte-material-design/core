@@ -1,32 +1,32 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count = 0;
-</script>
-
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../common/functions";
-	let className: string = undefined;
+	import { classList } from "@raythurnevoid/strings-filter";
 
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/drawer/AppContent:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#region  imports
+	import { afterUpdate } from "svelte";
 	//#endregion
 
-	// AppContent
-	import { afterUpdate } from "svelte";
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
-	export let topAppBar: boolean = undefined;
-	let topAppBarFound: boolean = false;
+	let belowTopAppBarProp: boolean = undefined;
+	export { belowTopAppBarProp as belowTopAppBar };
+	//#endregion
+
+	//#region implementation
+	let belowTopAppBar: boolean = false;
 
 	afterUpdate(() => {
 		if (dom) {
-			topAppBarFound =
+			belowTopAppBar =
+				belowTopAppBarProp ||
 				!!dom.parentElement.querySelector(":scope > .mdc-top-app-bar") ||
 				!!(
 					$$slots.topAppBar &&
@@ -34,27 +34,20 @@
 				);
 		}
 	});
+	//#endregion
 </script>
 
 <div
 	bind:this={dom}
-	{...props}
 	{id}
-	class={parseClassList([
-		className,
-		"mdc-drawer-app-content",
-		"smui-app-content",
-	])}
+	class={classList([className, "mdc-drawer-app-content", "smui-app-content"])}
 	{style}
 >
 	<slot name="topAppBar" />
 	<main
-		class={parseClassList([
+		class={classList([
 			"smui-app-content__main",
-			[
-				topAppBar === undefined ? topAppBarFound : topAppBar,
-				"mdc-top-app-bar--fixed-adjust",
-			],
+			[belowTopAppBar, "mdc-top-app-bar--fixed-adjust"],
 		])}
 	>
 		<div class="smui-app-content__main-content">
