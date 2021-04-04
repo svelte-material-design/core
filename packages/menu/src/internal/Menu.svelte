@@ -5,7 +5,8 @@
 	import { MDCMenu } from "@material/menu";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { UseAnchor } from "../../../menu-surface/src/internal";
-	import { MenuAnchorCorner, MenuVariant, createMenuContext } from "..";
+	import { createMenuContext } from "..";
+	import type { MenuAnchorCorner, MenuVariant } from "../types";
 	import { Menu, List } from "../dom";
 	import type { ListOrientation, ListItemsStyle } from "../../../list";
 	import {
@@ -17,10 +18,8 @@
 	import type { SelectionType } from "../../../common/hoc";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import {
-		Group,
-		OnGroupItemsUpdateEvent,
-	} from "@raythurnevoid/svelte-group-components/ts";
+	import { Group } from "@raythurnevoid/svelte-group-components/ts";
+	import type { OnGroupItemsUpdateEvent } from "@raythurnevoid/svelte-group-components/ts";
 	import type {
 		MenuAnchorMargin,
 		OnMenuChildrenChangeEvent,

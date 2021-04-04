@@ -1,9 +1,7 @@
-import Item from "./Item.svelte";
-import Content from "./Content.svelte";
-import PrimaryText from "./PrimaryText.svelte";
-import SecondaryText from "./SecondaryText.svelte";
-
-export { Item, Content, PrimaryText, SecondaryText };
+export { default as Item } from "./Item.svelte";
+export { default as Content } from "./Content.svelte";
+export { default as PrimaryText } from "./PrimaryText.svelte";
+export { default as SecondaryText } from "./SecondaryText.svelte";
 export { LeadingIcon, TrailingIcon } from "../../../list/src";
 export * from "./types";
 export * from "./ItemContext";

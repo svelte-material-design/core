@@ -1,10 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	import { classList } from "@raythurnevoid/strings-filter";
-
 	//#region  imports
 	import { afterUpdate } from "svelte";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports

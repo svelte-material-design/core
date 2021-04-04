@@ -1,30 +1,31 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count = 0;
-</script>
-
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../common/functions";
-	let className: string = undefined;
+	//#region  imports
+	import { classList } from "@raythurnevoid/strings-filter";
+	//#endregion
 
+	//#region exports
+	//#region base
+	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/drawer/Content:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#endregion
+
+	//#endregion
+
+	//#region implementation
 	//#endregion
 </script>
 
 <div
 	bind:this={dom}
-	{...props}
 	{id}
-	class={parseClassList([className, "mdc-drawer__content"])}
+	class={classList([className, "mdc-drawer__content"])}
 	{style}
+	{...$$restProps}
 >
 	<slot />
 </div>

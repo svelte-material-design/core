@@ -3,7 +3,7 @@
 <script lang="ts">
 	//#region  imports
 	import type { IconDOM, IconType } from "../item/types";
-	import { Icon } from "../../../list/src/item";
+	import { LeadingIcon } from "../../../list/src/item";
 	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
@@ -20,7 +20,7 @@
 	//#endregion
 </script>
 
-<Icon
+<LeadingIcon
 	bind:dom
 	{id}
 	class={classList([
@@ -32,4 +32,4 @@
 	{type}
 >
 	<slot />
-</Icon>
+</LeadingIcon>

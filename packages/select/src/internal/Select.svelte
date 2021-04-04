@@ -2,12 +2,13 @@
 
 <script lang="ts">
 	//#region  imports
-	import { MDCSelect, MDCSelectEvent } from "@material/select";
+	import { MDCSelect } from "@material/select";
+	import type { MDCSelectEvent } from "@material/select";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { Select } from "../dom";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { createSelectContext, OnSelectChange } from "..";
-	import type { SelectVariant } from "..";
+	import { createSelectContext } from "..";
+	import type { SelectVariant, OnSelectChange } from "../types";
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
