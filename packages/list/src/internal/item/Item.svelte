@@ -26,9 +26,8 @@
 	//#endregion
 </script>
 
-<li bind:this={dom}>
+<li bind:this={dom} {id}>
 	<ItemImpl
-		{id}
 		class={className}
 		{style}
 		{selected}
