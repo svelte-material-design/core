@@ -143,10 +143,6 @@
 			menu.listen("MDCMenuSurface:opened", handleOpen);
 			menu.listen("MDCMenuSurface:closed", handleClose);
 			menu.listen("MDCMenuSurface:closing", handleClosing);
-
-			setTimeout(() => {
-				console.log(menu.typeaheadMatchItem("Item 0"));
-			}, 5000);
 		}
 	}
 

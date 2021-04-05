@@ -105,8 +105,6 @@
 
 	function istantiate(...args: any) {
 		if (dom && inputElement) {
-			console.log(inputElement, value);
-
 			select?.destroy();
 			select = new MDCSelect(dom);
 
