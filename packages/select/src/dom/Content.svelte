@@ -57,7 +57,7 @@
 		[variant === "outlined", "mdc-select--outlined"],
 		[disabled, "mdc-select--disabled"],
 		[required, "mdc-select--required"],
-		[slots.leadingIcon, "mdc-select--with-leading-icon"],
+		[slots.leading, "mdc-select--with-leading-icon"],
 		[invalid, "mdc-select--invalid"],
 		[!slots.label, "mdc-select--no-label"],
 	])}

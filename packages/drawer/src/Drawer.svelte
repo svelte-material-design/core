@@ -7,7 +7,13 @@
 <script lang="ts">
 	//#region  imports
 	import { MDCDrawer } from "@material/drawer";
-	import { afterUpdate, createEventDispatcher, onDestroy, tick } from "svelte";
+	import {
+		afterUpdate,
+		createEventDispatcher,
+		onDestroy,
+		onMount,
+		tick,
+	} from "svelte";
 	import { createDrawerContext } from "./DrawerContext";
 	import type { DrawerVariant, OnOpenEvent, OnCloseEvent } from "./types";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
@@ -40,6 +46,10 @@
 	let belowTopAppBar = false;
 	let drawer: MDCDrawer;
 
+	onMount(() => {
+		initialize();
+	});
+
 	afterUpdate(() => {
 		if (dom) {
 			belowTopAppBar =
@@ -56,21 +66,14 @@
 	$: $context$ = { ...$context$, variant };
 
 	$: if (drawer && drawer.open !== open) {
-		drawer.open = open;
-		tick().then(() => {
-			// Sometimes when rerendered with #key block, it will stuck in opening state. This will unlock it.
-			if (!drawer.open && open && !dom.classList.contains("mdc-drawer--open")) {
-				dom.classList.remove("mdc-drawer--opening");
-				drawer.open = open;
-			}
-		});
+		tick().then(() => (drawer.open = open));
 	}
 
 	onDestroy(() => {
 		drawer && drawer.destroy();
 	});
 
-	function init() {
+	function initialize() {
 		drawer?.list?.destroy();
 		drawer?.destroy();
 
@@ -101,7 +104,7 @@
 	//#endregion
 </script>
 
-<UseState value={variant} onUpdate={init} />
+<UseState value={variant} onUpdate={initialize} />
 
 <aside
 	bind:this={dom}

@@ -176,7 +176,8 @@
 	}
 
 	function handleOptionsChange(event: OnGroupItemsUpdateEvent) {
-		list.hasTypeahead = true;
+		fixItemsTabIndex();
+		list.hasTypeahead = typeahead;
 		dispatch("optionsChange", {
 			dom,
 			items: event.items.map((i) => i.dom as HTMLLIElement),
