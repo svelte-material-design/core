@@ -46,6 +46,6 @@
 	on:nav
 	let:contentClass
 >
-	<slot />
-	<slot name="content" slot="content" className={contentClass} />
+	<slot {contentClass} />
+	<slot name="content" slot="content" />
 </TopAppBar>

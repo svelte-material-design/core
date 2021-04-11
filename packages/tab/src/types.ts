@@ -1,1 +1,1 @@
-export { GraphicDOM as IconDOM } from "../../common/components";
+export type { GraphicDOM as IconDOM } from "../../common/components";

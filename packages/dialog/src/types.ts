@@ -1,3 +1,3 @@
-import { MDCDialogCloseEventDetail } from "@material/dialog";
+import type { MDCDialogCloseEventDetail } from "@material/dialog";
 
 export interface OnCloseEventDetail extends MDCDialogCloseEventDetail {}

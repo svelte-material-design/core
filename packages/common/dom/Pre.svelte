@@ -1,28 +1,27 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../src/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLPreElement = undefined;
-
-	import { BaseProps } from "./Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// Pre
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <pre
 	bind:this={dom}
-	{...props}
 	{id}
 	class={className}
 	{style}
-	use:forwardDOMEvents>
+	{...$$restProps}>
   <slot />
 </pre>

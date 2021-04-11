@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	import type { TypographyVariant } from ".";
 	import { H1, H2, H3, H4, H5, H6, P, Span } from "../../common/dom";
@@ -31,23 +33,24 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
+	//#region imports
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
 	export let dom: HTMLElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// Typography
 	export let variant: TypographyVariant = "body1";
 	export let component: any = getDefaultComponent(variant);
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:component
@@ -56,7 +59,16 @@
 	{id}
 	class="{className || ''} mdc-typography--{variant}"
 	{style}
-	on:domEvent={forwardDOMEvents}
-	{...props}>
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
+>
 	<slot />
 </svelte:component>

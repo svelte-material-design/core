@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
 	import { DOMEventsForwarder } from "../../common/actions";
@@ -9,14 +11,12 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Actions
 </script>
-
-<svelte:options immutable={true} />
 
 <div
 	bind:this={dom}
@@ -24,6 +24,7 @@
 	{id}
 	class="mdc-banner__actions {className}"
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </div>

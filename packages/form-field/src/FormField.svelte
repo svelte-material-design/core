@@ -1,30 +1,31 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
-	let counter: number = 0;
+	let count = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
-	export { className as class };
-	export let style: string = "";
-	export let id: string = `@smui/form-field/FormField:${counter++}`;
-
-	export let dom: HTMLDivElement = null;
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// FormField
+	//#region imports
 	import { MDCFormField } from "@material/form-field";
 	import { onMount, onDestroy } from "svelte";
 	import { FormFieldLabelAlign, createFormFieldContext } from "./";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/form-field/FormField:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
 	export let align: FormFieldLabelAlign = "start";
 	export let noWrap: boolean = false;
 	export let vertical: boolean = false;
+	//#endregion
 
+	//#region implementation
 	let labelId: string;
 	$: labelId = `${id}--label`;
 
@@ -54,31 +55,31 @@
 	onDestroy(() => {
 		formField && formField.destroy();
 	});
+	//#endregion
 </script>
-
-<style lang="scss">
-	.smui-form-field--vertical {
-		display: flex;
-		flex-direction: column;
-
-		&.mdc-form-field--align-end {
-			> label {
-				margin-left: 0;
-				margin-right: auto;
-			}
-		}
-	}
-</style>
 
 <div
 	bind:this={dom}
-	{...props}
+	{id}
 	class="mdc-form-field {className}
-    {align === 'end' ? 'mdc-form-field--align-end' : ''}
+    {align === 'end'
+		? 'mdc-form-field--align-end'
+		: ''}
     {noWrap ? 'mdc-form-field--nowrap' : ''}
-    {vertical ? 'smui-form-field--vertical' : ''}"
+    {vertical
+		? 'smui-form-field--vertical'
+		: ''}"
 	{style}
-	use:forwardDOMEvents>
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
+>
 	<slot />
 	{#if $$slots.label}
 		{#if inputId}
@@ -93,21 +94,16 @@
 	{/if}
 </div>
 
-<!-- <div
-  bind:this={element}
-  use:useActions={use}
-  use:forwardEvents
-  class="
-    mdc-form-field
-    {className}
-    {align === 'end' ? 'mdc-form-field--align-end' : ''}
-  "
-  {...exclude($$props, ['use', 'class', 'alignEnd', 'inputId', 'label$'])}
->
-  <slot></slot>
-  <label
-    use:useActions={label$use}
-    for={inputId}
-    {...exclude(prefixFilter($$props, 'label$'), ['use'])}
-  ><slot name="label"></slot></label>
-</div> -->
+<style lang="scss">
+	.smui-form-field--vertical {
+		display: flex;
+		flex-direction: column;
+
+		&.mdc-form-field--align-end {
+			> label {
+				margin-left: 0;
+				margin-right: auto;
+			}
+		}
+	}
+</style>

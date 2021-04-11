@@ -2,10 +2,8 @@
 
 <script lang="ts">
 	//#region imports
-	import {
-		MDCIconButtonToggle,
-		MDCIconButtonToggleEventDetail,
-	} from "@material/icon-button";
+	import { MDCIconButtonToggle } from "@material/icon-button";
+	import type { MDCIconButtonToggleEventDetail } from "@material/icon-button";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import { IconButton } from "../../../icon-button/src/internal";
 	import type { IconButtonColor, OnIconButtonToggleChange } from "..";

@@ -32,8 +32,6 @@
 
 	export let variant: DrawerVariant = "permanent";
 	export let open: boolean = false;
-	let belowTopAppBarProp: boolean = undefined;
-	export { belowTopAppBarProp as belowTopAppBar };
 	//#endregion
 
 	//#region implementation
@@ -48,14 +46,6 @@
 
 	onMount(() => {
 		initialize();
-	});
-
-	afterUpdate(() => {
-		if (dom) {
-			belowTopAppBar =
-				belowTopAppBarProp ||
-				!!dom.parentElement.querySelector(":scope > .mdc-top-app-bar");
-		}
 	});
 
 	$: if (!variant) variant = "permanent";
@@ -115,7 +105,6 @@
 		"mdc-drawer",
 		[variant === "dismissible", "mdc-drawer--dismissible"],
 		[variant === "modal", "mdc-drawer--modal"],
-		[belowTopAppBar, "mdc-top-app-bar--fixed-adjust"],
 		[opened || variant === "permanent", "mdc-drawer--open"],
 	])}
 	{style}

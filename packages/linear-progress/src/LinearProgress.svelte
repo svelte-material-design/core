@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 
 	let className: string = undefined;
 

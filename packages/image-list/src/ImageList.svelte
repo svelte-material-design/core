@@ -21,7 +21,7 @@
 	export let id: string = `@smui/image-list/ImageList:${count++}`;
 
 	export let dom: HTMLUListElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	import { ImageListVariant } from "./types";
 	export let props: BaseProps = {};
 	//#endregion

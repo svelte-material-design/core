@@ -8,7 +8,7 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -24,6 +24,7 @@
 	{...props}
 	class={className}
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </thead>

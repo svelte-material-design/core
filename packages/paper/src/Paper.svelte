@@ -9,7 +9,7 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -26,13 +26,20 @@
 	class="
     smui-paper
     {className}
-    {elevation !== 0 ? 'mdc-elevation--z' + elevation : ''}
+    {elevation !== 0
+		? 'mdc-elevation--z' + elevation
+		: ''}
     {!square ? 'smui-paper--rounded' : ''}
-    {color === 'primary' ? 'smui-paper--color-primary' : ''}
-    {color === 'secondary' ? 'smui-paper--color-secondary' : ''}
+    {color === 'primary'
+		? 'smui-paper--color-primary'
+		: ''}
+    {color === 'secondary'
+		? 'smui-paper--color-secondary'
+		: ''}
     {transition ? 'mdc-elevation-transition' : ''}
   "
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </div>

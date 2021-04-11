@@ -1,29 +1,22 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../src/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
-	export let dom: HTMLTableDataCellElement = null;
-
-	import { BaseProps } from "./Props";
-	export let props: BaseProps = {};
+	export let dom: HTMLTableDataCellElement = undefined;
 	//#endregion
 
-	// Td
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
-<td
-	bind:this={dom}
-	{...props}
-	{id}
-	class={className}
-	{style}
-	use:forwardDOMEvents
->
+<td bind:this={dom} {id} class={className} {style} {...$$restProps}>
 	<slot />
 </td>

@@ -1,5 +1,6 @@
 import { createEventDispatcher } from "svelte/internal";
-import { listenEvents, ListenerOpt } from "../../mdcEvents";
+import { listenEvents } from "../../mdcEvents";
+import type { ListenerOpt } from "../../mdcEvents";
 
 const domEvents: DOMEvents[] = [
 	"focus",

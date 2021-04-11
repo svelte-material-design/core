@@ -1,4 +1,4 @@
-import { SortActionEventDetail } from "@material/data-table";
+import type { SortActionEventDetail } from "@material/data-table";
 
 export type SortDirection = "ascending" | "descending" | "none";
 export interface SortEventDetail

@@ -6,6 +6,7 @@
 	import { IconButton } from "../../../../icon-button/src/internal";
 	import { parseClassList } from "../../../../common/functions";
 	import type { IconButtonColor } from ".";
+	import { Icon } from "..";
 	//#endregion
 
 	//#region exports

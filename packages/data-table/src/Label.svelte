@@ -15,7 +15,7 @@
 
 	export let dom: HTMLTableHeaderCellElement = undefined;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 

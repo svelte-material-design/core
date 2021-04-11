@@ -74,7 +74,7 @@
 	<Item
 		bind:dom
 		{id}
-		{className}
+		class={className}
 		{style}
 		{selected}
 		{activated}

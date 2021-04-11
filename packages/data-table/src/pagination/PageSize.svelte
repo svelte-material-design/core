@@ -21,12 +21,13 @@
 
 	export let dom: HTMLDivElement = undefined;
 
-	import { BaseProps } from "../../../common/dom/Props";
+	import type { BaseProps } from "../../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// PageSize
-	import { Option, Select, OnSelectChangeEventDetail } from "../../../select";
+	import { Option, Select } from "../../../select";
+	import type { OnSelectChange } from "../../../select";
 	import { createEventDispatcher } from "svelte";
 	import { getPaginationContext } from "./PaginationContext";
 
@@ -47,7 +48,7 @@
 
 	$: $paginationContext$?.setPageSize(pageSize);
 
-	function handlePageSizeChange(event: OnSelectChangeEventDetail) {
+	function handlePageSizeChange(event: OnSelectChange) {
 		pageSizeSelectValue = event.value;
 		pageSize = Number(pageSizeSelectValue);
 		dispatch("change", {

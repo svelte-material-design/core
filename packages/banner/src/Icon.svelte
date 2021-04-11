@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
 	import { DOMEventsForwarder } from "../../common/events";
@@ -9,7 +11,7 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -17,14 +19,13 @@
 	import { Icon } from "../../common/dom";
 </script>
 
-<svelte:options immutable={true} />
-
 <Icon
 	bind:dom
 	{props}
 	{id}
 	class="mdc-banner__icon {className || 'material-icons'}"
 	{style}
-	on:domEvent={forwardDOMEvents}>
+	on:domEvent={forwardDOMEvents}
+>
 	<slot />
 </Icon>

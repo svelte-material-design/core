@@ -1,36 +1,34 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { parseClassList } from "../../common/functions";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/line-ripple/LineRipple:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-
-	import { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// LineRipple
+	//#region imports
 	import { MDCLineRipple } from "@material/line-ripple";
+	import { classList, styleList } from "@raythurnevoid/strings-filter";
 	import { onMount, onDestroy } from "svelte";
 	import { getCSSVariable } from "../../common/theme";
-	import defaults from "./line-ripple.module.scss";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/line-ripple/LineRipple:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
 	export let active = false;
 	/**
 	 * Eg: "primary" | "secondary" | "red" | "#ff0000"
 	 */
-	export let color: string = defaults.activeColor;
+	export let color: string = "initial";
+	//#endregion
 
+	//#region implementation
 	let lineRipple: MDCLineRipple;
 	onMount(() => {
 		lineRipple = new MDCLineRipple(dom);
@@ -56,23 +54,31 @@
 	export function setRippleCenter(xCoordinate: number) {
 		return lineRipple.setRippleCenter(xCoordinate);
 	}
+	//#endregion
 </script>
 
 <div
 	bind:this={dom}
-	{...props}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-line-ripple",
 		[active, "mdc-line-ripple--active"],
 	])}
-	style={parseClassList([
+	style={styleList([
 		[
 			color,
 			`--smui-line-ripple--active-color: ${getActiveColorCSSValue(color)};`,
 		],
 		style,
 	])}
-	use:forwardDOMEvents
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 />

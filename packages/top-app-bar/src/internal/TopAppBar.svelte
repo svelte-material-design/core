@@ -100,4 +100,4 @@
 		<slot {contentClass} />
 	</div>
 </header>
-<slot name="content" className={contentClass} />
+<slot name="content" />

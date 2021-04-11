@@ -34,8 +34,8 @@
 
 	let tab: MDCTab;
 
-	setIconBehaviour("tab");
-	setLabelBehaviour("tab");
+	setIconBehaviour("tab"); //TODO: da eliminare
+	setLabelBehaviour("tab"); //TODO: da eliminare
 
 	onMount(async () => {
 		initialize();

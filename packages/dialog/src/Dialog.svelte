@@ -12,7 +12,7 @@
 	export let id: string = "";
 
 	export let dom: HTMLDivElement = undefined;
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 

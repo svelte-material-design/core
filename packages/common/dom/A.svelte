@@ -13,6 +13,9 @@
 
 	export let href: string = undefined;
 	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <a

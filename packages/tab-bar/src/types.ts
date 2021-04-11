@@ -1,4 +1,4 @@
-export { TabIndicatorTransition } from "../../tab-indicator";
+export type { TabIndicatorTransition } from "../../tab-indicator";
 
 export interface OnTabBarChange {
 	dom: HTMLDivElement;

@@ -3,7 +3,8 @@
 <script lang="ts">
 	//#region  imports
 	import { parseClassList } from "../../common/functions";
-	import { Graphic, GraphicDOM } from "../../common/components";
+	import type { GraphicDOM } from "../../common/components";
+	import { Graphic } from "../../common/components";
 	import type { GraphicType } from "../../common/components";
 	//#endregion
 

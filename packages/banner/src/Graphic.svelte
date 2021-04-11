@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
 	import { DOMEventsForwarder } from "../../common/actions";
@@ -9,15 +11,13 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
 	// Graphic
 	export let alt: string = "";
 </script>
-
-<svelte:options immutable={true} />
 
 <div
 	bind:this={dom}
@@ -27,6 +27,7 @@
 	{style}
 	role="img"
 	{alt}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </div>

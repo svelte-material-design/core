@@ -119,6 +119,6 @@
 	<slot
 		name="content"
 		slot="content"
-		className={innerContentClass || contentClass}
+		class={innerContentClass || contentClass}
 	/>
 </TopAppBar>

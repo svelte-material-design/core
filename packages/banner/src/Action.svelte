@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	//#region Base
 	import { DOMEventsForwarder } from "../../common/events";
@@ -9,7 +11,7 @@
 
 	export let dom: HTMLButtonElement | HTMLAnchorElement = null;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 
@@ -20,15 +22,16 @@
 	export let type: ButtonColor = "primary";
 </script>
 
-<svelte:options immutable={true} />
-
 <Button
 	bind:dom
 	{props}
 	{id}
-	class="{className || ''} {type === 'primary' ? 'mdc-banner__primary-action' : 'mdc-banner__secondary-action'}"
+	class="{className || ''} {type === 'primary'
+		? 'mdc-banner__primary-action'
+		: 'mdc-banner__secondary-action'}"
 	{style}
 	{ripple}
-	on:domEvent={forwardDOMEvents}>
+	on:domEvent={forwardDOMEvents}
+>
 	<slot />
 </Button>

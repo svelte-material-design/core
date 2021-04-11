@@ -1,34 +1,23 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../src/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-
-	export let dom: HTMLOptionElement = null;
-
-	import { BaseProps } from "./Props";
-	export let props: BaseProps = {};
+	export let dom: HTMLOptionElement = undefined;
 	//#endregion
 
-	// Option
-
 	export let value: string;
+	//#endregion
 
-	// A svelte bug thorw error "not implemented empty" when this is used ?
+	//#region implementation
+	//#endregion
 </script>
 
-<option
-	bind:this={dom}
-	{...props}
-	{id}
-	class={className}
-	{style}
-	{value}
-	use:forwardDOMEvents
->
+<option bind:this={dom} {id} class={className} {style} {value} {...$$restProps}>
 	<slot />
 </option>

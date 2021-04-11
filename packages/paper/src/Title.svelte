@@ -9,7 +9,7 @@
 
 	export let dom: HTMLHeadingElement = null;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	export let props: BaseProps = {};
 	//#endregion
 </script>
@@ -20,6 +20,7 @@
 	{id}
 	class="smui-paper__title {className}"
 	{style}
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	<slot />
 </h6>

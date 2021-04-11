@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
 	import { MDCBanner } from "@material/banner";
 
@@ -11,7 +13,7 @@
 
 	export let dom: HTMLDivElement = null;
 
-	import { BaseProps } from "../../common/dom/Props";
+	import type { BaseProps } from "../../common/dom/Props";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { onDestroy, onMount } from "svelte";
 	export let props: BaseProps = {};
@@ -47,8 +49,6 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState value={open} onUpdate={handleOpenChange} />
 
 <div
@@ -58,7 +58,8 @@
 	class="mdc-banner {className} {centered ? 'mdc-banner--centered' : ''}"
 	{style}
 	role="banner"
-	use:forwardDOMEvents>
+	use:forwardDOMEvents
+>
 	{#if fixed}
 		<div class="mdc-banner__fixed">
 			<div class="mdc-banner__content" role="status" aria-live="assertive">
