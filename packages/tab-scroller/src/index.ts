@@ -1,3 +1,1 @@
-import TabScroller from "./TabScroller.svelte";
-
-export { TabScroller };
+export { default as TabScroller } from "./TabScroller.svelte";

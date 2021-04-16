@@ -1,6 +1,6 @@
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -13,14 +13,17 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <div
 	bind:this={dom}
-	{...$$restProps}
 	{id}
-	class={parseClassList([className, "mdc-tab-scroller"])}
+	class={classList([className, "mdc-tab-scroller"])}
 	{style}
+	{...$$restProps}
 >
 	<div class="mdc-tab-scroller__scroll-area">
 		<div class="mdc-tab-scroller__scroll-content">

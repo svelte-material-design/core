@@ -36,7 +36,7 @@
 
 	$: invalid = customValidation ? !customValidation(value) : invalid;
 
-	export let group: SelectionGroupBinding;
+	export let group: SelectionGroupBinding = undefined;
 	//#endregion
 
 	//#region implementation

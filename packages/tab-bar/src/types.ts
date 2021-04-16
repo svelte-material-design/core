@@ -1,13 +1,14 @@
-export type { TabIndicatorTransition } from "../../tab-indicator";
+import type { TabElement } from "../../tab/src/types";
+export type { TabIndicatorTransition } from "../../tab-indicator/src/types";
+export type { OnTabChange } from "../../tab/src/types";
+export type { TabElement };
 
 export interface OnTabBarChange {
 	dom: HTMLDivElement;
-	active: string;
-	index: number;
+	value: string;
 }
 
-export interface OnTabChange {
-	dom: HTMLButtonElement;
-	key: string;
-	active: boolean;
+export interface OnTabBarChildrenChange {
+	dom: HTMLDivElement;
+	items: TabElement[];
 }

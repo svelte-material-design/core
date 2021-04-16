@@ -20,6 +20,7 @@
 	//#endregion
 	//#endregion
 
+	//#region implementation
 	let tabScroller: MDCTabScroller;
 
 	onMount(async () => {
@@ -50,6 +51,7 @@
 	export function getScrollContentWidth() {
 		return tabScroller.getScrollContentWidth();
 	}
+	//#endregion
 </script>
 
-<TabScroller {...$$restProps} bind:dom {id} class={className} {style} />
+<TabScroller bind:dom {id} class={className} {style} {...$$restProps} />

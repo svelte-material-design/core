@@ -3,11 +3,12 @@
 <script lang="ts">
 	//#region imports
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createEventDispatcher, tick } from "svelte";
-	import type { OnTabChange, TabContext } from ".";
+	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { Tab } from "../../tab/src/internal";
 	import { getTabBarContext, setTabContext } from "./TabBarContext";
+	import type { TabContext } from "./TabBarContext";
+	import type { TabElement, OnTabChange } from "./types";
 	//#endregion
 
 	//#region exports
@@ -17,71 +18,68 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLButtonElement = undefined;
+	export let dom: TabElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
-	export let key: any = undefined;
+	export let value: string = undefined;
 	export let stacked: boolean = false;
 	export let useMinWidth: boolean = false;
-	export let active: boolean = false;
+	export let selected: boolean = false;
 	//#endregion
 
+	//#region implementation
 	const dispatch = createEventDispatcher<{
 		change: OnTabChange;
 	}>();
 
-	let internalActive: boolean = active;
-	let activeState: UseState;
-
 	const tabBarContext$ = getTabBarContext();
 	const context = {
-		key,
-		active,
-		async setActive(newValue: boolean) {
-			internalActive = active = newValue;
-			activeState.setValue(active);
-
-			await tick();
-
-			dispatch("change", { dom, key, active });
-		},
+		value,
+		selected,
 	} as TabContext;
 	const context$ = setTabContext(context);
+	$: $context$ = {
+		...Object.assign(context, { ...$context$, value, selected }),
+	};
 
-	$: $context$ = { ...Object.assign(context, { ...$context$, key, active }) };
-
-	function handleActiveChange() {
-		if (active) {
-			$tabBarContext$.setActive(context);
+	async function handleChange(event: CustomEvent<OnSelectableChangeEvent>) {
+		if (selected !== event.detail.selected) {
+			selected = event.detail.selected;
+			await tick();
 		}
+		dispatch("change", { dom, selected });
 	}
+	//#endregion
 </script>
-
-<UseState
-	bind:this={activeState}
-	value={active}
-	onUpdate={handleActiveChange}
-/>
 
 <Selectable
 	{dom}
-	bind:value={key}
-	bind:selected={active}
+	bind:value
+	bind:selected
 	group={$tabBarContext$.group}
-	{context}
+	on:change={handleChange}
 >
 	<Tab
-		{...$$restProps}
 		bind:dom
 		{id}
 		class={className}
 		{style}
-		active={internalActive}
+		{selected}
 		{ripple}
-		{key}
+		{value}
 		{stacked}
 		{useMinWidth}
+		{...$$restProps}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
+		on:focusin
+		on:focusout
 	>
 		<slot />
 	</Tab>

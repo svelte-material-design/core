@@ -19,20 +19,22 @@
 	//#endregion
 	//#endregion
 
+	//#region implementation
 	let tabBarContext$ = getTabBarContext();
 	let tabContext$ = getTabContext();
 
 	onMount(() => {
 		$tabBarContext$.reinitialize();
 	});
+	//#endregion
 </script>
 
 <TabIndicator
-	{...$$restProps}
 	bind:dom
 	{id}
 	class={className}
 	{style}
-	active={$tabContext$.active}
+	active={$tabContext$.selected}
 	transition={$tabBarContext$.transition}
+	{...$$restProps}
 />

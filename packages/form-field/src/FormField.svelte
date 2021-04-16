@@ -8,7 +8,8 @@
 	//#region imports
 	import { MDCFormField } from "@material/form-field";
 	import { onMount, onDestroy } from "svelte";
-	import { FormFieldLabelAlign, createFormFieldContext } from "./";
+	import type { FormFieldLabelAlign } from "./";
+	import { createFormFieldContext } from "./";
 	//#endregion
 
 	//#region exports

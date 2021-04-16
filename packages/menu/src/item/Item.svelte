@@ -10,7 +10,8 @@
 	import { Item } from "../internal";
 	import { getMenuContext } from "..";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { createEventDispatcher } from "svelte";
+	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { createEventDispatcher, tick } from "svelte";
 	import type { OnItemChangeEvent } from "./types";
 	//#endregion
 
@@ -40,7 +41,11 @@
 		selected = false;
 	}
 
-	async function handleChange() {
+	async function handleChange(event: CustomEvent<OnSelectableChangeEvent>) {
+		if (selected !== event.detail.selected) {
+			selected = event.detail.selected;
+			await tick();
+		}
 		dispatch("change", { dom, selected });
 	}
 	//#endregion

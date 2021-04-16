@@ -4,7 +4,7 @@
 	import { MDCTabIndicator } from "@material/tab-indicator";
 	import { onMount, onDestroy } from "svelte";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { TabIndicatorTransition } from ".";
+	import type { TabIndicatorTransition } from ".";
 	//#endregion
 
 	//#region exports
@@ -21,6 +21,7 @@
 	export let transition: TabIndicatorTransition = "slide";
 	//#endregion
 
+	//#region implementation
 	let tabIndicator: MDCTabIndicator;
 
 	onMount(async () => {
@@ -38,16 +39,17 @@
 			tabIndicator.deactivate();
 		}
 	}
+	//#endregion
 </script>
 
 <UseState value={active} onUpdate={handleActivateChange} />
 
 <TabIndicator
-	{...$$restProps}
 	bind:dom
 	{id}
 	class={className}
 	{style}
 	{active}
 	{transition}
+	{...$$restProps}
 />

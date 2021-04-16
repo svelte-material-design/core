@@ -4,7 +4,7 @@
 	//#region  imports
 	import { Graphic } from "../../../common/components";
 	import type { GraphicType } from "../../../common/components";
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { IconDOM } from "..";
 	//#endregion
 
@@ -27,15 +27,16 @@
 
 <Graphic
 	bind:dom
-	{...$$restProps}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-tab__icon",
 		[type === "icon" && className == undefined, "material-icons"],
 	])}
 	{style}
 	{type}
+	aria-hidden="true"
+	{...$$restProps}
 >
 	<slot />
 </Graphic>

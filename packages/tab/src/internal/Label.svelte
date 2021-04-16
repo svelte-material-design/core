@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -15,14 +15,17 @@
 	export let dom: HTMLSpanElement = undefined;
 	//#endregion
 	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <span
 	bind:this={dom}
-	{...$$restProps}
 	{id}
-	class={parseClassList([className, "mdc-tab__text-label"])}
+	class={classList([className, "mdc-tab__text-label"])}
 	{style}
+	{...$$restProps}
 >
 	<slot />
 </span>

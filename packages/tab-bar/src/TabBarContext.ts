@@ -17,7 +17,6 @@ export interface TabBarContext {
 export const [setTabContext, getTabContext] = createContextStore<TabContext>();
 
 export interface TabContext {
-	key: string;
-	active: boolean;
-	setActive: (active: boolean) => void;
+	value: string;
+	selected: boolean;
 }

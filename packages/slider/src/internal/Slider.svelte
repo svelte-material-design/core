@@ -8,11 +8,10 @@
 	import { getFormFieldContext } from "../../../form-field";
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
 	import { Track } from ".";
-	import { RangeContext, setSliderContext } from "../SliderContext";
-	import {
-		Group,
-		GroupItemContext,
-	} from "@raythurnevoid/svelte-group-components/ts/components-group";
+	import { setSliderContext } from "../SliderContext";
+	import type { RangeContext } from "../SliderContext";
+	import type { GroupItemContext } from "@raythurnevoid/svelte-group-components/ts/components-group";
+	import { Group } from "@raythurnevoid/svelte-group-components/ts/components-group";
 	import type { OnSliderChangeEvent, OnSliderInputEvent } from "../types";
 	//#endregion
 

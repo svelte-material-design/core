@@ -6,13 +6,20 @@
 
 <script lang="ts">
 	//#region imports
-	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
-	import { MDCTabBar, MDCTabBarActivatedEvent } from "@material/tab-bar";
-	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { TabScroller, TabIndicatorTransition } from ".";
-	import type { OnTabBarChange, TabContext } from ".";
-	import { parseClassList } from "../../common/functions";
-	import { SingleSelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { createEventDispatcher, onDestroy, onMount } from "svelte";
+	import { MDCTabBar } from "@material/tab-bar";
+	import type { MDCTabBarActivatedEvent } from "@material/tab-bar";
+	import { UseState } from "@raythurnevoid/svelte-hooks/ts";
+	import { TabScroller } from ".";
+	import type {
+		TabIndicatorTransition,
+		OnTabBarChildrenChange,
+		OnTabBarChange,
+		TabContext,
+	} from ".";
+	import { classList } from "@raythurnevoid/strings-filter";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { setTabBarContext } from "./TabBarContext";
 	//#endregion
 
@@ -28,25 +35,29 @@
 
 	export let focusOnActivate: boolean = true;
 	export let activateOnKeyboardNavigation: boolean = true;
-	export let active: string = undefined;
-	export let transition: TabIndicatorTransition;
+	export let value: string = undefined;
+	export let transition: TabIndicatorTransition = "slide";
+	export let nullable: boolean = false;
+	export let group: SelectionGroupBinding = undefined;
 	//#endregion
 
+	//#region implementation
 	const dispatch = createEventDispatcher<{
 		change: OnTabBarChange;
+		optionsChange: OnTabBarChildrenChange;
 	}>();
 
 	let tabBar: MDCTabBar;
-	let selectionGroup: SingleSelectionGroup;
-	let initialized: boolean = false;
+	let selectionGroup: SelectionGroup;
+	let valueState: UseState;
 
 	const context$ = setTabBarContext({
 		transition,
 		setActive(tab: TabContext) {
-			active = tab.key;
+			value = tab.value;
 		},
 		reinitialize() {
-			if (initialized) {
+			if (tabBar) {
 				initialize();
 			}
 		},
@@ -57,18 +68,7 @@
 		$context$ = { ...$context$, group: selectionGroup.getBindings() };
 
 		initialize();
-		initialized = true;
 	});
-
-	function initialize() {
-		tabBar?.destroy();
-		tabBar = new MDCTabBar(dom);
-		tabBar.listen("MDCTabBar:activated", handleActivated);
-		if (active) {
-			const activeTabIndex = getTabs().indexOf(getActiveTab());
-			tabBar.activateTab(activeTabIndex);
-		}
-	}
 
 	$: if (tabBar) {
 		if (tabBar.focusOnActivate !== focusOnActivate) {
@@ -84,72 +84,89 @@
 		tabBar?.destroy();
 	});
 
-	async function handleActivated(event: MDCTabBarActivatedEvent) {
-		const index = event.detail.index;
-		active = getTabs()[index].key;
-
-		await tick();
-
-		dispatch("change", {
-			dom,
-			index,
-			active,
-		});
-
-		const tabContext = selectionGroup
-			.getItems()
-			[index].getContext() as TabContext;
-
-		tabContext.setActive(true);
-	}
-
-	async function handleActiveValueChange(oldValue: string) {
-		if (tabBar) {
-			if (active) {
-				const activeIndex = getTabs().findIndex((tab) => tab.key === active);
-				tabBar.activateTab(activeIndex);
-			} else {
-				const previouslyActiveTab = getTabs().find(
-					(tab) => tab.key === oldValue
-				);
-				previouslyActiveTab.setActive(false);
-				await tick();
-				initialize();
-			}
+	function initialize() {
+		tabBar?.destroy();
+		tabBar = new MDCTabBar(dom);
+		tabBar.listen("MDCTabBar:activated", handleActivated);
+		if (value) {
+			const activeTabIndex = getSelectedTabIndex();
+			tabBar.activateTab(activeTabIndex);
 		}
 	}
 
-	function getActiveTab() {
-		return getTabs().find((tab) => tab.key === active);
+	function handleOptionsChange() {
+		initialize();
+		dispatch("optionsChange", {
+			dom,
+			items: selectionGroup
+				.getItems()
+				.map((item) => item.dom as HTMLButtonElement),
+		});
 	}
 
-	function getTabs(): TabContext[] {
-		const tabs = selectionGroup.getItems();
-		return tabs ? tabs.map((item) => item.externalContext) : [];
+	async function handleActivated(event: MDCTabBarActivatedEvent) {
+		const index = event.detail.index;
+		const selectedItem = selectionGroup.getItems()[index];
+		selectionGroup.setSelected(selectedItem, true);
+	}
+
+	async function handleTabSelection() {
+		const selectedTabIndex = getSelectedTabIndex();
+		tabBar.activateTab(selectedTabIndex);
+		dispatch("change", {
+			dom,
+			value,
+		});
+	}
+
+	async function handleActiveValueChange() {
+		if (tabBar && value) {
+			const activeIndex = getSelectedTabIndex();
+			tabBar.activateTab(activeIndex);
+		}
+	}
+
+	function getSelectedTabIndex() {
+		const items = selectionGroup.getItems();
+		return items.findIndex((tab) => tab.value === value);
 	}
 
 	export function scrollIntoView(index: number) {
 		return tabBar.scrollIntoView(index);
 	}
+	//#endregion
 </script>
 
-<UseState value={active} onUpdate={handleActiveValueChange} />
+<UseState bind:this={valueState} {value} onUpdate={handleActiveValueChange} />
 
-<SingleSelectionGroup
+<SelectionGroup
 	bind:this={selectionGroup}
-	bind:value={active}
-	on:optionsChange={initialize}
+	bind:value
+	{nullable}
+	{group}
+	selectionType="single"
+	on:change={handleTabSelection}
+	on:optionsChange={handleOptionsChange}
 >
 	<div
 		bind:this={dom}
-		{...$$restProps}
 		{id}
-		class={parseClassList([className, "mdc-tab-bar"])}
+		class={classList([className, "mdc-tab-bar"])}
 		{style}
 		role="tablist"
+		{...$$restProps}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
+		on:focusin
+		on:focusout
 	>
 		<TabScroller>
 			<slot />
 		</TabScroller>
 	</div>
-</SingleSelectionGroup>
+</SelectionGroup>

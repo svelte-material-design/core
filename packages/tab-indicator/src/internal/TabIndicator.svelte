@@ -1,11 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	import { onMount } from "svelte";
-
 	//#region imports
-	import { parseClassList } from "../../../common/functions";
-	import { TabIndicatorTransition } from "..";
+	import { classList } from "@raythurnevoid/strings-filter";
+	import type { TabIndicatorTransition } from "..";
 	//#endregion
 
 	//#region exports
@@ -22,23 +20,25 @@
 	export let transition: TabIndicatorTransition = "slide";
 	//#endregion
 
+	//#region implementation
 	let type: "underline" | "icon" = "underline"; //TODO: icon;
+	//#endregion
 </script>
 
 <span
 	bind:this={dom}
-	{...$$restProps}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-tab-indicator",
 		[active, "mdc-tab-indicator--active"],
 		[transition === "fade", "mdc-tab-indicator--fade"],
 	])}
 	{style}
+	{...$$restProps}
 >
 	<span
-		class={parseClassList([
+		class={classList([
 			"mdc-tab-indicator__content",
 			[type === "underline", "mdc-tab-indicator__content--underline"],
 			[type === "icon", "mdc-tab-indicator__content--icon"],

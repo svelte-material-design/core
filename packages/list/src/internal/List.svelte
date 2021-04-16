@@ -46,7 +46,7 @@
 	export let wrapFocus: boolean = false;
 	export let typeahead: boolean = false;
 
-	export let group: SelectionGroupBinding;
+	export let group: SelectionGroupBinding = undefined;
 	export let selectionType: SelectionType = undefined;
 
 	export let disableMDCInstance: boolean = false;

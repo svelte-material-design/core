@@ -2,7 +2,9 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
+	import { A, Button } from "../../../common/dom";
+	import type { TabElement } from "../types";
 	//#endregion
 
 	//#region exports
@@ -12,32 +14,48 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLButtonElement = undefined;
+	export let dom: TabElement = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;
-	export let active: boolean = false;
+	export let selected: boolean = false;
 	export let stacked: boolean = false;
 	export let useMinWidth: boolean = false;
+	export let href: string = undefined;
+	//#endregion
+
+	//#region implementation
+	let component: typeof Button | typeof A = href ? A : Button;
 	//#endregion
 </script>
 
-<button
-	bind:this={dom}
-	{...$$restProps}
+<svelte:component
+	this={component}
+	bind:dom
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-tab",
-		[active, "mdc-tab--active"],
+		[selected, "mdc-tab--active"],
 		[stacked, "mdc-tab--stacked"],
 		[useMinWidth, "mdc-tab--min-width"],
 	])}
 	{style}
 	role="tab"
-	aria-selected={active}
-	tabindex={active ? 0 : -1}
+	aria-selected={selected}
+	tabindex={selected ? 0 : -1}
+	{href}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
 	{#if ripple}<span class="mdc-tab__ripple" />{/if}
-</button>
+</svelte:component>

@@ -10,8 +10,7 @@
 	import { MDCTab } from "@material/tab";
 	import { onMount, onDestroy } from "svelte";
 	import { Tab } from "./internal";
-	import { setLabelBehaviour } from "../../common/dom/LabelContext";
-	import { setIconBehaviour } from "../../common/dom";
+	import type { TabElement } from "./types";
 	//#endregion
 
 	//#region exports
@@ -21,21 +20,20 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@smui/tab/Tab:${count++}`;
-	export let dom: HTMLButtonElement = undefined;
+	export let dom: TabElement = undefined;
 	//#endregion
 
+	export let value: string = undefined;
 	export let ripple: boolean = true;
-	export let key: any = undefined;
-	export let active: boolean = false;
+	export let selected: boolean = false;
 	export let stacked: boolean = false;
 	export let useMinWidth: boolean = false;
+	export let href: string = undefined;
 	export let focusOnActivate: boolean = true;
 	//#endregion
 
+	//#region implementation
 	let tab: MDCTab;
-
-	setIconBehaviour("tab"); //TODO: da eliminare
-	setLabelBehaviour("tab"); //TODO: da eliminare
 
 	onMount(async () => {
 		initialize();
@@ -56,7 +54,7 @@
 		tab = new MDCTab(dom);
 		tab.listen("MDCTab:interacted", interactedHandler);
 
-		if (active) {
+		if (selected) {
 			tab.activate();
 		} else {
 			tab.deactivate();
@@ -64,12 +62,12 @@
 	}
 
 	function interactedHandler() {
-		active = tab.active;
+		selected = tab.active;
 	}
 
 	function onActiveChange() {
-		if (tab && tab.active !== active) {
-			if (active) {
+		if (tab && tab.active !== selected) {
+			if (selected) {
 				tab.activate();
 			} else {
 				tab.deactivate();
@@ -78,11 +76,11 @@
 	}
 
 	export function activate() {
-		active = true;
+		selected = true;
 	}
 
 	export function deactivate() {
-		active = false;
+		selected = false;
 	}
 
 	export function focus() {
@@ -96,22 +94,33 @@
 	export function computeDimensions() {
 		return tab.computeDimensions();
 	}
+	//#endregion
 </script>
 
-<UseState value={active} onUpdate={onActiveChange} />
+<UseState value={selected} onUpdate={onActiveChange} />
 
 <Tab
-	{...$$restProps}
 	bind:dom
 	{id}
 	class={className}
 	{style}
-	{active}
-	{key}
+	{selected}
+	{value}
 	{focusOnActivate}
 	{useMinWidth}
 	{ripple}
 	{stacked}
+	{href}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
 </Tab>

@@ -1,3 +1,1 @@
-import TabIndicator from "./TabIndicator.svelte";
-
-export { TabIndicator };
+export { default as TabIndicator } from "./TabIndicator.svelte";

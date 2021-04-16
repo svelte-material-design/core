@@ -6,10 +6,13 @@
 
 <script lang="ts">
 	//#region  imports
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, tick } from "svelte";
 	import { getListContext } from "../";
 	import type { OnItemChangeEvent } from ".";
-	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import {
+		OnSelectableChangeEvent,
+		Selectable,
+	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { Item } from "../internal";
 	//#endregion
@@ -41,7 +44,11 @@
 		selected = false;
 	}
 
-	async function handleChange() {
+	async function handleChange(event: CustomEvent<OnSelectableChangeEvent>) {
+		if (selected !== event.detail.selected) {
+			selected = event.detail.selected;
+			await tick();
+		}
 		dispatch("change", { dom, selected });
 	}
 	//#endregion

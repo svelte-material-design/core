@@ -35,14 +35,14 @@
 	export let invalid: boolean = false;
 	export let required: boolean = false;
 
-	export let group: SelectionGroupBinding;
+	export let group: SelectionGroupBinding = undefined;
 	//#endregion
 
 	//#region implementation
-	let selectImpl: Select;
+	let select: Select;
 
 	async function handleOptionsUpdated() {
-		selectImpl?.updateOptions();
+		select?.updateOptions();
 	}
 	//#endregion
 </script>
@@ -56,7 +56,7 @@
 	let:group
 >
 	<Select
-		bind:this={selectImpl}
+		bind:this={select}
 		bind:dom
 		{...$$restProps}
 		{id}
