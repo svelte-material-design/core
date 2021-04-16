@@ -7,7 +7,7 @@
 <script lang="ts">
 	//#region imports
 	import type { CardVariant } from ".";
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -30,7 +30,7 @@
 <div
 	bind:this={dom}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-card",
 		[variant === "outlined", "mdc-card--outlined"],

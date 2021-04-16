@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { FloatingLabel } from "../../../floating-label/src/dom";
 	import { LineRipple } from "../../../line-ripple";
 	import { NotchedOutline } from "../../../notched-outline";
@@ -50,7 +50,7 @@
 	bind:this={dom}
 	{...$$restProps}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-select",
 		[variant === "filled", "mdc-select--filled"],
@@ -61,14 +61,14 @@
 		[invalid, "mdc-select--invalid"],
 		[!slots.label, "mdc-select--no-label"],
 	])}
-	style={parseClassList([style])}
+	style={classList([style])}
 	{...$$restProps}
 >
 	<div
 		class="mdc-select__anchor"
 		role="button"
 		aria-haspopup="listbox"
-		aria-labelledby={parseClassList([labelId, selectedTextId])}
+		aria-labelledby={classList([labelId, selectedTextId])}
 		aria-required={required || null}
 		aria-disabled={disabled || null}
 		aria-controls={helperTextId}

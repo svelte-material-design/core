@@ -17,7 +17,7 @@
 	// Icon
 	import type { GraphicDOM, GraphicType } from "../../common/components";
 	import { Graphic } from "../../common/components";
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { onMount, tick } from "svelte";
 	import { getChipContext } from "./ChipContext";
 	import { getChipSetContext } from "./ChipSetContext";
@@ -59,7 +59,7 @@
 	bind:dom
 	{props}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-chip__icon",
 		[type === "icon" && className == undefined, "material-icons"],

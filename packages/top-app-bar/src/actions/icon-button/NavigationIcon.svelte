@@ -4,7 +4,7 @@
 	//#region  imports
 	import "../../../../icon-button";
 	import { IconButton } from "../../../../icon-button/src/internal";
-	import { parseClassList } from "../../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { IconButtonColor } from ".";
 	import { Icon } from "..";
 	//#endregion
@@ -31,7 +31,7 @@
 <IconButton
 	bind:dom
 	{id}
-	class={parseClassList([className, "mdc-top-app-bar__navigation-icon"])}
+	class={classList([className, "mdc-top-app-bar__navigation-icon"])}
 	{style}
 	{disabled}
 	{color}

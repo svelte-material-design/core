@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { IconButton } from "../../../icon-button";
 	//#endregion
 
@@ -33,7 +33,7 @@
 	bind:dom
 	{...$$restProps}
 	{id}
-	class={parseClassList([className, "mdc-snackbar__action"])}
+	class={classList([className, "mdc-snackbar__action"])}
 	{style}
 	{ripple}
 	type="button"

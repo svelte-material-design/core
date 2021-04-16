@@ -5,7 +5,7 @@
 	import { Ol, Ul } from "../../../common/dom";
 	import type { ListOrientation, ListItemsStyle } from "..";
 	import type { ListElement, ListComponent } from "./types";
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -47,7 +47,7 @@
 	this={component}
 	bind:dom
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-list",
 		[dense, "mdc-list--dense"],

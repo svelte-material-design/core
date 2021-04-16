@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { GraphicDOM } from "../../common/components";
 	import { Graphic } from "../../common/components";
 	import type { GraphicType } from "../../common/components";
@@ -28,7 +28,7 @@
 <Graphic
 	bind:dom
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-button__icon",
 		[type === "icon" && className == undefined, "material-icons"],

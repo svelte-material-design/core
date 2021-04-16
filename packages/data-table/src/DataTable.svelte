@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className: string = undefined;
@@ -99,7 +99,7 @@
 <div
 	bind:this={dom}
 	{...props}
-	class={parseClassList([className, "mdc-data-table"])}
+	class={classList([className, "mdc-data-table"])}
 	{style}
 	{id}
 	use:forwardDOMEvents

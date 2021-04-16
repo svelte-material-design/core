@@ -1,5 +1,5 @@
 import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
-import type { StringListToFilter } from "../../common/functions";
+import type { StringList } from "@raythurnevoid/strings-filter";
 import type { InputFieldVariant } from "./types";
 
 const [
@@ -16,7 +16,7 @@ export interface InputFieldContext {
 	ripple: boolean;
 	lineRipple?: boolean;
 	variant?: InputFieldVariant;
-	inputFieldClassList: StringListToFilter;
+	inputFieldClassList: StringList;
 	textArea: boolean;
 	setInputElement(inputElement: HTMLInputElement | HTMLTextAreaElement): void;
 	setHelperTextId(id: string): void;

@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -23,7 +23,7 @@
 <div
 	bind:this={dom}
 	{id}
-	class={parseClassList([className, "mdc-card__media-content"])}
+	class={classList([className, "mdc-card__media-content"])}
 	{style}
 	{...$$restProps}
 >

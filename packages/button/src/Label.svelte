@@ -1,7 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	import { parseClassList } from "../../common/functions";
+	//#region imports
+	import { classList } from "@raythurnevoid/strings-filter";
+	//#endregion
 
 	//#region exports
 	//#region base
@@ -18,7 +20,7 @@
 	bind:this={dom}
 	{...$$restProps}
 	{id}
-	class={parseClassList([className, "mdc-button__label"])}
+	class={classList([className, "mdc-button__label"])}
 	{style}
 	{...$$restProps}
 >

@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	let className: string = undefined;
 
 	export { className as class };
@@ -21,7 +21,7 @@
 	bind:this={dom}
 	{...$$restProps}
 	{id}
-	class={parseClassList([className, "mdc-snackbar__label"])}
+	class={classList([className, "mdc-snackbar__label"])}
 	{style}
 	aria-atomic="false"
 >

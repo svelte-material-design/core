@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -23,7 +23,7 @@
 <div
 	bind:this={dom}
 	{id}
-	class={parseClassList([className, "svmd-card__horizontal-layout"])}
+	class={classList([className, "svmd-card__horizontal-layout"])}
 	{style}
 	{...$$restProps}
 >

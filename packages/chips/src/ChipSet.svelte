@@ -8,7 +8,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className: string = undefined;
@@ -107,7 +107,7 @@
 		{...props}
 		role="grid"
 		{id}
-		class={parseClassList([
+		class={classList([
 			className,
 			"mdc-chip-set",
 			[entryAnimation, "mdc-chip-set--input"],

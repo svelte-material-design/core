@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { MDCSlider } from "@material/slider";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getFormFieldContext } from "../../../form-field";
@@ -231,7 +231,7 @@
 		<div
 			bind:this={dom}
 			{id}
-			class={parseClassList([
+			class={classList([
 				className,
 				"mdc-slider",
 				[step, "mdc-slider--discrete"],

@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { DOMEventsForwarder } from "../../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className: string = undefined;
@@ -53,7 +53,7 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, "mdc-data-table__pagination"])}
+	class={classList([className, "mdc-data-table__pagination"])}
 	{style}
 	use:forwardDOMEvents
 >

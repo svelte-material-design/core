@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { DOMEventsForwarder } from "../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className: string = undefined;
@@ -34,7 +34,7 @@
 	bind:dom
 	{props}
 	{id}
-	class={parseClassList([className, "mdc-data-table__linear-progress"])}
+	class={classList([className, "mdc-data-table__linear-progress"])}
 	{style}
 	indeterminate
 	{ariaLabel}

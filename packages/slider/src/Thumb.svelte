@@ -8,7 +8,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { getFormFieldContext } from "../../form-field";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { getSliderContext, getRangeContext } from "./SliderContext";
@@ -85,7 +85,7 @@
 <div
 	bind:this={dom}
 	{id}
-	class={parseClassList([className, "mdc-slider__thumb"])}
+	class={classList([className, "mdc-slider__thumb"])}
 	{style}
 	{...$$restProps}
 	role="slider"
@@ -94,7 +94,7 @@
 	{#if $sliderContext$.discrete}
 		<div class="mdc-slider__value-indicator-container">
 			<div
-				class={parseClassList([
+				class={classList([
 					"mdc-slider__value-indicator",
 					[!$$slots.default, "svmd-slider__value-indicator--hidden"],
 				])}

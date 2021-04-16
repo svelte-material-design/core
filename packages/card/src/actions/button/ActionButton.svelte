@@ -3,7 +3,7 @@
 <script lang="ts">
 	//#region imports
 	import { Button } from "../../../../button/src";
-	import { parseClassList } from "../../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { ButtonColor, ButtonVariant } from ".";
 	import { setActionType } from "../ActionsContext";
 	//#endregion
@@ -33,11 +33,7 @@
 <Button
 	bind:dom
 	{id}
-	class={parseClassList([
-		className,
-		"mdc-card__action",
-		"mdc-card__action--button",
-	])}
+	class={classList([className, "mdc-card__action", "mdc-card__action--button"])}
 	{style}
 	{ripple}
 	{color}

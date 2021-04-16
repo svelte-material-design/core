@@ -3,7 +3,7 @@
 <script lang="ts">
 	//#region imports
 	import { IconButtonToggle } from "../../../../icon-button-toggle/src/internal";
-	import { parseClassList } from "../../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { IconButtonColor } from "../..";
 	//#endregion
 
@@ -32,7 +32,7 @@
 <IconButtonToggle
 	bind:dom
 	{id}
-	class={parseClassList([className, "mdc-card__action-icons"])}
+	class={classList([className, "mdc-card__action-icons"])}
 	{style}
 	bind:active
 	{disabled}

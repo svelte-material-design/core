@@ -11,7 +11,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className: string = undefined;
@@ -81,7 +81,7 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"smui-image-list",
 		"mdc-image-list",
@@ -90,7 +90,7 @@
 		[variant === "masonry", "mdc-image-list--masonry"],
 		[textProtection, "mdc-image-list--with-text-protection"],
 	])}
-	style={parseClassList([
+	style={classList([
 		style,
 		`--smui-image-list--columns: ${columns};`,
 		[gap, `--smui-image-list--gap: ${gap};`],

@@ -14,10 +14,10 @@
 
 	// Icon
 	import type { GraphicDOM } from "../../common/components";
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 </script>
 
-<span class={parseClassList(["mdc-chip__checkmark", className])} on:click>
+<span class={classList(["mdc-chip__checkmark", className])} on:click>
 	<svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
 		{#if !$$slots.default}
 			<path

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { Ripple } from "../../ripple";
 	import type { FabColor, FabVariant } from ".";
 	//#endregion
@@ -36,7 +36,7 @@
 		bind:this={dom}
 		{...$$restProps}
 		{id}
-		class={parseClassList([
+		class={classList([
 			className,
 			"mdc-fab",
 			[variant === "mini", "mdc-fab--mini"],

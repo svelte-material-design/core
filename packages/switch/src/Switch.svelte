@@ -24,7 +24,7 @@
 	import { Selectable } from "../../common/hoc";
 	import { getFormFieldContext } from "../../form-field";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { parseClassList } from "../../common/src/functions";
+	import { classList } from "../../common/src/functions";
 	import { SwitchChangeEvent } from ".";
 
 	export let ripple: boolean = true;
@@ -124,7 +124,7 @@
 		bind:this={dom}
 		{...props}
 		{id}
-		class={parseClassList([
+		class={classList([
 			className,
 			"mdc-switch",
 			[disabled, "mdc-switch--disabled"],

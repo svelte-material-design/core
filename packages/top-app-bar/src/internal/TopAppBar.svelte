@@ -4,7 +4,7 @@
 	//#region  imports
 	import { MDCTopAppBar } from "@material/top-app-bar";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type {
 		TopAppBarVariant,
 		TopAppBarColor,
@@ -85,7 +85,7 @@
 <header
 	bind:this={dom}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-top-app-bar",
 		[variant === "fixed", "mdc-top-app-bar--fixed"],

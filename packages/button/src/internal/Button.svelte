@@ -5,7 +5,7 @@
 	import { Ripple } from "../../../ripple";
 	import type { ButtonColor, ButtonVariant } from "..";
 	import { Button, A } from "../../../common/dom";
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -37,7 +37,7 @@
 		this={component}
 		bind:dom
 		{id}
-		class={parseClassList([
+		class={classList([
 			className,
 			"mdc-button",
 			[variant, `mdc-button--${variant}`],

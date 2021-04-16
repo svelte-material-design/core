@@ -4,7 +4,7 @@
 	//#region imports
 	import "../../../../icon-button";
 	import { IconButton } from "../../../../icon-button/src/internal";
-	import { parseClassList } from "../../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { IconButtonDOM, IconButtonColor } from ".";
 	import { setActionType } from "../ActionsContext";
 	//#endregion
@@ -32,7 +32,7 @@
 <IconButton
 	bind:dom
 	{id}
-	class={parseClassList([className, "mdc-top-app-bar__action-item"])}
+	class={classList([className, "mdc-top-app-bar__action-item"])}
 	{style}
 	{disabled}
 	{color}

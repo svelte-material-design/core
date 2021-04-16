@@ -4,7 +4,7 @@
 	//#region imports
 	import "../../../../button";
 	import { Button } from "../../../../button/src";
-	import { parseClassList } from "../../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { ButtonColor, ButtonVariant } from ".";
 	import { setActionType } from "../ActionsContext";
 	//#endregion
@@ -34,7 +34,7 @@
 <Button
 	bind:dom
 	{id}
-	class={parseClassList([className, "mdc-top-app-bar__action-item"])}
+	class={classList([className, "mdc-top-app-bar__action-item"])}
 	{style}
 	{ripple}
 	{color}

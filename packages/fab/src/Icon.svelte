@@ -3,7 +3,7 @@
 <script lang="ts">
 	//#region  imports
 	import { Graphic } from "../../common/components";
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { IconDOM, IconType } from ".";
 	//#endregion
 
@@ -28,7 +28,7 @@
 	bind:dom
 	{...$$restProps}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-fab__icon",
 		[type === "icon" && className == undefined, "material-icons"],

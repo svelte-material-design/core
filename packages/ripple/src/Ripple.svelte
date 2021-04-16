@@ -4,7 +4,7 @@
 	import { onDestroy, onMount, tick } from "svelte";
 	import { SMUIRipple } from "./SMUIRipple";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 
 	export let target: HTMLElement;
 	export let unbounded: boolean = undefined;
@@ -15,7 +15,7 @@
 	let forwardedClasses: string = "";
 	let ripple: SMUIRipple;
 
-	$: rippleClasses = parseClassList([
+	$: rippleClasses = classList([
 		"mdc-ripple-upgraded",
 		[color, "mdc-ripple-surface"],
 		[color === "primary", "mdc-ripple-surface--primary"],

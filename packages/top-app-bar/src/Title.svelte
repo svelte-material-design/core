@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { A, Span } from "../../common/dom";
 	//#endregion
 
@@ -28,7 +28,7 @@
 	this={component}
 	bind:dom
 	{id}
-	class={parseClassList([className, "mdc-top-app-bar__title"])}
+	class={classList([className, "mdc-top-app-bar__title"])}
 	{style}
 	{...$$restProps}
 >

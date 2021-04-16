@@ -14,32 +14,4 @@ export function filterStringList(toFilter: StringListToFilter): string[] {
 	}
 }
 
-export function parseClassList(toParse: StringListToFilter): string {
-	let parsed: string;
-
-	const parsedArray = filterStringList(toParse);
-
-	if (parsedArray) {
-		parsed = parsedArray.join(" ");
-	} else {
-		parsed = undefined;
-	}
-
-	return parsed;
-}
-
-export function parseStylesList(toParse: StringListToFilter): string {
-	let parsed: string;
-
-	const parsedArray = filterStringList(toParse);
-
-	if (parsedArray) {
-		parsed = parsedArray.join("; ");
-	} else {
-		parsed = undefined;
-	}
-
-	return parsed;
-}
-
 export type StringListToFilter = (string | [any, string])[];

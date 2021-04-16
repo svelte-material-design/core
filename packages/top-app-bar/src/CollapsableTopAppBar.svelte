@@ -7,7 +7,7 @@
 <script lang="ts">
 	//#region  imports
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { OnTopAppBarCollapsedChange, TopAppBarColor } from ".";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { TopAppBar } from "./internal";
@@ -98,7 +98,7 @@
 	bind:this={topAppBar}
 	bind:dom
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-top-app-bar--short",
 		[alwaysCollapsed, "mdc-top-app-bar--short-collapsed"],

@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -24,7 +24,7 @@
 	bind:this={dom}
 	{...$$restProps}
 	{id}
-	class={parseClassList([className, "mdc-fab__label"])}
+	class={classList([className, "mdc-fab__label"])}
 	{style}
 >
 	<slot />

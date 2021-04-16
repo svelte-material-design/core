@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { DOMEventsForwarder } from "../../common/events";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className: string = undefined;
@@ -59,7 +59,7 @@
 	bind:dom
 	props={{ ...props, ...actionProps }}
 	{id}
-	class={parseClassList([className, "mdc-dialog__button"])}
+	class={classList([className, "mdc-dialog__button"])}
 	{style}
 	{ripple}
 	{color}

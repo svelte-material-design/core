@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { Ripple } from "../../ripple";
 	//#endregion
 
@@ -27,11 +27,7 @@
 	<div
 		bind:this={dom}
 		{id}
-		class={parseClassList([
-			className,
-			"mdc-card__primary-action",
-			rippleClasses,
-		])}
+		class={classList([className, "mdc-card__primary-action", rippleClasses])}
 		{style}
 		tab-index="0"
 		{...$$restProps}

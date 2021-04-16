@@ -17,7 +17,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className: string = undefined;
@@ -153,7 +153,7 @@
 		{...props}
 		{id}
 		role="row"
-		class={parseClassList([className, "mdc-chip"])}
+		class={classList([className, "mdc-chip"])}
 		{style}
 		use:forwardDOMEvents
 	>

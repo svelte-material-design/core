@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from "..";
 	import type { ButtonColor, ButtonVariant } from "..";
-	import { parseClassList, parseStylesList } from "../../../common/functions";
+	import { classList, styleList } from "@raythurnevoid/strings-filter";
 	import { themeColor } from "../../../common/theme";
 
 	//#region exports
@@ -51,7 +51,7 @@
 <Button
 	bind:dom
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		[density != null, `smui-button--dense--${density}`],
 		[
@@ -63,7 +63,7 @@
 			`smui-button--dense-${density}--shape-rounded`,
 		], */
 	])}
-	style={parseStylesList([
+	style={styleList([
 		[
 			containerFillColor,
 			`--smui-button--container-fill-color: ${themeColor(containerFillColor)}`,

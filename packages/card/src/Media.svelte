@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { AspectRatio } from ".";
 	//#endregion
 
@@ -26,7 +26,7 @@
 <div
 	bind:this={dom}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-card__media",
 		[aspectRatio === "square", "mdc-card__media--square"],

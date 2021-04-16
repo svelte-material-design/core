@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className: string = undefined;
@@ -30,7 +30,7 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, "mdc-dialog__content"])}
+	class={classList([className, "mdc-dialog__content"])}
 	{style}
 	use:forwardDOMEvents
 >

@@ -4,7 +4,7 @@
 	import { MDCTextField } from "@material/textfield";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import type { InputFieldVariant } from "./";
-	import type { StringListToFilter } from "../../common/functions";
+	import type { StringList } from "@raythurnevoid/strings-filter";
 	import { UseState } from "@raythurnevoid/svelte-hooks/ts";
 	import type { Value } from "./types";
 	import { handleInputValidation } from "./functions";
@@ -18,7 +18,7 @@
 	export let label: boolean = false;
 	export let variant: InputFieldVariant = "filled";
 	export let customValidation: GetHTMLValidationMsg = undefined;
-	export let classList: StringListToFilter = [];
+	export let classList: StringList = [];
 	export let inputElement: HTMLInputElement | HTMLTextAreaElement = undefined;
 
 	let textField: MDCTextField;

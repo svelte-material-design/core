@@ -6,7 +6,7 @@
 
 	//#region  imports
 	import { createEventDispatcher, onMount, tick } from "svelte";
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { getSliderContext, setRangeContext } from "./SliderContext";
 	import type { OnRangeChangeEvent } from "./types";
 	//#endregion
@@ -101,7 +101,7 @@
 	<input
 		bind:this={dom}
 		{id}
-		class={parseClassList([className, "mdc-slider__input"])}
+		class={classList([className, "mdc-slider__input"])}
 		{style}
 		{value}
 		{min}

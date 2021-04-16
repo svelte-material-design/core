@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { IconButton, IconButtonColor } from "../../../icon-button";
 	//#endregion
 
@@ -29,7 +29,7 @@
 	bind:dom
 	{...$$restProps}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-snackbar__dismiss",
 		[className == undefined, "material-icons"],

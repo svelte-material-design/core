@@ -7,7 +7,7 @@
 <script lang="ts">
 	//#region imports
 	import { IconButton } from "./internal";
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { IconButtonDOM, IconButtonColor } from ".";
 	//#endregion
 
@@ -34,7 +34,7 @@
 <IconButton
 	bind:dom
 	{id}
-	class={parseClassList([className])}
+	class={classList([className])}
 	{style}
 	{disabled}
 	{href}

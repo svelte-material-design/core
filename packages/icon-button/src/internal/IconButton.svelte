@@ -4,7 +4,7 @@
 	//#region imports
 	import { Button, A } from "../../../common/dom";
 	import { Ripple } from "../../../ripple";
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { IconButtonDOM, IconButtonColor } from "..";
 	//#endregion
 
@@ -35,7 +35,7 @@
 		this={href ? A : Button}
 		bind:dom
 		{id}
-		class={parseClassList([
+		class={classList([
 			className,
 			"mdc-icon-button",
 			[color, `svmd-icon-button--color--${color}`],

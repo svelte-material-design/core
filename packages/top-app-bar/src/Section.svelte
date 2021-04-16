@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
 	//#region exports
@@ -25,7 +25,7 @@
 <section
 	bind:this={dom}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-top-app-bar__section",
 		[align === "start", "mdc-top-app-bar__section--align-start"],

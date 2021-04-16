@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { parseClassList } from "../../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { GraphicType } from "../../../common/components";
 	import { Icon } from "../../../icon-button/src/internal";
 	import type { IconDOM } from "..";
@@ -30,7 +30,7 @@
 	bind:dom
 	{...$$restProps}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-icon-button__icon",
 		[type === "icon" && className == undefined, "material-icons"],

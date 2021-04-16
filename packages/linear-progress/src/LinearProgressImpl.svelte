@@ -14,7 +14,7 @@
 	//#endregion
 
 	// LinearProgressImpl
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { MDCLinearProgress } from "@material/linear-progress";
 	import { onMount, onDestroy, tick } from "svelte";
 	import { UseDebounce, UseState } from "@raythurnevoid/svelte-hooks";
@@ -90,7 +90,7 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([
+	class={classList([
 		className,
 		"mdc-linear-progress",
 		[indeterminate, "mdc-linear-progress--indeterminate"],

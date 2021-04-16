@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region Base
-	import { parseClassList } from "../../common/functions";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import { DOMEventsForwarder } from "../../common/actions";
 	const forwardDOMEvents = DOMEventsForwarder();
 	let className: string = undefined;
@@ -28,7 +28,7 @@
 	bind:this={dom}
 	{...props}
 	{id}
-	class={parseClassList([className, "mdc-image-list__image-aspect-container"])}
+	class={classList([className, "mdc-image-list__image-aspect-container"])}
 	{style}
 	use:forwardDOMEvents
 >
