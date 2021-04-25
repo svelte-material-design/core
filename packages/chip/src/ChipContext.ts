@@ -10,6 +10,9 @@ export interface ChipContext {
 	chip: MDCChip;
 	dom: HTMLDivElement;
 	selected: boolean;
-	setChip(chip: MDCChip): void;
-	reinitializeMDC(): void;
+	value: string;
+	isLeadingIconHidden: boolean;
+	removeOnTrailingIconClick: boolean;
+	reinitialize(): void;
+	setSelected(selected: boolean);
 }

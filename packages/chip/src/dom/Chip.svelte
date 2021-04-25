@@ -1,0 +1,53 @@
+<svelte:options immutable={true} />
+
+<script lang="ts">
+	//#region imports
+	import { classList } from "@raythurnevoid/strings-filter";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
+
+	export let ripple: boolean = true;
+	export let selected: boolean = false;
+	export let accessibleTouch: boolean = false;
+	//#endregion
+
+	//#region implementation
+	//#endregion
+</script>
+
+<div bind:this={dom} class={accessibleTouch ? "accessibleTouch" : undefined}>
+	<div
+		{id}
+		class={classList([
+			className,
+			"mdc-chip",
+			[selected, "mdc-chip--selected"],
+			[accessibleTouch, "mdc-chip--touch"],
+		])}
+		{style}
+		role="row"
+		{...$$restProps}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
+		on:focusin
+		on:focusout
+	>
+		{#if ripple}
+			<div class="mdc-chip__ripple" />
+		{/if}
+		<slot />
+	</div>
+</div>

@@ -1,40 +1,31 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region  imports
-	import "../../../../icon-button";
-	import { IconButton } from "../../../../icon-button/src/internal";
+	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import type { IconButtonColor } from ".";
 	//#endregion
 
 	//#region exports
 	//#region base
 	let className: string = undefined;
-
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLButtonElement = undefined;
+	export let dom: HTMLSpanElement = undefined;
 	//#endregion
 
-	export let ripple: boolean = true;
-	export let color: IconButtonColor = undefined;
-	export let disabled: boolean = false;
 	//#endregion
 
 	//#region implementation
 	//#endregion
 </script>
 
-<IconButton
-	bind:dom
+<span
+	bind:this={dom}
 	{id}
-	class={classList([className, "mdc-top-app-bar__navigation-icon"])}
+	class={classList([className, "mdc-chip__primary-action"])}
 	{style}
-	{disabled}
-	{color}
-	{ripple}
+	tabindex="0"
 	{...$$restProps}
 	on:click
 	on:mousedown
@@ -43,6 +34,8 @@
 	on:keyup
 	on:focus
 	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
-</IconButton>
+</span>

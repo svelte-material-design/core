@@ -1,10 +1,6 @@
-import Chip from "./Chip.svelte";
-import ChipSet from "./ChipSet.svelte";
-import Checkmark from "./Checkmark.svelte";
-import Icon from "./Icon.svelte";
-import Text from "./Text.svelte";
-
-export { Chip, ChipSet, Icon, Checkmark, Text };
-export * from "./Chip.svelte";
-export * from "./ChipSet.svelte";
+export { default as Chip } from "./Chip.svelte";
+export { default as ChipSet } from "./ChipSet.svelte";
+export { default as Action } from "./Action.svelte";
+export { Checkmark, Text, Content } from "../../chip/src/dom";
+export { LeadingIcon, TrailingIcon } from "../../chip/src";
 export * from "./types";

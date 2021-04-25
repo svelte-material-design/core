@@ -1,4 +1,4 @@
-import { createEventDispatcher } from "svelte/internal";
+import { createEventDispatcher } from "svelte";
 import type { DOMEvents } from "../../forwardEvents";
 
 export function DOMEventsForwarder(filter?: DOMEvents) {

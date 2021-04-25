@@ -6,14 +6,12 @@
 
 <script lang="ts">
 	//#region imports
+	import type { GroupBindings } from "@raythurnevoid/svelte-group-components/ts";
 	import {
-		OnSelectableChangeEvent,
 		Selectable,
+		SelectionGroupBinding,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { createEventDispatcher, tick } from "svelte";
-	import { getChipSetContext } from "./ChipSetContext";
 	import { Chip } from "./internal";
-	import type { OnChipChange } from "./types";
 	//#endregion
 
 	//#region exports
@@ -21,7 +19,7 @@
 	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/chip-set/Chip:${count++}`;
+	export let id: string = `@svmd/chips/Chip:${count++}`;
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
@@ -29,33 +27,17 @@
 	export let ripple: boolean = true;
 	export let selected: boolean = false;
 	export let accessibleTouch: boolean = false;
+	export let removeOnTrailingIconClick: boolean = false;
 	export let hideLeadingIconOnSelect: boolean = true;
+	export let selectionGroup: SelectionGroupBinding = undefined;
+	export let group: GroupBindings = undefined;
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		change: OnChipChange;
-	}>();
-
-	let chipSetContext$ = getChipSetContext();
-
-	async function handleChange(event: CustomEvent<OnSelectableChangeEvent>) {
-		if (selected !== event.detail.selected) {
-			selected = event.detail.selected;
-			await tick();
-		}
-		dispatch("change", { dom, selected, value });
-	}
 	//#endregion
 </script>
 
-<Selectable
-	bind:selected
-	group={$chipSetContext$?.selectionGroup}
-	{dom}
-	{value}
-	on:change={handleChange}
->
+<Selectable bind:selected {value} group={selectionGroup} {dom}>
 	<Chip
 		bind:dom
 		{id}
@@ -65,8 +47,12 @@
 		{value}
 		{ripple}
 		{accessibleTouch}
+		{removeOnTrailingIconClick}
 		{hideLeadingIconOnSelect}
+		{group}
 		{...$$restProps}
+		on:remove
+		on:change
 		on:click
 		on:mousedown
 		on:mouseup

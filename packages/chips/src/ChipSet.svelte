@@ -2,123 +2,95 @@
 
 <script context="module" lang="ts">
 	let count = 0;
-
-	export type ChipSetVariant = "choice" | "filter";
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `../../chips/ChipSet:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#region imports
+	import { createEventDispatcher } from "svelte";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type {
+		ChipSetValue,
+		ChipSetVariant,
+		OnChipSetChange,
+		OnChipSetChildrenChange,
+	} from "./types";
+	import { ChipSet } from "./internal";
 	//#endregion
 
-	// ChipSet
-	import { MDCChipSet } from "@material/chips";
-	import { onDestroy } from "svelte";
-	import { SelectableGroup } from "../../common/hoc";
-	import { createChipSetContext } from "./ChipSetContext";
-	import { ChipContext } from "./ChipContext";
-	import { arrRemove, arrAdd, arrHas } from "../../common/utils";
-	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/chips/ChipSet:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
-	export let value: any = undefined;
-	export let variant: ChipSetVariant = null;
+	export let value: ChipSetValue = undefined;
+	export let variant: ChipSetVariant = undefined;
 	export let entryAnimation: boolean = true;
+	export let nullable: boolean = false;
+	export let group: SelectionGroupBinding = undefined;
+	//#endregion
 
-	let items: ChipContext[] = [];
-	let selectableGroup: SelectableGroup;
-	const context$ = createChipSetContext({
-		registerItem(chip: ChipContext) {
-			if (chipSet && !arrHas(items, chip)) {
-				chipSet.addChip(chip.dom);
-			}
+	//#region implementation
+	const dispatch = createEventDispatcher<{
+		optionsChange: OnChipSetChildrenChange;
+		change: OnChipSetChange;
+	}>();
 
-			items = arrAdd(items, chip);
-		},
-		unregisterItem(chip: ChipContext) {
-			items = arrRemove(items, chip);
-		},
-		variant,
-	});
+	let selectionType: SelectionType;
+	$: selectionType =
+		variant === "choice"
+			? "single"
+			: variant === "filter" || variant === "input"
+			? "multi"
+			: null;
 
-	$: $context$ = Object.assign($context$, {
-		variant,
-	});
-
-	// Update chips instances
-	$: if (chipSet && items.length) {
-		syncChips();
-	}
-
-	let chipSet: MDCChipSet;
-	/** Must be an hook because chip uses hooks to initialize */
-	function initChipSet() {
-		chipSet = new MDCChipSet(dom);
-	}
-
-	function reinitialize() {
-		destroy();
-		initChipSet();
-		syncChips();
-	}
-
-	function syncChips() {
-		Array.from(items).forEach((item, index) => {
-			if (item.chip !== chipSet.chips[index]) {
-				item.setChip(chipSet.chips[index]);
-			}
+	function handleChange() {
+		dispatch("change", {
+			dom,
+			value,
 		});
 	}
-
-	function destroy() {
-		chipSet?.destroy();
-	}
-
-	onDestroy(() => {
-		destroy();
-	});
+	//#endregion
 </script>
 
-<UseState value={variant} onUpdate={reinitialize} />
-
-<SelectableGroup
-	bind:this={selectableGroup}
-	nullable
-	selectionType={variant === "choice"
-		? "single"
-		: variant === "filter" || variant === "input"
-		? "multi"
-		: null}
+<SelectionGroup
 	bind:value
+	{nullable}
+	{selectionType}
+	{group}
+	let:group
+	on:change={handleChange}
 >
-	<div
-		bind:this={dom}
-		{...props}
-		role="grid"
+	<ChipSet
+		bind:dom
 		{id}
-		class={classList([
-			className,
-			"mdc-chip-set",
-			[entryAnimation, "mdc-chip-set--input"],
-			[variant === "choice", "mdc-chip-set--choice"],
-			[variant === "filter", "mdc-chip-set--filter"],
-		])}
+		class={className}
 		{style}
-		use:forwardDOMEvents
+		{variant}
+		{entryAnimation}
+		{nullable}
+		{group}
+		{...$$restProps}
+		on:interaction
+		on:trailingIconInteraction
+		on:navigation
+		on:selection
+		on:removal
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
+		on:focusin
+		on:focusout
 	>
 		<slot />
-	</div>
-</SelectableGroup>
-
-<Use effect hook={initChipSet} />
+	</ChipSet>
+</SelectionGroup>

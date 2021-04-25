@@ -15,3 +15,4 @@ module.exports = {
   preserveWhitespace: true,
   dev: true
 };
+ 

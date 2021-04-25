@@ -1,4 +1,4 @@
-import { createEventDispatcher } from "svelte/internal";
+import { createEventDispatcher } from "svelte";
 import { listenEvents } from "../../mdcEvents";
 import type { ListenerOpt } from "../../mdcEvents";
 
