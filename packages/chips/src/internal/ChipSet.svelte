@@ -7,10 +7,10 @@
 <script lang="ts">
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import {
+	import { MDCChipSet } from "@material/chips";
+	import type {
 		MDCChipNavigationEvent,
 		MDCChipSelectionEvent,
-		MDCChipSet,
 	} from "@material/chips";
 	import type { MDCChipInteractionEvent } from "@material/chips";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
@@ -20,15 +20,12 @@
 	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type {
 		ChipSetVariant,
-		OnChipSetChange,
 		OnChipSetChildrenChange,
 		OnChipSetInteraction,
 		OnChipSetSelection,
 	} from "../types";
-	import {
-		Group,
-		GroupItemContext,
-	} from "@raythurnevoid/svelte-group-components/ts";
+	import { Group } from "@raythurnevoid/svelte-group-components/ts";
+	import type { GroupItemContext } from "@raythurnevoid/svelte-group-components/ts";
 	//#endregion
 
 	//#region exports
@@ -49,7 +46,6 @@
 	//#region implementation
 	const dispatch = createEventDispatcher<{
 		optionsChange: OnChipSetChildrenChange;
-		change: OnChipSetChange;
 		interaction: OnChipSetInteraction;
 		trailingIconInteraction: OnChipSetInteraction;
 		navigation: OnChipSetInteraction;

@@ -22,6 +22,4 @@ export interface OnChipSetSelection extends OnChipSetInteraction {
 	selected: boolean;
 }
 
-export interface OnChipSetRemoval extends OnChipSetInteraction {}
-
 export type { OnChipChange } from "../../chip/src/types";

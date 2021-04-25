@@ -76,11 +76,11 @@
 		{nullable}
 		{group}
 		{...$$restProps}
+		on:optionsChange
 		on:interaction
 		on:trailingIconInteraction
 		on:navigation
 		on:selection
-		on:removal
 		on:click
 		on:mousedown
 		on:mouseup

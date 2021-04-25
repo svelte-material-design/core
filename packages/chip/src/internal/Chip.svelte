@@ -5,7 +5,8 @@
 	import { MDCChip } from "@material/chips";
 	import type { MDCChipSelectionEvent } from "@material/chips";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
-	import { ChipContext, createChipContext } from "../ChipContext";
+	import { createChipContext } from "../ChipContext";
+	import type { ChipContext } from "../ChipContext";
 	import type { OnChipChange, OnChipInteraction } from "../types";
 	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
 	import { Chip } from "../dom";

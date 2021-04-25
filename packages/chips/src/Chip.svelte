@@ -6,10 +6,8 @@
 
 <script lang="ts">
 	//#region imports
-	import {
-		OnSelectableChangeEvent,
-		Selectable,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { createEventDispatcher, tick } from "svelte";
 	import { getChipSetContext } from "./ChipSetContext";
 	import { Chip } from "./internal";

@@ -23,7 +23,11 @@
 	//#endregion
 </script>
 
-<div bind:this={dom} class={accessibleTouch ? "accessibleTouch" : undefined}>
+<div
+	bind:this={dom}
+	class="svmd-chip__wrapper"
+	class:mdc-touch-target-wrapper={accessibleTouch}
+>
 	<div
 		{id}
 		class={classList([
@@ -51,3 +55,9 @@
 		<slot />
 	</div>
 </div>
+
+<style>
+	.svmd-chip__wrapper {
+		display: inline;
+	}
+</style>

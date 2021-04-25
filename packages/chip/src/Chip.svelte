@@ -9,6 +9,8 @@
 	import type { GroupBindings } from "@raythurnevoid/svelte-group-components/ts";
 	import {
 		Selectable,
+	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type {
 		SelectionGroupBinding,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { Chip } from "./internal";
