@@ -1,32 +1,27 @@
-<script context="module" lang="ts">
-	let count = 0;
-</script>
+<svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
+	//#region imports
+	import { onMount } from "svelte";
+	import { getDataTableContext } from "./DataTableContext";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../data-table/Cell:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLTableCellElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
-
-	// Cell
-	import { getRowBehaviour } from "./RowContext";
-	import { onMount } from "svelte";
-	import { getDataTableContext } from "./DataTableContext";
 
 	export let numeric: boolean = false;
 	export let checkbox: boolean = false;
+	//#endregion
 
+	//#region implementation
 	const dataTableContext$ = getDataTableContext();
 
 	onMount(() => {
@@ -35,11 +30,11 @@
 			$dataTableContext$?.syncDom();
 		}
 	});
+	//#endregion
 </script>
 
 <td
 	bind:this={dom}
-	{...props}
 	{id}
 	class={classList([
 		className,
@@ -48,36 +43,7 @@
 		[checkbox, "mdc-data-table__cell--checkbox"],
 	])}
 	{style}
-	use:forwardDOMEvents
+	{...$$restProps}
 >
 	<slot />
 </td>
-
-<!-- {#if header}
-  <th
-    use:useActions={use}
-    use:forwardEvents
-    class="
-      mdc-data-table__header-cell
-      {className}
-      {checkbox ? 'mdc-data-table__header-cell--checkbox' : ''}
-    "
-    {...roleProp}
-    {...scopeProp}
-    {...props}
-  ><slot></slot></th>
-{:else}
-  <td
-    use:useActions={use}
-    use:forwardEvents
-    class="
-      mdc-data-table__cell
-      {className}
-      {numeric ? 'mdc-data-table__cell--numeric' : ''}
-      {checkbox ? 'mdc-data-table__cell--checkbox' : ''}
-    "
-    {...roleProp}
-    {...scopeProp}
-    {...props}
-  ><slot></slot></td>
-{/if} -->

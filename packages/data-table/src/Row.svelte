@@ -1,35 +1,34 @@
-<script context="module" lang="ts">
-	let count = 0;
-</script>
+<svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
+	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { setCreateMDCLinearProgressInstance } from "../../linear-progress";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../data-table/Row:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLDivElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// Row
-	import { Selectable } from "../../common/hoc";
-
-	export let value: any = undefined;
+	export let value: string = undefined;
 	export let selected: boolean = undefined;
+	//#endregion
+
+	//#region implementation
+	setCreateMDCLinearProgressInstance(false);
+	//#endregion
 </script>
 
 <Selectable bind:selected bind:value>
 	<tr
 		bind:this={dom}
-		{...props}
 		{id}
 		class={classList([
 			className,
@@ -38,7 +37,7 @@
 		])}
 		{style}
 		aria-selected={selected ? "true" : "false"}
-		use:forwardDOMEvents
+		{...$$restProps}
 	>
 		<slot />
 	</tr>

@@ -1,38 +1,35 @@
-<script context="module" lang="ts">
-	let count = 0;
-</script>
+<svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
+	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	import { getRowBehaviour } from "./RowContext";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../data-table/HeaderCell:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLTableHeaderCellElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// Label
-	import { getRowBehaviour } from "./RowContext";
+	//#endregion
 
+	//#region implementation
 	const behaviour = getRowBehaviour();
+	//#endregion
 </script>
 
 {#if behaviour == "header"}
 	<div
 		bind:this={dom}
-		{...props}
 		{id}
 		class={classList([className, "mdc-data-table__header-cell-label"])}
 		{style}
-		use:forwardDOMEvents
+		{...$$restProps}
 	>
 		<slot />
 	</div>

@@ -1,7 +1,7 @@
 import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 
 export const [
-	createDataTableContext,
+	setDataTableContext,
 	getDataTableContext,
 ] = createContextStore<DataTableContext>();
 

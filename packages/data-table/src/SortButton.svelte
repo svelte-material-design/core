@@ -1,32 +1,28 @@
-<script context="module" lang="ts">
-	let count = 0;
-</script>
+<svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
+	//#region imports
+	import { Icon, IconButton } from "../../icon-button";
+	import { onDestroy } from "svelte";
+	import { SortDirection, getHeadCellContext } from "./";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../data-table/SortButton:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLButtonElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
-
-	// SortButton
-	import { Icon, IconButton } from "../../icon-button";
-	import { onDestroy } from "svelte";
-	import { SortDirection, getHeadCellContext } from "./";
 
 	export let direction: SortDirection = undefined;
 	export let ariaLabel: string = undefined;
+	//#endregion
 
+	//#region implementation
 	const headCellContext$ = getHeadCellContext();
 
 	$headCellContext$.setSort(true);
@@ -36,17 +32,17 @@
 	onDestroy(() => {
 		$headCellContext$.setSort(false);
 	});
+	//#endregion
 </script>
 
 <IconButton
 	bind:dom
-	{...props}
 	{id}
 	class={classList([className, "mdc-data-table__sort-icon-button"])}
 	{style}
 	{ariaLabel}
 	aria-describedby="{id}__status"
-	on:domEvent={forwardDOMEvents}
+	{...$$restProps}
 >
 	<slot>
 		<Icon>arrow_upward</Icon>

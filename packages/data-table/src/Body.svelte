@@ -1,31 +1,34 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
-	import { setCheckboxBehaviour } from "../../checkbox/src";
-
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
-	export { className as class };
-	export let style: string = "";
-
-	export let dom: HTMLDivElement = null;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#region imports
+	import { setRowBehaviour } from "./RowContext";
+	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
-	import { setRowBehaviour } from "./RowContext";
+	//#region exports
+	//#region base
+	let className: string = undefined;
 
-	setCheckboxBehaviour("data-table-row");
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
+
+	//#endregion
+
+	//#region implementation
 	setRowBehaviour(null);
+	//#endregion
 </script>
 
 <tbody
 	bind:this={dom}
-	{...props}
-	class="mdc-data-table__content {className}"
+	{id}
+	class={classList([className, "mdc-data-table__content"])}
 	{style}
-	use:forwardDOMEvents
+	{...$$restProps}
 >
 	<slot />
 </tbody>

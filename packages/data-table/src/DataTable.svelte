@@ -1,27 +1,11 @@
 <svelte:options immutable={true} />
 
 <script context="module" lang="ts">
-	let count = 0;
+	let count: number = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
-	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `../../data-table/DataTable:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// DataTable
+	//#region imports
 	import {
 		MDCDataTable,
 		MDCDataTableRowSelectionChangedEventDetail,
@@ -29,19 +13,32 @@
 	} from "@material/data-table";
 	import { onMount, onDestroy, createEventDispatcher } from "svelte";
 	import { SelectableGroup } from "../../common/hoc";
-	import { setCreateCheckboxMDCIstance } from "../../checkbox";
 	import { getDialogContext } from "../../dialog";
-	import { createDataTableContext } from "./DataTableContext";
-	import { SortEventDetail } from "./";
+	import { setDataTableContext } from "./DataTableContext";
+	import type { SortEventDetail } from ".";
+	import { classList } from "@raythurnevoid/strings-filter";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
+
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/data-table/DataTable:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
 	// TODO: radio single selection table, figure out how to handle pagination and selection (maybe specific component?), allow sort deactivation.
-	export let value: any = undefined;
+	export let value: string = undefined;
 	export let ariaLabel: string = undefined;
+	//#endregion
 
+	//#region implementation
 	const dispatch = createEventDispatcher<{
 		sort: SortEventDetail;
 	}>();
-	createDataTableContext({
+	setDataTableContext({
 		syncDom() {
 			dataTable?.layout();
 		},
@@ -49,7 +46,6 @@
 
 	let selectableGroup: SelectableGroup;
 
-	setCreateCheckboxMDCIstance(true);
 	const dialogContext$ = getDialogContext();
 
 	let dataTable: MDCDataTable;
@@ -94,15 +90,15 @@
 	function unselectAllRows() {
 		selectableGroup.unselectAll();
 	}
+	//#endregion
 </script>
 
 <div
 	bind:this={dom}
-	{...props}
 	class={classList([className, "mdc-data-table"])}
 	{style}
 	{id}
-	use:forwardDOMEvents
+	{...$$restProps}
 >
 	<SelectableGroup bind:this={selectableGroup} bind:value>
 		<table class="mdc-data-table__table" aria-label={ariaLabel}>

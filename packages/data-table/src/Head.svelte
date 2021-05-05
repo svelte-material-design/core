@@ -1,30 +1,27 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
-	export { className as class };
-	export let style: string = "";
-
-	export let dom: HTMLDivElement = null;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	//#region imports
+	import { setRowBehaviour } from "./RowContext";
 	//#endregion
 
-	import { setCheckboxBehaviour } from "../../checkbox/src";
-	import { setRowBehaviour } from "./RowContext";
+	//#region exports
+	//#region base
+	let className: string = undefined;
 
-	setCheckboxBehaviour("data-table-header");
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
+
+	//#endregion
+
+	//#region implementation
 	setRowBehaviour("header");
+	//#endregion
 </script>
 
-<thead
-	bind:this={dom}
-	{...props}
-	class={className}
-	{style}
-	use:forwardDOMEvents
->
+<thead bind:this={dom} {id} class={className} {style} {...$$restProps}>
 	<slot />
 </thead>

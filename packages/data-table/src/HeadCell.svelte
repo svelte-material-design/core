@@ -1,39 +1,34 @@
-<script context="module" lang="ts">
-	let count = 0;
-</script>
+<svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
-	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `../../data-table/HeaderCell:${count++}`;
-
-	export let dom: HTMLTableHeaderCellElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// HeadCell
+	//#region imports
 	import { onMount } from "svelte";
 	import {
 		getDataTableContext,
 		createHeadCellContext,
 		SortDirection,
 	} from "./";
-	import { Icon, IconButton } from "../../icon-button";
+	import { classList } from "@raythurnevoid/strings-filter";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
+
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLTableHeaderCellElement = undefined;
+	//#endregion
 
 	export let numeric: boolean = false;
 	export let checkbox: boolean = false;
 	//export let sort: "ascending" | "descending" | "none" = undefined;
 	export let sortAriaLabel: string = undefined;
 	export let columnId: string = undefined;
+	//#endregion
 
+	//#region implementation
 	let sort: boolean = false;
 	let sortDirection: SortDirection = "none";
 
@@ -53,11 +48,11 @@
 			$dataTableContext$?.syncDom();
 		}
 	});
+	//#endregion
 </script>
 
 <th
 	bind:this={dom}
-	{...props}
 	{id}
 	class={classList([
 		className,
@@ -75,38 +70,9 @@
 	scope="col"
 	aria-sort={sort}
 	data-column-id={columnId || id}
-	use:forwardDOMEvents
+	{...$$restProps}
 >
 	<div class="mdc-data-table__header-cell-wrapper">
 		<slot />
 	</div>
 </th>
-
-<!-- {#if header}
-  <th
-    use:useActions={use}
-    use:forwardEvents
-    class="
-      mdc-data-table__header-cell
-      {className}
-      {checkbox ? 'mdc-data-table__header-cell--checkbox' : ''}
-    "
-    {...roleProp}
-    {...scopeProp}
-    {...props}
-  ><slot></slot></th>
-{:else}
-  <td
-    use:useActions={use}
-    use:forwardEvents
-    class="
-      mdc-data-table__cell
-      {className}
-      {numeric ? 'mdc-data-table__cell--numeric' : ''}
-      {checkbox ? 'mdc-data-table__cell--checkbox' : ''}
-    "
-    {...roleProp}
-    {...scopeProp}
-    {...props}
-  ><slot></slot></td>
-{/if} -->

@@ -1,42 +1,37 @@
-<script context="module" lang="ts">
-	let count = 0;
-</script>
+<svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
+	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `../../data-table/LinearProgress:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// LinearProgress
 	import {
 		LinearProgress,
 		setCreateMDCLinearProgressInstance,
 	} from "../../linear-progress";
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
+
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
 	export let ariaLabel: string = undefined;
+	//#endregion
 
+	//#region implementation
 	setCreateMDCLinearProgressInstance(false);
+	//#endregion
 </script>
 
 <LinearProgress
 	bind:dom
-	{props}
 	{id}
 	class={classList([className, "mdc-data-table__linear-progress"])}
 	{style}
-	indeterminate
 	{ariaLabel}
-	on:domEvent={forwardDOMEvents}
+	{...$$restProps}
 />

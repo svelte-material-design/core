@@ -1,38 +1,32 @@
-<script context="module" lang="ts">
-	let count = 0;
-</script>
+<svelte:options immutable={true} />
 
 <script lang="ts">
-	//#region Base
+	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../data-table/Row:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLDivElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// HeadRow
-	import { SelectableGroup } from "../../common/hoc";
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
-<SelectableGroup contextOverride$={null}>
-	<!-- Workaround to prevent header checkbox to dirty the table SelectableGroup -->
-	<tr
-		bind:this={dom}
-		{...props}
-		{id}
-		class={classList([className, "mdc-data-table__header-row"])}
-		{style}
-		use:forwardDOMEvents
-	>
-		<slot />
-	</tr>
-</SelectableGroup>
+<tr
+	bind:this={dom}
+	{id}
+	class={classList([className, "mdc-data-table__header-row"])}
+	{style}
+	{...$$restProps}
+>
+	<slot />
+</tr>
