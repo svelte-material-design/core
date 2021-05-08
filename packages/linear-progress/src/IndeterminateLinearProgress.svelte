@@ -5,36 +5,35 @@
 </script>
 
 <script lang="ts">
-	//#region Base
-	import type { BaseProps } from "../../common/dom/Props";
-
-	let className: string = undefined;
-
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = `@smui/linear-progress/IndeterminateLinearProgress:${count++}`;
-	export let dom: HTMLDivElement = undefined;
-	export let props: BaseProps = undefined;
+	//#region imports
+	import { LinearProgress } from "./internal";
 	//#endregion
 
-	// LinearProgress
-	import LinearProgressImpl from "./LinearProgressImpl.svelte";
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/linear-progress/IndeterminateLinearProgress:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
 
-	export let indeterminate: boolean = false;
 	export let reversed: boolean = false;
 	export let closed: boolean = false;
-	export let ariaLabel: string = undefined;
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <svelte:component
-	this={LinearProgressImpl}
+	this={LinearProgress}
 	bind:dom
-	{props}
 	{id}
 	class={className}
 	{style}
 	indeterminate={true}
 	{reversed}
 	{closed}
-	{ariaLabel}
+	{...$$restProps}
 />

@@ -22,7 +22,8 @@
 	export let step: number = 1;
 	export let disabled: boolean = false;
 	export let tickMarks: boolean = undefined;
-	if (step < 1) step = 1;
+	$: step = parseInt("" + step);
+	$: if (step < 1) step = 1;
 	//#endregion
 
 	//#region implementation

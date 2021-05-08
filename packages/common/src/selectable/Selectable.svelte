@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts" context="module">
 	let count: number = 0;
 </script>
@@ -5,7 +7,7 @@
 <script lang="ts">
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
-	import {
+	import type {
 		SelectionGroupBinding,
 		OnSelectableChangeEvent,
 		SelectableItem,
@@ -82,12 +84,11 @@
 	}
 </script>
 
-<svelte:options immutable={true} />
-
 <UseState
 	bind:this={selectedState}
 	value={selected}
-	onUpdate={handleSelectedValueUpdate} />
+	onUpdate={handleSelectedValueUpdate}
+/>
 <UseState value={[dom, value]} onUpdate={updateContext} />
 
 <slot />
