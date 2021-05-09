@@ -4,7 +4,10 @@
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { setCreateMDCLinearProgressInstance } from "../../linear-progress";
+	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { createEventDispatcher, tick } from "svelte";
+	import { getDataTableContext } from "./DataTableContext";
+	import type { OnRowChange } from "./types";
 	//#endregion
 
 	//#region exports
@@ -14,7 +17,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLDivElement = undefined;
+	export let dom: HTMLTableRowElement = undefined;
 	//#endregion
 
 	export let value: string = undefined;
@@ -22,11 +25,29 @@
 	//#endregion
 
 	//#region implementation
-	setCreateMDCLinearProgressInstance(false);
+	const dispatch = createEventDispatcher<{
+		change: OnRowChange;
+	}>();
+
+	const dataTableContext$ = getDataTableContext();
+
+	async function handleChange(event: CustomEvent<OnSelectableChangeEvent>) {
+		if (selected !== event.detail.selected) {
+			selected = event.detail.selected;
+			await tick();
+		}
+		dispatch("change", { dom, selected });
+	}
 	//#endregion
 </script>
 
-<Selectable bind:selected bind:value>
+<Selectable
+	bind:selected
+	group={$dataTableContext$.selectionGroup}
+	{dom}
+	{value}
+	on:change={handleChange}
+>
 	<tr
 		bind:this={dom}
 		{id}
@@ -38,6 +59,15 @@
 		{style}
 		aria-selected={selected ? "true" : "false"}
 		{...$$restProps}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
+		on:focusin
+		on:focusout
 	>
 		<slot />
 	</tr>

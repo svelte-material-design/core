@@ -2,7 +2,6 @@
 
 <script lang="ts">
 	//#region imports
-	import { setRowBehaviour } from "./RowContext";
 	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
@@ -19,25 +18,15 @@
 	//#endregion
 
 	//#region implementation
-	setRowBehaviour(null);
 	//#endregion
 </script>
 
-<tbody
+<table
 	bind:this={dom}
 	{id}
-	class={classList([className, "mdc-data-table__content"])}
+	class={classList([className, "mdc-data-table__table"])}
 	{style}
 	{...$$restProps}
-	on:click
-	on:mousedown
-	on:mouseup
-	on:keydown
-	on:keyup
-	on:focus
-	on:blur
-	on:focusin
-	on:focusout
 >
 	<slot />
-</tbody>
+</table>

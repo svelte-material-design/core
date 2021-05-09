@@ -3,10 +3,7 @@
 <script lang="ts">
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import {
-		LinearProgress,
-		setCreateMDCLinearProgressInstance,
-	} from "../../linear-progress";
+	import { LinearProgress } from "../../linear-progress/src/internal";
 	//#endregion
 
 	//#region exports
@@ -23,7 +20,6 @@
 	//#endregion
 
 	//#region implementation
-	setCreateMDCLinearProgressInstance(false);
 	//#endregion
 </script>
 
@@ -33,5 +29,7 @@
 	class={classList([className, "mdc-data-table__linear-progress"])}
 	{style}
 	{ariaLabel}
+	indeterminate
+	disableMDCInstance
 	{...$$restProps}
 />

@@ -1,45 +1,41 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count = 0;
-
-	export interface OnPageSizeChangeEventDetail {
-		value: number;
-	}
-</script>
-
 <script lang="ts">
-	//#region Base
+	//#region imports
+	import {
+		Option,
+		Select,
+		Content,
+		OptionContent,
+		Input,
+		Options,
+	} from "../../../select/src";
+	import type { OnSelectChange } from "../../../select/src";
+	import { createEventDispatcher } from "svelte";
+	import { getPaginationContext } from "./PaginationContext";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	import type { OnPageSizeChange } from "../types";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../../data-table/pagination/PageSize:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLDivElement = undefined;
-
-	import type { BaseProps } from "../../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
-
-	// PageSize
-	import { Option, Select } from "../../../select";
-	import type { OnSelectChange } from "../../../select";
-	import { createEventDispatcher } from "svelte";
-	import { getPaginationContext } from "./PaginationContext";
 
 	export let pageSizeOptions: number[] = [10, 20, 50];
 	export let pageSize: number = pageSizeOptions[0];
+	//#endregion
 
-	$: if (pageSizeOptions == null || pageSizeOptions.length === 0)
-		pageSizeOptions = [10, 20, 50];
+	//#region implementation$: if (pageSizeOptions == null || pageSizeOptions.length === 0)
 	$: if (pageSize == null) pageSize = pageSizeOptions[0];
 
 	const dispatch = createEventDispatcher<{
-		change: OnPageSizeChangeEventDetail;
+		change: OnPageSizeChange;
 	}>();
 
 	const paginationContext$ = getPaginationContext();
@@ -52,34 +48,41 @@
 		pageSizeSelectValue = event.value;
 		pageSize = Number(pageSizeSelectValue);
 		dispatch("change", {
+			dom,
 			value: pageSize,
 		});
 	}
+	//#endregion
 </script>
 
 <div
 	bind:this={dom}
-	{...props}
 	{id}
 	class={classList([className, "mdc-data-table__pagination-rows-per-page"])}
 	{style}
-	use:forwardDOMEvents
+	{...$$restProps}
 >
 	<div class="mdc-data-table__pagination-rows-per-page-label">
 		<slot />
 	</div>
 
 	<Select
-		variant="outlined"
 		class="mdc-data-table__pagination-rows-per-page-select"
 		nullable={false}
 		value={pageSizeSelectValue}
 		on:change={(event) => handlePageSizeChange(event.detail)}
 	>
-		<div slot="options">
-			{#each pageSizeOptions as option (option)}
-				<Option value={"" + option}>{option}</Option>
-			{/each}
-		</div>
+		<Content>
+			<Input />
+			<Options>
+				{#each pageSizeOptions as option (option)}
+					<Option value={"" + option}>
+						<OptionContent>
+							{option}
+						</OptionContent>
+					</Option>
+				{/each}
+			</Options>
+		</Content>
 	</Select>
 </div>

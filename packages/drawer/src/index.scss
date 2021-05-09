@@ -1,1 +1,5 @@
+@use "smui-theme";
 @use "@material/drawer/mdc-drawer";
+@use "@material/list";
+
+@include list.core-styles();

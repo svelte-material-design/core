@@ -110,3 +110,10 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.mdc-data-table__pagination {
+		/* Why in hell would MDC put 4px randomly... */
+		padding-left: calc(1em - 4px);
+	}
+</style>

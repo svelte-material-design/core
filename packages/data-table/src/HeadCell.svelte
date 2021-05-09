@@ -71,6 +71,15 @@
 	aria-sort={sort}
 	data-column-id={columnId || id}
 	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<div class="mdc-data-table__header-cell-wrapper">
 		<slot />

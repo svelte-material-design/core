@@ -43,6 +43,15 @@
 	{ariaLabel}
 	aria-describedby="{id}__status"
 	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot>
 		<Icon>arrow_upward</Icon>

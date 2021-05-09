@@ -1,8 +1,9 @@
 @use "smui-theme";
-@use "@material/select/select-theme";
 @use "@material/select/select";
 @use "@material/menu-surface/mdc-menu-surface";
 @use "@material/menu/mdc-menu";
 @use "@material/floating-label/mdc-floating-label";
+@use "@material/list";
 
 @include select.core-styles;
+@include list.core-styles();

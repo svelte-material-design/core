@@ -22,6 +22,21 @@
 	//#endregion
 </script>
 
-<thead bind:this={dom} {id} class={className} {style} {...$$restProps}>
+<thead
+	bind:this={dom}
+	{id}
+	class={className}
+	{style}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
+>
 	<slot />
 </thead>

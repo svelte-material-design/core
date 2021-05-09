@@ -57,7 +57,6 @@
 		{disabled}
 		{readonly}
 		{...$$restProps}
-		on:change
 		on:click
 		on:mousedown
 		on:mouseup
@@ -65,5 +64,7 @@
 		on:keyup
 		on:focus
 		on:blur
+		on:focusin
+		on:focusout
 	/>
 </Selectable>

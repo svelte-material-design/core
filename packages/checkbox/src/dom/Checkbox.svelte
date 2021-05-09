@@ -47,13 +47,6 @@
 	//#endregion
 </script>
 
-<!-- TODO:
-				[
-				behaviour === "data-table-header",
-				"mdc-data-table__header-row-checkbox",
-			],
-			[behaviour === "data-table-row", "mdc-data-table__row-checkbox"],
--->
 <div
 	bind:this={dom}
 	{id}
@@ -80,7 +73,6 @@
 			{value}
 			data-indeterminate={checked === null ? "true" : undefined}
 			{...$$restProps}
-			on:change
 			on:click
 			on:mousedown
 			on:mouseup
@@ -88,6 +80,8 @@
 			on:keyup
 			on:focus
 			on:blur
+			on:focusin
+			on:focusout
 		/>
 		<div class="mdc-checkbox__background">
 			<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
