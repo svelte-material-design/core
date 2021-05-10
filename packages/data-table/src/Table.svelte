@@ -21,12 +21,13 @@
 	//#endregion
 </script>
 
-<table
+<div
 	bind:this={dom}
 	{id}
-	class={classList([className, "mdc-data-table__table"])}
+	class={classList([className, "mdc-data-table__table-container"])}
 	{style}
-	{...$$restProps}
 >
-	<slot />
-</table>
+	<table class="mdc-data-table__table" {...$$restProps}>
+		<slot />
+	</table>
+</div>

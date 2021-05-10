@@ -17,6 +17,8 @@
 		SelectionGroupBinding,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type { OnDataTableSelect } from "./types";
+	import { Group } from "@raythurnevoid/svelte-group-components/ts";
+	import type { OnDataTableChildrenChange } from "../types";
 	//#endregion
 
 	//#region exports
@@ -29,7 +31,6 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
-	// TODO: radio single selection table, figure out how to handle pagination and selection (maybe specific component?), allow sort deactivation.
 	export let selectionGroupBindings: SelectionGroupBinding;
 	export let selectionGroup: SelectionGroup;
 	//#endregion
@@ -40,15 +41,15 @@
 		select: OnDataTableSelect;
 		selectAll: OnDataTableAction;
 		unselectAll: OnDataTableAction;
+		optionsChange: OnDataTableChildrenChange;
 	}>();
 
+	let dataTableGroup: Group;
 	let dataTable: MDCDataTable;
 	let reinitializeDebounce: ReturnType<typeof setTimeout>;
+	let layoutDebounce: ReturnType<typeof setTimeout>;
 
 	const context$ = setDataTableContext({
-		syncDom() {
-			dataTable?.layout();
-		},
 		reinitialize() {
 			clearTimeout(reinitializeDebounce);
 			reinitializeDebounce = setTimeout(() => {
@@ -56,15 +57,29 @@
 			});
 		},
 		layout() {
-			dataTable?.layout();
+			clearTimeout(layoutDebounce);
+			layoutDebounce = setTimeout(() => {
+				dataTable?.layout();
+			});
+		},
+		showProgress(show: boolean) {
+			if (show) {
+				dataTable?.showProgress();
+			} else {
+				dataTable?.hideProgress();
+			}
 		},
 	});
 
-	$: $context$ = { ...$context$, selectionGroup: selectionGroupBindings };
+	$: $context$ = {
+		...$context$,
+		selectionGroup: selectionGroupBindings,
+	};
 
 	const dialogContext$ = getDialogContext();
 
 	onMount(async () => {
+		$context$ = { ...$context$, group: dataTableGroup.getBindings() };
 		initialize();
 	});
 
@@ -136,24 +151,35 @@
 			dom,
 		});
 	}
+
+	function handleChildrenChange() {
+		dispatch("optionsChange", {
+			dom,
+			children: dataTableGroup
+				.getItems()
+				.map((item) => item.dom as HTMLTableRowElement),
+		});
+	}
 	//#endregion
 </script>
 
-<div
-	bind:this={dom}
-	class={classList([className, "mdc-data-table"])}
-	{style}
-	{id}
-	{...$$restProps}
-	on:click
-	on:mousedown
-	on:mouseup
-	on:keydown
-	on:keyup
-	on:focus
-	on:blur
-	on:focusin
-	on:focusout
->
-	<slot />
-</div>
+<Group bind:this={dataTableGroup} on:optionsChange={handleChildrenChange}>
+	<div
+		bind:this={dom}
+		class={classList([className, "mdc-data-table"])}
+		{style}
+		{id}
+		{...$$restProps}
+		on:click
+		on:mousedown
+		on:mouseup
+		on:keydown
+		on:keyup
+		on:focus
+		on:blur
+		on:focusin
+		on:focusout
+	>
+		<slot />
+	</div>
+</Group>

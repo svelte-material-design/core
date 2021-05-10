@@ -21,11 +21,9 @@
 	export let dom: HTMLTableHeaderCellElement = undefined;
 	//#endregion
 
-	export let numeric: boolean = false;
+	export let alignEnd: boolean = false;
 	export let checkbox: boolean = false;
 	//export let sort: "ascending" | "descending" | "none" = undefined;
-	export let sortAriaLabel: string = undefined;
-	export let columnId: string = undefined;
 	//#endregion
 
 	//#region implementation
@@ -45,7 +43,7 @@
 	onMount(() => {
 		if (checkbox) {
 			// This will prevent MDCDataTable to broke itself if previously there was no checkbox
-			$dataTableContext$?.syncDom();
+			$dataTableContext$?.layout();
 		}
 	});
 	//#endregion
@@ -63,13 +61,12 @@
 			"mdc-data-table__header-cell--sorted",
 		],
 		[checkbox, "mdc-data-table__header-cell--checkbox"],
-		[numeric, "mdc-data-table__header-cell--numeric"],
+		[alignEnd, "mdc-data-table__header-cell--numeric"],
 	])}
 	{style}
 	role="columnheader"
 	scope="col"
 	aria-sort={sort}
-	data-column-id={columnId || id}
 	{...$$restProps}
 	on:click
 	on:mousedown

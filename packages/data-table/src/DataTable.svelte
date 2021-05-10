@@ -13,7 +13,7 @@
 		SelectionGroupBinding,
 	} from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { DataTable } from "./internal";
-	import { createEventDispatcher, tick } from "svelte";
+	import { createEventDispatcher } from "svelte";
 	//#endregion
 
 	//#region exports
@@ -26,10 +26,10 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
-	// TODO: radio single selection table, figure out how to handle pagination and selection (maybe specific component?), allow sort deactivation.
 	export let value: DataTableValue = undefined;
 	export let group: SelectionGroupBinding = undefined;
 	export let nullable: boolean = true;
+	export let selectionType: SelectionType = "multi";
 	//#endregion
 
 	//#region implementation
@@ -38,7 +38,6 @@
 	}>();
 
 	let selectionGroup: SelectionGroup;
-	let selectionType: SelectionType = "multi";
 
 	async function handleChange() {
 		dispatch("change", { dom, value });
@@ -59,12 +58,12 @@
 		{id}
 		{className}
 		{style}
-		{selectionGroup}
-		selectionGroupBindings={group}
+		{group}
 		{...$$restProps}
 		on:select={handleChange}
 		on:selectAll={handleChange}
 		on:unselectAll={handleChange}
+		on:optionsChange
 		on:sort
 		on:selectAll
 		on:unselectAll

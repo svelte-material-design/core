@@ -2,12 +2,12 @@
 
 <script lang="ts">
 	//#region imports
-	import { classList } from "@raythurnevoid/strings-filter";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { createEventDispatcher, tick } from "svelte";
-	import { getDataTableContext } from "./DataTableContext";
+	import { getDataTableContext, setRowContext } from "./DataTableContext";
 	import type { OnRowChange } from "./types";
+	import { Row } from "./internal";
 	//#endregion
 
 	//#region exports
@@ -48,16 +48,13 @@
 	{value}
 	on:change={handleChange}
 >
-	<tr
-		bind:this={dom}
+	<Row
+		bind:dom
 		{id}
-		class={classList([
-			className,
-			"mdc-data-table__row",
-			[selected, "mdc-data-table__row--selected"],
-		])}
+		class={className}
 		{style}
-		aria-selected={selected ? "true" : "false"}
+		{value}
+		{selected}
 		{...$$restProps}
 		on:click
 		on:mousedown
@@ -70,5 +67,5 @@
 		on:focusout
 	>
 		<slot />
-	</tr>
+	</Row>
 </Selectable>

@@ -3,10 +3,13 @@
 <script lang="ts">
 	//#region  imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { onDestroy, onMount } from "svelte";
+	import { onDestroy, onMount, tick } from "svelte";
 	import { Checkbox } from "../../checkbox/src/dom";
-	import { getDataTableContext } from "./DataTableContext";
-	import { getRowBehaviour } from "./RowContext";
+	import {
+		getDataTableContext,
+		getRowBehaviour,
+		getRowContext,
+	} from "./DataTableContext";
 	//#endregion
 
 	//#region exports
@@ -18,7 +21,6 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
-	export let checked: boolean = false;
 	export let value: string = undefined;
 	export let ripple: boolean = true;
 	export let accessibleTouch: boolean = true;
@@ -29,6 +31,7 @@
 	//#endregion
 
 	//#region implementation
+	const rowContext$ = getRowContext();
 	const rowBehaviour = getRowBehaviour();
 	const dataTableContext$ = getDataTableContext();
 
@@ -36,7 +39,8 @@
 		$dataTableContext$.layout();
 	});
 
-	onDestroy(() => {
+	onDestroy(async () => {
+		await tick();
 		$dataTableContext$.layout();
 	});
 	//#endregion
@@ -44,14 +48,14 @@
 
 <Checkbox
 	bind:dom
-	bind:checked
 	class={classList([
 		className,
 		[rowBehaviour === "header", "mdc-data-table__header-row-checkbox"],
-		[rowBehaviour !== "header", "mdc-data-table__row-checkbox"],
+		[rowBehaviour === "body", "mdc-data-table__row-checkbox"],
 	])}
 	{style}
 	{id}
+	checked={$rowContext$?.selected}
 	{value}
 	{ripple}
 	{accessibleTouch}

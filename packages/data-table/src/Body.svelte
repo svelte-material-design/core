@@ -2,8 +2,8 @@
 
 <script lang="ts">
 	//#region imports
-	import { setRowBehaviour } from "./RowContext";
 	import { classList } from "@raythurnevoid/strings-filter";
+	import { setRowBehaviour } from "./DataTableContext";
 	//#endregion
 
 	//#region exports
@@ -19,7 +19,7 @@
 	//#endregion
 
 	//#region implementation
-	setRowBehaviour(null);
+	setRowBehaviour("body");
 	//#endregion
 </script>
 

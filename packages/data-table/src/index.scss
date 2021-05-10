@@ -1,12 +1,5 @@
 @use "smui-theme";
-@use "@material/select/select";
 @use "@material/data-table/data-table";
-@use "@material/menu-surface/mdc-menu-surface";
-@use "@material/menu/mdc-menu";
-@use "@material/floating-label/mdc-floating-label";
-@use "@material/list";
+@use "@material/linear-progress/mdc-linear-progress";
 
 @include data-table.core-styles;
-@include data-table.theme-baseline;
-@include select.core-styles;
-@include list.core-styles();

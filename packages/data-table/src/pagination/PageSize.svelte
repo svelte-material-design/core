@@ -9,7 +9,7 @@
 		OptionContent,
 		Input,
 		Options,
-	} from "../../../select/src";
+	} from "../../../select";
 	import type { OnSelectChange } from "../../../select/src";
 	import { createEventDispatcher } from "svelte";
 	import { getPaginationContext } from "./PaginationContext";

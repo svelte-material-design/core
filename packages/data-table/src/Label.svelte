@@ -3,7 +3,7 @@
 <script lang="ts">
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { getRowBehaviour } from "./RowContext";
+	import { getRowBehaviour } from "./DataTableContext";
 	//#endregion
 
 	//#region exports

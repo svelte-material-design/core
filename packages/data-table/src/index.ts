@@ -12,6 +12,5 @@ export { default as Checkbox } from "./Checkbox.svelte";
 export { default as Table } from "./Table.svelte";
 export * from "./types";
 export * from "./HeadCellContext";
-export * from "./RowContext";
 export * from "./DataTableContext";
 export * from "./pagination";

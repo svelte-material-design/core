@@ -3,7 +3,10 @@
 <script lang="ts">
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
+	import { UseState } from "@raythurnevoid/svelte-hooks/ts";
+	import { onDestroy, onMount, tick } from "svelte";
 	import { LinearProgress } from "../../linear-progress/src/internal";
+	import { getDataTableContext } from "./DataTableContext";
 	//#endregion
 
 	//#region exports
@@ -16,20 +19,42 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
-	export let ariaLabel: string = undefined;
+	export let closed: boolean = false;
 	//#endregion
 
 	//#region implementation
+	const dataTableContext$ = getDataTableContext();
+
+	onMount(async () => {
+		await tick();
+		$dataTableContext$.reinitialize();
+		handleClosedUpdate();
+	});
+
+	onDestroy(async () => {
+		await tick();
+		$dataTableContext$.reinitialize();
+	});
+
+	async function handleClosedUpdate() {
+		$dataTableContext$.showProgress(!closed);
+	}
 	//#endregion
 </script>
 
-<LinearProgress
-	bind:dom
+<UseState value={closed} onUpdate={handleClosedUpdate} />
+
+<div
+	bind:this={dom}
 	{id}
-	class={classList([className, "mdc-data-table__linear-progress"])}
+	class={classList([className, "mdc-data-table__progress-indicator"])}
 	{style}
-	{ariaLabel}
-	indeterminate
-	disableMDCInstance
-	{...$$restProps}
-/>
+>
+	<div class="mdc-data-table__scrim" />
+	<LinearProgress
+		class="mdc-data-table__linear-progress"
+		indeterminate
+		disableMDCInstance
+		{...$$restProps}
+	/>
+</div>

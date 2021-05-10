@@ -73,6 +73,7 @@
 			{value}
 			data-indeterminate={checked === null ? "true" : undefined}
 			{...$$restProps}
+			on:change
 			on:click
 			on:mousedown
 			on:mouseup

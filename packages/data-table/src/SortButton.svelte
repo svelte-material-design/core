@@ -57,6 +57,7 @@
 		<Icon>arrow_upward</Icon>
 	</slot>
 </IconButton>
+
 <div
 	class="mdc-data-table__sort-status-label"
 	aria-hidden="true"

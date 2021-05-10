@@ -26,3 +26,8 @@ export interface OnPageSizeChange {
 export interface OnDataTableAction {
 	dom: HTMLDivElement;
 }
+
+export interface OnDataTableChildrenChange {
+	dom: HTMLDivElement;
+	children: HTMLTableRowElement[];
+}

@@ -17,7 +17,7 @@
 	export let dom: HTMLTableCellElement = undefined;
 	//#endregion
 
-	export let numeric: boolean = false;
+	export let alignEnd: boolean = false;
 	export let checkbox: boolean = false;
 	//#endregion
 
@@ -27,7 +27,7 @@
 	onMount(() => {
 		if (checkbox) {
 			// This will prevent MDCDataTable to broke itself if previously there was no checkbox
-			$dataTableContext$?.syncDom();
+			$dataTableContext$?.layout();
 		}
 	});
 	//#endregion
@@ -39,7 +39,7 @@
 	class={classList([
 		className,
 		"mdc-data-table__cell",
-		[numeric, "mdc-data-table__cell--numeric"],
+		[alignEnd, "mdc-data-table__cell--numeric"],
 		[checkbox, "mdc-data-table__cell--checkbox"],
 	])}
 	{style}

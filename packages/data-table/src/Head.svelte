@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { setRowBehaviour } from "./RowContext";
+	import { setRowBehaviour } from "./DataTableContext";
 	//#endregion
 
 	//#region exports
