@@ -17,14 +17,16 @@
 	export let dom: HTMLTableRowElement = undefined;
 	//#endregion
 
+	export let value: string = undefined;
 	export let selected: boolean = undefined;
 	//#endregion
 
 	//#region implementation
 	const context$ = setRowContext({
 		selected,
+		value,
 	});
-	$: $context$ = { ...$context$, selected };
+	$: $context$ = { ...$context$, selected, value };
 
 	const dataTableContext$ = getDataTableContext();
 	//#endregion

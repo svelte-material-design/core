@@ -12,7 +12,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLTableElement = undefined;
+	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
 	//#endregion
@@ -21,21 +21,12 @@
 	//#endregion
 </script>
 
-<table
+<div
 	bind:this={dom}
 	{id}
-	class={classList([className, "mdc-data-table__table"])}
+	class={classList([className, "mdc-data-table__table-container"])}
 	{style}
 	{...$$restProps}
-	on:click
-	on:mousedown
-	on:mouseup
-	on:keydown
-	on:keyup
-	on:focus
-	on:blur
-	on:focusin
-	on:focusout
 >
 	<slot />
-</table>
+</div>

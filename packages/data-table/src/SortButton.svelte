@@ -1,11 +1,16 @@
 <svelte:options immutable={true} />
 
+<script context="module" lang="ts">
+	let count: number = 0;
+</script>
+
 <script lang="ts">
 	//#region imports
 	import { Icon, IconButton } from "../../icon-button";
 	import { onDestroy } from "svelte";
-	import { SortDirection, getHeadCellContext } from "./";
+	import type { SortDirection } from ".";
 	import { classList } from "@raythurnevoid/strings-filter";
+	import { getHeadCellContext } from "./HeadCellContext";
 	//#endregion
 
 	//#region exports
@@ -14,12 +19,13 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = undefined;
+	export let id: string = `@svmd/data-table/SortButton:${count++}`;
 	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 
-	export let direction: SortDirection = undefined;
-	export let ariaLabel: string = undefined;
+	export let direction: SortDirection = "none";
+	export let ripple: boolean = true;
+	export let disabled: boolean = false;
 	//#endregion
 
 	//#region implementation
@@ -40,8 +46,9 @@
 	{id}
 	class={classList([className, "mdc-data-table__sort-icon-button"])}
 	{style}
-	{ariaLabel}
-	aria-describedby="{id}__status"
+	{ripple}
+	{disabled}
+	aria-describedby="{id}__label"
 	{...$$restProps}
 	on:click
 	on:mousedown
@@ -61,5 +68,5 @@
 <div
 	class="mdc-data-table__sort-status-label"
 	aria-hidden="true"
-	id="{id}__status"
+	id="{id}__label"
 />

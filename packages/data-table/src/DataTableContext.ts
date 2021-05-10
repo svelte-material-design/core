@@ -23,6 +23,7 @@ export const [setRowBehaviour, getRowBehaviour] = createContext<RowBehaviour>();
 
 export interface RowContext {
 	selected: boolean;
+	value: string;
 }
 
 export type RowBehaviour = "header" | "body";

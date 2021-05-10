@@ -5,7 +5,7 @@
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { createEventDispatcher, tick } from "svelte";
-	import { getDataTableContext, setRowContext } from "./DataTableContext";
+	import { getDataTableContext } from "./DataTableContext";
 	import type { OnRowChange } from "./types";
 	import { Row } from "./internal";
 	//#endregion

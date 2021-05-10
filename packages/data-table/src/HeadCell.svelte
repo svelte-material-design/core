@@ -3,11 +3,8 @@
 <script lang="ts">
 	//#region imports
 	import { onMount } from "svelte";
-	import {
-		getDataTableContext,
-		createHeadCellContext,
-		SortDirection,
-	} from "./";
+	import { getDataTableContext, createHeadCellContext } from ".";
+	import type { SortDirection } from ".";
 	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 

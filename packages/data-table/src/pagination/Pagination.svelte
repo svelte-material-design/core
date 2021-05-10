@@ -65,8 +65,7 @@
 				<slot
 					name="counter"
 					first={pageIndex * pageSize + 1}
-					end={(pageIndex + 1) * pageSize}
-					{length}
+					last={(pageIndex + 1) * pageSize}
 					pages={lastPageIndex + 1}
 					page={pageIndex + 1}
 				/>

@@ -27,6 +27,15 @@
 	class={classList([className, "mdc-data-table__header-row"])}
 	{style}
 	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
 </tr>

@@ -10,6 +10,7 @@ export { default as Label } from "./Label.svelte";
 export { default as SortButton } from "./SortButton.svelte";
 export { default as Checkbox } from "./Checkbox.svelte";
 export { default as Table } from "./Table.svelte";
+export { default as TableContainer } from "./TableContainer.svelte";
 export * from "./types";
 export * from "./HeadCellContext";
 export * from "./DataTableContext";

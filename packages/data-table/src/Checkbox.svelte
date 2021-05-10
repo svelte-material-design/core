@@ -21,10 +21,8 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
-	export let value: string = undefined;
 	export let ripple: boolean = true;
 	export let accessibleTouch: boolean = true;
-	export let density: number = undefined;
 
 	export let disabled: boolean = false;
 	export let readonly: boolean = undefined;
@@ -56,10 +54,9 @@
 	{style}
 	{id}
 	checked={$rowContext$?.selected}
-	{value}
+	value={$rowContext$?.value}
 	{ripple}
 	{accessibleTouch}
-	{density}
 	{disabled}
 	{readonly}
 	{...$$restProps}
