@@ -1,74 +1,59 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
-	//#region Base
+	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/events";
-	const forwardDOMEvents = DOMEventsForwarder();
+	import { Button } from "../../button/src/internal";
+	import type { ButtonVariant, ButtonColor } from "../../button";
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../dialog/Action:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLButtonElement | HTMLAnchorElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// Action
-	import { Button, ButtonVariant, ButtonColor } from "../../button";
-
-	//#region exports
-	export let ripple: boolean = undefined;
-	export let color: ButtonColor = undefined;
-	export let variant: ButtonVariant = undefined;
-	export let disabled: boolean = undefined;
-	export let density: number = undefined;
-	export let href: string = undefined;
-	export let target: string = undefined;
+	export let ripple: boolean = true;
+	export let color: ButtonColor = "primary";
+	export let variant: ButtonVariant = "text";
+	export let disabled: boolean = false;
+	export let accessibleTouch: boolean = false;
 
 	export let action: string = "close";
 	let defaultAction: boolean = false;
 	export { defaultAction as default };
 	//#endregion
 
-	let actionProps: {
-		"data-mdc-dialog-button-default"?: "";
-		"data-mdc-dialog-action"?: string;
-	} = {};
-	$: {
-		actionProps = {};
-
-		if (defaultAction) {
-			actionProps["data-mdc-dialog-button-default"] = "";
-		}
-
-		if (action !== null) {
-			actionProps["data-mdc-dialog-action"] = action;
-		}
-	}
+	//#region implementation
+	//#endregion
 </script>
 
 <Button
 	bind:dom
-	props={{ ...props, ...actionProps }}
 	{id}
 	class={classList([className, "mdc-dialog__button"])}
 	{style}
 	{ripple}
 	{color}
 	{variant}
-	{href}
 	{disabled}
-	{target}
-	{density}
-	on:domEvent={forwardDOMEvents}
+	{accessibleTouch}
+	data-mdc-dialog-button-default={defaultAction && ""}
+	data-mdc-dialog-action={action}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
 </Button>

@@ -56,6 +56,8 @@
 		on:keyup
 		on:focus
 		on:blur
+		on:focusin
+		on:focusout
 	>
 		{#if ripple}
 			<div class="mdc-button__ripple" />

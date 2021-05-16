@@ -1,40 +1,39 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
+<script lang="ts" context="module">
 	let count: number = 0;
 </script>
 
 <script lang="ts">
-	//#region Base
+	//#region imports
+	import { getDialogContext } from "./DialogContext";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `../../dialog/Title:${count++}`;
-
-	export let dom: HTMLDivElement = undefined;
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
+	export let id: string = `@svmd/dialog/Title:${count++}`;
+	export let dom: HTMLHeadingElement = undefined;
 	//#endregion
 
-	// Title
-	import { getDialogContext } from "./DialogContext";
+	//#endregion
 
+	//#region implementation
 	const dialogContext$ = getDialogContext();
-
 	$: $dialogContext$.setTitleId(id);
+	//#endregion
 </script>
 
 <h2
 	bind:this={dom}
-	{...props}
 	{id}
 	class={classList([className, "mdc-dialog__title"])}
 	{style}
-	use:forwardDOMEvents
+	{...$$restProps}
 >
 	<slot />
 </h2>

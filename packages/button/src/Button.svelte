@@ -51,6 +51,8 @@
 	on:keyup
 	on:focus
 	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
 </InternalButton>

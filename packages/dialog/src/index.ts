@@ -1,11 +1,8 @@
-import Dialog from "./Dialog.svelte";
-
-import Title from "./Title.svelte";
-import Content from "./Content.svelte";
-import Actions from "./Actions.svelte";
-import Action from "./Action.svelte";
-import { initialFocus } from "./InitialFocus";
-
-export { Dialog, Title, Content, Actions, Action, initialFocus };
+export { default as Dialog } from "./Dialog.svelte";
+export { default as Title } from "./Title.svelte";
+export { default as Content } from "./Content.svelte";
+export { default as Actions } from "./Actions.svelte";
+export { default as Action } from "./Action.svelte";
+export { Icon, Label } from "../../button/src";
 export * from "./DialogContext";
 export * from "./types";

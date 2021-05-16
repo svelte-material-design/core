@@ -1,3 +1,12 @@
-import type { MDCDialogCloseEventDetail } from "@material/dialog";
+export interface OnDialogOpened {
+	dom: HTMLDivElement;
+}
 
-export interface OnCloseEventDetail extends MDCDialogCloseEventDetail {}
+export interface OnDialogClosed {
+	dom: HTMLDivElement;
+	action: string;
+}
+
+export type OnDialogOpening = OnDialogOpened;
+
+export type OnDialogClosing = OnDialogClosed;
