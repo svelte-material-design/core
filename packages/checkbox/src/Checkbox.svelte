@@ -2,7 +2,6 @@
 
 <script lang="ts" context="module">
 	let count = 0;
-
 </script>
 
 <script lang="ts">
@@ -36,7 +35,6 @@
 	//#region implementation
 	const checkboxGroupContext$ = getCheckboxGroupContext();
 	//#endregion
-
 </script>
 
 <Selectable

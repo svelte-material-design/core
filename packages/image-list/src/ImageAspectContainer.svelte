@@ -1,36 +1,32 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count = 0;
-</script>
-
 <script lang="ts">
-	//#region Base
+	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
+	//#endregion
+
+	//#region exports
+	//#region base
 	let className: string = undefined;
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/image-list/ImageAspectContainer:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLDivElement = undefined;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	export let props: BaseProps = {};
 	//#endregion
 
-	// ImageAspectContainer
+	//#endregion
+
+	//#region implementation
+	//#endregion
 </script>
 
 <div
 	bind:this={dom}
-	{...props}
 	{id}
 	class={classList([className, "mdc-image-list__image-aspect-container"])}
 	{style}
-	use:forwardDOMEvents
+	{...$$restProps}
 >
 	<slot />
 </div>

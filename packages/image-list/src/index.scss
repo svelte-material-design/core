@@ -1,37 +1,3 @@
 @use "@material/image-list";
-@use "./variables";
-@use "./mixins";
 
 @include image-list.core-styles;
-
-$default-columns: 2;
-$default-standard-gap: image-list.$standard-gutter-size;
-$default-masonry-gap: image-list.$masonry-gutter-size;
-$smui-image-list--aspect-ratio: 1;
-
-.smui-image-list {
-	max-height: 100%;
-	@include image-list.aspect(
-		var(--smui-image-list--aspect-ratio, $smui-image-list--aspect-ratio)
-	);
-}
-
-.smui-image-list--standard-columns {
-	// Unfortunately doesn't work
-	// @include image-list.standard-columns(
-	// 	var(--smui-image-list--columns, variables.$default-columns),
-	// 	var(--smui-image-list--gap, variables.$default-standard-gap)
-	// );
-
-	@include mixins.standard-columns(
-		var(--smui-image-list--columns, variables.$default-columns),
-		var(--smui-image-list--gap, variables.$default-standard-gap)
-	);
-}
-
-.smui-image-list--masonry-columns {
-	@include image-list.masonry-columns(
-		var(--smui-image-list--columns, variables.$default-columns),
-		var(--smui-image-list--gap, variables.$default-masonry-gap)
-	);
-}

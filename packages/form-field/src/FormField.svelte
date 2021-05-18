@@ -29,8 +29,9 @@
 	//#region implementation
 	let labelId: string;
 	$: labelId = `${id}--label`;
-
+	let formField: MDCFormField;
 	let inputId: string;
+
 	const context$ = createFormFieldContext({
 		labelId,
 		inputId,
@@ -48,7 +49,6 @@
 
 	$: $context$ = { ...$context$, labelId, inputId, id };
 
-	let formField: MDCFormField;
 	onMount(() => {
 		formField = new MDCFormField(dom);
 	});
@@ -63,13 +63,9 @@
 	bind:this={dom}
 	{id}
 	class="mdc-form-field {className}
-    {align === 'end'
-		? 'mdc-form-field--align-end'
-		: ''}
+    {align === 'end' ? 'mdc-form-field--align-end' : ''}
     {noWrap ? 'mdc-form-field--nowrap' : ''}
-    {vertical
-		? 'smui-form-field--vertical'
-		: ''}"
+    {vertical ? 'smui-form-field--vertical' : ''}"
 	{style}
 	on:click
 	on:mousedown

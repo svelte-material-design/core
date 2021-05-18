@@ -1,6 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+	//#region imports
 	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type {
 		SelectionGroupBinding,
@@ -13,14 +14,23 @@
 		OnCheckboxGroupChangeEvent,
 		OnCheckboxGroupChildrenChangeEvent,
 	} from "./types";
+	//#endregion
+
+	//#region exports
+	//#region base
+
+	//#endregion
 
 	export let value: string[] = undefined;
 	export let group: SelectionGroupBinding = undefined;
+	//#endregion
 
-	const dispatch = createEventDispatcher<{
-		change: OnCheckboxGroupChangeEvent;
-		optionsChange: OnCheckboxGroupChildrenChangeEvent;
-	}>();
+	//#region implementation
+	const dispatch =
+		createEventDispatcher<{
+			change: OnCheckboxGroupChangeEvent;
+			optionsChange: OnCheckboxGroupChildrenChangeEvent;
+		}>();
 
 	let selectionGroup: SelectionGroup;
 
@@ -41,6 +51,7 @@
 			items: event.items.map((i) => i.dom as HTMLDivElement),
 		});
 	}
+	//#endregion
 </script>
 
 <SelectionGroup
