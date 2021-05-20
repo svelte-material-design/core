@@ -7,7 +7,7 @@
 <script lang="ts">
 	//#region imports
 	import type { ButtonColor, ButtonVariant } from ".";
-	import { Button as InternalButton } from "./internal";
+	import { Button } from "./internal";
 	//#endregion
 
 	//#region exports
@@ -32,7 +32,7 @@
 	//#endregion
 </script>
 
-<InternalButton
+<Button
 	bind:dom
 	{id}
 	class={className}
@@ -55,4 +55,4 @@
 	on:focusout
 >
 	<slot />
-</InternalButton>
+</Button>

@@ -17,7 +17,7 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/button/IconButton:${count++}`;
+	export let id: string = `@svelte-material-design/button/IconButton:${count++}`;
 	export let dom: IconButtonDOM = undefined;
 	//#endregion
 

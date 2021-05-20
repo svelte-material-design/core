@@ -1,19 +1,23 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
-	//#region Base
 	import { classList } from "@raythurnevoid/strings-filter";
-	let className: string = undefined;
 
+	//#region imports
+	//#endregion
+
+	//#region exports
+	//#region base
+	let className: string = undefined;
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/snackbar/Content:${count++}`;
-
+	export let id: string = undefined;
 	export let dom: HTMLSpanElement = undefined;
+	//#endregion
+
+	//#endregion
+
+	//#region implementation
 	//#endregion
 </script>
 

@@ -1,7 +1,5 @@
-import Actions from "./Actions.svelte";
-import Action from "./Action.svelte";
-import IconAction from "./IconAction.svelte";
-import Icon from "./Icon.svelte";
-import Dismiss from "./Dismiss.svelte";
-
-export { Action, Actions, Icon, IconAction, Dismiss };
+export { default as Actions } from "./Actions.svelte";
+export { default as Action } from "./Action.svelte";
+export { default as IconAction } from "./IconAction.svelte";
+export { default as Icon } from "./Icon.svelte";
+export { default as Dismiss } from "./Dismiss.svelte";

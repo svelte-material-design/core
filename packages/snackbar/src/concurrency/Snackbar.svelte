@@ -1,43 +1,7 @@
 <svelte:options immutable={true} />
 
 <script context="module" lang="ts">
-	import { SnackbarContext } from "./";
-
 	let count: number = 0;
-
-	namespace SnackbarModule {
-		let awaitingSnackbar: Binding = undefined;
-		let currentOpenSnackbar: Binding = undefined;
-
-		export function queueOpen(snackbar: Binding) {
-			if (currentOpenSnackbar) {
-				awaitingSnackbar = snackbar;
-				currentOpenSnackbar.close();
-			} else {
-				open(snackbar);
-			}
-		}
-
-		export function open(snackbar: Binding) {
-			currentOpenSnackbar = snackbar;
-			currentOpenSnackbar.open();
-		}
-
-		export function notifyClosed(snackbar: Binding) {
-			if (snackbar === currentOpenSnackbar) {
-				currentOpenSnackbar = null;
-				if (awaitingSnackbar) {
-					open(awaitingSnackbar);
-					awaitingSnackbar = null;
-				}
-			}
-		}
-	}
-
-	interface Binding {
-		open: () => void;
-		close: () => void;
-	}
 </script>
 
 <script lang="ts">
@@ -45,8 +9,10 @@
 	import { onDestroy, onMount, tick } from "svelte";
 	import { createEventDispatcher } from "svelte";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import SnackbarBase from "./internal/SnackbarBase.svelte";
-	import { OnSnackbarClose } from ".";
+	import { Snackbar } from "../internal";
+	import type { OnSnackbarClose } from "../types";
+	import { getSnackbarConcurrencyContext } from "./SnackbarConcurrencyContext";
+	import type { ConcurrentSnackbarContext } from "./SnackbarConcurrencyContext";
 	//#endregion
 
 	//#region exports
@@ -55,7 +21,7 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/snackbar/Snackbar:${count++}`;
+	export let id: string = `@svmd/snackbar/concurrency/Snackbar:${count++}`;
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
@@ -64,43 +30,38 @@
 	export let timeoutMs: number = 5000;
 	export let closeOnEscape: boolean = true;
 	export let open: boolean = false;
+	export let value: string = undefined;
 	//#endregion
 
-	const dispatch = createEventDispatcher<{
-		closed: OnSnackbarClose;
-	}>();
-
 	//#region implementation
+	const dispatch =
+		createEventDispatcher<{
+			closed: OnSnackbarClose;
+		}>();
+
 	let internalOpen: boolean = open;
 
-	const binding: Binding = {
+	const snackbarConcurrencyContext$ = getSnackbarConcurrencyContext();
+	const context = {
 		open: () => setOpen(true),
 		close: () => setOpen(false),
-	};
+		value,
+	} as ConcurrentSnackbarContext;
 
-	const context: SnackbarContext = {
-		setOpen: (newValue: boolean) => {
-			open = newValue;
-		},
-		isOpen: open,
-	};
-
-	$: Object.assign(context, { ...context, isOpen: open });
+	$: Object.assign(context, { ...context, value, dom });
 
 	onMount(() => {
 		handleOpenUpdate();
 	});
 
 	onDestroy(() => {
-		SnackbarModule.notifyClosed(binding);
+		$snackbarConcurrencyContext$.notifyClosed(context);
 	});
 
 	async function handleClosed(event: OnSnackbarClose) {
-		SnackbarModule.notifyClosed(binding);
 		open = false;
-
 		await tick();
-
+		$snackbarConcurrencyContext$.notifyClosed(context, event.reason);
 		dispatch("closed", event);
 	}
 
@@ -111,7 +72,7 @@
 
 	function handleOpenUpdate() {
 		if (open) {
-			SnackbarModule.queueOpen(binding);
+			$snackbarConcurrencyContext$.requestOpen(context);
 		} else {
 			internalOpen = false;
 		}
@@ -121,7 +82,7 @@
 
 <UseState value={open} onUpdate={handleOpenUpdate} />
 
-<SnackbarBase
+<Snackbar
 	bind:dom
 	bind:open={internalOpen}
 	{...$$restProps}
@@ -136,6 +97,15 @@
 	on:closing
 	on:opened
 	on:opening
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
-</SnackbarBase>
+</Snackbar>

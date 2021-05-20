@@ -3,7 +3,6 @@
 <script lang="ts">
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { IconButton } from "../../../icon-button/src/internal";
 	//#endregion
 
 	//#region exports
@@ -13,25 +12,28 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLButtonElement = undefined;
+	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
-	//#region icon-button
-	export let ripple: boolean = false;
-	//#endregion
+	export let stacked: boolean = false;
+	export let leading: boolean = false;
 	//#endregion
 
-	//#region implementation
+	//region implementation
 	//#endregion
 </script>
 
-<IconButton
-	bind:dom
-	{...$$restProps}
+<div
+	bind:this={dom}
 	{id}
-	class={classList([className, "mdc-snackbar__action"])}
+	class={classList([
+		className,
+		"mdc-snackbar",
+		[leading, "mdc-snackbar--leading"],
+		[stacked, "mdc-snackbar--stacked"],
+	])}
 	{style}
-	{ripple}
+	{...$$restProps}
 	on:click
 	on:mousedown
 	on:mouseup
@@ -42,5 +44,7 @@
 	on:focusin
 	on:focusout
 >
-	<slot />
-</IconButton>
+	<div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+		<slot />
+	</div>
+</div>

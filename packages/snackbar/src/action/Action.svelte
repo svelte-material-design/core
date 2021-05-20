@@ -1,12 +1,8 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
 	//#region imports
-	import { Button, ButtonColor } from "../../../button";
+	import { Button } from "../../../button/src/internal";
 	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 
@@ -16,7 +12,7 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/snackbar/Action:${count++}`;
+	export let id: string = undefined;
 	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 
@@ -36,7 +32,15 @@
 	class={classList([className, "mdc-snackbar__action"])}
 	{style}
 	{ripple}
-	type="button"
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
 </Button>

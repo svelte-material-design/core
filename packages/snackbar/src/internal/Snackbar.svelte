@@ -2,11 +2,13 @@
 
 <script lang="ts">
 	//#region imports
-	import { MDCSnackbar, MDCSnackbarCloseEvent } from "@material/snackbar";
+	import { MDCSnackbar } from "@material/snackbar";
+	import type { MDCSnackbarCloseEvent } from "@material/snackbar";
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { OnSnackbarOpen, OnSnackbarClose } from "..";
-	import { classList } from "@raythurnevoid/strings-filter";
+	import type { OnSnackbarOpen, OnSnackbarClose } from "..";
+	import { Snackbar } from "../dom";
+	import type { SnackbarCloseReason } from "../types";
 	//#endregion
 
 	//#region exports
@@ -26,14 +28,15 @@
 	export let open: boolean = false;
 	//#endregion
 
-	const dispatch = createEventDispatcher<{
-		opening: OnSnackbarOpen;
-		opened: OnSnackbarOpen;
-		closing: OnSnackbarClose;
-		closed: OnSnackbarClose;
-	}>();
-
 	//region implementation
+	const dispatch =
+		createEventDispatcher<{
+			opening: OnSnackbarOpen;
+			opened: OnSnackbarOpen;
+			closing: OnSnackbarClose;
+			closed: OnSnackbarClose;
+		}>();
+
 	let openState: UseState;
 	let snackbar: MDCSnackbar;
 
@@ -85,7 +88,7 @@
 
 		dispatch("closing", {
 			dom,
-			reason: event.detail.reason,
+			reason: event.detail.reason as SnackbarCloseReason,
 		});
 	}
 
@@ -98,7 +101,7 @@
 	function handleClosed(event: MDCSnackbarCloseEvent) {
 		dispatch("closed", {
 			dom,
-			reason: event.detail.reason,
+			reason: event.detail.reason as SnackbarCloseReason,
 		});
 	}
 
@@ -115,27 +118,23 @@
 <UseState value={[stacked, leading]} onUpdate={initialize} />
 <UseState bind:this={openState} value={open} onUpdate={handleOpenUpdate} />
 
-<div class="smui-snackbar-origin" />
-
-<div
-	bind:this={dom}
-	{...$$restProps}
+<Snackbar
+	bind:dom
 	{id}
-	class={classList([
-		className,
-		"mdc-snackbar",
-		[leading, "mdc-snackbar--leading"],
-		[stacked, "mdc-snackbar--stacked"],
-	])}
+	class={className}
 	{style}
+	{stacked}
+	{leading}
+	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
-	<div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
-		<slot />
-	</div>
-</div>
-
-<style>
-	.smui-snackbar-origin {
-		display: none;
-	}
-</style>
+	<slot />
+</Snackbar>

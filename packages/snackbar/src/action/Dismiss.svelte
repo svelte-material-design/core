@@ -1,13 +1,9 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { IconButton, IconButtonColor } from "../../../icon-button";
+	import { IconButton } from "../../../icon-button/src/internal";
 	//#endregion
 
 	//#region exports
@@ -16,7 +12,7 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/snackbar/Dismiss:${count++}`;
+	export let id: string = undefined;
 	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 
@@ -37,6 +33,15 @@
 	{style}
 	{ripple}
 	type="button"
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	close
 </IconButton>

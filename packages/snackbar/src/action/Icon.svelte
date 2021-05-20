@@ -1,14 +1,10 @@
 <svelte:options immutable={true} />
 
-<script context="module" lang="ts">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
 	//#region  imports
 	import { classList } from "@raythurnevoid/strings-filter";
 	import type { GraphicType } from "../../../common/components";
-	import { Icon } from "../../../icon-button/src/internal";
+	import { Icon } from "../../../icon-button/src";
 	import type { IconDOM } from "..";
 	//#endregion
 
@@ -18,7 +14,7 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@smui/snackbar/Icon:${count++}`;
+	export let id: string = undefined;
 	export let dom: IconDOM = undefined;
 	//#endregion
 

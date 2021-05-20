@@ -3,7 +3,7 @@ export type { IconDOM } from "../../icon-button";
 
 export interface OnSnackbarClose {
 	dom: HTMLDivElement;
-	reason: string;
+	reason?: SnackbarCloseReason;
 }
 
 export interface OnSnackbarOpen {
@@ -11,3 +11,5 @@ export interface OnSnackbarOpen {
 }
 
 export type IconType = GraphicType;
+
+export type SnackbarCloseReason = "dismiss" | "action";
