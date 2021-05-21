@@ -4,6 +4,7 @@
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
 	import { IconButton } from "../../../icon-button/src/internal";
+	import { setActionType } from "./ActionsContext";
 	//#endregion
 
 	//#region exports
@@ -16,12 +17,11 @@
 	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 
-	//#region icon-button
 	export let ripple: boolean = false;
-	//#endregion
 	//#endregion
 
 	//#region implementation
+	setActionType("icon");
 	//#endregion
 </script>
 

@@ -115,7 +115,7 @@
 	//#endregion
 </script>
 
-<UseState value={[stacked, leading]} onUpdate={initialize} />
+<UseState value={[stacked, leading, timeoutMs]} onUpdate={initialize} />
 <UseState bind:this={openState} value={open} onUpdate={handleOpenUpdate} />
 
 <Snackbar

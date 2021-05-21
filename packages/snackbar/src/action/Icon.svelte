@@ -2,10 +2,11 @@
 
 <script lang="ts">
 	//#region  imports
-	import { classList } from "@raythurnevoid/strings-filter";
 	import type { GraphicType } from "../../../common/components";
 	import { Icon } from "../../../icon-button/src";
+	import { Icon as ButtonIcon } from "../../../button/src";
 	import type { IconDOM } from "..";
+	import { getActionType } from "./ActionsContext";
 	//#endregion
 
 	//#region exports
@@ -20,19 +21,20 @@
 
 	export let type: GraphicType = "icon";
 	//#endregion
+
+	//#region implementation
+	const parent = getActionType();
+	//#endregion
 </script>
 
-<Icon
+<svelte:component
+	this={parent === "icon" ? Icon : ButtonIcon}
 	bind:dom
-	{...$$restProps}
 	{id}
-	class={classList([
-		className,
-		"mdc-icon-button__icon",
-		[type === "icon" && className == undefined, "material-icons"],
-	])}
+	class={className}
 	{style}
 	{type}
+	{...$$restProps}
 >
 	<slot />
-</Icon>
+</svelte:component>

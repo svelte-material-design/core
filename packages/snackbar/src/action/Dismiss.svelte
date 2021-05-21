@@ -16,7 +16,7 @@
 	export let dom: HTMLButtonElement = undefined;
 	//#endregion
 
-	//#region icon-button
+	//#region implementation
 	export let ripple: boolean = false;
 	//#endregion
 </script>

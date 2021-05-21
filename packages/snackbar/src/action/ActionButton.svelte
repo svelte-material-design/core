@@ -4,6 +4,7 @@
 	//#region imports
 	import { Button } from "../../../button/src/internal";
 	import { classList } from "@raythurnevoid/strings-filter";
+	import { setActionType } from "./ActionsContext";
 	//#endregion
 
 	//#region exports
@@ -22,6 +23,7 @@
 	//#endregion
 
 	//#region implementation
+	setActionType("button");
 	//#endregion
 </script>
 
