@@ -28,7 +28,7 @@
 	{id}
 	class={classList([
 		className,
-		"mdc-list-item__graphic",
+		"mdc-list-item__start",
 		[type === "icon" && !className, "material-icons"],
 	])}
 	{style}

@@ -49,3 +49,13 @@
 	<slot {contentClass} />
 	<slot name="content" slot="content" />
 </TopAppBar>
+
+<style lang="scss" global>
+	@use "smui-theme";
+	@use "@material/top-app-bar/mdc-top-app-bar";
+	@use "@material/top-app-bar";
+
+	.svmd-top-app-bar--color--secondary {
+		@include top-app-bar.fill-color-accessible(secondary);
+	}
+</style>

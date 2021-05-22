@@ -1,8 +1,7 @@
 @use "smui-theme";
 @use "@material/icon-button";
-@use "@material/button";
+@use "@material/button/styles";
 @use "@material/snackbar";
 
 @include icon-button.core-styles;
-@include button.core-styles;
 @include snackbar.core-styles;

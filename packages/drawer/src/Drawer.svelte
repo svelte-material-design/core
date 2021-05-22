@@ -7,13 +7,7 @@
 <script lang="ts">
 	//#region  imports
 	import { MDCDrawer } from "@material/drawer";
-	import {
-		afterUpdate,
-		createEventDispatcher,
-		onDestroy,
-		onMount,
-		tick,
-	} from "svelte";
+	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import { createDrawerContext } from "./DrawerContext";
 	import type { DrawerVariant, OnOpenEvent, OnCloseEvent } from "./types";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
@@ -35,13 +29,13 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		open: OnOpenEvent;
-		close: OnCloseEvent;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			open: OnOpenEvent;
+			close: OnCloseEvent;
+		}>();
 
 	let opened = false;
-	let belowTopAppBar = false;
 	let drawer: MDCDrawer;
 
 	onMount(() => {
@@ -101,7 +95,6 @@
 	{id}
 	class={classList([
 		className,
-		"smui-drawer",
 		"mdc-drawer",
 		[variant === "dismissible", "mdc-drawer--dismissible"],
 		[variant === "modal", "mdc-drawer--modal"],
@@ -112,13 +105,17 @@
 >
 	<slot />
 </aside>
+<slot name="app-content" />
 
 {#if variant === "modal"}
 	<Scrim />
 {/if}
 
-<style>
-	:global(.smui-drawer) {
+<style lang="scss" global>
+	@use "smui-theme";
+	@use "@material/drawer/mdc-drawer";
+
+	.mdc-drawer {
 		position: absolute;
 	}
 </style>

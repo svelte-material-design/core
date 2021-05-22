@@ -23,7 +23,7 @@
 <span
 	bind:this={dom}
 	{id}
-	class={classList([className, "mdc-chip__primary-action"])}
+	class={classList([className, "mdc-evolution-chip__primary-action"])}
 	{style}
 	tabindex="0"
 	{...$$restProps}

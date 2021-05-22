@@ -2,12 +2,10 @@ import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
 import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 import type { GroupBindings } from "@raythurnevoid/svelte-group-components/ts";
 import type { ChipSetVariant } from "./types";
-import type { MDCChipSet } from "@material/chips";
+import type { MDCChipSet } from "@material/chips/chip-set";
 
-export const [
-	setChipSetContext,
-	getChipSetContext,
-] = createContextStore<ChipSetContext>();
+export const [setChipSetContext, getChipSetContext] =
+	createContextStore<ChipSetContext>();
 
 export interface ChipSetContext {
 	variant: ChipSetVariant;

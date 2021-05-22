@@ -23,20 +23,20 @@
 <span
 	bind:this={dom}
 	{id}
-	class={classList(["mdc-chip__checkmark", className])}
+	class={classList(["mdc-evolution-chip__checkmark", className])}
 	{style}
 	on:click
 >
-	<svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+	<svg class="mdc-evolution-chip__checkmark-svg" viewBox="-2 -3 30 30">
 		{#if !$$slots.default}
 			<path
-				class="mdc-chip__checkmark-path"
+				class="mdc-evolution-chip__checkmark-path"
 				fill="none"
 				stroke="black"
 				d="M1.73,12.91 8.1,19.28 22.79,4.59"
 			/>
 		{:else}
-			<slot class="mdc-chip__checkmark-path" />
+			<slot class="mdc-evolution-chip__checkmark-path" />
 		{/if}
 	</svg>
 </span>

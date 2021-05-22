@@ -2,14 +2,14 @@
 @use "@material/list";
 @use "./mixins";
 
-@include list.core-styles();
+@include list.deprecated-core-styles();
 @include mixins.smui-list-core-styles();
 
-@for $density from 1 to 5 {
-	.smui-list--density--#{$density} {
-		@include list.single-line-density($density * -1);
-	}
-}
+// @for $density from 1 to 5 {
+// 	.smui-list--density--#{$density} {
+// 		@include list.single-line-density($density * -1);
+// 	}
+// }
 
 .mdc-list-item__meta.smui-list__trailing-icon {
 	width: 24px;

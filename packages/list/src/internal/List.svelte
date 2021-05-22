@@ -20,6 +20,7 @@
 	import { List } from "../dom";
 	import { Group } from "@raythurnevoid/svelte-group-components";
 	import type { ItemContext } from "../item";
+	import type { ItemLines } from "../item/types";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import type {
 		OnListChildrenChangeEvent,
@@ -41,7 +42,10 @@
 
 	export let orientation: ListOrientation = "vertical";
 	export let itemsStyle: ListItemsStyle = "textual";
-	export let itemsRows: number = 1;
+	/**
+	 * @deprecated
+	 */
+	export let itemsRows: ItemLines = 1;
 	export let dense: boolean = false;
 	export let wrapFocus: boolean = false;
 	export let typeahead: boolean = false;
@@ -55,10 +59,11 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		action: OnListActionEvent;
-		optionsChange: OnListChildrenChangeEvent;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			action: OnListActionEvent;
+			optionsChange: OnListChildrenChangeEvent;
+		}>();
 
 	let list: MDCList;
 	let listGroup: Group;
@@ -67,6 +72,7 @@
 	const context$ = createListContext({
 		listSelectionGroup: group,
 		selectionType,
+		itemsRows,
 		reinitialize() {
 			initialize();
 		},
@@ -76,6 +82,7 @@
 		dom,
 		list,
 		selectionType,
+		itemsRows,
 	};
 
 	onMount(async () => {

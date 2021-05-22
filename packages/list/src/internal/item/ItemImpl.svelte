@@ -10,6 +10,7 @@
 	import { onMount } from "svelte";
 	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
 	import { setItemContext } from "../../item";
+	import type { ItemLines } from "../../item/types";
 	import { A, Div } from "../../../../common/dom";
 	//#endregion
 
@@ -28,6 +29,7 @@
 	export let disabled: boolean = false;
 	export let value: string = undefined;
 	export let href: string = undefined;
+	export let lines: ItemLines = undefined;
 	//#endregion
 
 	//#region implementation
@@ -81,6 +83,7 @@
 		{ripple}
 		{disabled}
 		{href}
+		lines={lines || $listContext$.itemsRows}
 		component={href ? A : Div}
 		data-value={value}
 		aria-selected={selected}

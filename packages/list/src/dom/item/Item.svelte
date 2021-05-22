@@ -7,6 +7,7 @@
 	import { ItemContent } from ".";
 	import { Li } from "../../../../common/dom";
 	import type { ListItemComponent, ListItemElement } from "./types";
+	import type { ItemLines } from "../../item/types";
 	//#endregion
 
 	//#region exports
@@ -22,6 +23,7 @@
 	export let selected: boolean = false;
 	export let activated: boolean = false;
 	export let disabled: boolean = false;
+	export let lines: ItemLines = 1;
 
 	export let component: ListItemComponent = Li;
 	//#endregion
@@ -38,6 +40,9 @@
 		class={classList([
 			className,
 			"mdc-list-item",
+			[lines === 1, "mdc-list-item--with-one-line"],
+			[lines === 2, "mdc-list-item--with-two-lines"],
+			[lines === 3, "mdc-list-item--with-three-lines"],
 			[disabled, "mdc-list-item--disabled"],
 			[selected, "mdc-list-item--selected"],
 			[activated, "mdc-list-item--activated"],

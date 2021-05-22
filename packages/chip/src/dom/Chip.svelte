@@ -32,9 +32,9 @@
 		{id}
 		class={classList([
 			className,
-			"mdc-chip",
-			[selected, "mdc-chip--selected"],
-			[accessibleTouch, "mdc-chip--touch"],
+			"mdc-evolution-chip",
+			[selected, "mdc-evolution-chip--selected"],
+			[accessibleTouch, "mdc-evolution-chip--touch"],
 		])}
 		{style}
 		role="row"
@@ -50,7 +50,7 @@
 		on:focusout
 	>
 		{#if ripple}
-			<div class="mdc-chip__ripple" />
+			<div class="mdc-evolution-chip__ripple" />
 		{/if}
 		<slot />
 	</div>

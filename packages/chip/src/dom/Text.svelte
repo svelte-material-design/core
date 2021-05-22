@@ -23,7 +23,7 @@
 <span
 	bind:this={dom}
 	{id}
-	class={classList([className, "mdc-chip__text"])}
+	class={classList([className, "mdc-evolution-chip__text"])}
 	{style}
 	{...$$restProps}
 >

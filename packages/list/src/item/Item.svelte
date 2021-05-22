@@ -8,7 +8,7 @@
 	//#region  imports
 	import { createEventDispatcher, tick } from "svelte";
 	import { getListContext } from "../";
-	import type { OnItemChangeEvent } from "./types";
+	import type { ItemLines, OnItemChangeEvent } from "./types";
 	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
@@ -29,12 +29,14 @@
 	export let activated: boolean = false;
 	export let disabled: boolean = false;
 	export let value: string = undefined;
+	export let lines: ItemLines = undefined;
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		change: OnItemChangeEvent;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			change: OnItemChangeEvent;
+		}>();
 
 	const listContext$ = getListContext();
 
@@ -71,6 +73,7 @@
 		{disabled}
 		{value}
 		{ripple}
+		{lines}
 		{...$$restProps}
 		let:leadingClassName
 		let:trailingClassName

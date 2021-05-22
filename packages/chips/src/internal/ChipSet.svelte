@@ -7,12 +7,12 @@
 <script lang="ts">
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { MDCChipSet } from "@material/chips";
+	import { MDCChipSet } from "@material/chips/chip-set";
 	import type {
-		MDCChipNavigationEvent,
-		MDCChipSelectionEvent,
-	} from "@material/chips";
-	import type { MDCChipInteractionEvent } from "@material/chips";
+		MDCChipSetInteractionEventDetail,
+		MDCChipSetRemovalEventDetail,
+		MDCChipSetSelectionEventDetail,
+	} from "@material/chips/chip-set/types";
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import { setChipSetContext } from "../ChipSetContext";
 	import type { ChipContext } from "../ChipSetContext";
@@ -22,6 +22,7 @@
 		ChipSetVariant,
 		OnChipSetChildrenChange,
 		OnChipSetInteraction,
+		OnChipSetRemoval,
 		OnChipSetSelection,
 	} from "../types";
 	import { Group } from "@raythurnevoid/svelte-group-components/ts";
@@ -44,13 +45,14 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		optionsChange: OnChipSetChildrenChange;
-		interaction: OnChipSetInteraction;
-		trailingIconInteraction: OnChipSetInteraction;
-		navigation: OnChipSetInteraction;
-		selection: OnChipSetSelection;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			optionsChange: OnChipSetChildrenChange;
+			interaction: OnChipSetInteraction;
+			navigation: OnChipSetInteraction;
+			selection: OnChipSetSelection;
+			removal: OnChipSetRemoval;
+		}>();
 
 	let chipSet: MDCChipSet;
 	let chipSetGroup: Group;
@@ -83,13 +85,9 @@
 		if (dom) {
 			destroy();
 			chipSet = new MDCChipSet(dom);
-			chipSet.listen("MDCChip:interaction", handleInteraction);
-			chipSet.listen("MDCChip:selection", handleSelection);
-			chipSet.listen(
-				"MDCChip:trailingIconInteraction",
-				handleTrailingIconInteraction
-			);
-			chipSet.listen("MDCChip:navigation", handleNavigation);
+			chipSet.listen("MDCChipSet:interaction", handleInteraction);
+			chipSet.listen("MDCChipSet:selection", handleSelection);
+			chipSet.listen("MDCChipSet:removal", handleRemoval);
 		}
 	}
 
@@ -100,18 +98,11 @@
 		return result;
 	}
 
-	function handleInteraction(event: MDCChipInteractionEvent) {
-		const chip = getChipById(event.detail.chipId);
-		dispatch("interaction", {
-			dom,
-			chipValue: chip.externalContext.value,
-			chipDom: chip.dom as HTMLDivElement,
-		});
-	}
-
-	async function handleSelection(event: MDCChipSelectionEvent) {
-		const chip = getChipById(event.detail.chipId);
-		chip.externalContext.setSelected(event.detail.selected);
+	async function handleSelection(
+		event: CustomEvent<MDCChipSetSelectionEventDetail>
+	) {
+		const chip = getChipById(event.detail.chipID);
+		chip.externalContext.setSelected(event.detail.isSelected);
 
 		await tick();
 
@@ -119,22 +110,24 @@
 			dom,
 			chipValue: chip.externalContext.value,
 			chipDom: chip.dom as HTMLDivElement,
-			selected: event.detail.selected,
+			selected: event.detail.isSelected,
 		});
 	}
 
-	function handleTrailingIconInteraction(event: MDCChipInteractionEvent) {
-		const chip = getChipById(event.detail.chipId);
-		dispatch("trailingIconInteraction", {
+	function handleRemoval(event: CustomEvent<MDCChipSetRemovalEventDetail>) {
+		const chip = getChipById(event.detail.chipID);
+		dispatch("removal", {
 			dom,
 			chipValue: chip.externalContext.value,
 			chipDom: chip.dom as HTMLDivElement,
 		});
 	}
 
-	function handleNavigation(event: MDCChipNavigationEvent) {
-		const chip = getChipById(event.detail.chipId);
-		dispatch("navigation", {
+	function handleInteraction(
+		event: CustomEvent<MDCChipSetInteractionEventDetail>
+	) {
+		const chip = getChipById(event.detail.chipID);
+		dispatch("interaction", {
 			dom,
 			chipValue: chip.externalContext.value,
 			chipDom: chip.dom as HTMLDivElement,
@@ -165,10 +158,10 @@
 		{id}
 		class={classList([
 			className,
-			"mdc-chip-set",
-			[entryAnimation, "mdc-chip-set--input"],
-			[variant === "choice", "mdc-chip-set--choice"],
-			[variant === "filter", "mdc-chip-set--filter"],
+			"mdc-evolution-chip-set",
+			[entryAnimation, "mdc-evolution-chip-set--input"],
+			[variant === "choice", "mdc-evolution-chip-set--choice"],
+			[variant === "filter", "mdc-evolution-chip-set--filter"],
 		])}
 		{style}
 		{...$$restProps}

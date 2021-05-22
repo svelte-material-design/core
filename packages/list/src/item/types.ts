@@ -5,3 +5,5 @@ export interface OnItemChangeEvent {
 	dom: HTMLLIElement;
 	selected: boolean;
 }
+
+export type ItemLines = 1 | 2 | 3;

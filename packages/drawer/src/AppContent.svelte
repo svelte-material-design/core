@@ -18,6 +18,7 @@
 
 	//#region implementation
 	//#endregion
+
 </script>
 
 <div
@@ -27,7 +28,5 @@
 	{style}
 >
 	<slot name="topAppBar" />
-	{#if $$slots.default}
-		<slot />
-	{/if}
+	<slot />
 </div>

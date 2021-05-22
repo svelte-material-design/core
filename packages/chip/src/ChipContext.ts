@@ -1,10 +1,8 @@
 import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
-import type { MDCChip } from "@material/chips";
+import type { MDCChip } from "@material/chips/chip";
 
-export const [
-	createChipContext,
-	getChipContext,
-] = createContextStore<ChipContext>();
+export const [createChipContext, getChipContext] =
+	createContextStore<ChipContext>();
 
 export interface ChipContext {
 	chip: MDCChip;

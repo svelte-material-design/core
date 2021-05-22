@@ -18,6 +18,8 @@ export interface OnChipSetInteraction {
 	chipDom: HTMLDivElement;
 }
 
+export interface OnChipSetRemoval extends OnChipSetInteraction {}
+
 export interface OnChipSetSelection extends OnChipSetInteraction {
 	selected: boolean;
 }

@@ -58,3 +58,19 @@
 
 <slot {rippleClasses} />
 <UseState value={target} onUpdate={initialize} />
+
+<style lang="scss" global>
+	@use "smui-theme";
+	@use "@material/ripple";
+	@use "@material/theme";
+
+	@include ripple.core-styles;
+
+	.mdc-ripple-surface--primary {
+		@include ripple.states(theme.$primary);
+	}
+
+	.mdc-ripple-surface--secondary {
+		@include ripple.states(theme.$secondary);
+	}
+</style>

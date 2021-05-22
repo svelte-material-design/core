@@ -33,8 +33,8 @@ https://github.com/material-components/material-components-web/issues/31
 		.mdc-list-divider {
 			$divider-color: if(
 				theme-functions.tone(theme-variables.$background) == "dark",
-				variables.$divider-color-on-dark-bg,
-				variables.$divider-color-on-light-bg
+				variables.$deprecated-divider-color-on-dark-bg,
+				variables.$deprecated-divider-color-on-light-bg
 			);
 
 			border-bottom: none;

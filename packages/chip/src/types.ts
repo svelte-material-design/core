@@ -5,6 +5,10 @@ export interface OnChipInteraction {
 	value: string;
 }
 
+export interface OnChipAnimation extends OnChipInteraction {}
+
+export interface OnChipNavigation extends OnChipInteraction {}
+
 export interface OnChipChange {
 	dom: HTMLDivElement;
 	value: string;

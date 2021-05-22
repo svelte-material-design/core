@@ -3,6 +3,7 @@
 <script lang="ts">
 	//#region  imports
 	import { ItemImpl } from ".";
+	import type { ItemLines } from "../../item/types";
 	//#endregion
 
 	//#region exports
@@ -20,6 +21,7 @@
 	export let disabled: boolean = false;
 	export let value: string = undefined;
 	export let href: string = undefined;
+	export let lines: ItemLines = undefined;
 	//#endregion
 
 	//#region implementation
@@ -36,6 +38,7 @@
 		{disabled}
 		{value}
 		{href}
+		{lines}
 		{...$$restProps}
 		let:leadingClassName
 		let:trailingClassName

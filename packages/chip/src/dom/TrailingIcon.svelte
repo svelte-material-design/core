@@ -29,10 +29,10 @@
 	{id}
 	class={classList([
 		className,
-		"mdc-chip__icon",
-		"mdc-chip__icon--trailing",
+		"mdc-evolution-chip__icon",
+		"mdc-evolution-chip__icon--trailing",
 		[type === "icon" && className == undefined, "material-icons"],
-		[action, "mdc-chip-trailing-action"],
+		[action, "mdc-evolution-chip-trailing-action"],
 	])}
 	{style}
 	{type}

@@ -7,7 +7,11 @@
 <script lang="ts">
 	//#region  imports
 	import { List } from "../../../list/src/internal";
-	import type { ListOrientation, ListItemsStyle } from "../../../list";
+	import type {
+		ListOrientation,
+		ListItemsStyle,
+		ItemLines,
+	} from "../../../list";
 	import { getDrawerContext } from "../DrawerContext";
 	//#endregion
 
@@ -23,7 +27,7 @@
 	export let orientation: ListOrientation = "vertical";
 	export let itemsStyle: ListItemsStyle = "textual";
 	export let dense: boolean = false;
-	export let itemsRows: number = 1;
+	export let itemsRows: ItemLines = 1;
 	//#endregion
 
 	//#region implementation
@@ -54,3 +58,10 @@
 		<slot />
 	</List>
 </nav>
+
+<style lang="scss" global>
+	@use "smui-theme";
+	@use "@material/list";
+
+	@include list.deprecated-core-styles();
+</style>

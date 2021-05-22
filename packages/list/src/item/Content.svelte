@@ -23,7 +23,7 @@
 <span
 	bind:this={dom}
 	{id}
-	class={classList([className, "mdc-list-item__text"])}
+	class={classList([className, "mdc-list-item__content"])}
 	{style}
 	{...$$restProps}
 >

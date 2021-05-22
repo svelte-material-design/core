@@ -1,5 +1,5 @@
 import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
-import type { ItemContext } from "./item";
+import type { ItemContext, ItemLines } from "./item";
 import type { SelectionType } from "../../common/hoc";
 import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
 import type { GroupBindings } from "@raythurnevoid/svelte-group-components/ts/components-group";
@@ -12,6 +12,7 @@ export interface ListContext {
 	listSelectionGroup: SelectionGroupBinding;
 	listGroup: GroupBindings;
 	selectionType: SelectionType;
+	itemsRows: ItemLines;
 	registerItem(item: ItemContext): void;
 	unregisterItem(item: ItemContext): void;
 	reinitialize(): void;

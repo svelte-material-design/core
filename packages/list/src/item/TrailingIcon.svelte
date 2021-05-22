@@ -28,7 +28,7 @@
 	{id}
 	class={classList([
 		className,
-		"mdc-list-item__meta",
+		"mdc-list-item__end",
 		"smui-list__trailing-icon",
 		[type === "icon" && !className, "material-icons"],
 	])}

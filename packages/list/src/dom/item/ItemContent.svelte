@@ -5,6 +5,6 @@
 
 <span class="mdc-list-item__ripple" />
 <slot
-	leadingClassName="mdc-list-item__graphic"
-	trailingClassName="mdc-list-item__meta"
+	leadingClassName="mdc-list-item__startc"
+	trailingClassName="mdc-list-item__end"
 />

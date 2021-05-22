@@ -56,3 +56,25 @@
 >
 	<slot />
 </Button>
+
+<style lang="scss" global>
+	@use "smui-theme";
+	@use "@material/button/styles";
+	@use "@material/button";
+	@use "@material/theme";
+
+	.mdc-button--raised,
+	.mdc-button--unelevated {
+		&.svmd-button--color--secondary {
+			@include button.filled-accessible(theme.$secondary);
+		}
+	}
+
+	.mdc-button--text,
+	.mdc-button--outlined {
+		&.svmd-button--color--secondary {
+			@include button.ink-color(theme.$secondary);
+			@include button.outline-color(theme.$secondary);
+		}
+	}
+</style>

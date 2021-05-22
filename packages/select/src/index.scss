@@ -6,4 +6,4 @@
 @use "@material/list";
 
 @include select.core-styles;
-@include list.core-styles();
+@include list.deprecated-core-styles();
