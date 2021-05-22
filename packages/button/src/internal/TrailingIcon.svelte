@@ -3,9 +3,11 @@
 <script lang="ts">
 	//#region  imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import type { GraphicDOM } from "../../common/components";
-	import { Graphic } from "../../common/components";
-	import type { GraphicType } from "../../common/components";
+	import type { GraphicDOM } from "../../../common/components";
+	import { Graphic } from "../../../common/components";
+	import type { GraphicType } from "../../../common/components";
+	import { getButtonContext } from "../ButtonContext";
+	import { onMount } from "svelte";
 	//#endregion
 
 	//#region exports
@@ -22,6 +24,15 @@
 	//#endregion
 
 	//#region implementation
+	const buttonContext$ = getButtonContext();
+
+	onMount(() => {
+		$buttonContext$.setHasLeadingIcon(true);
+
+		return () => {
+			$buttonContext$.setHasLeadingIcon(false);
+		};
+	});
 	//#endregion
 </script>
 

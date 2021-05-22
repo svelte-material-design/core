@@ -3,7 +3,7 @@
 <script lang="ts">
 	//#region imports
 	import "../../../../button";
-	import { Button } from "../../../../button/src";
+	import { Button } from "../../../../button/src/internal";
 	import { classList } from "@raythurnevoid/strings-filter";
 	import type { ButtonColor, ButtonVariant } from ".";
 	import { setActionType } from "../ActionsContext";

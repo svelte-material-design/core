@@ -54,7 +54,9 @@
 	on:focusin
 	on:focusout
 >
+	<slot name="leading" slot="leading" />
 	<slot />
+	<slot name="trailing" slot="trailing" />
 </Button>
 
 <style lang="scss" global>

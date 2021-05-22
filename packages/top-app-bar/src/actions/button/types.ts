@@ -1,1 +1,1 @@
-export type { ButtonColor, ButtonVariant } from "../../../../button/src";
+export type { ButtonColor, ButtonVariant } from "../../../../button/src/types";
