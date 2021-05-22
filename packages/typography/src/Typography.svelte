@@ -1,9 +1,27 @@
 <svelte:options immutable={true} />
 
-<script lang="ts" context="module">
+<script lang="ts">
+	//#region imports
+	import { classList } from "@raythurnevoid/strings-filter/ts";
 	import type { TypographyVariant } from ".";
+	import { TypographyStyle } from ".";
 	import { H1, H2, H3, H4, H5, H6, P, Span } from "../../common/dom";
+	//#endregion
 
+	//#region exports
+	//#region base
+	let className: string = undefined;
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = undefined;
+	export let dom: HTMLElement = undefined;
+	//#endregion
+
+	export let variant: TypographyVariant = "body1";
+	export let component: any = getDefaultComponent(variant);
+	//#endregion
+
+	//#region implementation
 	function getDefaultComponent(variant: TypographyVariant) {
 		switch (variant) {
 			case "headline1":
@@ -30,26 +48,6 @@
 				return P;
 		}
 	}
-</script>
-
-<script lang="ts">
-	//#region imports
-	//#endregion
-
-	//#region exports
-	//#region base
-	let className: string = undefined;
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = undefined;
-	export let dom: HTMLElement = undefined;
-	//#endregion
-
-	export let variant: TypographyVariant = "body1";
-	export let component: any = getDefaultComponent(variant);
-	//#endregion
-
-	//#region implementation
 	//#endregion
 </script>
 
@@ -57,7 +55,7 @@
 	this={component}
 	bind:dom
 	{id}
-	class="{className || ''} mdc-typography--{variant}"
+	class={classList([className, `mdc-typography--${variant}`])}
 	{style}
 	{...$$restProps}
 	on:click
@@ -72,3 +70,5 @@
 >
 	<slot />
 </svelte:component>
+
+<TypographyStyle />
