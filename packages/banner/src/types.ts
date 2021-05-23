@@ -11,4 +11,5 @@ export interface OnBannerClosing {
 
 export interface OnBannerClosed extends OnBannerClosing {}
 
-export type CloseReason = "primary" | "secondary";
+export type ActionType = "primary" | "secondary";
+export type CloseReason = ActionType;

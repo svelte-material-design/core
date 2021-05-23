@@ -8,8 +8,8 @@
 	//#region imports
 	import { MDCFormField } from "@material/form-field";
 	import { onMount, onDestroy } from "svelte";
-	import type { FormFieldLabelAlign } from "./";
-	import { createFormFieldContext } from "./";
+	import { FormFieldStyles, createFormFieldContext } from ".";
+	import type { FormFieldLabelAlign } from ".";
 	//#endregion
 
 	//#region exports
@@ -90,6 +90,8 @@
 		{/if}
 	{/if}
 </div>
+
+<FormFieldStyles />
 
 <style lang="scss">
 	.smui-form-field--vertical {

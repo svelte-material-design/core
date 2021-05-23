@@ -9,6 +9,7 @@
 		ButtonVariant,
 	} from "../../../button/src/types";
 	import { Button } from "../../../button/src/internal";
+	import type { ActionType } from "@material/chips/action/constants";
 	//#endregion
 
 	//#region exports
@@ -28,7 +29,7 @@
 	export let href: string = undefined;
 	export let accessibleTouch: boolean = false;
 
-	export let type: "primary" | "secondary" = "primary";
+	export let type: ActionType = "primary";
 	//#endregion
 
 	//#region implementation
