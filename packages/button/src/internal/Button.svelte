@@ -1,12 +1,8 @@
 <svelte:options immutable={true} />
 
-<script lang="ts" context="module">
-	let count: number = 0;
-</script>
-
 <script lang="ts">
 	//#region imports
-	import type { ButtonColor, ButtonVariant } from "../types";
+	import type { ButtonColor, ButtonDOM, ButtonVariant } from "../types";
 	import { setButtonContext } from "../ButtonContext";
 	import { Button } from "../dom";
 	//#endregion
@@ -17,8 +13,8 @@
 
 	export { className as class };
 	export let style: string = undefined;
-	export let id: string = `@svmd/button/Button:${count++}`;
-	export let dom: HTMLButtonElement | HTMLAnchorElement = undefined;
+	export let id: string = undefined;
+	export let dom: ButtonDOM = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;

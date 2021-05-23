@@ -2,9 +2,13 @@
 
 <script lang="ts">
 	//#region imports
-	import { classList } from "@raythurnevoid/strings-filter";
-	import { Button } from "../../button/src/internal";
-	import type { ButtonVariant, ButtonColor, ButtonDOM } from "../../button";
+	import { classList } from "@raythurnevoid/strings-filter/ts";
+	import type {
+		ButtonDOM,
+		ButtonColor,
+		ButtonVariant,
+	} from "../../../button/src/types";
+	import { Button } from "../../../button/src/internal";
 	//#endregion
 
 	//#region exports
@@ -21,11 +25,10 @@
 	export let color: ButtonColor = "primary";
 	export let variant: ButtonVariant = "text";
 	export let disabled: boolean = false;
+	export let href: string = undefined;
 	export let accessibleTouch: boolean = false;
 
-	export let action: string = "close";
-	let defaultAction: boolean = false;
-	export { defaultAction as default };
+	export let type: "primary" | "secondary" = "primary";
 	//#endregion
 
 	//#region implementation
@@ -35,25 +38,19 @@
 <Button
 	bind:dom
 	{id}
-	class={classList([className, "mdc-dialog__button"])}
+	class={classList([
+		className,
+		[type === "primary", "mdc-banner__primary-action"],
+		[type === "secondary", "mdc-banner__secondary-action"],
+	])}
 	{style}
 	{ripple}
 	{color}
 	{variant}
 	{disabled}
+	{href}
 	{accessibleTouch}
-	data-mdc-dialog-button-default={defaultAction && ""}
-	data-mdc-dialog-action={action}
 	{...$$restProps}
-	on:click
-	on:mousedown
-	on:mouseup
-	on:keydown
-	on:keyup
-	on:focus
-	on:blur
-	on:focusin
-	on:focusout
 >
 	<slot />
 </Button>

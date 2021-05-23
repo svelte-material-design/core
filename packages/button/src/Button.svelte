@@ -8,6 +8,7 @@
 	//#region imports
 	import type { ButtonColor, ButtonVariant } from ".";
 	import { Button } from "./internal";
+	import type { ButtonDOM } from "./types";
 	//#endregion
 
 	//#region exports
@@ -17,7 +18,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = `@svmd/button/Button:${count++}`;
-	export let dom: HTMLButtonElement | HTMLAnchorElement = undefined;
+	export let dom: ButtonDOM = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;

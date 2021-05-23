@@ -1,74 +1,60 @@
 <svelte:options immutable={true} />
 
-<script lang="ts">
-	import { MDCBanner } from "@material/banner";
-
-	//#region Base
-	import { DOMEventsForwarder } from "../../common/actions";
-	const forwardDOMEvents = DOMEventsForwarder();
-	let className = "";
-	export { className as class };
-	export let style: string = undefined;
-	export let id: string = undefined;
-
-	export let dom: HTMLDivElement = null;
-
-	import type { BaseProps } from "../../common/dom/Props";
-	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import { onDestroy, onMount } from "svelte";
-	export let props: BaseProps = {};
-	//#endregion
-
-	// Banner
-	export let centered: boolean = false;
-	export let fixed: boolean = false;
-	export let open: boolean = false;
-
-	let banner: MDCBanner;
-	onMount(() => {
-		banner = new MDCBanner(dom);
-		handleOpenChange();
-	});
-
-	onDestroy(() => {
-		banner?.destroy();
-	});
-
-	function handleOpenChange() {
-		if (!banner) return;
-
-		if (open) {
-			banner.open();
-		} else {
-			banner.close();
-		}
-	}
-
-	function setOpen(newValue: boolean) {
-		open = newValue;
-	}
+<script lang="ts" context="module">
+	let count: number = 0;
 </script>
 
-<UseState value={open} onUpdate={handleOpenChange} />
+<script lang="ts">
+	//#region imports
+	import { BannerStyles } from ".";
+	import { Banner } from "./internal";
+	//#endregion
 
-<div
-	bind:this={dom}
-	{...props}
+	//#region exports
+	//#region base
+	let className: string = undefined;
+
+	export { className as class };
+	export let style: string = undefined;
+	export let id: string = `@svmd/banner/Banner:${count++}`;
+	export let dom: HTMLDivElement = undefined;
+	//#endregion
+
+	export let stacked: boolean = false;
+	export let fixed: boolean = false;
+	export let centered: boolean = false;
+	export let open: boolean = false;
+	//#endregion
+
+	//#region implementation
+	//#endregion
+</script>
+
+<Banner
+	bind:dom
 	{id}
-	class="mdc-banner {className} {centered ? 'mdc-banner--centered' : ''}"
+	class={className}
+	bind:open
 	{style}
-	role="banner"
-	use:forwardDOMEvents
+	{stacked}
+	{fixed}
+	{centered}
+	{...$$restProps}
+	on:opening
+	on:opened
+	on:closing
+	on:closed
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
-	{#if fixed}
-		<div class="mdc-banner__fixed">
-			<div class="mdc-banner__content" role="status" aria-live="assertive">
-				<slot />
-			</div>
-		</div>
-	{:else}
-		<div class="mdc-banner__content" role="status" aria-live="assertive">
-			<slot />
-		</div>
-	{/if}
-</div>
+	<slot />
+</Banner>
+
+<BannerStyles />

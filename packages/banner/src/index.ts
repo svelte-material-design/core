@@ -1,9 +1,6 @@
-import Banner from "./Banner.svelte";
-import Actions from "./Actions.svelte";
-import Text from "./Text.svelte";
-import Action from "./Action.svelte";
-import Graphic from "./Graphic.svelte";
-import Icon from "./Icon.svelte";
-import { Label } from "../../button";
-
-export { Banner, Actions, Text, Action, Graphic, Label, Icon };
+export { Action } from "./internal";
+export { Actions, Graphic, Content, Icon, Text } from "./dom";
+export { Label } from "../../button/src/dom";
+export { LeadingIcon, TrailingIcon } from "../../button/src/internal";
+export { default as BannerStyles } from "./BannerStyles.svelte";
+export { default as Banner } from "./Banner.svelte";

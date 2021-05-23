@@ -6,6 +6,7 @@
 	import type { ButtonColor, ButtonVariant } from "..";
 	import { Button, A } from "../../../common/dom";
 	import { classList } from "@raythurnevoid/strings-filter";
+	import type { ButtonDOM } from "../types";
 	//#endregion
 
 	//#region exports
@@ -15,7 +16,7 @@
 	export { className as class };
 	export let style: string = undefined;
 	export let id: string = undefined;
-	export let dom: HTMLButtonElement | HTMLAnchorElement = undefined;
+	export let dom: ButtonDOM = undefined;
 	//#endregion
 
 	export let ripple: boolean = true;

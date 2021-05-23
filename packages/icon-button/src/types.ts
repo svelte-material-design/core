@@ -1,8 +1,10 @@
+import type { ButtonDOM } from "../../button";
+
 export type {
 	GraphicDOM as IconDOM,
 	GraphicType as IconType,
 } from "../../common";
-export type IconButtonDOM = HTMLButtonElement | HTMLAnchorElement;
+export type IconButtonDOM = ButtonDOM;
 export type SwitchableString =
 	| string
 	| {
