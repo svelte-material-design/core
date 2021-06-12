@@ -1,4 +1,4 @@
-export { Action } from "./internal";
+export { ActionButton } from "./internal";
 export { Actions, Graphic, Content, Icon, Text } from "./dom";
 export { Label } from "../../button/src/dom";
 export { LeadingIcon, TrailingIcon } from "../../button/src/internal";

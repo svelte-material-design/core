@@ -20,7 +20,7 @@
 	export let dom: HTMLDivElement = undefined;
 	//#endregion
 
-	export let stacked: boolean = false;
+	export let stackedOnMobile: boolean = false;
 	export let fixed: boolean = false;
 	export let centered: boolean = false;
 	export let open: boolean = false;
@@ -36,7 +36,7 @@
 	class={className}
 	bind:open
 	{style}
-	{stacked}
+	{stackedOnMobile}
 	{fixed}
 	{centered}
 	{...$$restProps}

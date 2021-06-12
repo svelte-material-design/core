@@ -9,7 +9,7 @@
 		ButtonVariant,
 	} from "../../../button/src/types";
 	import { Button } from "../../../button/src/internal";
-	import type { ActionType } from "@material/chips/action/constants";
+	import type { ActionType } from "../types";
 	//#endregion
 
 	//#region exports
@@ -52,6 +52,15 @@
 	{href}
 	{accessibleTouch}
 	{...$$restProps}
+	on:click
+	on:mousedown
+	on:mouseup
+	on:keydown
+	on:keyup
+	on:focus
+	on:blur
+	on:focusin
+	on:focusout
 >
 	<slot />
 </Button>

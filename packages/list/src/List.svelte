@@ -18,6 +18,8 @@
 	} from "./types";
 	import type { OnListActionEvent, OnListChildrenChangeEvent } from "./types";
 	import { handleSelect } from "./functions";
+	import type { ItemLines } from "./item";
+	import { ListStyles } from ".";
 	//#endregion
 
 	//#region exports
@@ -33,7 +35,7 @@
 
 	export let orientation: ListOrientation = "vertical";
 	export let itemsStyle: ListItemsStyle = "textual";
-	export let itemsRows: number = 1;
+	export let itemsRows: ItemLines = 1;
 	export let dense: boolean = false;
 	export let wrapFocus: boolean = true;
 	export let typeahead: boolean = false;
@@ -44,11 +46,12 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		action: OnListActionEvent;
-		optionsChange: OnListChildrenChangeEvent;
-		change: OnListChangeEvent;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			action: OnListActionEvent;
+			optionsChange: OnListChildrenChangeEvent;
+			change: OnListChangeEvent;
+		}>();
 
 	let selectionGroup: SelectionGroup;
 
@@ -107,3 +110,5 @@
 		<slot />
 	</List>
 </SelectionGroup>
+
+<ListStyles />

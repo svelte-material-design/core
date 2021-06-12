@@ -6,4 +6,4 @@ export interface OnItemChangeEvent {
 	selected: boolean;
 }
 
-export type ItemLines = 1 | 2 | 3;
+export type ItemLines = 1 | 2 | 3 | number;
