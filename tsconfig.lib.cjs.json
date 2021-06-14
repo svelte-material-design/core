@@ -2,6 +2,15 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"module": "CommonJS",
-		"outDir": "./lib/cjs"
-	}
+		"outDir": "./lib/cjs",
+		"sourceMap": false,
+		"declaration": true
+	},
+	"include": [
+		"packages"
+	],
+	"exclude": [
+		"node_modules",
+		"**/*.test.ts"
+	]
 }
