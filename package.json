@@ -1,6 +1,6 @@
 {
 	"name": "@svelte-material-ui-test/core",
-	"version": "2.0.0-alpha.5",
+	"version": "2.0.0-alpha.6",
 	"description": "",
 	"scripts": {
 		"clean-lib": "del-cli lib",
