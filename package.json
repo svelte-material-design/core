@@ -1,14 +1,14 @@
 {
 	"name": "@svelte-material-ui-test/core",
-	"version": "2.0.0-alpha.9",
+	"version": "2.0.0-alpha.10",
 	"description": "",
 	"scripts": {
 		"clean-lib": "del-cli lib",
 		"copy:package:cjs": "copyfiles --up 1 cjs/* lib/cjs",
 		"copy:package": "copyfiles package.json lib",
 		"copy:src": "copyfiles --up 2 src/lib/**/* lib/src",
-		"copy:cjs": "copyfiles --up 2 src/lib/**/*!(.ts) lib/cjs",
-		"copy": "copyfiles --up 2 src/lib/**/*!(.ts) lib",
+		"copy:cjs": "copyfiles --up 2 src/lib/**/*[!.ts] lib/cjs",
+		"copy": "copyfiles --up 2 src/lib/**/*[!.ts] lib",
 		"tsc": "tsc -p tsconfig.lib.json",
 		"tsc:cjs": "tsc -p tsconfig.lib.cjs.json",
 		"lib": "npm-run-all clean-lib copy:package copy:package:cjs copy copy:cjs copy:src tsc tsc:cjs",
@@ -78,8 +78,8 @@
 		"@material/touch-target": "^11.0.0",
 		"@material/typography": "^11.0.0",
 		"@raythurnevoid/strings-filter": "^0.0.3",
-		"@raythurnevoid/svelte-context-enhanced": "^0.0.7",
-		"@raythurnevoid/svelte-group-components": "0.0.23",
+		"@raythurnevoid/svelte-context-enhanced": "^0.0.8",
+		"@raythurnevoid/svelte-group-components": "0.0.26",
 		"@raythurnevoid/svelte-hooks": "^0.0.8",
 		"@raythurnevoid/svelte-template": "^0.1.4"
 	},
