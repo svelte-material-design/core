@@ -1,16 +1,13 @@
 {
-	"extends": "./tsconfig.json",
+	"extends": "./tsconfig.lib.json",
 	"compilerOptions": {
-		"module": "CommonJS",
 		"outDir": "./lib/cjs",
-		"sourceMap": false,
-		"declaration": true
+		"module": "CommonJS",
 	},
 	"include": [
-		"packages"
+		"src/lib"
 	],
 	"exclude": [
-		"node_modules",
 		"**/*.test.ts"
 	]
 }

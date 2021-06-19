@@ -1,17 +1,14 @@
-/** @type {import('svelte-preprocess')["default"]} */
-// @ts-ignore
-const sveltePreprocess = require("svelte-preprocess");
-const path = require("path");
+import preprocess from "svelte-preprocess";
+import { resolve } from "path";
 
-module.exports = {
-	preprocess: sveltePreprocess({
-		typescript: {
-			tsconfigFile: "./tsconfig.json",
-		},
+const config = {
+	// Consult https://github.com/sveltejs/svelte-preprocess
+	// for more information about preprocessors
+	preprocess: preprocess({
 		scss: {
-			includePaths: [path.resolve("node_modules"), path.resolve("src")],
+			includePaths: [resolve("src"), resolve("node_modules")],
 		},
 	}),
-	preserveWhitespace: true,
-	dev: true,
 };
+
+export default config;

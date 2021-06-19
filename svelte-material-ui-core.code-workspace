@@ -5,31 +5,36 @@
 		}
 	],
 	"settings": {
-		"typescript.tsdk": "node_modules\\typescript\\lib",
 		"workbench.colorCustomizations": {
-			"activityBar.activeBackground": "#e4712f",
-			"activityBar.activeBorder": "#849e8e",
 			"activityBar.background": "#e2a785",
-			"activityBar.foreground": "#303030",
 			"activityBar.inactiveForeground": "#797979",
+			"activityBar.activeBackground": "#e4712f",
+			"activityBar.foreground": "#303030",
+			"activityBar.activeBorder": "#849e8e",
 			"activityBarBadge.background": "#555563",
 			"activityBarBadge.foreground": "#e7e7e7",
-			"statusBar.background": "#555563",
-			"statusBar.foreground": "#e7e7e7",
-			"statusBarItem.hoverBackground": "#4c6458",
-			"titleBar.activeBackground": "#555563",
-			"titleBar.activeForeground": "#e7e7e7",
-			"titleBar.inactiveBackground": "#55556399",
-			"titleBar.inactiveForeground": "#e7e7e799"
 		},
-		"editor.formatOnSave": true,
 		"prettier.useTabs": true,
-		"typescript.preferences.importModuleSpecifier": "relative"
+		"prettier.singleQuote": false,
+		"editor.formatOnSave": true,
+		"editor.insertSpaces": false,
+		"typescript.tsdk": "node_modules\\typescript\\lib",
+		"typescript.preferences.importModuleSpecifier": "relative",
+		"typescript.preferences.importModuleSpecifierEnding": "js"
 	},
 	"extensions": {
 		"recommendations": [
 			"esbenp.prettier-vscode",
-			"svelte.svelte-vscode"
+			"svelte.svelte-vscode",
+			"CoenraadS.bracket-pair-colorizer-2",
+			"aaron-bond.better-comments",
+			"wmaurer.change-case",
+			"mikestead.dotenv",
+			"usernamehw.errorlens",
+			"christian-kohler.path-intellisense",
+			"searKing.preview-vscode",
+			"pflannery.vscode-versionlens",
+			"vscode-icons-team.vscode-icons",
 		]
 	}
 }
