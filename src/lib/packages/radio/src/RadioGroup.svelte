@@ -1,12 +1,12 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/selectable";
 	import type {
 		SelectionGroupBinding,
 		OnSelectionGroupOptionsChangeEvent,
 		OnSingleSelectionGroupChangeEvent,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	} from "@raythurnevoid/svelte-group-components/selectable";
 	import { createEventDispatcher, onMount } from "svelte";
 	import { setRadioGroupContext } from "./RadioContext";
 	import type {

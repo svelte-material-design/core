@@ -7,11 +7,11 @@
 <script lang="ts">
 	//#region imports
 	import type { DataTableValue, OnDataTableChange } from "./types";
-	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/selectable";
 	import type {
 		SelectionType,
 		SelectionGroupBinding,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	} from "@raythurnevoid/svelte-group-components/selectable";
 	import { DataTable } from "./internal";
 	import { createEventDispatcher } from "svelte";
 	//#endregion

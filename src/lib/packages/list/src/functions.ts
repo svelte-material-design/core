@@ -1,5 +1,5 @@
 import type { SelectionType } from "../../common/hoc";
-import type { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+import type { SelectionGroup } from "@raythurnevoid/svelte-group-components/selectable";
 
 export function handleSelect({
 	selectionType,

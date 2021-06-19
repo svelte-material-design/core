@@ -7,7 +7,7 @@
 <script lang="ts">
 	//#region  imports
 	import { Item } from "../../../list/src/dom/item";
-	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/selectable";
 	import { getSelectContext } from "../SelectContext";
 	//#endregion
 

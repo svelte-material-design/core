@@ -10,8 +10,8 @@
 	import { Track } from ".";
 	import { setSliderContext } from "../SliderContext";
 	import type { RangeContext } from "../SliderContext";
-	import type { GroupItemContext } from "@raythurnevoid/svelte-group-components/ts/components-group";
-	import { Group } from "@raythurnevoid/svelte-group-components/ts/components-group";
+	import type { GroupItemContext } from "@raythurnevoid/svelte-group-components/components-group";
+	import { Group } from "@raythurnevoid/svelte-group-components/components-group";
 	import type { OnSliderChangeEvent, OnSliderInputEvent } from "../types";
 	//#endregion
 

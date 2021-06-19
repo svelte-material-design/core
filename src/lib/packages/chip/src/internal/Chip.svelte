@@ -13,7 +13,7 @@
 		OnChipInteraction,
 		OnChipNavigation,
 	} from "../types";
-	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
+	import { GroupItem } from "@raythurnevoid/svelte-group-components";
 	import { Chip } from "../dom";
 	import type { GroupBindings } from "@raythurnevoid/svelte-group-components";
 	import { ActionType } from "@material/chips/action/constants";

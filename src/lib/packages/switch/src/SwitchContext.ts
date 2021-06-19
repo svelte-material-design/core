@@ -1,5 +1,5 @@
 import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
-import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 
 export const [setSwitchGroupContext, getSwitchGroupContext] =
 	createContextStore<SwitchGroupContext>();

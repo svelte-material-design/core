@@ -7,8 +7,8 @@
 <script lang="ts">
 	//#region  imports
 	import type { SelectVariant } from "./";
-	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 	import { Select } from "./internal";
 	//#endregion
 

@@ -4,12 +4,12 @@
 	//#region imports
 	import { createEventDispatcher } from "svelte";
 	import type { OnSwitchGroupChildrenChange, OnSwitchGroupChange } from "./";
-	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/selectable";
 	import type {
 		SelectionGroupBinding,
 		OnMultiSelectionGroupChangeEvent,
 		OnSelectionGroupOptionsChangeEvent,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	} from "@raythurnevoid/svelte-group-components/selectable";
 	import { SwitchGroup } from "./internal";
 	import type { SwitchGroupValue, SwitchGroupSelectionType } from "./types";
 	//#endregion

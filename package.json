@@ -1,6 +1,6 @@
 {
 	"name": "@svelte-material-ui-test/core",
-	"version": "2.0.0-alpha.8",
+	"version": "2.0.0-alpha.9",
 	"description": "",
 	"scripts": {
 		"clean-lib": "del-cli lib",
@@ -29,19 +29,13 @@
 		"./cjs/*": "./cjs/packages/*"
 	},
 	"browserslist": [
-		"last 1 year and >5% and supports es6-module"
+		"> 5%"
 	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/svelte-material-ui-test/core.git"
 	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"author": "Hunter Perrin <hperrin@gmail.com>",
-	"contributors": [
-		"Ray Thurne <monkeythedev@gmail.com>"
-	],
+	"author": "Ray Thurne",
 	"license": "ISC",
 	"dependencies": {
 		"@material/banner": "^11.0.0",
@@ -83,10 +77,10 @@
 		"@material/top-app-bar": "^11.0.0",
 		"@material/touch-target": "^11.0.0",
 		"@material/typography": "^11.0.0",
-		"@raythurnevoid/strings-filter": "^0.0.2",
-		"@raythurnevoid/svelte-context-enhanced": "^0.0.5",
-		"@raythurnevoid/svelte-group-components": "0.0.22",
-		"@raythurnevoid/svelte-hooks": "^0.0.6",
+		"@raythurnevoid/strings-filter": "^0.0.3",
+		"@raythurnevoid/svelte-context-enhanced": "^0.0.7",
+		"@raythurnevoid/svelte-group-components": "0.0.23",
+		"@raythurnevoid/svelte-hooks": "^0.0.8",
 		"@raythurnevoid/svelte-template": "^0.1.4"
 	},
 	"devDependencies": {
@@ -97,6 +91,6 @@
 		"sass": "^1.35.1",
 		"svelte": "^3.38.2",
 		"svelte-preprocess": "^4.7.3",
-		"typescript": "^4.3.3"
+		"typescript": "^4.3.4"
 	}
 }

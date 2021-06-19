@@ -16,10 +16,10 @@
 	} from "../../../menu-surface/functions";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import type { SelectionType } from "../../../common/hoc";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { Group } from "@raythurnevoid/svelte-group-components/ts";
-	import type { OnGroupItemsUpdateEvent } from "@raythurnevoid/svelte-group-components/ts";
+	import { Group } from "@raythurnevoid/svelte-group-components";
+	import type { OnGroupItemsUpdateEvent } from "@raythurnevoid/svelte-group-components";
 	import type {
 		MenuAnchorMargin,
 		OnMenuChildrenChangeEvent,
@@ -64,13 +64,14 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		open: void;
-		close: void;
-		closing: void;
-		select: OnMenuSelect;
-		optionsChange: OnMenuChildrenChangeEvent;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			open: void;
+			close: void;
+			closing: void;
+			select: OnMenuSelect;
+			optionsChange: OnMenuChildrenChangeEvent;
+		}>();
 
 	let _open: boolean = open;
 	let menuGroup: Group;

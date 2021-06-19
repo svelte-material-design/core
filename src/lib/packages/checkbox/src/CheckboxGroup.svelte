@@ -2,12 +2,12 @@
 
 <script lang="ts">
 	//#region imports
-	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/selectable";
 	import type {
 		SelectionGroupBinding,
 		OnSelectionGroupOptionsChangeEvent,
 		OnMultiSelectionGroupChangeEvent,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	} from "@raythurnevoid/svelte-group-components/selectable";
 	import { createEventDispatcher, onMount } from "svelte";
 	import { setCheckboxGroupContext } from "./CheckboxContext";
 	import type {

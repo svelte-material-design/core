@@ -2,8 +2,8 @@
 
 <script lang="ts">
 	//#region imports
-	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/selectable";
+	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/selectable";
 	import { createEventDispatcher, tick } from "svelte";
 	import { getDataTableContext } from "./DataTableContext";
 	import type { OnRowChange } from "./types";

@@ -2,9 +2,9 @@
 
 <script lang="ts">
 	//#region imports
-	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/selectable";
 	import { createEventDispatcher, tick } from "svelte";
-	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/selectable";
 	import { Tab } from "../../tab/src/internal";
 	import { getTabBarContext, setTabContext } from "./TabBarContext";
 	import type { TabContext } from "./TabBarContext";

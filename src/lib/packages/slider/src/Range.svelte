@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts/components-group";
+	import { GroupItem } from "@raythurnevoid/svelte-group-components/components-group";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 
 	//#region  imports

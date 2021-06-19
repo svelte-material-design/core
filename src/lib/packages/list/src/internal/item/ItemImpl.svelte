@@ -8,7 +8,7 @@
 	import { Item } from "../../dom";
 	import type { ListItemElement } from "./types";
 	import { onMount } from "svelte";
-	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
+	import { GroupItem } from "@raythurnevoid/svelte-group-components";
 	import { setItemContext } from "../../item";
 	import type { ItemLines } from "../../item/types";
 	import { A, Div } from "../../../../common/dom";

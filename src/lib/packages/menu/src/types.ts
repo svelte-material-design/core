@@ -6,7 +6,7 @@ export type {
 	MenuSurfaceAnchor as MenuAnchor,
 } from "../../menu-surface/src/types";
 export type { MDCMenuDistance } from "@material/menu-surface";
-export type { SelectionType as MenuSelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
+export type { SelectionType as MenuSelectionType } from "@raythurnevoid/svelte-group-components/selectable";
 export type {
 	ListOrientation as MenuOrientation,
 	ListItemsStyle as MenuItemsStyle,

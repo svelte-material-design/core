@@ -15,9 +15,9 @@
 	import type {
 		SelectionGroup,
 		SelectionGroupBinding,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	} from "@raythurnevoid/svelte-group-components/selectable";
 	import type { OnDataTableSelect } from "./types";
-	import { Group } from "@raythurnevoid/svelte-group-components/ts";
+	import { Group } from "@raythurnevoid/svelte-group-components";
 	import type { OnDataTableChildrenChange } from "../types";
 	//#endregion
 
@@ -36,13 +36,14 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		sort: OnDataTableSort;
-		select: OnDataTableSelect;
-		selectAll: OnDataTableAction;
-		unselectAll: OnDataTableAction;
-		optionsChange: OnDataTableChildrenChange;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			sort: OnDataTableSort;
+			select: OnDataTableSelect;
+			selectAll: OnDataTableAction;
+			unselectAll: OnDataTableAction;
+			optionsChange: OnDataTableChildrenChange;
+		}>();
 
 	let dataTableGroup: Group;
 	let dataTable: MDCDataTable;

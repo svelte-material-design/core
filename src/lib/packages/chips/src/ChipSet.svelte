@@ -7,9 +7,9 @@
 <script lang="ts">
 	//#region imports
 	import { createEventDispatcher } from "svelte";
-	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import type { SelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/selectable";
+	import type { SelectionType } from "@raythurnevoid/svelte-group-components/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 	import type {
 		ChipSetValue,
 		ChipSetVariant,

@@ -14,7 +14,7 @@
 	import type {
 		SelectionGroupBinding,
 		SelectionType,
-	} from "@raythurnevoid/svelte-group-components/ts/selectable";
+	} from "@raythurnevoid/svelte-group-components/selectable";
 	import type { ListOrientation, ListItemsStyle } from "..";
 	import { createListContext } from "..";
 	import { List } from "../dom";
@@ -28,7 +28,7 @@
 		ListElement,
 		ListComponent,
 	} from "../types";
-	import type { OnGroupItemsUpdateEvent } from "@raythurnevoid/svelte-group-components/ts";
+	import type { OnGroupItemsUpdateEvent } from "@raythurnevoid/svelte-group-components";
 	//#endregion
 
 	//#region exports

@@ -1,4 +1,4 @@
-import type { SelectionType } from "@raythurnevoid/svelte-group-components/ts/selectable";
+import type { SelectionType } from "@raythurnevoid/svelte-group-components/selectable";
 
 export interface OnSwitchChange {
 	dom: HTMLDivElement;

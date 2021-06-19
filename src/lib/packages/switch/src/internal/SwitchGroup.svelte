@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region imports
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 	import { setSwitchGroupContext } from "../SwitchContext";
 	//#endregion
 

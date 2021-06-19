@@ -9,7 +9,7 @@
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createSelectContext } from "..";
 	import type { SelectVariant, OnSelectChange } from "../types";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 	import { classList } from "@raythurnevoid/strings-filter";
 	//#endregion
 

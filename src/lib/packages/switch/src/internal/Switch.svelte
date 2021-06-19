@@ -4,8 +4,8 @@
 	//#region imports
 	import { getSwitchGroupContext } from "../SwitchContext";
 	import { SwitchImpl } from ".";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/selectable";
 	//#endregion
 
 	//#region exports

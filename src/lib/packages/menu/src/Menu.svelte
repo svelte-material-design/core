@@ -21,8 +21,8 @@
 		MenuItemsStyle,
 	} from "./types";
 	import { createEventDispatcher, tick } from "svelte";
-	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 	//#endregion
 
 	//#region exports

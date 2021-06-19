@@ -3,7 +3,7 @@
 <script lang="ts">
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { GroupItem } from "@raythurnevoid/svelte-group-components/ts";
+	import { GroupItem } from "@raythurnevoid/svelte-group-components";
 	import { getDataTableContext, setRowContext } from "../DataTableContext";
 	//#endregion
 

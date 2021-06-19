@@ -1,4 +1,4 @@
-export type { OnSingleSelectionGroupChangeEvent as OnRadioGroupChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
+export type { OnSingleSelectionGroupChangeEvent as OnRadioGroupChangeEvent } from "@raythurnevoid/svelte-group-components/selectable";
 
 export interface OnRadioGroupChildrenChangeEvent {
 	items: HTMLDivElement[];

@@ -2,13 +2,11 @@ import {
 	createContextStore,
 	createContext,
 } from "@raythurnevoid/svelte-context-enhanced";
-import type { GroupBindings } from "@raythurnevoid/svelte-group-components/ts";
-import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+import type { GroupBindings } from "@raythurnevoid/svelte-group-components";
+import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 
-export const [
-	setDataTableContext,
-	getDataTableContext,
-] = createContextStore<DataTableContext>();
+export const [setDataTableContext, getDataTableContext] =
+	createContextStore<DataTableContext>();
 
 interface DataTableContext {
 	selectionGroup: SelectionGroupBinding;

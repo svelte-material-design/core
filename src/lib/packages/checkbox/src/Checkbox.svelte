@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/selectable";
 	import { getCheckboxGroupContext } from "./CheckboxContext";
 	import { Checkbox } from "./internal";
 	//#endregion

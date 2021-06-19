@@ -17,7 +17,7 @@
 	import { setChipSetContext } from "../ChipSetContext";
 	import type { ChipContext } from "../ChipSetContext";
 	import { UseState } from "@raythurnevoid/svelte-hooks";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 	import type {
 		ChipSetVariant,
 		OnChipSetChildrenChange,
@@ -25,8 +25,8 @@
 		OnChipSetRemoval,
 		OnChipSetSelection,
 	} from "../types";
-	import { Group } from "@raythurnevoid/svelte-group-components/ts";
-	import type { GroupItemContext } from "@raythurnevoid/svelte-group-components/ts";
+	import { Group } from "@raythurnevoid/svelte-group-components";
+	import type { GroupItemContext } from "@raythurnevoid/svelte-group-components";
 	//#endregion
 
 	//#region exports

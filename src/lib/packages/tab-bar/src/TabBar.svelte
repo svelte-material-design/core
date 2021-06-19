@@ -18,8 +18,8 @@
 		TabContext,
 	} from ".";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
+	import { SelectionGroup } from "@raythurnevoid/svelte-group-components/selectable";
 	import { setTabBarContext } from "./TabBarContext";
 	//#endregion
 

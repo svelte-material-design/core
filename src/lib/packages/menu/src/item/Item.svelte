@@ -9,8 +9,8 @@
 	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { Item } from "../internal";
 	import { getMenuContext } from "..";
-	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
-	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/selectable";
+	import type { OnSelectableChangeEvent } from "@raythurnevoid/svelte-group-components/selectable";
 	import { createEventDispatcher, tick } from "svelte";
 	import type { OnItemChangeEvent } from "./types";
 	//#endregion

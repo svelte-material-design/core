@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import { Selectable } from "@raythurnevoid/svelte-group-components/ts/selectable";
+	import { Selectable } from "@raythurnevoid/svelte-group-components/selectable";
 	import { Radio } from "./internal";
 	import { getRadioGroupContext } from "./RadioContext";
 	//#endregion

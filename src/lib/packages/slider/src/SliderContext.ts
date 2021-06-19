@@ -1,14 +1,10 @@
 import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
-import type { GroupBindings } from "@raythurnevoid/svelte-group-components/ts/components-group";
+import type { GroupBindings } from "@raythurnevoid/svelte-group-components/components-group";
 
-export const [
-	setSliderContext,
-	getSliderContext,
-] = createContextStore<SliderContext>();
-export const [
-	setRangeContext,
-	getRangeContext,
-] = createContextStore<RangeContext>();
+export const [setSliderContext, getSliderContext] =
+	createContextStore<SliderContext>();
+export const [setRangeContext, getRangeContext] =
+	createContextStore<RangeContext>();
 
 export interface SliderContext {
 	group: GroupBindings;
