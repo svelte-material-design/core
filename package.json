@@ -1,6 +1,6 @@
 {
 	"name": "@svelte-material-ui-test/core",
-	"version": "2.0.0-alpha.11",
+	"version": "2.0.0-alpha.12",
 	"description": "",
 	"scripts": {
 		"clean-lib": "del-cli lib/*",
@@ -78,7 +78,7 @@
 		"@material/touch-target": "^11.0.0",
 		"@material/typography": "^11.0.0",
 		"@raythurnevoid/strings-filter": "^0.0.3",
-		"@raythurnevoid/svelte-context-enhanced": "../svelte-context-enhanced/lib/raythurnevoid-svelte-context-enhanced-1.0.0.tgz",
+		"@raythurnevoid/svelte-context-enhanced": "^1.0.1",
 		"@raythurnevoid/svelte-group-components": "0.0.26",
 		"@raythurnevoid/svelte-hooks": "^0.0.8",
 		"@raythurnevoid/svelte-template": "^0.1.4"

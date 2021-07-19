@@ -11,6 +11,7 @@ export { createListContext, getListContext };
 export interface ListContext {
 	dom: HTMLDivElement | HTMLUListElement;
 	listSelectionGroup: SelectionGroupBinding;
+	a: number;
 	listGroup: GroupBindings;
 	selectionType: SelectionType;
 	itemsRows: ItemLines;
