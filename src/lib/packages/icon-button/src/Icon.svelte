@@ -2,9 +2,9 @@
 
 <script lang="ts">
 	//#region  imports
-	import { Graphic } from "../../common/components";
+	import { Graphic } from "../../common/components.js";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import type { IconDOM, IconType } from ".";
+	import type { IconDOM, IconType } from "./index.js";
 	//#endregion
 
 	//#region exports

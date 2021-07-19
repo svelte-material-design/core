@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { classList } from "@raythurnevoid/strings-filter/ts";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type { TypographyVariant } from ".";
 	import { TypographyStyle } from ".";
 	import { H1, H2, H3, H4, H5, H6, P, Span } from "../../common/dom";

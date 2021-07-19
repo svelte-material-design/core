@@ -1,9 +1,7 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 
-export const [
-	setItemContext,
-	getItemContext,
-] = createContextStore<ItemContext>();
+export const [setItemContext, getItemContext] =
+	createContextWritableStore<ItemContext>();
 
 export interface ItemContext {
 	dom: HTMLLIElement;

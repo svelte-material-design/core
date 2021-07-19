@@ -1,6 +1,6 @@
-import Radio from "./Radio.svelte";
-import RadioGroup from "./RadioGroup.svelte";
+export { default as Radio } from "./Radio.svelte";
+export { default as RadioGroup } from "./RadioGroup.svelte";
+export { default as RadioStyles } from "./RadioStyles.svelte";
 
-export { Radio, RadioGroup };
 export * from "./types";
 export * from "./RadioContext";

@@ -1,9 +1,7 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 
-const [
-	createDialogContext,
-	getDialogContext,
-] = createContextStore<DialogContext>();
+const [createDialogContext, getDialogContext] =
+	createContextWritableStore<DialogContext>();
 export { createDialogContext, getDialogContext };
 
 export interface DialogContext {

@@ -1,5 +1,5 @@
 <style lang="scss" global>
-	@use "smui-theme";
+	@use "smui-theme.scss";
 	@use "@material/list";
 	@use "@material/feature-targeting/functions";
 	@use "@material/feature-targeting/mixins";

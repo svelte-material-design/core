@@ -2,9 +2,9 @@
 
 <script lang="ts">
 	//#region  imports
-	import "../../../../checkbox/src/index.scss";
-	import { Checkbox } from "../../../../checkbox/src/dom";
-	import { getItemContext } from "../ItemContext";
+	import { CheckboxStyles } from "../../../../checkbox/src/index.js";
+	import { Checkbox } from "../../../../checkbox/src/dom/index.js";
+	import { getItemContext } from "../ItemContext.js";
 	//#endregion
 
 	//#region exports
@@ -39,3 +39,5 @@
 	disabled={$itemContext$.disabled || disabled}
 	{...$$restProps}
 />
+
+<CheckboxStyles />

@@ -7,8 +7,6 @@
 <script lang="ts">
 	//#region  imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { createEventDispatcher } from "svelte";
-	import type { OnRadioChangeEvent } from "../types";
 	//#endregion
 
 	//#region exports
@@ -30,7 +28,7 @@
 
 	export let ripple: boolean = undefined;
 
-	export let inputElement: HTMLInputElement;
+	export let inputElement: HTMLInputElement = undefined;
 	export let inputId: string = id ? `${id}--input` : undefined;
 	//#endregion
 

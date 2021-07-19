@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region imports
-	import { classList } from "@raythurnevoid/strings-filter/ts";
+	import { classList } from "@raythurnevoid/strings-filter";
 	import type {
 		ButtonDOM,
 		ButtonColor,

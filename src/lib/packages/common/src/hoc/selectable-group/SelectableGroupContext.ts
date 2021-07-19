@@ -1,10 +1,8 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 import type { SelectableContext } from "../selectable/SelectableContext";
 
-const [
-	setSelectableGroupContext,
-	getSelectableGroupContext,
-] = createContextStore<SelectableGroupContext>();
+const [setSelectableGroupContext, getSelectableGroupContext] =
+	createContextWritableStore<SelectableGroupContext>();
 export { setSelectableGroupContext, getSelectableGroupContext };
 
 export interface SelectableGroupContext {

@@ -3,7 +3,7 @@
 <script lang="ts">
 	//#region imports
 	import { classList } from "@raythurnevoid/strings-filter";
-	import { UseState } from "@raythurnevoid/svelte-hooks/ts";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { onDestroy, onMount, tick } from "svelte";
 	import { LinearProgress } from "../../linear-progress/src/internal";
 	import { getDataTableContext } from "./DataTableContext";

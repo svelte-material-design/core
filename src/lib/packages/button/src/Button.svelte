@@ -61,7 +61,7 @@
 </Button>
 
 <style lang="scss" global>
-	@use "smui-theme";
+	@use "smui-theme.scss";
 	@use "@material/button/styles";
 	@use "@material/button";
 	@use "@material/theme";

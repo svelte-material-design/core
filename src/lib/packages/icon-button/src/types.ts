@@ -1,4 +1,4 @@
-import type { ButtonDOM } from "../../button";
+import type { ButtonDOM } from "../../button/index.js";
 
 export type {
 	GraphicDOM as IconDOM,

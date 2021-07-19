@@ -4,7 +4,7 @@
 	//#region imports
 	import { CloseReason as MDCCloseReason, MDCBanner } from "@material/banner";
 	import type { MDCBannerCloseEventDetail } from "@material/banner";
-	import { UseState } from "@raythurnevoid/svelte-hooks/ts";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { createEventDispatcher, onMount, tick } from "svelte";
 	import { Banner } from "../dom";
 	import type {

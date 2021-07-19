@@ -1,12 +1,12 @@
 import {
-	createContextStore,
+	createContextWritableStore,
 	createContext,
 } from "@raythurnevoid/svelte-context-enhanced";
 import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 import type { SelectVariant } from "./types";
 
 export const [createSelectContext, getSelectContext] =
-	createContextStore<SelectContext>();
+	createContextWritableStore<SelectContext>();
 
 interface SelectContext {
 	id: string;

@@ -1,10 +1,8 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 import type { DrawerVariant } from "./types";
 
-const [
-	createDrawerContext,
-	getDrawerContext,
-] = createContextStore<DrawerContext>();
+const [createDrawerContext, getDrawerContext] =
+	createContextWritableStore<DrawerContext>();
 export { createDrawerContext, getDrawerContext };
 
 export interface DrawerContext {

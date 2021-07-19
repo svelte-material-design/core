@@ -1,9 +1,7 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 
-export const [
-	createMenuSurfaceContext,
-	getMenuSurfaceContext,
-] = createContextStore<MenuSurfaceContext>();
+export const [createMenuSurfaceContext, getMenuSurfaceContext] =
+	createContextWritableStore<MenuSurfaceContext>();
 
 export interface MenuSurfaceContext {
 	open: boolean;

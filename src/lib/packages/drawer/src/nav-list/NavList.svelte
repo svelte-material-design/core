@@ -12,6 +12,7 @@
 		ListItemsStyle,
 		ItemLines,
 	} from "../../../list";
+	import { ListStyles } from "../../../list";
 	import { getDrawerContext } from "../DrawerContext";
 	//#endregion
 
@@ -59,9 +60,4 @@
 	</List>
 </nav>
 
-<style lang="scss" global>
-	@use "smui-theme";
-	@use "@material/list";
-
-	@include list.deprecated-core-styles();
-</style>
+<ListStyles />

@@ -1,7 +1,7 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 
 export const [setButtonContext, getButtonContext] =
-	createContextStore<ButtonContext>();
+	createContextWritableStore<ButtonContext>();
 
 export interface ButtonContext {
 	setHasLeadingIcon(value: boolean): void;

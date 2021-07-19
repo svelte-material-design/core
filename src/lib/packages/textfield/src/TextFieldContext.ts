@@ -1,11 +1,9 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 import type { StringList } from "@raythurnevoid/strings-filter";
 import type { InputFieldVariant } from "./types";
 
-const [
-	createInputFieldContext,
-	getInputFieldContext,
-] = createContextStore<InputFieldContext>();
+const [createInputFieldContext, getInputFieldContext] =
+	createContextWritableStore<InputFieldContext>();
 export { createInputFieldContext, getInputFieldContext };
 
 export interface InputFieldContext {
@@ -27,10 +25,8 @@ export interface InputFieldContext {
 	setContentElement(element: HTMLLabelElement): void;
 }
 
-export const [
-	setContentContext,
-	getContentContext,
-] = createContextStore<ContentContext>();
+export const [setContentContext, getContentContext] =
+	createContextWritableStore<ContentContext>();
 
 export interface ContentContext {
 	dom: HTMLLabelElement;

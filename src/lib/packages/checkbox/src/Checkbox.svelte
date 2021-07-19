@@ -7,8 +7,9 @@
 <script lang="ts">
 	//#region  imports
 	import { Selectable } from "@raythurnevoid/svelte-group-components/selectable";
-	import { getCheckboxGroupContext } from "./CheckboxContext";
-	import { Checkbox } from "./internal";
+	import { getCheckboxGroupContext } from "./CheckboxContext.js";
+	import { Checkbox } from "./internal/index.js";
+	import { CheckboxStyles } from "./index.js";
 	//#endregion
 
 	//#region exports
@@ -69,3 +70,5 @@
 		on:focusout
 	/>
 </Selectable>
+
+<CheckboxStyles />

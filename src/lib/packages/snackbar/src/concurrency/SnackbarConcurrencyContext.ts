@@ -1,7 +1,7 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 
 export const [setSnackbarConcurrencyContext, getSnackbarConcurrencyContext] =
-	createContextStore<SelectContext>();
+	createContextWritableStore<SelectContext>();
 
 interface SelectContext {
 	requestOpen(snackbarBindings: ConcurrentSnackbarContext): void;

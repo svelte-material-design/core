@@ -51,9 +51,9 @@
 </TopAppBar>
 
 <style lang="scss" global>
-	@use "smui-theme";
-	@use "@material/top-app-bar/mdc-top-app-bar";
-	@use "@material/top-app-bar";
+	@use "smui-theme.scss";
+	@use "@material/top-app-bar/mdc-top-app-bar.scss";
+	@use "@material/top-app-bar/index.scss" as top-app-bar;
 
 	.svmd-top-app-bar--color--secondary {
 		@include top-app-bar.fill-color-accessible(secondary);

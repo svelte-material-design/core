@@ -1,17 +1,18 @@
 <script lang="ts">
 	import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
-	import { UseState } from "@raythurnevoid/svelte-hooks/ts";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import type { MenuSurfaceAnchor } from "../types";
 	import { isAnchorElement } from "../functions";
 
 	export let dom: HTMLElement;
 	export let anchor: MenuSurfaceAnchor;
 
-	const dispatch = createEventDispatcher<{
-		update: {
-			anchorElement?: HTMLElement;
-		};
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			update: {
+				anchorElement?: HTMLElement;
+			};
+		}>();
 
 	onMount(async () => {
 		if (anchor) {

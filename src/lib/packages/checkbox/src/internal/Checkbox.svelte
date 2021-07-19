@@ -4,11 +4,11 @@
 	//#region  imports
 	import { MDCCheckbox } from "@material/checkbox";
 	import { onMount, onDestroy, tick } from "svelte";
-	import { getFormFieldContext } from "../../../form-field";
+	import { getFormFieldContext } from "../../../form-field/index.js";
 	import { createEventDispatcher } from "svelte";
-	import type { OnCheckboxChangeEvent } from "../types";
+	import type { OnCheckboxChangeEvent } from "../types.js";
 	import { Use, UseState } from "@raythurnevoid/svelte-hooks";
-	import { Checkbox } from "../dom";
+	import { Checkbox } from "../dom/index.js";
 	//#endregion
 
 	//#region exports
@@ -43,9 +43,10 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		change: OnCheckboxChangeEvent;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			change: OnCheckboxChangeEvent;
+		}>();
 
 	let inputElement: HTMLInputElement;
 	let inputId: string;

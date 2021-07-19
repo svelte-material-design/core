@@ -5,7 +5,7 @@
 	import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 	import type { InputFieldVariant } from "./";
 	import type { StringList } from "@raythurnevoid/strings-filter";
-	import { UseState } from "@raythurnevoid/svelte-hooks/ts";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import type { Value } from "./types";
 	import { handleInputValidation } from "./functions";
 	import type { GetHTMLValidationMsg } from "./functions";
@@ -24,14 +24,15 @@
 	let textField: MDCTextField;
 	let valueState: UseState;
 
-	const dispatch = createEventDispatcher<{
-		input: {
-			value: Value;
-		};
-		change: {
-			value: Value;
-		};
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			input: {
+				value: Value;
+			};
+			change: {
+				value: Value;
+			};
+		}>();
 
 	$: if (variant == undefined) variant = "filled";
 

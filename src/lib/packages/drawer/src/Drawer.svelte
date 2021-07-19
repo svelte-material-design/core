@@ -112,7 +112,7 @@
 {/if}
 
 <style lang="scss" global>
-	@use "smui-theme";
+	@use "smui-theme.scss";
 	@use "@material/drawer/mdc-drawer";
 
 	.mdc-drawer {

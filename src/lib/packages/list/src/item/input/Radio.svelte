@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	//#region  imports
-	import "../../../../radio/src/index.scss";
+	import { RadioStyles } from "../../../../radio/src/index";
 	import { Radio } from "../../../../radio/src/dom";
 	import { getItemContext } from "../ItemContext";
 	//#endregion
@@ -39,3 +39,5 @@
 	{readonly}
 	{...$$restProps}
 />
+
+<RadioStyles />

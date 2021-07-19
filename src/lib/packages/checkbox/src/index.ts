@@ -1,6 +1,6 @@
-import Checkbox from "./Checkbox.svelte";
-import CheckboxGroup from "./CheckboxGroup.svelte";
+export { default as Checkbox } from "./Checkbox.svelte";
+export { default as CheckboxGroup } from "./CheckboxGroup.svelte";
+export { default as CheckboxStyles } from "./CheckboxStyles.svelte";
 
-export { Checkbox, CheckboxGroup };
-export * from "./CheckboxContext";
-export * from "./types";
+export * from "./CheckboxContext.js";
+export * from "./types.js";

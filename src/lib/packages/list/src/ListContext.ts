@@ -1,10 +1,11 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 import type { ItemContext, ItemLines } from "./item";
 import type { SelectionType } from "../../common/hoc";
 import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 import type { GroupBindings } from "@raythurnevoid/svelte-group-components/components-group";
 
-const [createListContext, getListContext] = createContextStore<ListContext>();
+const [createListContext, getListContext] =
+	createContextWritableStore<ListContext>();
 export { createListContext, getListContext };
 
 export interface ListContext {

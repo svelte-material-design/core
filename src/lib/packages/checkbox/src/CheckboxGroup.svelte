@@ -9,11 +9,11 @@
 		OnMultiSelectionGroupChangeEvent,
 	} from "@raythurnevoid/svelte-group-components/selectable";
 	import { createEventDispatcher, onMount } from "svelte";
-	import { setCheckboxGroupContext } from "./CheckboxContext";
+	import { setCheckboxGroupContext } from "./CheckboxContext.js";
 	import type {
 		OnCheckboxGroupChangeEvent,
 		OnCheckboxGroupChildrenChangeEvent,
-	} from "./types";
+	} from "./types.js";
 	//#endregion
 
 	//#region exports

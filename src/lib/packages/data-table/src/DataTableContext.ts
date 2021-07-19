@@ -1,12 +1,12 @@
 import {
-	createContextStore,
+	createContextWritableStore,
 	createContext,
 } from "@raythurnevoid/svelte-context-enhanced";
 import type { GroupBindings } from "@raythurnevoid/svelte-group-components";
 import type { SelectionGroupBinding } from "@raythurnevoid/svelte-group-components/selectable";
 
 export const [setDataTableContext, getDataTableContext] =
-	createContextStore<DataTableContext>();
+	createContextWritableStore<DataTableContext>();
 
 interface DataTableContext {
 	selectionGroup: SelectionGroupBinding;
@@ -16,7 +16,8 @@ interface DataTableContext {
 	showProgress(show: boolean): void;
 }
 
-export const [setRowContext, getRowContext] = createContextStore<RowContext>();
+export const [setRowContext, getRowContext] =
+	createContextWritableStore<RowContext>();
 export const [setRowBehaviour, getRowBehaviour] = createContext<RowBehaviour>();
 
 export interface RowContext {

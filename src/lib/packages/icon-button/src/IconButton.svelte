@@ -6,9 +6,10 @@
 
 <script lang="ts">
 	//#region imports
-	import { IconButton } from "./internal";
+	import { IconButton } from "./internal/index.js";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import type { IconButtonDOM, IconButtonColor } from ".";
+	import { IconButtonStyles } from "./index.js";
+	import type { IconButtonDOM, IconButtonColor } from "./index.js";
 	//#endregion
 
 	//#region exports
@@ -53,3 +54,5 @@
 >
 	<slot />
 </IconButton>
+
+<IconButtonStyles />

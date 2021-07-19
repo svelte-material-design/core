@@ -17,7 +17,7 @@
 		OnDialogOpening,
 		OnDialogClosing,
 	} from "./types";
-	import { UseState } from "@raythurnevoid/svelte-hooks/ts";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	//#endregion
 
 	//#region exports

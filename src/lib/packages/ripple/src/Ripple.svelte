@@ -60,7 +60,7 @@
 <UseState value={target} onUpdate={initialize} />
 
 <style lang="scss" global>
-	@use "smui-theme";
+	@use "smui-theme.scss";
 	@use "@material/ripple";
 	@use "@material/theme";
 

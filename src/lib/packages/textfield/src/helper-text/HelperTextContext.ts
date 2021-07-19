@@ -1,9 +1,7 @@
-import { createContextStore } from "@raythurnevoid/svelte-context-enhanced";
+import { createContextWritableStore } from "@raythurnevoid/svelte-context-enhanced";
 
-const [
-	createHelperTextContext,
-	getHelperTextContext,
-] = createContextStore<HelperTextContext>();
+const [createHelperTextContext, getHelperTextContext] =
+	createContextWritableStore<HelperTextContext>();
 export { createHelperTextContext, getHelperTextContext };
 
 export interface HelperTextContext {

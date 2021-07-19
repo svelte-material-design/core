@@ -17,10 +17,11 @@
 	export let value: string = undefined;
 	export let group: SelectionGroupBinding = undefined;
 
-	const dispatch = createEventDispatcher<{
-		change: OnRadioGroupChangeEvent;
-		optionsChange: OnRadioGroupChildrenChangeEvent;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			change: OnRadioGroupChangeEvent;
+			optionsChange: OnRadioGroupChildrenChangeEvent;
+		}>();
 
 	let selectionGroup: SelectionGroup;
 

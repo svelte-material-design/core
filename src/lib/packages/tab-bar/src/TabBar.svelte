@@ -9,7 +9,7 @@
 	import { createEventDispatcher, onDestroy, onMount } from "svelte";
 	import { MDCTabBar } from "@material/tab-bar";
 	import type { MDCTabBarActivatedEvent } from "@material/tab-bar";
-	import { UseState } from "@raythurnevoid/svelte-hooks/ts";
+	import { UseState } from "@raythurnevoid/svelte-hooks";
 	import { TabScroller } from ".";
 	import type {
 		TabIndicatorTransition,
@@ -42,10 +42,11 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		change: OnTabBarChange;
-		optionsChange: OnTabBarChildrenChange;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			change: OnTabBarChange;
+			optionsChange: OnTabBarChildrenChange;
+		}>();
 
 	let tabBar: MDCTabBar;
 	let selectionGroup: SelectionGroup;

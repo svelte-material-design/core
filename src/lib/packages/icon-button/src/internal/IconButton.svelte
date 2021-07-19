@@ -2,10 +2,10 @@
 
 <script lang="ts">
 	//#region imports
-	import { Button, A } from "../../../common/dom";
-	import { Ripple } from "../../../ripple";
+	import { Button, A } from "../../../common/dom/index.js";
+	import { Ripple } from "../../../ripple/index.js";
 	import { classList } from "@raythurnevoid/strings-filter";
-	import type { IconButtonDOM, IconButtonColor } from "..";
+	import type { IconButtonDOM, IconButtonColor } from "../index.js";
 	//#endregion
 
 	//#region exports

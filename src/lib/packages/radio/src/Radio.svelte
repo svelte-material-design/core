@@ -7,8 +7,9 @@
 <script lang="ts">
 	//#region  imports
 	import { Selectable } from "@raythurnevoid/svelte-group-components/selectable";
-	import { Radio } from "./internal";
+	import { Radio } from "./internal/index";
 	import { getRadioGroupContext } from "./RadioContext";
+	import { RadioStyles } from "./index";
 	//#endregion
 
 	//#region exports
@@ -57,3 +58,5 @@
 		on:change
 	/>
 </Selectable>
+
+<RadioStyles />

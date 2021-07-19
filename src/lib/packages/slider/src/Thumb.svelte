@@ -26,10 +26,11 @@
 	//#endregion
 
 	//#region implementation
-	const dispatch = createEventDispatcher<{
-		mounted: OnMountedEvent;
-		destroyed: undefined;
-	}>();
+	const dispatch =
+		createEventDispatcher<{
+			mounted: OnMountedEvent;
+			destroyed: undefined;
+		}>();
 
 	const sliderContext$ = getSliderContext();
 
@@ -61,6 +62,7 @@
 
 	onDestroy(() => {
 		dispatch("destroyed");
+		indicatorTextElementObserver.disconnect();
 	});
 
 	function updateValueText() {

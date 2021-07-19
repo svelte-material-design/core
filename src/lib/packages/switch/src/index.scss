@@ -1,4 +1,4 @@
-@use "smui-theme";
+@use "smui-theme.scss";
 @use "@material/switch";
 
 @include switch.core-styles;
